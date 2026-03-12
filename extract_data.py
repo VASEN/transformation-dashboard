@@ -268,7 +268,10 @@ def extract():
     }
 
     with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
-        json.dump(result, f, ensure_ascii=False, indent=2)
+        # Экранируем </ чтобы не ломать <script> блок при любом встраивании
+        safe_json = json.dumps(result, ensure_ascii=False, indent=2)
+        safe_json = safe_json.replace('</', '<\\/')
+        f.write(safe_json)
 
     kb = Path(OUTPUT_FILE).stat().st_size // 1024
     print(f"\n✅ {OUTPUT_FILE} сохранён ({kb} KB)")

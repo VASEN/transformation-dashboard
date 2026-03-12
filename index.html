@@ -1513,22 +1513,57 @@ function initDashboard(data) {
 }
 
 // ===== FETCH DATA =====
+// "Unexpected token '<'" at runtime = server returned an HTML error page
+// instead of JSON (e.g. 404 from GitHub Pages). We detect this explicitly
+// and show a meaningful message instead of a cryptic SyntaxError.
 async function loadData() {
+  const loader = document.getElementById('loader');
   try {
     const resp = await fetch('data.json');
-    if (!resp.ok) throw new Error('HTTP ' + resp.status);
-    const data = await resp.json();
+
+    // Peek at Content-Type — an HTML 404 gives text/html, not application/json
+    const ct = resp.headers.get('content-type') || '';
+    const bodyText = await resp.text();
+
+    if (!resp.ok || (!ct.includes('json') && bodyText.trim().startsWith('<'))) {
+      // Server sent HTML (404 page, redirect, etc.) — this is the source of
+      // "Unexpected token '<'" when the old code called resp.json() directly.
+      const dataUrl = new URL('data.json', location.href).href;
+      throw new Error(
+        `Сервер вернул HTML вместо JSON (HTTP ${resp.status}).\n` +
+        `Проверьте, что файл доступен по адресу:\n${dataUrl}`
+      );
+    }
+
+    let data;
+    try {
+      data = JSON.parse(bodyText);
+    } catch (parseErr) {
+      // Locate the bad position in data.json and show a snippet
+      const pos = parseInt((parseErr.message.match(/position (\d+)/) || [])[1]);
+      const snippet = Number.isFinite(pos)
+        ? bodyText.slice(Math.max(0, pos - 40), pos + 40)
+        : '';
+      throw new Error(
+        `Ошибка разбора data.json: ${parseErr.message}` +
+        (snippet ? `\nФрагмент: …${snippet}…` : '')
+      );
+    }
+
     initDashboard(data);
+    loader.style.display = 'none';
+
   } catch (err) {
-    const loader = document.getElementById('loader');
     loader.innerHTML = `
-      <div style="color:var(--danger);font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:2px;text-align:center">
-        Ошибка загрузки данных<br>
-        <span style="font-size:10px;color:var(--text-dim);font-family:'Exo 2',sans-serif;margin-top:8px;display:block">${err.message}</span>
+      <div style="color:var(--danger);font-family:'Orbitron',sans-serif;font-size:12px;
+                  letter-spacing:1px;text-align:center;max-width:460px;padding:0 16px">
+        Ошибка загрузки данных
+        <pre style="font-size:10px;color:var(--text-dim);font-family:'Exo 2',sans-serif;
+                    margin-top:12px;white-space:pre-wrap;text-align:left;
+                    background:rgba(255,255,255,0.06);padding:10px;border-radius:8px;
+                    word-break:break-all">${err.message}</pre>
       </div>`;
-    return;
   }
-  document.getElementById('loader').style.display = 'none';
 }
 
 loadData();
