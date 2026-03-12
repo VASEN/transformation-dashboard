@@ -340,6 +340,12 @@
     border-radius: 12px;
     padding: 16px;
     text-align: center;
+    transition: opacity 0.25s, box-shadow 0.25s;
+  }
+  .gauge-card.dimmed { opacity: 0.35; }
+  .gauge-card.highlighted {
+    box-shadow: 0 0 0 2px var(--accent), 0 0 20px rgba(0,229,255,0.25);
+    border-color: var(--accent);
   }
 
   .gauge-name {
@@ -352,9 +358,10 @@
 
   .gauge-wrap {
     position: relative;
-    width: 100px;
-    height: 60px;
+    width: 110px;
+    height: 64px;
     margin: 0 auto 8px;
+    overflow: visible;
   }
 
   .gauge-svg { width: 100%; height: 100%; overflow: visible; }
@@ -713,9 +720,13 @@
 
     <div class="filter-bar">
       <span class="filter-label">Год</span>
-      <select class="filter-select"><option>2026</option><option>2025</option></select>
-      <span class="filter-label" style="margin-left:16px">Куратор</span>
-      <select class="filter-select" id="curatorFilter"><option value="all">Все</option></select>
+      <select class="filter-select" id="yearFilter" onchange="applyExecFilters()">
+        <option value="2026">2026</option>
+        <option value="2025">2025</option>
+        <option value="all">Все</option>
+      </select>
+      <span class="filter-label" style="margin-left:16px">Ответственный</span>
+      <select class="filter-select" id="ownerFilter" onchange="applyExecFilters()"><option value="all">Все</option></select>
       <span class="separator"></span>
       <div class="badge-row">
         <div class="info-badge" id="badge-active"><div class="dot" style="background:var(--accent)"></div>В работе: —</div>
@@ -924,6 +935,7 @@
 let allProjects = [];
 let allTasks = [];
 let allDetails = [];
+let allCurators = [];
 
 // ===== HELPERS =====
 function getProgressColor(pct) {
@@ -957,6 +969,24 @@ function getProjectStyle(name) {
   return projectColorCache[name];
 }
 
+// ===== HELPERS: parse date dd.mm.yyyy → Date =====
+function parseDate(str) {
+  if (!str) return new Date(9999, 0, 1);
+  const [dd, mm, yyyy] = str.split('.');
+  return new Date(+yyyy, +mm - 1, +dd);
+}
+
+// ===== RENDER: PROJ TABLE (exec mini) =====
+function renderProjTable(projects) {
+  const body = document.getElementById('projTableBody');
+  const active = projects
+    .filter(p => p.status === 'В работе')
+    .sort((a, b) => parseDate(a.deadline) - parseDate(b.deadline))
+    .slice(0, 10);
+  body.innerHTML = active.map(p => `
+    <tr>
+      <td>${p.name}</td>
+      <td style="color:var(--text-dim);font-size:12px">${p.owner_short || p.person || '—'}</td>
 // ===== RENDER: PROJ TABLE (exec mini) =====
 function renderProjTable(projects) {
   const body = document.getElementById('projTableBody');
@@ -989,6 +1019,7 @@ function renderFullProjTable(projects, filter = 'all') {
         <td style="color:var(--text-dim);font-size:11px">${i + 1}</td>
         <td>${p.name}</td>
         <td><span class="status-badge ${isActive ? 'active' : 'done'}">${p.status}</span></td>
+        <td style="color:var(--text-dim);font-size:12px">${p.owner_short || p.person || '—'}</td>
         <td style="color:var(--text-dim);font-size:12px">${p.person || '—'}</td>
         <td style="color:var(--text-dim);font-size:12px">${p.deadline || '—'}</td>
         <td>
@@ -1009,6 +1040,13 @@ function filterProjects(val) { renderFullProjTable(allProjects, val); }
 // ===== RENDER: GAUGES =====
 function renderGauges(curators) {
   const grid = document.getElementById('gaugesGrid');
+  // cx=50, cy=50, r=38 → top of arc y=12, with stroke-width=8 extends to y=8
+  // viewBox "0 4 100 54": clip 4px from top (safe margin), show y=4..58
+  // gauge-wrap height 64px → scale ≈ 64/54 = 1.185 → rendered arc fills nicely
+  const r = 38, cx = 50, cy = 50;
+  grid.innerHTML = curators.map(g => {
+    const color = getGaugeColor(g.pct_vysv);
+    const pct = Math.min(g.pct_vysv, 200) / 200;
   grid.innerHTML = curators.map(g => {
     const color = getGaugeColor(g.pct_vysv);
     const pct = Math.min(g.pct_vysv, 200) / 200;
@@ -1019,6 +1057,15 @@ function renderGauges(curators) {
     const x2 = cx + r * Math.cos(endAngle), y2 = cy + r * Math.sin(endAngle);
     const largeArc = pct > 0.5 ? 1 : 0;
     return `
+      <div class="gauge-card" data-curator-name="${g.name}">
+        <div class="gauge-name">${g.name}</div>
+        <div class="gauge-wrap">
+          <svg class="gauge-svg" viewBox="0 4 100 54">
+            <path d="M ${cx - r},${cy} A ${r},${r} 0 0 1 ${cx + r},${cy}"
+              fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="8" stroke-linecap="round"/>
+            <path d="M ${x1},${y1} A ${r},${r} 0 ${largeArc} 1 ${x2},${y2}"
+              fill="none" stroke="${color}" stroke-width="8" stroke-linecap="round"/>
+            <text x="50" y="49" text-anchor="middle" font-family="Orbitron,sans-serif"
       <div class="gauge-card">
         <div class="gauge-name">${g.name}</div>
         <div class="gauge-wrap">
@@ -1104,6 +1151,19 @@ function renderDeadlineMap(tasks) {
         <div class="week-count" style="color:${w.total >= 15 ? 'var(--danger)' : w.total >= 8 ? 'var(--warn)' : 'var(--text-dim)'}">${w.total}</div>
       </div>
     `;
+  }).join('') + `
+    <div style="display:flex;gap:14px;padding:8px 0 2px;margin-top:4px;border-top:1px solid rgba(255,255,255,0.06)">
+      <div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-dim)">
+        <span style="width:10px;height:10px;border-radius:2px;background:rgba(0,229,255,0.55);display:inline-block;flex-shrink:0"></span>1–2 задачи
+      </div>
+      <div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-dim)">
+        <span style="width:10px;height:10px;border-radius:2px;background:rgba(255,184,0,0.65);display:inline-block;flex-shrink:0"></span>3–4 задачи
+      </div>
+      <div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-dim)">
+        <span style="width:10px;height:10px;border-radius:2px;background:rgba(255,59,92,0.65);display:inline-block;flex-shrink:0"></span>5+ задач
+      </div>
+    </div>
+  `;
   }).join('');
 }
 
@@ -1121,6 +1181,7 @@ function renderTasks(tasks, filter = 'all') {
         <td><span class="project-tag" style="background:${ps.bg};color:${ps.color}">${t.project}</span></td>
         <td style="max-width:280px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t.theme}</td>
         <td><span style="color:${statusColor};font-size:12px">${t.status}</span></td>
+        <td style="color:var(--text-dim);font-size:12px">${t.executor_short || t.person || '—'}</td>
         <td style="color:var(--text-dim);font-size:12px">${t.person || '—'}</td>
         <td><span class="deadline-chip ${urgencyLabel}">${urgencyIcon}${t.deadline || '—'}</span></td>
       </tr>
@@ -1246,6 +1307,14 @@ function populateDetailSelect(details) {
   if (details.length) loadDetail(details[0].name);
 }
 
+// ===== POPULATE OWNER FILTER =====
+function populateOwnerFilter(projects) {
+  const sel = document.getElementById('ownerFilter');
+  const owners = [...new Set(projects.map(p => p.owner_short).filter(Boolean))].sort();
+  owners.forEach(name => {
+    const opt = document.createElement('option');
+    opt.value = name;
+    opt.textContent = name;
 // ===== POPULATE CURATOR FILTER =====
 function populateCuratorFilter(curators) {
   const sel = document.getElementById('curatorFilter');
@@ -1255,6 +1324,88 @@ function populateCuratorFilter(curators) {
     opt.textContent = c.name;
     sel.appendChild(opt);
   });
+}
+
+// ===== GAUGE HIGHLIGHT =====
+function highlightGauge(selectedOwner) {
+  const cards = document.querySelectorAll('.gauge-card');
+  if (selectedOwner === 'all') {
+    cards.forEach(c => c.classList.remove('dimmed', 'highlighted'));
+    return;
+  }
+  // Match by last name (normalise ё→е for fuzzy match)
+  const norm = s => (s || '').toLowerCase().replace(/ё/g, 'е');
+  const lastName = norm(selectedOwner).split(' ')[0];
+  let anyMatch = false;
+  cards.forEach(card => {
+    const cn = norm(card.dataset.curatorName || '');
+    const match = cn.includes(lastName);
+    if (match) anyMatch = true;
+    card.classList.toggle('dimmed', !match);
+    card.classList.toggle('highlighted', match);
+  });
+  if (!anyMatch) cards.forEach(c => c.classList.remove('dimmed', 'highlighted'));
+}
+
+// ===== COMPUTE TASK KPIs FOR FILTERED PROJECTS =====
+function computeTaskKPIs(filteredProjects) {
+  const projNames = new Set(filteredProjects.map(p => p.name));
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const in14 = new Date(today); in14.setDate(today.getDate() + 14);
+  const closed = new Set(['Выполнена', 'Завершена', 'Закрыта', 'Закрыто', 'Выполнено']);
+  let deadline14 = 0, overdue = 0;
+  allTasks.forEach(t => {
+    if (!projNames.has(t.project) || !t.deadline || closed.has(t.status)) return;
+    const d = parseDate(t.deadline);
+    if (d < today) overdue++;
+    else if (d <= in14) deadline14++;
+  });
+  return { deadline14, overdue };
+}
+
+// ===== APPLY EXEC FILTERS =====
+function applyExecFilters() {
+  const year = document.getElementById('yearFilter').value;
+  const owner = document.getElementById('ownerFilter').value;
+
+  let filtered = allProjects;
+  if (year !== 'all') filtered = filtered.filter(p => p.deadline && p.deadline.split('.')[2] === year);
+  if (owner !== 'all') filtered = filtered.filter(p => p.owner_short === owner);
+
+  const active = filtered.filter(p => p.status === 'В работе');
+  const closed = filtered.filter(p => p.status !== 'В работе');
+  const { deadline14, overdue } = computeTaskKPIs(filtered);
+
+  // KPI cards
+  document.getElementById('kpi-projects').textContent = filtered.length;
+  document.getElementById('kpi-projects-sub').innerHTML =
+    `<span class="trend up">${active.length} активных</span>&nbsp;/ ${closed.length} закрыто`;
+
+  const avgPct = active.length
+    ? Math.round(active.reduce((s, p) => s + (p.pct || 0), 0) / active.length)
+    : 0;
+  document.getElementById('kpi-completion').textContent = avgPct + '%';
+  document.getElementById('kpi-completion-sub').textContent =
+    `среднее по ${active.length} активным проектам`;
+
+  document.getElementById('kpi-deadline14').textContent = deadline14;
+  document.getElementById('kpi-overdue').textContent = overdue;
+  document.getElementById('kpi-overdue-sub').innerHTML = overdue === 0
+    ? `<span class="trend up">✓</span> Всё в норме`
+    : `<span class="trend down">!</span> Требует внимания`;
+
+  // Badges
+  document.getElementById('badge-active').innerHTML =
+    `<div class="dot" style="background:var(--accent)"></div>В работе: ${active.length}`;
+  document.getElementById('badge-closed').innerHTML =
+    `<div class="dot" style="background:var(--accent3)"></div>Закрыто: ${closed.length}`;
+  document.getElementById('badge-overdue').textContent = overdue;
+
+  // Project table (sorted by deadline, top-10 active)
+  renderProjTable(filtered);
+
+  // Gauge highlight
+  highlightGauge(owner);
 }
 
 // ===== TAB SWITCHING =====
@@ -1272,6 +1423,13 @@ function initDashboard(data) {
   // Timestamp
   document.getElementById('updated-at').textContent = 'Обновлено: ' + data.updated_at;
 
+  // Store globally (use all_tasks for full task coverage)
+  allProjects = data.projects;
+  allTasks = data.all_tasks || data.tasks;
+  allDetails = data.projects;
+  allCurators = data.curators;
+
+  // Gauges (Высвобождение — never filtered)
   // KPI cards
   document.getElementById('kpi-projects').textContent = s.projects_total;
   document.getElementById('kpi-projects-sub').innerHTML =
@@ -1291,6 +1449,13 @@ function initDashboard(data) {
     document.getElementById('kpi-vysv-sub').innerHTML =
       `<span class="trend ${overall.pct_vysv >= 100 ? 'up' : 'down'}">${overall.pct_vysv >= 100 ? '↑' : '↓'} план</span> ${overall.name}`;
   }
+  renderGauges(data.curators);
+
+  // Projects screen badge (total unfiltered)
+  document.getElementById('badge-projects-total').innerHTML =
+    `<div class="dot" style="background:var(--accent)"></div>Всего: ${s.projects_total}`;
+
+  // Tasks screen stats (from summary — not filtered)
 
   document.getElementById('kpi-deadline14').textContent = s.tasks_deadline_14 ?? '—';
   document.getElementById('kpi-overdue').textContent = s.tasks_overdue ?? '—';
@@ -1319,6 +1484,18 @@ function initDashboard(data) {
   document.getElementById('tasks-stat-deadline14').textContent = s.tasks_deadline_14 ?? '—';
   document.getElementById('tasks-stat-overdue').textContent = s.tasks_overdue ?? '—';
 
+  // Populate dropdowns
+  populateOwnerFilter(allProjects);
+  populateTaskFilter(allTasks);
+  populateDetailSelect(allDetails);
+
+  // Static renders
+  renderFullProjTable(allProjects);
+  renderDeadlineMap(allTasks);
+  renderTasks(allTasks);
+
+  // Apply exec filters (uses default year=2026, owner=all)
+  applyExecFilters();
   // Store globally
   allProjects = data.projects;
   allTasks = data.tasks;
