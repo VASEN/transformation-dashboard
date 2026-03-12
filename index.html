@@ -1149,8 +1149,9 @@ function loadDetail(name) {
 
   const planH = d.plan_hours ? Math.round(d.plan_hours).toLocaleString('ru') : '—';
   const factH = d.fact_hours ? Math.round(d.fact_hours).toLocaleString('ru') : '—';
-  const planInt = d.plan_int ? Math.round(d.plan_int).toLocaleString('ru') : '—';
-  const planExt = d.plan_ext ? Math.round(d.plan_ext).toLocaleString('ru') : '—';
+  const planInt = d.plan_hours_cio ? Math.round(d.plan_hours_cio).toLocaleString('ru') : '—';
+  const planExt = (d.plan_hours && d.plan_hours_cio)
+    ? Math.round(d.plan_hours - d.plan_hours_cio).toLocaleString('ru') : '—';
   const planUnits = d.plan_units ? d.plan_units.toFixed(2) : '—';
   const factColor = d.fact_hours && d.plan_hours && d.fact_hours >= d.plan_hours ? 'var(--accent3)' : 'var(--warn)';
 
@@ -1170,10 +1171,10 @@ function loadDetail(name) {
     <!-- LEFT: info + team -->
     <div style="display:flex;flex-direction:column;gap:16px">
       <div class="info-block">
-        <div class="info-label">Ответственный</div>
-        <div class="info-value">${d.person || '—'}</div>
-        <div class="info-label">Куратор</div>
-        <div class="info-value" style="color:var(--accent2)">${d.curator || '—'}</div>
+        <div class="info-label">Держатель проекта</div>
+        <div class="info-value">${d.owner_short || d.owner || '—'}</div>
+        <div class="info-label">Руководитель проекта</div>
+        <div class="info-value" style="color:var(--accent2)">${d.manager_short || d.manager || '—'}</div>
         <div class="info-label">Срок завершения</div>
         <div class="info-value" style="color:var(--warn)">${d.deadline || '—'}</div>
 
@@ -1321,7 +1322,7 @@ function initDashboard(data) {
   // Store globally
   allProjects = data.projects;
   allTasks = data.tasks;
-  allDetails = data.project_details;
+  allDetails = data.projects;
 
   // Render all sections
   renderProjTable(allProjects);
