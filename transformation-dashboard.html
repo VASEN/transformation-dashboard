@@ -71,6 +71,34 @@
 
   .app { position: relative; z-index: 1; }
 
+  /* === LOADER === */
+  #loader {
+    position: fixed;
+    inset: 0;
+    background: rgba(6,6,15,0.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .loader-ring {
+    width: 48px; height: 48px;
+    border: 3px solid rgba(0,229,255,0.2);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loader-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+
   /* === NAVIGATION TABS === */
   .nav {
     display: flex;
@@ -659,6 +687,13 @@
 </style>
 </head>
 <body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-ring"></div>
+  <div class="loader-text">Загрузка данных</div>
+</div>
+
 <div class="orb2"></div>
 <div class="app">
 
@@ -669,6 +704,8 @@
     <button class="tab" onclick="showTab('projects')">Проекты</button>
     <button class="tab" onclick="showTab('tasks')">Задачи</button>
     <button class="tab" onclick="showTab('detail')">Детализация</button>
+    <span class="separator"></span>
+    <span id="updated-at" style="font-size:11px;color:var(--text-dim);padding-bottom:10px"></span>
   </nav>
 
   <!-- ===================== SCREEN: EXEC ===================== -->
@@ -678,12 +715,12 @@
       <span class="filter-label">Год</span>
       <select class="filter-select"><option>2026</option><option>2025</option></select>
       <span class="filter-label" style="margin-left:16px">Куратор</span>
-      <select class="filter-select"><option>Все</option><option>Кренёва АА</option><option>Родевальд СЕ</option><option>Гуляев ВА</option></select>
+      <select class="filter-select" id="curatorFilter"><option value="all">Все</option></select>
       <span class="separator"></span>
       <div class="badge-row">
-        <div class="info-badge"><div class="dot" style="background:var(--accent)"></div>В работе: 23</div>
-        <div class="info-badge"><div class="dot" style="background:var(--accent3)"></div>Закрыто: 1</div>
-        <div class="info-badge"><div class="dot pulse" style="background:var(--danger)"></div>Риск: 0</div>
+        <div class="info-badge" id="badge-active"><div class="dot" style="background:var(--accent)"></div>В работе: —</div>
+        <div class="info-badge" id="badge-closed"><div class="dot" style="background:var(--accent3)"></div>Закрыто: —</div>
+        <div class="info-badge"><div class="dot pulse" style="background:var(--danger)"></div>Просрочено: <span id="badge-overdue">—</span></div>
       </div>
     </div>
 
@@ -691,8 +728,8 @@
     <div class="exec-grid">
       <div class="kpi-card" style="--c: var(--accent)">
         <div class="kpi-label">Всего проектов</div>
-        <div class="kpi-value">24</div>
-        <div class="kpi-sub"><span class="trend up">↑ +3</span> vs 2025</div>
+        <div class="kpi-value" id="kpi-projects">—</div>
+        <div class="kpi-sub" id="kpi-projects-sub">активных и закрытых</div>
         <div class="sparkline-wrap">
           <svg class="sparkline-svg" viewBox="0 0 100 32">
             <polyline points="0,28 16,22 32,24 48,16 64,18 80,10 100,6"
@@ -710,9 +747,9 @@
       </div>
 
       <div class="kpi-card" style="--c: var(--accent3)">
-        <div class="kpi-label">Выполнение (факт)</div>
-        <div class="kpi-value">96%</div>
-        <div class="kpi-sub">23 из 24 в графике</div>
+        <div class="kpi-label">Готовность (ср.)</div>
+        <div class="kpi-value" id="kpi-completion">—</div>
+        <div class="kpi-sub" id="kpi-completion-sub">по активным проектам</div>
         <div class="sparkline-wrap">
           <svg class="sparkline-svg" viewBox="0 0 100 32">
             <polyline points="0,20 16,18 32,22 48,12 64,10 80,8 100,4"
@@ -731,8 +768,8 @@
 
       <div class="kpi-card" style="--c: var(--accent2)">
         <div class="kpi-label">Высвобождение</div>
-        <div class="kpi-value">128%</div>
-        <div class="kpi-sub"><span class="trend up">↑ план</span> Комитет и РЦТ</div>
+        <div class="kpi-value" id="kpi-vysv">—</div>
+        <div class="kpi-sub" id="kpi-vysv-sub"><span class="trend up">↑ план</span> Комитет и РЦТ</div>
         <div class="sparkline-wrap">
           <svg class="sparkline-svg" viewBox="0 0 100 32">
             <polyline points="0,26 16,22 32,20 48,14 64,10 80,8 100,4"
@@ -743,7 +780,7 @@
 
       <div class="kpi-card" style="--c: var(--warn)">
         <div class="kpi-label">Дедлайн ≤14 дней</div>
-        <div class="kpi-value">10</div>
+        <div class="kpi-value" id="kpi-deadline14">—</div>
         <div class="kpi-sub"><span class="trend down">↑</span> задач требуют внимания</div>
         <div class="sparkline-wrap">
           <svg class="sparkline-svg" viewBox="0 0 100 32">
@@ -755,8 +792,8 @@
 
       <div class="kpi-card" style="--c: var(--danger)">
         <div class="kpi-label">Просрочено</div>
-        <div class="kpi-value">0</div>
-        <div class="kpi-sub"><span class="trend up">✓</span> Всё в норме</div>
+        <div class="kpi-value" id="kpi-overdue">—</div>
+        <div class="kpi-sub" id="kpi-overdue-sub"><span class="trend up">✓</span> Всё в норме</div>
         <div class="sparkline-wrap">
           <svg class="sparkline-svg" viewBox="0 0 100 32">
             <polyline points="0,16 20,16 20,8 40,8 60,16 80,16 100,16"
@@ -808,12 +845,12 @@
       <span class="filter-label">Статус</span>
       <select class="filter-select" onchange="filterProjects(this.value)">
         <option value="all">Все</option>
-        <option value="active">В работе</option>
-        <option value="done">Закрыто</option>
+        <option value="В работе">В работе</option>
+        <option value="Закрыто">Закрыто</option>
       </select>
       <span class="separator"></span>
       <div class="badge-row">
-        <div class="info-badge"><div class="dot" style="background:var(--accent)"></div>Всего: 24</div>
+        <div class="info-badge" id="badge-projects-total"><div class="dot" style="background:var(--accent)"></div>Всего: —</div>
       </div>
     </div>
     <div class="section-card">
@@ -836,22 +873,19 @@
   <!-- ===================== SCREEN: TASKS ===================== -->
   <div class="screen" id="screen-tasks">
     <div class="tasks-stats">
-      <div class="stat-pill" style="--c:var(--accent)"><span class="stat-pill-val">236</span><div class="stat-pill-label">Всего задач</div></div>
-      <div class="stat-pill" style="--c:var(--accent2)"><span class="stat-pill-val">224</span><div class="stat-pill-label">В работе</div></div>
-      <div class="stat-pill" style="--c:var(--accent3)"><span class="stat-pill-val">12</span><div class="stat-pill-label">Закрыта</div></div>
-      <div class="stat-pill" style="--c:var(--warn)"><span class="stat-pill-val">10</span><div class="stat-pill-label">Срок — 5 дней</div></div>
-      <div class="stat-pill" style="--c:var(--danger)"><span class="stat-pill-val">1</span><div class="stat-pill-label">Просрочено</div></div>
+      <div class="stat-pill" style="--c:var(--accent)"><span class="stat-pill-val" id="tasks-stat-total">—</span><div class="stat-pill-label">Всего задач</div></div>
+      <div class="stat-pill" style="--c:var(--accent2)"><span class="stat-pill-val" id="tasks-stat-active">—</span><div class="stat-pill-label">В работе</div></div>
+      <div class="stat-pill" style="--c:var(--accent3)"><span class="stat-pill-val" id="tasks-stat-closed">—</span><div class="stat-pill-label">Закрыто</div></div>
+      <div class="stat-pill" style="--c:var(--warn)"><span class="stat-pill-val" id="tasks-stat-deadline14">—</span><div class="stat-pill-label">Срок ≤14 дней</div></div>
+      <div class="stat-pill" style="--c:var(--danger)"><span class="stat-pill-val" id="tasks-stat-overdue">—</span><div class="stat-pill-label">Просрочено</div></div>
     </div>
 
     <div class="section-card">
       <div class="section-header">
         <span class="section-title">Список задач</span>
         <div class="badge-row">
-          <select class="filter-select" onchange="filterTasks(this.value)">
+          <select class="filter-select" id="taskProjectFilter" onchange="filterTasks(this.value)">
             <option value="all">Все проекты</option>
-            <option value="ИИ робот Ник">ИИ робот Ник</option>
-            <option value="Оптимизация закупок 223-ФЗ">Оптимизация закупок</option>
-            <option value="ИИ мониторинг закупок 223-ФЗ">ИИ мониторинг</option>
           </select>
         </div>
       </div>
@@ -877,9 +911,7 @@
     <div class="filter-bar">
       <span class="filter-label">Проект</span>
       <select class="filter-select" onchange="loadDetail(this.value)" id="detailSelect">
-        <option value="gchp">Анализ проектов ГЧП</option>
-        <option value="nik">ИИ робот Ник</option>
-        <option value="223">Оптимизация закупок 223-ФЗ</option>
+        <!-- populated from data -->
       </select>
     </div>
     <div class="detail-grid" id="detailGrid"></div>
@@ -888,165 +920,98 @@
 </div>
 
 <script>
-// ===== DATA =====
-const projects = [
-  { name: 'Электронные ДС с ПИК', status: 'active', person: 'Хорев', deadline: '06.04.2026', pct: 50, color: '#00e5ff' },
-  { name: 'Цифровые коммуникации ЗИТ', status: 'active', person: 'Саркисян', deadline: '11.12.2026', pct: 20, color: '#b44fff' },
-  { name: 'Цифровой двойник сотрудника (ИИ)', status: 'active', person: 'Заичко', deadline: '30.11.2026', pct: 0, color: '#b44fff' },
-  { name: 'Цифровое нормирование', status: 'active', person: 'Потапчик', deadline: '30.06.2026', pct: 40, color: '#00e5ff' },
-  { name: 'Трансформация управления аналитики', status: 'active', person: 'Гуляев', deadline: '30.08.2026', pct: 3, color: '#ffb800' },
-  { name: 'Судебный навигатор', status: 'active', person: 'Березкин', deadline: '01.12.2026', pct: 0, color: '#b44fff' },
-  { name: 'Смарт-допуск к ЗИТ', status: 'active', person: 'Воронина', deadline: '17.08.2026', pct: 14, color: '#00e5ff' },
-  { name: 'Робот закупщик', status: 'active', person: 'Кренева', deadline: '27.11.2026', pct: 0, color: '#b44fff' },
-  { name: 'Панель управления заказчика + ИИ', status: 'active', person: 'Кренева', deadline: '30.11.2026', pct: 0, color: '#b44fff' },
-  { name: 'Оптимизация процессов ЗИТ', status: 'active', person: 'Саркисян', deadline: '29.09.2026', pct: 15, color: '#00e5ff' },
-  { name: 'Оптимизация организационного блока РЦТ', status: 'active', person: 'Заичко', deadline: '30.09.2026', pct: 0, color: '#b44fff' },
-  { name: 'Анализ проектов ГЧП', status: 'active', person: 'Филатова', deadline: '30.11.2026', pct: 50, color: '#00e5ff' },
-  { name: 'ИИ мониторинг закупок 223-ФЗ', status: 'active', person: 'Кукарцева', deadline: '08.06.2026', pct: 35, color: '#00ff9d' },
-  { name: 'Оптимизация закупок 223-ФЗ', status: 'active', person: 'Кукарцева', deadline: '30.04.2026', pct: 60, color: '#00ff9d' },
-  { name: 'ИИ проверка закупок', status: 'active', person: 'Малюгина', deadline: '20.04.2026', pct: 25, color: '#00e5ff' },
-  { name: 'ИИ робот Ник', status: 'active', person: '', deadline: '21.04.2026', pct: 10, color: '#ffb800' },
-  { name: 'Цифровое нормирование (этап 2)', status: 'active', person: 'Потапчик', deadline: '31.03.2026', pct: 70, color: '#00ff9d' },
-];
+// ===== STATE =====
+let allProjects = [];
+let allTasks = [];
+let allDetails = [];
 
-const gaugeData = [
-  { name: 'Комитет и РЦТ', pct: 128, color: '#00ff9d' },
-  { name: 'Кренёва АА', pct: 130, color: '#00ff9d' },
-  { name: 'Родевальд СЕ', pct: 145, color: '#00e5ff' },
-  { name: 'Гуляев ВА', pct: 88, color: '#ff3b5c' },
-];
-
-const tasks = [
-  { project: 'Оптимизация закупок 223-ФЗ', theme: '1.1 Вывод на тестовый контур', status: 'В работе', person: 'Кукарцева', deadline: '27.03.2026', urgency: 'soon' },
-  { project: 'ИИ мониторинг закупок 223-ФЗ', theme: '1.1 Подготовка схемы', status: 'В работе', person: 'Кукарцева', deadline: '16.03.2026', urgency: 'urgent' },
-  { project: 'ИИ проверка закупок', theme: '1.1. Анализ замечаний МВК/РГ за 2025 год', status: 'В работе', person: 'Малюгина', deadline: '31.03.2026', urgency: 'soon' },
-  { project: 'ИИ робот Ник', theme: '1.1. Разработка базового функционала', status: 'В работе', person: '', deadline: '06.04.2026', urgency: 'soon' },
-  { project: 'ИИ мониторинг закупок 223-ФЗ', theme: '1.2 Подготовка ТЗ + формирование базы знаний', status: 'В работе', person: 'Кукарцева', deadline: '20.04.2026', urgency: 'ok' },
-  { project: 'Оптимизация закупок 223-ФЗ', theme: '1.2 Тестирование функционала', status: 'В работе', person: 'Кукарцева', deadline: '08.04.2026', urgency: 'soon' },
-  { project: 'ИИ робот Ник', theme: '1.2. Тестирование базового функционала', status: 'Новая', person: '', deadline: '13.04.2026', urgency: 'ok' },
-  { project: 'Оптимизация закупок 223-ФЗ', theme: '1.3 Правки функционала по итогу тестирования', status: 'В работе', person: 'Кукарцева', deadline: '17.04.2026', urgency: 'ok' },
-  { project: 'ИИ робот Ник', theme: '1.3. Пилотный проект', status: 'Новая', person: '', deadline: '20.04.2026', urgency: 'ok' },
-  { project: 'Оптимизация закупок 223-ФЗ', theme: '1.4 Ввод в промышленную эксплуатацию', status: 'В работе', person: 'Кукарцева', deadline: '30.04.2026', urgency: 'ok' },
-  { project: 'ИИ робот Ник', theme: '1.4. Релиз проекта', status: 'Новая', person: '', deadline: '21.04.2026', urgency: 'ok' },
-  { project: 'Цифровое нормирование', theme: '2. Этап. ТЗ', status: 'Новая', person: 'Потапчик', deadline: '31.03.2026', urgency: 'soon' },
-  { project: 'Оптимизация закупок 223-ФЗ', theme: '2.1 Подготовка ТЗ', status: 'В работе', person: 'Кукарцева', deadline: '16.03.2026', urgency: 'urgent' },
-  { project: 'ИИ мониторинг закупок 223-ФЗ', theme: '2.1 Согласование ТЗ', status: 'В работе', person: 'Кукарцева', deadline: '13.05.2026', urgency: 'ok' },
-  { project: 'ИИ проверка закупок', theme: '2.1. Модуль Комплектность', status: 'Новая', person: 'Малюгина', deadline: '20.04.2026', urgency: 'ok' },
-  { project: 'ИИ робот Ник', theme: '2.1. Пилотный проект', status: 'Новая', person: '', deadline: '12.05.2026', urgency: 'ok' },
-];
-
-const detailData = {
-  gchp: {
-    title: 'Анализ проектов ГЧП',
-    person: 'Филатова Екатерина Игоревна',
-    deadline: '30.11.2026',
-    hours: { total: 1824, ext: 912, int: 912, factTotal: 912 },
-    planUnits: 0.92,
-    team: ['Филатова (ККП) Екатерина Игоревна', 'Федоренчик Наталья Олеговна', 'Королькова Дарья Александровна'],
-    status: ['Разработаны матрица ограничений и условий использования (НПА) ЗУ'],
-    goal: 'Сокращение внутренних трудозатрат со 100% до 80% к 30.11.2026',
-    indicators: [
-      'Внедрение ИИ-агента «Помощник юриста»',
-      'Анализ условий проекта, выявление нарушений с привлечением ИИ',
-      'Автоматический независимый анализ рисков',
-      'Формирование выборки судебной практики в соответствии с выявленными рисками',
-    ],
-    description: ['Ручная проверка на соответствие применимому законодательству', 'Ручной анализ проекта и оценка рисков'],
-  },
-  nik: {
-    title: 'ИИ робот Ник',
-    person: 'Не назначен',
-    deadline: '21.04.2026',
-    hours: { total: 600, ext: 300, int: 300, factTotal: 60 },
-    planUnits: 0.3,
-    team: ['Разработчики РЦТ'],
-    status: ['Разработка базового функционала в процессе'],
-    goal: 'Автоматизация обработки закупочных запросов с использованием ИИ к 21.04.2026',
-    indicators: ['Базовый функционал', 'Тестирование', 'Пилотный проект', 'Релиз'],
-    description: ['Ручная обработка закупочных запросов', 'Ручной поиск по базе знаний'],
-  },
-  '223': {
-    title: 'Оптимизация закупок 223-ФЗ',
-    person: 'Кукарцева',
-    deadline: '30.04.2026',
-    hours: { total: 2400, ext: 1200, int: 1200, factTotal: 1440 },
-    planUnits: 1.2,
-    team: ['Кукарцева', 'Команда ЦИО'],
-    status: ['Вывод на тестовый контур', 'Тестирование функционала'],
-    goal: 'Ввод в промышленную эксплуатацию к 30.04.2026',
-    indicators: ['Тестовый контур развёрнут', 'Функционал протестирован', 'Правки по тестированию', 'Промышленная эксплуатация'],
-    description: ['Ручная проверка закупок по 223-ФЗ', 'Ручной сбор и анализ данных'],
-  },
-};
-
-// ===== PROJECT COLORS =====
-const projectColors = {
-  'Оптимизация закупок 223-ФЗ': { bg: 'rgba(0,229,255,0.12)', color: '#00e5ff' },
-  'ИИ мониторинг закупок 223-ФЗ': { bg: 'rgba(0,255,157,0.12)', color: '#00ff9d' },
-  'ИИ проверка закупок': { bg: 'rgba(180,79,255,0.12)', color: '#b44fff' },
-  'ИИ робот Ник': { bg: 'rgba(255,184,0,0.12)', color: '#ffb800' },
-  'Цифровое нормирование': { bg: 'rgba(255,59,92,0.12)', color: '#ff3b5c' },
-};
-
-function getProjectStyle(name) {
-  return projectColors[name] || { bg: 'rgba(255,255,255,0.06)', color: '#e8eaf6' };
-}
-
-// ===== RENDER PROJECTS TABLE =====
-function renderProjTable() {
-  const body = document.getElementById('projTableBody');
-  body.innerHTML = projects.slice(0, 10).map(p => `
-    <tr>
-      <td>${p.name}</td>
-      <td style="color:var(--text-dim);font-size:12px">${p.person}</td>
-      <td style="color:var(--text-dim);font-size:12px">${p.deadline}</td>
-      <td>
-        <div class="progress-wrap">
-          <div class="progress-bar">
-            <div class="progress-fill" style="width:${p.pct}%;background:${getProgressColor(p.pct)}"></div>
-          </div>
-          <span class="progress-pct" style="color:${getProgressColor(p.pct)}">${p.pct}%</span>
-        </div>
-      </td>
-    </tr>
-  `).join('');
-}
-
-function renderFullProjTable(filter = 'all') {
-  const body = document.getElementById('fullProjTable');
-  const filtered = filter === 'all' ? projects : projects.filter(p => p.status === filter);
-  body.innerHTML = filtered.map((p, i) => `
-    <tr>
-      <td style="color:var(--text-dim);font-size:11px">${i+1}</td>
-      <td>${p.name}</td>
-      <td><span class="status-badge ${p.status === 'active' ? 'active' : 'done'}">${p.status === 'active' ? 'В работе' : 'Закрыто'}</span></td>
-      <td style="color:var(--text-dim);font-size:12px">${p.person}</td>
-      <td style="color:var(--text-dim);font-size:12px">${p.deadline}</td>
-      <td>
-        <div class="progress-wrap">
-          <div class="progress-bar">
-            <div class="progress-fill" style="width:${p.pct}%;background:${getProgressColor(p.pct)}"></div>
-          </div>
-          <span class="progress-pct" style="color:${getProgressColor(p.pct)}">${p.pct}%</span>
-        </div>
-      </td>
-    </tr>
-  `).join('');
-}
-
-function filterProjects(val) { renderFullProjTable(val); }
-
+// ===== HELPERS =====
 function getProgressColor(pct) {
   if (pct <= 30) return '#ff3b5c';
   if (pct <= 70) return '#ffb800';
   return '#00ff9d';
 }
 
-// ===== RENDER GAUGES =====
-function renderGauges() {
+function getGaugeColor(pct) {
+  if (pct >= 120) return '#00ff9d';
+  if (pct >= 100) return '#00e5ff';
+  return '#ff3b5c';
+}
+
+// Assign a stable color per project name
+const PROJECT_PALETTE = [
+  { bg: 'rgba(0,229,255,0.12)', color: '#00e5ff' },
+  { bg: 'rgba(180,79,255,0.12)', color: '#b44fff' },
+  { bg: 'rgba(0,255,157,0.12)', color: '#00ff9d' },
+  { bg: 'rgba(255,184,0,0.12)', color: '#ffb800' },
+  { bg: 'rgba(255,59,92,0.12)', color: '#ff3b5c' },
+  { bg: 'rgba(100,180,255,0.12)', color: '#64b4ff' },
+];
+const projectColorCache = {};
+let paletteIdx = 0;
+function getProjectStyle(name) {
+  if (!projectColorCache[name]) {
+    projectColorCache[name] = PROJECT_PALETTE[paletteIdx % PROJECT_PALETTE.length];
+    paletteIdx++;
+  }
+  return projectColorCache[name];
+}
+
+// ===== RENDER: PROJ TABLE (exec mini) =====
+function renderProjTable(projects) {
+  const body = document.getElementById('projTableBody');
+  const active = projects.filter(p => p.status === 'В работе').slice(0, 10);
+  body.innerHTML = active.map(p => `
+    <tr>
+      <td>${p.name}</td>
+      <td style="color:var(--text-dim);font-size:12px">${p.person || '—'}</td>
+      <td style="color:var(--text-dim);font-size:12px">${p.deadline || '—'}</td>
+      <td>
+        <div class="progress-wrap">
+          <div class="progress-bar">
+            <div class="progress-fill" style="width:${p.pct}%;background:${getProgressColor(p.pct)}"></div>
+          </div>
+          <span class="progress-pct" style="color:${getProgressColor(p.pct)}">${p.pct}%</span>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+// ===== RENDER: FULL PROJECTS TABLE =====
+function renderFullProjTable(projects, filter = 'all') {
+  const body = document.getElementById('fullProjTable');
+  const filtered = filter === 'all' ? projects : projects.filter(p => p.status === filter);
+  body.innerHTML = filtered.map((p, i) => {
+    const isActive = p.status === 'В работе';
+    return `
+      <tr>
+        <td style="color:var(--text-dim);font-size:11px">${i + 1}</td>
+        <td>${p.name}</td>
+        <td><span class="status-badge ${isActive ? 'active' : 'done'}">${p.status}</span></td>
+        <td style="color:var(--text-dim);font-size:12px">${p.person || '—'}</td>
+        <td style="color:var(--text-dim);font-size:12px">${p.deadline || '—'}</td>
+        <td>
+          <div class="progress-wrap">
+            <div class="progress-bar">
+              <div class="progress-fill" style="width:${p.pct}%;background:${getProgressColor(p.pct)}"></div>
+            </div>
+            <span class="progress-pct" style="color:${getProgressColor(p.pct)}">${p.pct}%</span>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function filterProjects(val) { renderFullProjTable(allProjects, val); }
+
+// ===== RENDER: GAUGES =====
+function renderGauges(curators) {
   const grid = document.getElementById('gaugesGrid');
-  grid.innerHTML = gaugeData.map(g => {
-    const pct = Math.min(g.pct, 200) / 200;
+  grid.innerHTML = curators.map(g => {
+    const color = getGaugeColor(g.pct_vysv);
+    const pct = Math.min(g.pct_vysv, 200) / 200;
     const r = 40, cx = 50, cy = 55;
     const startAngle = -Math.PI;
     const endAngle = startAngle + pct * Math.PI;
@@ -1058,13 +1023,13 @@ function renderGauges() {
         <div class="gauge-name">${g.name}</div>
         <div class="gauge-wrap">
           <svg class="gauge-svg" viewBox="0 0 100 65">
-            <path d="M ${cx-r},${cy} A ${r},${r} 0 0 1 ${cx+r},${cy}"
+            <path d="M ${cx - r},${cy} A ${r},${r} 0 0 1 ${cx + r},${cy}"
               fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="8" stroke-linecap="round"/>
             <path d="M ${x1},${y1} A ${r},${r} 0 ${largeArc} 1 ${x2},${y2}"
-              fill="none" stroke="${g.color}" stroke-width="8" stroke-linecap="round"
-              style="filter:drop-shadow(0 0 6px ${g.color})"/>
+              fill="none" stroke="${color}" stroke-width="8" stroke-linecap="round"
+              style="filter:drop-shadow(0 0 6px ${color})"/>
             <text x="50" y="52" text-anchor="middle" font-family="Orbitron,sans-serif"
-              font-size="13" font-weight="700" fill="${g.color}">${g.pct}%</text>
+              font-size="13" font-weight="700" fill="${color}">${g.pct_vysv}%</text>
           </svg>
         </div>
       </div>
@@ -1072,21 +1037,50 @@ function renderGauges() {
   }).join('');
 }
 
-// ===== DEADLINE HEATMAP =====
-function renderDeadlineMap() {
-  const map = document.getElementById('deadlineMap');
-  const weeks = [
-    { label: '12–18 мар', counts: [2, 3, 1, 0, 1, 0, 0], total: 7 },
-    { label: '19–25 мар', counts: [1, 0, 2, 1, 0, 1, 0], total: 5 },
-    { label: '26 мар–1 апр', counts: [0, 1, 3, 2, 1, 0, 2], total: 9 },
-    { label: '2–8 апр', counts: [2, 1, 0, 2, 0, 1, 0], total: 6 },
-    { label: '9–15 апр', counts: [0, 0, 1, 0, 1, 0, 0], total: 2 },
-    { label: '16–22 апр', counts: [1, 2, 0, 1, 0, 0, 1], total: 5 },
-  ];
-  const maxTotal = Math.max(...weeks.map(w => w.total));
-  const days = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+// ===== RENDER: DEADLINE HEATMAP =====
+function getMonday(d) {
+  const day = d.getDay();
+  const diff = (day === 0 ? -6 : 1 - day);
+  const monday = new Date(d);
+  monday.setDate(d.getDate() + diff);
+  monday.setHours(0, 0, 0, 0);
+  return monday;
+}
 
-  // Days header
+function renderDeadlineMap(tasks) {
+  const map = document.getElementById('deadlineMap');
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const monday = getMonday(today);
+
+  const weeks = [];
+  for (let i = 0; i < 6; i++) {
+    const start = new Date(monday);
+    start.setDate(monday.getDate() + i * 7);
+    const end = new Date(start);
+    end.setDate(start.getDate() + 6);
+    const sm = start.toLocaleString('ru', { day: 'numeric', month: 'short' });
+    const em = end.toLocaleString('ru', { day: 'numeric', month: 'short' });
+    const label = start.getMonth() === end.getMonth()
+      ? `${start.getDate()}–${end.getDate()} ${start.toLocaleString('ru', { month: 'short' })}`
+      : `${sm}–${em}`;
+    weeks.push({ start, end, label, counts: [0, 0, 0, 0, 0, 0, 0], total: 0 });
+  }
+
+  tasks.forEach(t => {
+    if (!t.deadline) return;
+    const [dd, mm, yyyy] = t.deadline.split('.');
+    const d = new Date(+yyyy, +mm - 1, +dd);
+    weeks.forEach(w => {
+      if (d >= w.start && d <= w.end) {
+        const dayIdx = (d.getDay() + 6) % 7;
+        w.counts[dayIdx]++;
+        w.total++;
+      }
+    });
+  });
+
+  const days = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
   map.innerHTML = `
     <div class="week-row">
       <div class="week-label"></div>
@@ -1096,31 +1090,31 @@ function renderDeadlineMap() {
       <div class="week-count"></div>
     </div>
   ` + weeks.map(w => {
-    const maxDay = Math.max(...w.counts);
+    const maxDay = Math.max(...w.counts, 1);
     return `
       <div class="week-row">
         <div class="week-label">${w.label}</div>
         <div class="week-bar-wrap">
           ${w.counts.map(c => {
-            const alpha = maxDay > 0 ? (c / maxDay * 0.8 + (c > 0 ? 0.15 : 0)) : 0;
-            const color = c >= 3 ? `rgba(255,59,92,${alpha})` : c >= 2 ? `rgba(255,184,0,${alpha})` : `rgba(0,229,255,${alpha})`;
-            return `<div class="day-cell" style="background:${color}" title="${c} задач"></div>`;
+            const alpha = c > 0 ? (c / maxDay * 0.7 + 0.15) : 0;
+            const col = c >= 5 ? `rgba(255,59,92,${alpha})` : c >= 3 ? `rgba(255,184,0,${alpha})` : `rgba(0,229,255,${alpha})`;
+            return `<div class="day-cell" style="background:${col}" title="${c} задач"></div>`;
           }).join('')}
         </div>
-        <div class="week-count" style="color:${w.total >= 7 ? 'var(--danger)' : w.total >= 5 ? 'var(--warn)' : 'var(--text-dim)'}">${w.total}</div>
+        <div class="week-count" style="color:${w.total >= 15 ? 'var(--danger)' : w.total >= 8 ? 'var(--warn)' : 'var(--text-dim)'}">${w.total}</div>
       </div>
     `;
   }).join('');
 }
 
-// ===== RENDER TASKS =====
-function renderTasks(filter = 'all') {
+// ===== RENDER: TASKS =====
+function renderTasks(tasks, filter = 'all') {
   const body = document.getElementById('taskTableBody');
   const filtered = filter === 'all' ? tasks : tasks.filter(t => t.project === filter);
   body.innerHTML = filtered.map(t => {
     const ps = getProjectStyle(t.project);
     const urgencyLabel = t.urgency === 'urgent' ? 'urgent' : t.urgency === 'soon' ? 'soon' : 'ok';
-    const urgencyText = t.urgency === 'urgent' ? '🔴 ' : t.urgency === 'soon' ? '🟡 ' : '';
+    const urgencyIcon = t.urgency === 'urgent' ? '🔴 ' : t.urgency === 'soon' ? '🟡 ' : '';
     const statusColor = t.status === 'В работе' ? 'var(--accent)' : 'var(--text-dim)';
     return `
       <tr>
@@ -1128,43 +1122,77 @@ function renderTasks(filter = 'all') {
         <td style="max-width:280px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t.theme}</td>
         <td><span style="color:${statusColor};font-size:12px">${t.status}</span></td>
         <td style="color:var(--text-dim);font-size:12px">${t.person || '—'}</td>
-        <td><span class="deadline-chip ${urgencyLabel}">${urgencyText}${t.deadline}</span></td>
+        <td><span class="deadline-chip ${urgencyLabel}">${urgencyIcon}${t.deadline || '—'}</span></td>
       </tr>
     `;
   }).join('');
 }
 
-function filterTasks(val) { renderTasks(val); }
+function filterTasks(val) { renderTasks(allTasks, val); }
 
-// ===== RENDER DETAIL =====
-function loadDetail(key) {
-  const d = detailData[key];
+// ===== POPULATE TASK PROJECT FILTER =====
+function populateTaskFilter(tasks) {
+  const sel = document.getElementById('taskProjectFilter');
+  const projects = [...new Set(tasks.map(t => t.project).filter(Boolean))].sort();
+  projects.forEach(name => {
+    const opt = document.createElement('option');
+    opt.value = name;
+    opt.textContent = name;
+    sel.appendChild(opt);
+  });
+}
+
+// ===== RENDER: DETAIL =====
+function loadDetail(name) {
+  const d = allDetails.find(x => x.name === name);
   if (!d) return;
-  const factColor = d.hours.factTotal >= d.hours.total ? 'var(--accent3)' : 'var(--warn)';
+
+  const planH = d.plan_hours ? Math.round(d.plan_hours).toLocaleString('ru') : '—';
+  const factH = d.fact_hours ? Math.round(d.fact_hours).toLocaleString('ru') : '—';
+  const planInt = d.plan_int ? Math.round(d.plan_int).toLocaleString('ru') : '—';
+  const planExt = d.plan_ext ? Math.round(d.plan_ext).toLocaleString('ru') : '—';
+  const planUnits = d.plan_units ? d.plan_units.toFixed(2) : '—';
+  const factColor = d.fact_hours && d.plan_hours && d.fact_hours >= d.plan_hours ? 'var(--accent3)' : 'var(--warn)';
+
+  const teamArr = d.team ? d.team.split(',').map(s => s.trim()).filter(Boolean) : [];
+  const indicatorsArr = d.indicators
+    ? d.indicators.split('\n').map(s => s.trim()).filter(Boolean)
+    : [];
+  const statusArr = d.current_status
+    ? d.current_status.split('\n').map(s => s.trim()).filter(Boolean)
+    : ['Нет данных'];
+  const problemArr = d.problem
+    ? d.problem.split('\n').map(s => s.trim()).filter(Boolean)
+    : [];
+
   const grid = document.getElementById('detailGrid');
   grid.innerHTML = `
     <!-- LEFT: info + team -->
     <div style="display:flex;flex-direction:column;gap:16px">
       <div class="info-block">
         <div class="info-label">Ответственный</div>
-        <div class="info-value">${d.person}</div>
+        <div class="info-value">${d.person || '—'}</div>
+        <div class="info-label">Куратор</div>
+        <div class="info-value" style="color:var(--accent2)">${d.curator || '—'}</div>
         <div class="info-label">Срок завершения</div>
-        <div class="info-value" style="color:var(--warn)">${d.deadline}</div>
+        <div class="info-value" style="color:var(--warn)">${d.deadline || '—'}</div>
 
         <div style="margin-top:12px">
           <div class="section-title" style="margin-bottom:12px">Высвобождение часов</div>
           <div class="hours-visual">
-            <div class="hour-box"><div class="hour-num" style="color:var(--text-dim)">${d.hours.total.toLocaleString()}</div><div class="hour-lbl">план всего</div></div>
-            <div class="hour-box"><div class="hour-num" style="color:var(--accent2)">${d.planUnits}</div><div class="hour-lbl">план шт.ед.</div></div>
-            <div class="hour-box"><div class="hour-num">${d.hours.ext}</div><div class="hour-lbl">внешнее</div></div>
-            <div class="hour-box"><div class="hour-num" style="color:${factColor}">${d.hours.factTotal}</div><div class="hour-lbl">факт: всего</div></div>
+            <div class="hour-box"><div class="hour-num" style="color:var(--text-dim)">${planH}</div><div class="hour-lbl">план всего</div></div>
+            <div class="hour-box"><div class="hour-num" style="color:var(--accent2)">${planUnits}</div><div class="hour-lbl">план шт.ед.</div></div>
+            <div class="hour-box"><div class="hour-num">${planExt}</div><div class="hour-lbl">внешнее</div></div>
+            <div class="hour-box"><div class="hour-num" style="color:${factColor}">${factH}</div><div class="hour-lbl">факт</div></div>
           </div>
         </div>
       </div>
 
       <div class="info-block">
         <div class="section-title" style="margin-bottom:12px">Команда проекта</div>
-        ${d.team.map(m => `<div style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:13px">${m}</div>`).join('')}
+        ${teamArr.length
+          ? teamArr.map(m => `<div style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:13px">${m}</div>`).join('')
+          : '<div style="color:var(--text-dim);font-size:13px">—</div>'}
       </div>
     </div>
 
@@ -1172,33 +1200,60 @@ function loadDetail(key) {
     <div style="display:flex;flex-direction:column;gap:16px">
       <div class="info-block">
         <div class="section-title" style="margin-bottom:12px">Актуальный статус</div>
-        ${d.status.map(s => `<div style="padding:10px 14px;background:rgba(0,229,255,0.06);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;margin-bottom:8px;font-size:13px;line-height:1.5">${s}</div>`).join('')}
+        ${statusArr.map(s => `<div style="padding:10px 14px;background:rgba(0,229,255,0.06);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;margin-bottom:8px;font-size:13px;line-height:1.5">${s}</div>`).join('')}
       </div>
 
       <div class="info-block" style="flex:1">
         <div class="section-title" style="margin-bottom:16px">Критически важная цель</div>
-        <div class="big-goal">${d.goal}</div>
+        <div class="big-goal">${d.goal || '—'}</div>
       </div>
 
+      ${problemArr.length ? `
       <div class="info-block">
         <div class="section-title" style="margin-bottom:12px">Описание проекта</div>
-        ${d.description.map((s, i) => `<div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)"><span style="color:var(--accent);font-weight:700;font-size:11px">${i+1}.</span><span style="font-size:13px">${s}</span></div>`).join('')}
-      </div>
+        ${problemArr.map((s, i) => `<div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)"><span style="color:var(--accent);font-weight:700;font-size:11px">${i+1}.</span><span style="font-size:13px">${s}</span></div>`).join('')}
+      </div>` : ''}
     </div>
 
     <!-- RIGHT: indicators -->
     <div class="info-block">
       <div class="section-title" style="margin-bottom:16px">Опережающие показатели</div>
       <div class="indicators-list">
-        ${d.indicators.map((ind, i) => `
-          <div class="indicator-item">
-            <span class="indicator-num">${i+1}</span>
-            <span class="indicator-text">${ind}</span>
-          </div>
-        `).join('')}
+        ${indicatorsArr.length
+          ? indicatorsArr.map((ind, i) => `
+            <div class="indicator-item">
+              <span class="indicator-num">${i + 1}</span>
+              <span class="indicator-text">${ind}</span>
+            </div>
+          `).join('')
+          : '<div style="color:var(--text-dim);font-size:13px">—</div>'}
       </div>
     </div>
   `;
+}
+
+// ===== POPULATE DETAIL SELECT =====
+function populateDetailSelect(details) {
+  const sel = document.getElementById('detailSelect');
+  sel.innerHTML = '';
+  details.forEach(d => {
+    const opt = document.createElement('option');
+    opt.value = d.name;
+    opt.textContent = d.name;
+    sel.appendChild(opt);
+  });
+  if (details.length) loadDetail(details[0].name);
+}
+
+// ===== POPULATE CURATOR FILTER =====
+function populateCuratorFilter(curators) {
+  const sel = document.getElementById('curatorFilter');
+  curators.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c.name;
+    opt.textContent = c.name;
+    sel.appendChild(opt);
+  });
 }
 
 // ===== TAB SWITCHING =====
@@ -1209,13 +1264,96 @@ function showTab(name) {
   document.getElementById('screen-' + name).classList.add('active');
 }
 
-// ===== INIT =====
-renderProjTable();
-renderFullProjTable();
-renderGauges();
-renderDeadlineMap();
-renderTasks();
-loadDetail('gchp');
+// ===== INIT DASHBOARD =====
+function initDashboard(data) {
+  const s = data.summary;
+
+  // Timestamp
+  document.getElementById('updated-at').textContent = 'Обновлено: ' + data.updated_at;
+
+  // KPI cards
+  document.getElementById('kpi-projects').textContent = s.projects_total;
+  document.getElementById('kpi-projects-sub').innerHTML =
+    `<span class="trend up">${s.projects_active} активных</span>&nbsp;/ ${s.projects_closed} закрыто`;
+
+  const activeProjs = data.projects.filter(p => p.status === 'В работе');
+  const avgPct = activeProjs.length
+    ? Math.round(activeProjs.reduce((sum, p) => sum + (p.pct || 0), 0) / activeProjs.length)
+    : 0;
+  document.getElementById('kpi-completion').textContent = avgPct + '%';
+  document.getElementById('kpi-completion-sub').textContent =
+    `среднее по ${activeProjs.length} активным проектам`;
+
+  const overall = data.curators.find(c => c.name === 'Комитет и РЦТ') || data.curators[0];
+  if (overall) {
+    document.getElementById('kpi-vysv').textContent = overall.pct_vysv + '%';
+    document.getElementById('kpi-vysv-sub').innerHTML =
+      `<span class="trend ${overall.pct_vysv >= 100 ? 'up' : 'down'}">${overall.pct_vysv >= 100 ? '↑' : '↓'} план</span> ${overall.name}`;
+  }
+
+  document.getElementById('kpi-deadline14').textContent = s.tasks_deadline_14 ?? '—';
+  document.getElementById('kpi-overdue').textContent = s.tasks_overdue ?? '—';
+
+  if ((s.tasks_overdue || 0) === 0) {
+    document.getElementById('kpi-overdue-sub').innerHTML = `<span class="trend up">✓</span> Всё в норме`;
+  } else {
+    document.getElementById('kpi-overdue-sub').innerHTML = `<span class="trend down">!</span> Требует внимания`;
+  }
+
+  // Exec filter badges
+  document.getElementById('badge-active').innerHTML =
+    `<div class="dot" style="background:var(--accent)"></div>В работе: ${s.projects_active}`;
+  document.getElementById('badge-closed').innerHTML =
+    `<div class="dot" style="background:var(--accent3)"></div>Закрыто: ${s.projects_closed}`;
+  document.getElementById('badge-overdue').textContent = s.tasks_overdue ?? 0;
+
+  // Projects screen badge
+  document.getElementById('badge-projects-total').innerHTML =
+    `<div class="dot" style="background:var(--accent)"></div>Всего: ${s.projects_total}`;
+
+  // Tasks stats
+  document.getElementById('tasks-stat-total').textContent = s.tasks_total;
+  document.getElementById('tasks-stat-active').textContent = s.tasks_active;
+  document.getElementById('tasks-stat-closed').textContent = s.tasks_closed;
+  document.getElementById('tasks-stat-deadline14').textContent = s.tasks_deadline_14 ?? '—';
+  document.getElementById('tasks-stat-overdue').textContent = s.tasks_overdue ?? '—';
+
+  // Store globally
+  allProjects = data.projects;
+  allTasks = data.tasks;
+  allDetails = data.project_details;
+
+  // Render all sections
+  renderProjTable(allProjects);
+  renderFullProjTable(allProjects);
+  renderGauges(data.curators);
+  renderDeadlineMap(allTasks);
+  renderTasks(allTasks);
+  populateTaskFilter(allTasks);
+  populateDetailSelect(allDetails);
+  populateCuratorFilter(data.curators);
+}
+
+// ===== FETCH DATA =====
+async function loadData() {
+  try {
+    const resp = await fetch('data.json');
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const data = await resp.json();
+    initDashboard(data);
+  } catch (err) {
+    const loader = document.getElementById('loader');
+    loader.innerHTML = `
+      <div style="color:var(--danger);font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:2px;text-align:center">
+        Ошибка загрузки данных<br>
+        <span style="font-size:10px;color:var(--text-dim);font-family:'Exo 2',sans-serif;margin-top:8px;display:block">${err.message}</span>
+      </div>`;
+    return;
+  }
+  document.getElementById('loader').style.display = 'none';
+}
+
+loadData();
 </script>
 </body>
 </html>
