@@ -1,6 +1,9 @@
-name: "transformation-dashboard"
 meta:
-  environment: production
+  environment: node
   toolchain:
-    name: nginx
-    version: "1.25"
+    name: browser
+    version: "18"
+
+build:
+  artifacts:
+    "*": /
