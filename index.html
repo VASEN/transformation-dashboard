@@ -335,6 +335,7 @@
   }
 
   .gauge-card {
+    position: relative;
     background: rgba(255,255,255,0.03);
     border: 1px solid var(--card-border);
     border-radius: 12px;
@@ -370,6 +371,47 @@
     font-family: 'Orbitron', sans-serif;
     font-size: 18px;
     font-weight: 700;
+  }
+
+  .gauge-tooltip {
+    position: absolute;
+    inset: 0;
+    background: rgba(8,12,28,0.97);
+    border-radius: 12px;
+    padding: 14px 16px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.18s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    z-index: 10;
+  }
+  .gauge-card:hover .gauge-tooltip { opacity: 1; }
+  .gauge-tooltip-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    border-bottom: 1px solid rgba(0,229,255,0.15);
+    padding-bottom: 5px;
+  }
+  .gauge-tooltip-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-dim);
+    gap: 8px;
+  }
+  .gauge-tooltip-row span:last-child { color: var(--text); font-weight: 600; }
+  .gauge-tooltip-row.accent span:last-child { color: var(--accent); }
+  .gauge-tooltip-divider {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    margin: 2px 0;
   }
 
   /* === DEADLINE HEATMAP === */
@@ -1038,6 +1080,8 @@ function renderGauges(curators) {
     const x1 = cx + r * Math.cos(startAngle), y1 = cy + r * Math.sin(startAngle);
     const x2 = cx + r * Math.cos(endAngle), y2 = cy + r * Math.sin(endAngle);
     const largeArc = 0;
+    const vysv = Math.round(g.vysv_units * 10) / 10;
+    const plan = g.plan_minus20 != null ? Math.round(g.plan_minus20 * 10) / 10 : '—';
     return `
       <div class="gauge-card" data-curator-name="${g.name}">
         <div class="gauge-name">${g.name}\u003C/div>
@@ -1051,6 +1095,21 @@ function renderGauges(curators) {
             <text x="50" y="52" text-anchor="middle" font-family="Orbitron,sans-serif"
               font-size="13" font-weight="700" fill="${color}">${g.pct_vysv}%\u003C/text>
           \u003C/svg>
+        \u003C/div>
+        <div class="gauge-tooltip">
+          <div class="gauge-tooltip-title">${g.name}\u003C/div>
+          <div class="gauge-tooltip-row"><span>Численность\u003C/span><span>${g.headcount} чел.\u003C/span>\u003C/div>
+          <div class="gauge-tooltip-row"><span>ККП план\u003C/span><span>${g.kkp}\u003C/span>\u003C/div>
+          <div class="gauge-tooltip-row"><span>ККП факт\u003C/span><span>${g.kkp_fact}\u003C/span>\u003C/div>
+          <div class="gauge-tooltip-row"><span>РЦТ план\u003C/span><span>${g.rct}\u003C/span>\u003C/div>
+          <div class="gauge-tooltip-row"><span>РЦТ факт\u003C/span><span>${g.rct_fact}\u003C/span>\u003C/div>
+          <hr class="gauge-tooltip-divider">
+          <div class="gauge-tooltip-row"><span>Итого факт\u003C/span><span>${g.fact_total}\u003C/span>\u003C/div>
+          <div class="gauge-tooltip-row"><span>Вакансии\u003C/span><span>${g.vacancies}\u003C/span>\u003C/div>
+          <div class="gauge-tooltip-row"><span>План −20%\u003C/span><span>${plan} ед.\u003C/span>\u003C/div>
+          <div class="gauge-tooltip-row"><span>Высвобождение\u003C/span><span>${vysv} ед.\u003C/span>\u003C/div>
+          <hr class="gauge-tooltip-divider">
+          <div class="gauge-tooltip-row accent"><span>% высвобождения\u003C/span><span>${g.pct_vysv}%\u003C/span>\u003C/div>
         \u003C/div>
       \u003C/div>
     `;
