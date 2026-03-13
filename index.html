@@ -1313,6 +1313,27 @@ function loadDetail(name) {
   const indicatorsArr = d.indicators
     ? d.indicators.split('\n').map(s => s.trim()).filter(Boolean)
     : [];
+  // Parse current stages from status_text (lines after "Текущий этап:")
+  const statusText = (d.status_text || '').trim();
+  const currentStages = (() => {
+    if (!statusText) return [];
+    const stages = [];
+    // Match all "Текущий этап:" blocks
+    const rx = /Текущий этап[:\s]*([\s\S]*?)(?=Текущий этап:|Подпроект:|$)/gi;
+    let m;
+    while ((m = rx.exec(statusText)) !== null) {
+      const block = m[1].trim();
+      if (block) {
+        // Split numbered lines within the block
+        block.split('\n').map(s => s.trim()).filter(Boolean).forEach(s => stages.push(s));
+      }
+    }
+    return stages;
+  })();
+  // Full status lines for block 2
+  const statusFullLines = statusText
+    ? statusText.split('\n').map(s => s.trim()).filter(Boolean)
+    : [];
   const statusArr = d.current_status
     ? d.current_status.split('\n').map(s => s.trim()).filter(Boolean)
     : ['Нет данных'];
@@ -1355,7 +1376,28 @@ function loadDetail(name) {
     <div style="display:flex;flex-direction:column;gap:16px">
       <div class="info-block">
         <div class="section-title" style="margin-bottom:12px">Актуальный статус\u003C/div>
-        ${statusArr.map(s => `<div style="padding:10px 14px;background:rgba(0,229,255,0.06);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;margin-bottom:8px;font-size:13px;line-height:1.5">${s}\u003C/div>`).join('')}
+
+        <!-- Sub-block 1: current stages -->
+        <div style="margin-bottom:12px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--accent);text-transform:uppercase;margin-bottom:8px">Текущий этап\u003C/div>
+          ${currentStages.length
+            ? currentStages.map(s => `<div style="padding:9px 14px;background:rgba(0,229,255,0.09);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;margin-bottom:6px;font-size:13px;line-height:1.5;font-weight:500">${s}\u003C/div>`).join('')
+            : `<div style="padding:9px 14px;background:rgba(255,255,255,0.04);border-left:3px solid rgba(255,255,255,0.15);border-radius:0 8px 8px 0;font-size:13px;color:var(--text-dim)">Нет данных\u003C/div>`}
+        \u003C/div>
+
+        <!-- Sub-block 2: full status -->
+        <div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--accent2);text-transform:uppercase;margin-bottom:8px">Статус проекта\u003C/div>
+          ${statusFullLines.length
+            ? statusFullLines.map(s => {
+                const isStage = /^(ЭТАП\s+\d+|Подпроект|Текущий этап)/i.test(s);
+                const isBullet = /^\d+\./.test(s);
+                const bg = isStage ? 'rgba(100,220,100,0.07)' : 'transparent';
+                const border = isStage ? 'border-left:2px solid var(--accent2);padding-left:10px;' : isBullet ? 'padding-left:14px;' : '';
+                return `<div style="font-size:12px;line-height:1.6;${border}background:${bg};border-radius:4px;margin-bottom:3px;color:${isStage?'var(--accent2)':'var(--text)'}">${s}\u003C/div>`;
+              }).join('')
+            : `<div style="font-size:13px;color:var(--text-dim)">Нет данных\u003C/div>`}
+        \u003C/div>
       \u003C/div>
 
       <div class="info-block" style="flex:1">
