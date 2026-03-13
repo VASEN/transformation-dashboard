@@ -1019,7 +1019,7 @@ function renderProjTable(projects) {
     .filter(p => p.status !== 'Закрыта')
     .sort((a, b) => parseDate(a.deadline) - parseDate(b.deadline));
   body.innerHTML = active.map(p => `
-    <tr>
+    <tr ondblclick="goToDetail(this.dataset.name)" data-name="${p.name.replace(/"/g,'&quot;')}" style="cursor:pointer" title="Двойной клик — детализация">
       <td>${p.name}\u003C/td>
       <td style="color:var(--text-dim);font-size:12px">${p.owner_short || p.person || '—'}\u003C/td>
       <td style="color:var(--text-dim);font-size:12px">${p.deadline || '—'}\u003C/td>
@@ -1042,7 +1042,7 @@ function renderFullProjTable(projects, filter = 'all') {
   body.innerHTML = filtered.map((p, i) => {
     const isActive = p.status === 'В работе';
     return `
-      <tr>
+      <tr ondblclick="goToDetail(this.dataset.name)" data-name="${p.name.replace(/"/g,'&quot;')}" style="cursor:pointer" title="Двойной клик — детализация">
         <td style="color:var(--text-dim);font-size:11px">${i + 1}\u003C/td>
         <td>${p.name}\u003C/td>
         <td><span class="status-badge ${isActive ? 'active' : 'done'}">${p.status}\u003C/span>\u003C/td>
@@ -1329,13 +1329,14 @@ function loadDetail(name) {
 function populateDetailSelect(details) {
   const sel = document.getElementById('detailSelect');
   sel.innerHTML = '';
-  details.forEach(d => {
+  const proj2026 = details.filter(d => d.deadline && d.deadline.split('.')[2] === '2026');
+  proj2026.forEach(d => {
     const opt = document.createElement('option');
     opt.value = d.name;
     opt.textContent = d.name;
     sel.appendChild(opt);
   });
-  if (details.length) loadDetail(details[0].name);
+  if (proj2026.length) loadDetail(proj2026[0].name);
 }
 
 // ===== POPULATE OWNER FILTER =====
@@ -1448,6 +1449,20 @@ function showTab(name) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   event.target.classList.add('active');
   document.getElementById('screen-' + name).classList.add('active');
+}
+
+// ===== NAVIGATE TO DETAIL TAB WITH PROJECT FILTER =====
+function goToDetail(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const detailTab = document.querySelector('.tab[onclick="showTab(\'detail\')"]');
+  if (detailTab) detailTab.classList.add('active');
+  document.getElementById('screen-detail').classList.add('active');
+  const sel = document.getElementById('detailSelect');
+  if (sel) {
+    sel.value = name;
+    loadDetail(name);
+  }
 }
 
 // ===== INIT DASHBOARD =====
