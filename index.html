@@ -1260,18 +1260,23 @@ function filterTasksByStat(type) {
   document.querySelectorAll('.stat-pill').forEach(p => p.classList.remove('selected'));
   document.getElementById('spill-' + type).classList.add('selected');
   document.getElementById('taskProjectFilter').value = 'all';
+  const byProjectThenDeadline = (a, b) =>
+    (a.project || '').localeCompare(b.project || '', 'ru') || parseDate(a.deadline) - parseDate(b.deadline);
+  const byDeadline = (a, b) => parseDate(a.deadline) - parseDate(b.deadline);
+
   let filtered;
   if (type === 'active') {
-    filtered = allTasks2026.filter(t => t.status === 'В работе');
+    filtered = allTasks2026.filter(t => t.status === 'В работе').sort(byProjectThenDeadline);
   } else if (type === 'closed') {
-    filtered = allTasks2026.filter(t => t.status === 'Закрыта');
+    filtered = allTasks2026.filter(t => t.status === 'Закрыта').sort(byProjectThenDeadline);
   } else if (type === 'deadline14') {
     filtered = allTasks2026
-      .filter(t => (t.urgency === 'overdue' || t.urgency === 'today' || t.urgency === 'urgent' || t.urgency === 'soon') && t.status !== 'Закрыта');
+      .filter(t => (t.urgency === 'overdue' || t.urgency === 'today' || t.urgency === 'urgent' || t.urgency === 'soon') && t.status !== 'Закрыта')
+      .sort(byDeadline);
   } else if (type === 'overdue') {
-    filtered = allTasks2026.filter(t => t.urgency === 'overdue' && t.status !== 'Закрыта');
+    filtered = allTasks2026.filter(t => t.urgency === 'overdue' && t.status !== 'Закрыта').sort(byDeadline);
   } else {
-    filtered = [...allTasks2026];
+    filtered = [...allTasks2026].sort(byProjectThenDeadline);
   }
   renderTasks(filtered);
 }
