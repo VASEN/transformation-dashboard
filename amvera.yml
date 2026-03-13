@@ -1,9 +1,4 @@
 meta:
-  environment: node
+  environment: docker
   toolchain:
-    name: browser
-    version: "18"
-
-build:
-  artifacts:
-    "*": /
+    name: docker
