@@ -987,6 +987,14 @@ function renderProjTable(projects) {
     <tr>
       <td>${p.name}</td>
       <td style="color:var(--text-dim);font-size:12px">${p.owner_short || p.person || '—'}</td>
+// ===== RENDER: PROJ TABLE (exec mini) =====
+function renderProjTable(projects) {
+  const body = document.getElementById('projTableBody');
+  const active = projects.filter(p => p.status === 'В работе').slice(0, 10);
+  body.innerHTML = active.map(p => `
+    <tr>
+      <td>${p.name}</td>
+      <td style="color:var(--text-dim);font-size:12px">${p.person || '—'}</td>
       <td style="color:var(--text-dim);font-size:12px">${p.deadline || '—'}</td>
       <td>
         <div class="progress-wrap">
@@ -1012,6 +1020,7 @@ function renderFullProjTable(projects, filter = 'all') {
         <td>${p.name}</td>
         <td><span class="status-badge ${isActive ? 'active' : 'done'}">${p.status}</span></td>
         <td style="color:var(--text-dim);font-size:12px">${p.owner_short || p.person || '—'}</td>
+        <td style="color:var(--text-dim);font-size:12px">${p.person || '—'}</td>
         <td style="color:var(--text-dim);font-size:12px">${p.deadline || '—'}</td>
         <td>
           <div class="progress-wrap">
@@ -1038,6 +1047,10 @@ function renderGauges(curators) {
   grid.innerHTML = curators.map(g => {
     const color = getGaugeColor(g.pct_vysv);
     const pct = Math.min(g.pct_vysv, 200) / 200;
+  grid.innerHTML = curators.map(g => {
+    const color = getGaugeColor(g.pct_vysv);
+    const pct = Math.min(g.pct_vysv, 200) / 200;
+    const r = 40, cx = 50, cy = 55;
     const startAngle = -Math.PI;
     const endAngle = startAngle + pct * Math.PI;
     const x1 = cx + r * Math.cos(startAngle), y1 = cy + r * Math.sin(startAngle);
@@ -1053,6 +1066,16 @@ function renderGauges(curators) {
             <path d="M ${x1},${y1} A ${r},${r} 0 ${largeArc} 1 ${x2},${y2}"
               fill="none" stroke="${color}" stroke-width="8" stroke-linecap="round"/>
             <text x="50" y="49" text-anchor="middle" font-family="Orbitron,sans-serif"
+      <div class="gauge-card">
+        <div class="gauge-name">${g.name}</div>
+        <div class="gauge-wrap">
+          <svg class="gauge-svg" viewBox="0 0 100 65">
+            <path d="M ${cx - r},${cy} A ${r},${r} 0 0 1 ${cx + r},${cy}"
+              fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="8" stroke-linecap="round"/>
+            <path d="M ${x1},${y1} A ${r},${r} 0 ${largeArc} 1 ${x2},${y2}"
+              fill="none" stroke="${color}" stroke-width="8" stroke-linecap="round"
+              style="filter:drop-shadow(0 0 6px ${color})"/>
+            <text x="50" y="52" text-anchor="middle" font-family="Orbitron,sans-serif"
               font-size="13" font-weight="700" fill="${color}">${g.pct_vysv}%</text>
           </svg>
         </div>
@@ -1141,6 +1164,7 @@ function renderDeadlineMap(tasks) {
       </div>
     </div>
   `;
+  }).join('');
 }
 
 // ===== RENDER: TASKS =====
@@ -1158,6 +1182,7 @@ function renderTasks(tasks, filter = 'all') {
         <td style="max-width:280px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t.theme}</td>
         <td><span style="color:${statusColor};font-size:12px">${t.status}</span></td>
         <td style="color:var(--text-dim);font-size:12px">${t.executor_short || t.person || '—'}</td>
+        <td style="color:var(--text-dim);font-size:12px">${t.person || '—'}</td>
         <td><span class="deadline-chip ${urgencyLabel}">${urgencyIcon}${t.deadline || '—'}</span></td>
       </tr>
     `;
@@ -1290,6 +1315,13 @@ function populateOwnerFilter(projects) {
     const opt = document.createElement('option');
     opt.value = name;
     opt.textContent = name;
+// ===== POPULATE CURATOR FILTER =====
+function populateCuratorFilter(curators) {
+  const sel = document.getElementById('curatorFilter');
+  curators.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c.name;
+    opt.textContent = c.name;
     sel.appendChild(opt);
   });
 }
@@ -1398,6 +1430,19 @@ function initDashboard(data) {
   allCurators = data.curators;
 
   // Gauges (Высвобождение — never filtered)
+  // KPI cards
+  document.getElementById('kpi-projects').textContent = s.projects_total;
+  document.getElementById('kpi-projects-sub').innerHTML =
+    `<span class="trend up">${s.projects_active} активных</span>&nbsp;/ ${s.projects_closed} закрыто`;
+
+  const activeProjs = data.projects.filter(p => p.status === 'В работе');
+  const avgPct = activeProjs.length
+    ? Math.round(activeProjs.reduce((sum, p) => sum + (p.pct || 0), 0) / activeProjs.length)
+    : 0;
+  document.getElementById('kpi-completion').textContent = avgPct + '%';
+  document.getElementById('kpi-completion-sub').textContent =
+    `среднее по ${activeProjs.length} активным проектам`;
+
   const overall = data.curators.find(c => c.name === 'Комитет и РЦТ') || data.curators[0];
   if (overall) {
     document.getElementById('kpi-vysv').textContent = overall.pct_vysv + '%';
@@ -1411,6 +1456,28 @@ function initDashboard(data) {
     `<div class="dot" style="background:var(--accent)"></div>Всего: ${s.projects_total}`;
 
   // Tasks screen stats (from summary — not filtered)
+
+  document.getElementById('kpi-deadline14').textContent = s.tasks_deadline_14 ?? '—';
+  document.getElementById('kpi-overdue').textContent = s.tasks_overdue ?? '—';
+
+  if ((s.tasks_overdue || 0) === 0) {
+    document.getElementById('kpi-overdue-sub').innerHTML = `<span class="trend up">✓</span> Всё в норме`;
+  } else {
+    document.getElementById('kpi-overdue-sub').innerHTML = `<span class="trend down">!</span> Требует внимания`;
+  }
+
+  // Exec filter badges
+  document.getElementById('badge-active').innerHTML =
+    `<div class="dot" style="background:var(--accent)"></div>В работе: ${s.projects_active}`;
+  document.getElementById('badge-closed').innerHTML =
+    `<div class="dot" style="background:var(--accent3)"></div>Закрыто: ${s.projects_closed}`;
+  document.getElementById('badge-overdue').textContent = s.tasks_overdue ?? 0;
+
+  // Projects screen badge
+  document.getElementById('badge-projects-total').innerHTML =
+    `<div class="dot" style="background:var(--accent)"></div>Всего: ${s.projects_total}`;
+
+  // Tasks stats
   document.getElementById('tasks-stat-total').textContent = s.tasks_total;
   document.getElementById('tasks-stat-active').textContent = s.tasks_active;
   document.getElementById('tasks-stat-closed').textContent = s.tasks_closed;
@@ -1429,9 +1496,26 @@ function initDashboard(data) {
 
   // Apply exec filters (uses default year=2026, owner=all)
   applyExecFilters();
+  // Store globally
+  allProjects = data.projects;
+  allTasks = data.tasks;
+  allDetails = data.projects;
+
+  // Render all sections
+  renderProjTable(allProjects);
+  renderFullProjTable(allProjects);
+  renderGauges(data.curators);
+  renderDeadlineMap(allTasks);
+  renderTasks(allTasks);
+  populateTaskFilter(allTasks);
+  populateDetailSelect(allDetails);
+  populateCuratorFilter(data.curators);
 }
 
 // ===== FETCH DATA =====
+// "Unexpected token '<'" at runtime = server returned an HTML error page
+// instead of JSON (e.g. 404 from GitHub Pages). We detect this explicitly
+// and show a meaningful message instead of a cryptic SyntaxError.
 async function loadData() {
   const loader = document.getElementById('loader');
   try {
