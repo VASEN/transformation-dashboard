@@ -1486,22 +1486,8 @@ function initDashboard(data) {
   renderDeadlineMap(allTasks);
   renderTasks(allTasks);
 
-  // Apply exec filters (uses default year=2026, owner=all)
+  // Apply exec filters (uses default year/owner=all)
   applyExecFilters();
-  // Store globally
-  allProjects = data.projects;
-  allTasks = data.tasks;
-  allDetails = data.projects;
-
-  // Render all sections
-  renderProjTable(allProjects);
-  renderFullProjTable(allProjects);
-  renderGauges(data.curators);
-  renderDeadlineMap(allTasks);
-  renderTasks(allTasks);
-  populateTaskFilter(allTasks);
-  populateDetailSelect(allDetails);
-  populateCuratorFilter(data.curators);
 }
 
 // ===== FETCH DATA =====
