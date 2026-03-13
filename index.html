@@ -1313,21 +1313,53 @@ function loadDetail(name) {
   const indicatorsArr = d.indicators
     ? d.indicators.split('\n').map(s => s.trim()).filter(Boolean)
     : [];
-  // Parse current stages from status_text (lines after "Текущий этап:")
+  // Determine active ETAPs from tasks (tasks "В работе" grouped by parent_id)
   const statusText = (d.status_text || '').trim();
   const currentStages = (() => {
-    if (!statusText) return [];
-    const stages = [];
-    // Match all "Текущий этап:" blocks
-    const rx = /Текущий этап[:\s]*([\s\S]*?)(?=Текущий этап:|Подпроект:|$)/gi;
-    let m;
-    while ((m = rx.exec(statusText)) !== null) {
-      const block = m[1].trim();
-      if (block) {
-        // Split numbered lines within the block
-        block.split('\n').map(s => s.trim()).filter(Boolean).forEach(s => stages.push(s));
+    const projTasks = allTasks.filter(t => t && t.project === name);
+    if (!projTasks.length) return [];
+
+    // Group tasks by parent_id; find groups with at least one "В работе"
+    const groups = {};
+    projTasks.forEach(t => {
+      const pid = t.parent_id || '__root__';
+      if (!groups[pid]) groups[pid] = [];
+      groups[pid].push(t);
+    });
+
+    const activeGroups = Object.values(groups).filter(g =>
+      g.some(t => t.status === 'В работе')
+    );
+    if (!activeGroups.length) return [];
+
+    // Build ЭТАП label map from status_text: "ЭТАП N ..." → label
+    const etapMap = {};
+    if (statusText) {
+      const rx = /ЭТАП\s+(\d+)[.:\s]+([^\n;]+)/gi;
+      let m;
+      while ((m = rx.exec(statusText)) !== null) {
+        etapMap[m[1]] = `ЭТАП ${m[1]}: ${m[2].trim()}`;
       }
     }
+
+    const stages = [];
+    activeGroups.forEach(g => {
+      // Extract ЭТАП number from task theme prefix like "3.5 ..." → "3"
+      const sampleTheme = g[0].theme || '';
+      const numMatch = sampleTheme.match(/^(\d+)\./);
+      const etapNum = numMatch ? numMatch[1] : null;
+
+      if (etapNum && etapMap[etapNum]) {
+        if (!stages.includes(etapMap[etapNum])) stages.push(etapMap[etapNum]);
+      } else if (etapNum) {
+        const label = `ЭТАП ${etapNum}`;
+        if (!stages.includes(label)) stages.push(label);
+      } else {
+        // No numbered etap — use first active task theme as label
+        const activeTask = g.find(t => t.status === 'В работе');
+        if (activeTask && !stages.includes(activeTask.theme)) stages.push(activeTask.theme);
+      }
+    });
     return stages;
   })();
   // Full status lines for block 2
