@@ -1214,8 +1214,13 @@ function renderTasks(tasks, filter = 'all') {
   body.innerHTML = filtered.map(t => {
     const ps = getProjectStyle(t.project);
     const isClosed = t.status === 'Закрыта';
-    const urgencyLabel = (!isClosed && t.urgency === 'urgent') ? 'urgent' : (!isClosed && t.urgency === 'soon') ? 'soon' : 'ok';
-    const urgencyIcon = (!isClosed && t.urgency === 'urgent') ? '🔴 ' : (!isClosed && t.urgency === 'soon') ? '🟡 ' : '';
+    const urgencyLabel = isClosed ? 'ok'
+      : t.urgency === 'overdue' ? 'urgent'
+      : t.urgency === 'urgent'  ? 'soon'
+      : t.urgency === 'soon'    ? 'soon' : 'ok';
+    const urgencyIcon = isClosed ? ''
+      : t.urgency === 'overdue' ? '🔴 '
+      : t.urgency === 'urgent'  ? '🟡 ' : '';
     const statusColor = t.status === 'В работе' ? 'var(--accent)' : 'var(--text-dim)';
     return `
       <tr>
@@ -1249,9 +1254,9 @@ function filterTasksByStat(type) {
   } else if (type === 'closed') {
     filtered = allTasks2026.filter(t => t.status === 'Закрыта');
   } else if (type === 'deadline14') {
-    filtered = allTasks2026.filter(t => (t.urgency === 'soon' || t.urgency === 'urgent') && t.status !== 'Закрыта');
+    filtered = allTasks2026.filter(t => (t.urgency === 'overdue' || t.urgency === 'urgent' || t.urgency === 'soon') && t.status !== 'Закрыта');
   } else if (type === 'overdue') {
-    filtered = allTasks2026.filter(t => t.urgency === 'urgent' && t.status !== 'Закрыта');
+    filtered = allTasks2026.filter(t => t.urgency === 'overdue' && t.status !== 'Закрыта');
   } else {
     filtered = allTasks2026;
   }
@@ -1569,8 +1574,8 @@ function initDashboard(data) {
   const tTotal = allTasks2026.length;
   const tActive = allTasks2026.filter(t => t.status === 'В работе').length;
   const tClosed = allTasks2026.filter(t => t.status === 'Закрыта').length;
-  const tDeadline14 = allTasks2026.filter(t => (t.urgency === 'soon' || t.urgency === 'urgent') && t.status !== 'Закрыта').length;
-  const tOverdue = allTasks2026.filter(t => t.urgency === 'urgent' && t.status !== 'Закрыта').length;
+  const tDeadline14 = allTasks2026.filter(t => (t.urgency === 'overdue' || t.urgency === 'urgent' || t.urgency === 'soon') && t.status !== 'Закрыта').length;
+  const tOverdue = allTasks2026.filter(t => t.urgency === 'overdue' && t.status !== 'Закрыта').length;
   document.getElementById('tasks-stat-total').textContent = tTotal;
   document.getElementById('tasks-stat-active').textContent = tActive;
   document.getElementById('tasks-stat-closed').textContent = tClosed;
