@@ -1038,7 +1038,7 @@ function renderGauges(curators) {
     const endAngle = startAngle + pct * Math.PI;
     const x1 = cx + r * Math.cos(startAngle), y1 = cy + r * Math.sin(startAngle);
     const x2 = cx + r * Math.cos(endAngle), y2 = cy + r * Math.sin(endAngle);
-    const largeArc = pct > 0.5 ? 1 : 0;
+    const largeArc = 0;
     return `
       <div class="gauge-card" data-curator-name="${g.name}">
         <div class="gauge-name">${g.name}\u003C/div>
