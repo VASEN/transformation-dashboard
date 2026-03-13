@@ -815,7 +815,6 @@
       <div class="section-card">
         <div class="section-header">
           <span class="section-title">Проекты — Готовность</span>
-          <span style="font-size:11px;color:var(--text-dim)">Топ-10 активных</span>
         </div>
         <table class="proj-table">
           <thead>
@@ -976,9 +975,8 @@ function parseDate(str) {
 function renderProjTable(projects) {
   const body = document.getElementById('projTableBody');
   const active = projects
-    .filter(p => p.status === 'В работе')
-    .sort((a, b) => parseDate(a.deadline) - parseDate(b.deadline))
-    .slice(0, 10);
+    .filter(p => p.status !== 'Закрыта')
+    .sort((a, b) => parseDate(a.deadline) - parseDate(b.deadline));
   body.innerHTML = active.map(p => `
     <tr>
       <td>${p.name}\u003C/td>
@@ -1388,7 +1386,7 @@ function applyExecFilters() {
     `<div class="dot" style="background:var(--accent3)">\u003C/div>Закрыто: ${closed.length}`;
   document.getElementById('badge-overdue').textContent = overdue;
 
-  // Project table (sorted by deadline, top-10 active)
+  // Project table (sorted by deadline, all non-closed)
   renderProjTable(filtered);
 
   // Gauge highlight
