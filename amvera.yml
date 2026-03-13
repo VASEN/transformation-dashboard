@@ -1,5 +1,6 @@
 name: "transformation-dashboard"
 meta:
+  environment: production
   toolchain:
     name: nginx
     version: "1.25"
