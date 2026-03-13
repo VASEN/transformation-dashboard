@@ -1,3 +1,5 @@
-name: ""
+name: "transformation-dashboard"
 meta:
-  toolchain: {}
+  toolchain:
+    name: nginx
+    version: "1.25"
