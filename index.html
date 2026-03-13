@@ -1521,13 +1521,10 @@ async function loadData() {
   try {
     const resp = await fetch('data.json');
 
-    // Peek at Content-Type — an HTML 404 gives text/html, not application/json
     const ct = resp.headers.get('content-type') || '';
     const bodyText = await resp.text();
 
     if (!resp.ok || (!ct.includes('json') && bodyText.trim().startsWith('<'))) {
-      // Server sent HTML (404 page, redirect, etc.) — this is the source of
-      // "Unexpected token '<'" when the old code called resp.json() directly.
       const dataUrl = new URL('data.json', location.href).href;
       throw new Error(
         `Сервер вернул HTML вместо JSON (HTTP ${resp.status}).\n` +
@@ -1539,7 +1536,6 @@ async function loadData() {
     try {
       data = JSON.parse(bodyText);
     } catch (parseErr) {
-      // Locate the bad position in data.json and show a snippet
       const pos = parseInt((parseErr.message.match(/position (\d+)/) || [])[1]);
       const snippet = Number.isFinite(pos)
         ? bodyText.slice(Math.max(0, pos - 40), pos + 40)
