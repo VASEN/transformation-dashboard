@@ -1213,8 +1213,9 @@ function renderTasks(tasks, filter = 'all') {
   const filtered = (filter === 'all') ? tasks : tasks.filter(t => t.project === filter);
   body.innerHTML = filtered.map(t => {
     const ps = getProjectStyle(t.project);
-    const urgencyLabel = t.urgency === 'urgent' ? 'urgent' : t.urgency === 'soon' ? 'soon' : 'ok';
-    const urgencyIcon = t.urgency === 'urgent' ? '🔴 ' : t.urgency === 'soon' ? '🟡 ' : '';
+    const isClosed = t.status === 'Закрыта';
+    const urgencyLabel = (!isClosed && t.urgency === 'urgent') ? 'urgent' : (!isClosed && t.urgency === 'soon') ? 'soon' : 'ok';
+    const urgencyIcon = (!isClosed && t.urgency === 'urgent') ? '🔴 ' : (!isClosed && t.urgency === 'soon') ? '🟡 ' : '';
     const statusColor = t.status === 'В работе' ? 'var(--accent)' : 'var(--text-dim)';
     return `
       <tr>
