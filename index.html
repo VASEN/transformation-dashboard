@@ -472,8 +472,16 @@
     border-radius: 12px;
     padding: 16px;
     text-align: center;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    user-select: none;
   }
-
+  .stat-pill:hover { background: rgba(255,255,255,0.05); }
+  .stat-pill.selected {
+    border-color: var(--c, var(--accent));
+    background: rgba(0,229,255,0.07);
+    box-shadow: 0 0 10px rgba(0,229,255,0.12);
+  }
   .stat-pill-val {
     font-family: 'Orbitron', sans-serif;
     font-size: 28px;
@@ -920,11 +928,11 @@
   <!-- ===================== SCREEN: TASKS ===================== -->
   <div class="screen" id="screen-tasks">
     <div class="tasks-stats">
-      <div class="stat-pill" style="--c:var(--accent)"><span class="stat-pill-val" id="tasks-stat-total">—</span><div class="stat-pill-label">Всего задач</div></div>
-      <div class="stat-pill" style="--c:var(--accent2)"><span class="stat-pill-val" id="tasks-stat-active">—</span><div class="stat-pill-label">В работе</div></div>
-      <div class="stat-pill" style="--c:var(--accent3)"><span class="stat-pill-val" id="tasks-stat-closed">—</span><div class="stat-pill-label">Закрыто</div></div>
-      <div class="stat-pill" style="--c:var(--warn)"><span class="stat-pill-val" id="tasks-stat-deadline14">—</span><div class="stat-pill-label">Срок ≤14 дней</div></div>
-      <div class="stat-pill" style="--c:var(--danger)"><span class="stat-pill-val" id="tasks-stat-overdue">—</span><div class="stat-pill-label">Просрочено</div></div>
+      <div class="stat-pill selected" id="spill-all" style="--c:var(--accent)" onclick="filterTasksByStat('all')"><span class="stat-pill-val" id="tasks-stat-total">—</span><div class="stat-pill-label">Всего задач</div></div>
+      <div class="stat-pill" id="spill-active" style="--c:var(--accent2)" onclick="filterTasksByStat('active')"><span class="stat-pill-val" id="tasks-stat-active">—</span><div class="stat-pill-label">В работе</div></div>
+      <div class="stat-pill" id="spill-closed" style="--c:var(--accent3)" onclick="filterTasksByStat('closed')"><span class="stat-pill-val" id="tasks-stat-closed">—</span><div class="stat-pill-label">Закрыто</div></div>
+      <div class="stat-pill" id="spill-deadline14" style="--c:var(--warn)" onclick="filterTasksByStat('deadline14')"><span class="stat-pill-val" id="tasks-stat-deadline14">—</span><div class="stat-pill-label">Срок ≤14 дней</div></div>
+      <div class="stat-pill" id="spill-overdue" style="--c:var(--danger)" onclick="filterTasksByStat('overdue')"><span class="stat-pill-val" id="tasks-stat-overdue">—</span><div class="stat-pill-label">Просрочено</div></div>
     </div>
 
     <div class="section-card">
@@ -970,6 +978,7 @@
 // ===== STATE =====
 let allProjects = [];
 let allTasks = [];
+let allTasks2026 = [];
 let allDetails = [];
 let allCurators = [];
 
@@ -1201,7 +1210,7 @@ function renderDeadlineMap(tasks) {
 // ===== RENDER: TASKS =====
 function renderTasks(tasks, filter = 'all') {
   const body = document.getElementById('taskTableBody');
-  const filtered = filter === 'all' ? tasks : tasks.filter(t => t.project === filter);
+  const filtered = (filter === 'all') ? tasks : tasks.filter(t => t.project === filter);
   body.innerHTML = filtered.map(t => {
     const ps = getProjectStyle(t.project);
     const urgencyLabel = t.urgency === 'urgent' ? 'urgent' : t.urgency === 'soon' ? 'soon' : 'ok';
@@ -1220,11 +1229,38 @@ function renderTasks(tasks, filter = 'all') {
   }).join('');
 }
 
-function filterTasks(val) { renderTasks(allTasks, val); }
+function filterTasks(val) {
+  document.querySelectorAll('.stat-pill').forEach(p => p.classList.remove('selected'));
+  document.getElementById('spill-all').classList.add('selected');
+  renderTasks(allTasks2026, val);
+}
+
+// ===== FILTER TASKS BY STAT PILL =====
+function filterTasksByStat(type) {
+  document.querySelectorAll('.stat-pill').forEach(p => p.classList.remove('selected'));
+  document.getElementById('spill-' + type).classList.add('selected');
+  document.getElementById('taskProjectFilter').value = 'all';
+  let filtered;
+  if (type === 'all') {
+    filtered = allTasks2026;
+  } else if (type === 'active') {
+    filtered = allTasks2026.filter(t => t.status === 'В работе');
+  } else if (type === 'closed') {
+    filtered = allTasks2026.filter(t => t.status === 'Закрыта');
+  } else if (type === 'deadline14') {
+    filtered = allTasks2026.filter(t => (t.urgency === 'soon' || t.urgency === 'urgent') && t.status !== 'Закрыта');
+  } else if (type === 'overdue') {
+    filtered = allTasks2026.filter(t => t.urgency === 'urgent' && t.status !== 'Закрыта');
+  } else {
+    filtered = allTasks2026;
+  }
+  renderTasks(filtered);
+}
 
 // ===== POPULATE TASK PROJECT FILTER =====
 function populateTaskFilter(tasks) {
   const sel = document.getElementById('taskProjectFilter');
+  sel.innerHTML = '<option value="all">Все проекты</option>';
   const projects = [...new Set(tasks.map(t => t.project).filter(Boolean))].sort();
   projects.forEach(name => {
     const opt = document.createElement('option');
@@ -1475,6 +1511,8 @@ function initDashboard(data) {
   // Store globally (use all_tasks for full task coverage)
   allProjects = data.projects;
   allTasks = data.all_tasks || data.tasks;
+  const proj2026Names = new Set(allProjects.filter(p => p.deadline && p.deadline.split('.')[2] === '2026').map(p => p.name));
+  allTasks2026 = allTasks.filter(t => proj2026Names.has(t.project));
   allDetails = data.projects;
   allCurators = data.curators;
 
@@ -1526,22 +1564,27 @@ function initDashboard(data) {
   document.getElementById('badge-projects-total').innerHTML =
     `<div class="dot" style="background:var(--accent)">\u003C/div>Всего: ${s.projects_total}`;
 
-  // Tasks stats
-  document.getElementById('tasks-stat-total').textContent = s.tasks_total;
-  document.getElementById('tasks-stat-active').textContent = s.tasks_active;
-  document.getElementById('tasks-stat-closed').textContent = s.tasks_closed;
-  document.getElementById('tasks-stat-deadline14').textContent = s.tasks_deadline_14 ?? '—';
-  document.getElementById('tasks-stat-overdue').textContent = s.tasks_overdue ?? '—';
+  // Tasks stats (computed from 2026 tasks only)
+  const tTotal = allTasks2026.length;
+  const tActive = allTasks2026.filter(t => t.status === 'В работе').length;
+  const tClosed = allTasks2026.filter(t => t.status === 'Закрыта').length;
+  const tDeadline14 = allTasks2026.filter(t => (t.urgency === 'soon' || t.urgency === 'urgent') && t.status !== 'Закрыта').length;
+  const tOverdue = allTasks2026.filter(t => t.urgency === 'urgent' && t.status !== 'Закрыта').length;
+  document.getElementById('tasks-stat-total').textContent = tTotal;
+  document.getElementById('tasks-stat-active').textContent = tActive;
+  document.getElementById('tasks-stat-closed').textContent = tClosed;
+  document.getElementById('tasks-stat-deadline14').textContent = tDeadline14;
+  document.getElementById('tasks-stat-overdue').textContent = tOverdue;
 
   // Populate dropdowns
   populateOwnerFilter(allProjects);
-  populateTaskFilter(allTasks);
+  populateTaskFilter(allTasks2026);
   populateDetailSelect(allDetails);
 
   // Static renders
   renderFullProjTable(allProjects);
   renderDeadlineMap(allTasks);
-  renderTasks(allTasks);
+  renderTasks(allTasks2026);
 
   // Apply exec filters (uses default year/owner=all)
   applyExecFilters();
