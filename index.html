@@ -529,8 +529,10 @@
     font-weight: 600;
   }
   .deadline-chip.urgent { background: rgba(255,59,92,0.15); color: var(--danger); }
+  .deadline-chip.today  { background: rgba(255,59,92,0.25); color: var(--danger); border: 1px solid rgba(255,59,92,0.5); animation: pulse-today 1.5s ease-in-out infinite; }
   .deadline-chip.soon { background: rgba(255,184,0,0.15); color: var(--warn); }
   .deadline-chip.ok { background: rgba(0,255,157,0.08); color: rgba(0,255,157,0.7); }
+  @keyframes pulse-today { 0%,100% { opacity:1; } 50% { opacity:0.7; } }
 
   .project-tag {
     display: inline-block;
@@ -1216,10 +1218,12 @@ function renderTasks(tasks, filter = 'all') {
     const isClosed = t.status === 'Закрыта';
     const urgencyLabel = isClosed ? 'ok'
       : t.urgency === 'overdue' ? 'urgent'
+      : t.urgency === 'today'   ? 'today'
       : t.urgency === 'urgent'  ? 'soon'
       : t.urgency === 'soon'    ? 'soon' : 'ok';
     const urgencyIcon = isClosed ? ''
       : t.urgency === 'overdue' ? '🔴 '
+      : t.urgency === 'today'   ? '🔴 '
       : t.urgency === 'urgent'  ? '🟡 ' : '';
     const statusColor = t.status === 'В работе' ? 'var(--accent)' : 'var(--text-dim)';
     return `
@@ -1254,7 +1258,7 @@ function filterTasksByStat(type) {
   } else if (type === 'closed') {
     filtered = allTasks2026.filter(t => t.status === 'Закрыта');
   } else if (type === 'deadline14') {
-    filtered = allTasks2026.filter(t => (t.urgency === 'overdue' || t.urgency === 'urgent' || t.urgency === 'soon') && t.status !== 'Закрыта');
+    filtered = allTasks2026.filter(t => (t.urgency === 'overdue' || t.urgency === 'today' || t.urgency === 'urgent' || t.urgency === 'soon') && t.status !== 'Закрыта');
   } else if (type === 'overdue') {
     filtered = allTasks2026.filter(t => t.urgency === 'overdue' && t.status !== 'Закрыта');
   } else {
@@ -1574,7 +1578,7 @@ function initDashboard(data) {
   const tTotal = allTasks2026.length;
   const tActive = allTasks2026.filter(t => t.status === 'В работе').length;
   const tClosed = allTasks2026.filter(t => t.status === 'Закрыта').length;
-  const tDeadline14 = allTasks2026.filter(t => (t.urgency === 'overdue' || t.urgency === 'urgent' || t.urgency === 'soon') && t.status !== 'Закрыта').length;
+  const tDeadline14 = allTasks2026.filter(t => (t.urgency === 'overdue' || t.urgency === 'today' || t.urgency === 'urgent' || t.urgency === 'soon') && t.status !== 'Закрыта').length;
   const tOverdue = allTasks2026.filter(t => t.urgency === 'overdue' && t.status !== 'Закрыта').length;
   document.getElementById('tasks-stat-total').textContent = tTotal;
   document.getElementById('tasks-stat-active').textContent = tActive;

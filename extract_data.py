@@ -71,8 +71,10 @@ def safe_int(v):
 def get_urgency(deadline_str):
     if not deadline_str: return 'ok'
     try:
-        days = (datetime.strptime(deadline_str, '%d.%m.%Y') - datetime.now()).days
+        from datetime import date as _date
+        days = (datetime.strptime(deadline_str, '%d.%m.%Y').date() - _date.today()).days
         if days < 0:   return 'overdue'
+        if days == 0:  return 'today'
         if days <= 5:  return 'urgent'
         if days <= 14: return 'soon'
     except: pass
@@ -238,8 +240,9 @@ def extract():
     t_active = [t for t in all_tasks if t['status'] in ACTIVE_STATUSES]
     t_closed = [t for t in all_tasks if t['status'] in CLOSED_STATUSES]
     t_overdue = [t for t in t_active if t['urgency'] == 'overdue']
-    t_urgent = [t for t in t_active if t['urgency'] == 'urgent']
-    t_soon   = [t for t in t_active if t['urgency'] == 'soon']
+    t_today   = [t for t in t_active if t['urgency'] == 'today']
+    t_urgent  = [t for t in t_active if t['urgency'] == 'urgent']
+    t_soon    = [t for t in t_active if t['urgency'] == 'soon']
     p_active = [p for p in projects if p['status'] in ACTIVE_STATUSES]
     p_closed = [p for p in projects if p['status'] in CLOSED_STATUSES]
     avg_pct  = round(sum(p['pct'] for p in p_active) / len(p_active)) if p_active else 0
@@ -252,9 +255,10 @@ def extract():
         'tasks_total':       len(all_tasks),
         'tasks_active':      len(t_active),
         'tasks_closed':      len(t_closed),
-        'tasks_deadline_5':  len(t_urgent),
-        'tasks_deadline_14': len(t_overdue) + len(t_urgent) + len(t_soon),
+        'tasks_deadline_5':  len(t_today) + len(t_urgent),
+        'tasks_deadline_14': len(t_overdue) + len(t_today) + len(t_urgent) + len(t_soon),
         'tasks_overdue':     len(t_overdue),
+        'tasks_today':       len(t_today),
         'vysv_pct_total':    total_pct,
     }
 
