@@ -720,11 +720,7 @@
 
     <div class="filter-bar">
       <span class="filter-label">Год</span>
-      <select class="filter-select" id="yearFilter" onchange="applyExecFilters()">
-        <option value="2026">2026</option>
-        <option value="2025">2025</option>
-        <option value="all">Все</option>
-      </select>
+      <span class="filter-select" style="cursor:default;pointer-events:none;opacity:0.9">2026</span>
       <span class="filter-label" style="margin-left:16px">Ответственный</span>
       <select class="filter-select" id="ownerFilter" onchange="applyExecFilters()"><option value="all">Все</option></select>
       <span class="separator"></span>
@@ -1298,7 +1294,8 @@ function populateDetailSelect(details) {
 // ===== POPULATE OWNER FILTER =====
 function populateOwnerFilter(projects) {
   const sel = document.getElementById('ownerFilter');
-  const owners = [...new Set(projects.map(p => p.owner_short).filter(Boolean))].sort();
+  const proj2026 = projects.filter(p => p.deadline && p.deadline.split('.')[2] === '2026');
+  const owners = [...new Set(proj2026.map(p => p.owner_short).filter(Boolean))].sort();
   owners.forEach(name => {
     const opt = document.createElement('option');
     opt.value = name;
@@ -1357,15 +1354,13 @@ function computeTaskKPIs(filteredProjects) {
 
 // ===== APPLY EXEC FILTERS =====
 function applyExecFilters() {
-  const year = document.getElementById('yearFilter').value;
   const owner = document.getElementById('ownerFilter').value;
 
-  let filtered = allProjects;
-  if (year !== 'all') filtered = filtered.filter(p => p.deadline && p.deadline.split('.')[2] === year);
+  let filtered = allProjects.filter(p => p.deadline && p.deadline.split('.')[2] === '2026');
   if (owner !== 'all') filtered = filtered.filter(p => p.owner_short === owner);
 
   const active = filtered.filter(p => p.status === 'В работе');
-  const closed = filtered.filter(p => p.status !== 'В работе');
+  const closed = filtered.filter(p => p.status === 'Закрыта');
   const { deadline14, overdue } = computeTaskKPIs(filtered);
 
   // KPI cards
