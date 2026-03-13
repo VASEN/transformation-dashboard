@@ -520,6 +520,7 @@
     vertical-align: middle;
   }
   .task-table tr:hover td { background: rgba(255,255,255,0.03); }
+  .task-table th:last-child, .task-table td:last-child { text-align: right; white-space: nowrap; width: 80px; }
 
   .deadline-chip {
     display: inline-block;
@@ -955,6 +956,7 @@
               <th>Статус</th>
               <th>Назначена</th>
               <th>Срок</th>
+              <th>Осталось</th>
             </tr>
           </thead>
           <tbody id="taskTableBody"></tbody>
@@ -1226,14 +1228,22 @@ function renderTasks(tasks, filter = 'all') {
       : t.urgency === 'today'   ? '🔴 '
       : t.urgency === 'urgent'  ? '🟡 ' : '';
     const statusColor = t.status === 'В работе' ? 'var(--accent)' : 'var(--text-dim)';
+    const daysLeft = (() => {
+      if (!t.deadline || isClosed) return '—';
+      const today = new Date(); today.setHours(0,0,0,0);
+      const diff = Math.round((parseDate(t.deadline) - today) / 86400000);
+      if (diff === 0) return '<span style="color:var(--danger);font-weight:600">сегодня</span>';
+      if (diff < 0)  return `<span style="color:var(--danger)">−${Math.abs(diff)} дн</span>`;
+      return `<span style="color:var(--text-dim)">+${diff} дн</span>`;
+    })();
     return `
       <tr>
         <td><span class="project-tag" style="background:${ps.bg};color:${ps.color}">${t.project}\u003C/span>\u003C/td>
         <td style="max-width:280px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t.theme}\u003C/td>
         <td><span style="color:${statusColor};font-size:12px">${t.status}\u003C/span>\u003C/td>
         <td style="color:var(--text-dim);font-size:12px">${t.executor_short || t.person || '—'}\u003C/td>
-        <td style="color:var(--text-dim);font-size:12px">${t.person || '—'}\u003C/td>
         <td><span class="deadline-chip ${urgencyLabel}">${urgencyIcon}${t.deadline || '—'}\u003C/span>\u003C/td>
+        <td style="font-size:12px;text-align:right;padding-right:8px">${daysLeft}\u003C/td>
       \u003C/tr>
     `;
   }).join('');
@@ -1250,19 +1260,25 @@ function filterTasksByStat(type) {
   document.querySelectorAll('.stat-pill').forEach(p => p.classList.remove('selected'));
   document.getElementById('spill-' + type).classList.add('selected');
   document.getElementById('taskProjectFilter').value = 'all';
+  const byDeadline = (a, b) => parseDate(a.deadline) - parseDate(b.deadline);
+  const byProjectThenDeadline = (a, b) =>
+    (a.project || '').localeCompare(b.project || '', 'ru') || parseDate(a.deadline) - parseDate(b.deadline);
+
   let filtered;
   if (type === 'all') {
-    filtered = allTasks2026;
+    filtered = [...allTasks2026].sort(byProjectThenDeadline);
   } else if (type === 'active') {
-    filtered = allTasks2026.filter(t => t.status === 'В работе');
+    filtered = allTasks2026.filter(t => t.status === 'В работе').sort(byDeadline);
   } else if (type === 'closed') {
-    filtered = allTasks2026.filter(t => t.status === 'Закрыта');
+    filtered = allTasks2026.filter(t => t.status === 'Закрыта').sort(byDeadline);
   } else if (type === 'deadline14') {
-    filtered = allTasks2026.filter(t => (t.urgency === 'overdue' || t.urgency === 'today' || t.urgency === 'urgent' || t.urgency === 'soon') && t.status !== 'Закрыта');
+    filtered = allTasks2026
+      .filter(t => (t.urgency === 'overdue' || t.urgency === 'today' || t.urgency === 'urgent' || t.urgency === 'soon') && t.status !== 'Закрыта')
+      .sort(byProjectThenDeadline);
   } else if (type === 'overdue') {
-    filtered = allTasks2026.filter(t => t.urgency === 'overdue' && t.status !== 'Закрыта');
+    filtered = allTasks2026.filter(t => t.urgency === 'overdue' && t.status !== 'Закрыта').sort(byDeadline);
   } else {
-    filtered = allTasks2026;
+    filtered = [...allTasks2026].sort(byProjectThenDeadline);
   }
   renderTasks(filtered);
 }
