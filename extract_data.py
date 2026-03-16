@@ -23,11 +23,13 @@ extract_data.py — скрипт извлечения данных из Excel в
 import pandas as pd
 import json
 import re
+import sys
 from datetime import datetime
 from pathlib import Path
 
 # ===== НАСТРОЙКИ =====
-REDMINE_FILE = "issues_1.xlsx"
+# Можно передать файл аргументом: python3 extract_data.py "issues (1).xlsx"
+REDMINE_FILE = sys.argv[1] if len(sys.argv) > 1 else "issues.xlsx"
 SHTATKA_FILE = "ШТАТКА_ДБ.xlsx"
 VYSV_FILE    = "ПРОЕКТЫ_Данные по высвобождению.xlsx"
 OUTPUT_FILE  = "data.json"
@@ -176,6 +178,29 @@ def extract():
     # ── 5. Высвобождение (ПРОЕКТЫ_НМА) ───────────────────────────────────────
     print(f"📂 Читаем {VYSV_FILE}...")
     vdf = pd.read_excel(VYSV_FILE)
+
+    # Overlay per-project данных из VYSV: plan_hours_cio (внутреннее), plan_units, fact_hours
+    vysv_proj = {}
+    for _, r in vdf[vdf['Проект'].notna()].iterrows():
+        name = str(r['Проект']).strip()
+        vysv_proj[name] = {
+            'plan_hours':     safe_float(r.get('План по проектам, часы')),
+            'plan_hours_cio': safe_float(r.get('Внутрнее высвобождение') or r.get('Внутреннее высвобождение')),
+            'plan_units':     safe_float(r.get('высвобождение, шт. ед.')),
+            'fact_hours':     safe_float(r.get('Факт высвобождения трудозатрат всего, часы')),
+        }
+    for p in projects:
+        v = vysv_proj.get(p['name'].strip())
+        if not v:
+            continue
+        if v['plan_hours'] is not None:
+            p['plan_hours'] = v['plan_hours']
+        if v['plan_hours_cio'] is not None:
+            p['plan_hours_cio'] = v['plan_hours_cio']
+        if v['plan_units'] is not None:
+            p['plan_units'] = v['plan_units']
+        if v['fact_hours'] is not None:
+            p['fact_hours'] = v['fact_hours']
 
     # NaN строки — итоги по группам кураторов (в порядке CURATOR_ORDER)
     nan_rows = vdf[vdf['Проект'].isna()].reset_index(drop=True)
