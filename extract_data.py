@@ -29,7 +29,7 @@ from pathlib import Path
 
 # ===== НАСТРОЙКИ =====
 # Можно передать файл аргументом: python3 extract_data.py "issues (1).xlsx"
-REDMINE_FILE = sys.argv[1] if len(sys.argv) > 1 else "issues_1.xlsx"
+REDMINE_FILE = sys.argv[1] if len(sys.argv) > 1 else "issues.xlsx"
 SHTATKA_FILE = "ШТАТКА_ДБ.xlsx"
 VYSV_FILE    = "ПРОЕКТЫ_Данные по высвобождению.xlsx"
 OUTPUT_FILE  = "data.json"
