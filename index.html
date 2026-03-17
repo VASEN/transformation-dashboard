@@ -776,9 +776,7 @@
       <span class="filter-label" style="margin-left:16px">Ответственный</span>
       <select class="filter-select" id="ownerFilter" onchange="applyExecFilters()"><option value="all">Все</option></select>
       <span class="separator"></span>
-      <div class="badge-row" id="status-badges-row">
-        <div class="info-badge"><div class="dot pulse" style="background:var(--danger)"></div>Просрочено: <span id="badge-overdue">—</span></div>
-      </div>
+      <div class="badge-row" id="status-badges-row"></div>
     </div>
 
     <!-- KPI CARDS -->
@@ -1552,8 +1550,6 @@ function renderStatusBadges(filtered) {
   ];
 
   const row = document.getElementById('status-badges-row');
-  // rebuild all badges except badge-overdue (last child)
-  const overdueEl = row.querySelector(':scope > .info-badge:last-child');
   row.innerHTML = '';
   ordered.forEach(status => {
     const color = STATUS_COLORS[status] || '#888';
@@ -1562,14 +1558,13 @@ function renderStatusBadges(filtered) {
     badge.innerHTML = `<div class="dot" style="background:${color}"></div>${status}: ${counts[status]}`;
     row.appendChild(badge);
   });
-  row.appendChild(overdueEl);
 }
 
 // ===== APPLY EXEC FILTERS =====
 function applyExecFilters() {
   const owner = document.getElementById('ownerFilter').value;
 
-  let filtered = allProjects.filter(p => p.deadline && p.deadline.split('.')[2] === '2026');
+  let filtered = allProjects.filter(p => !p.deadline || p.deadline.split('.')[2] === '2026');
   if (owner !== 'all') filtered = filtered.filter(p => p.owner_short === owner);
 
   const active = filtered.filter(p => p.status === 'В работе');
@@ -1596,7 +1591,6 @@ function applyExecFilters() {
 
   // Badges
   renderStatusBadges(filtered);
-  document.getElementById('badge-overdue').textContent = overdue;
 
   // Project table (sorted by deadline, all non-closed)
   renderProjTable(filtered);
@@ -1680,8 +1674,7 @@ function initDashboard(data) {
   }
 
   // Exec filter badges
-  renderStatusBadges(allProjects.filter(p => p.deadline && p.deadline.split('.')[2] === '2026'));
-  document.getElementById('badge-overdue').textContent = s.tasks_overdue ?? 0;
+  renderStatusBadges(allProjects.filter(p => !p.deadline || p.deadline.split('.')[2] === '2026'));
 
   // Projects screen badge
   document.getElementById('badge-projects-total').innerHTML =
