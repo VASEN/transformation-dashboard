@@ -282,6 +282,7 @@
   }
   .status-badge.active { background: rgba(0,229,255,0.1); color: var(--accent); }
   .status-badge.done { background: rgba(0,255,157,0.1); color: var(--accent3); }
+  .row-overdue { border-left: 3px solid #ff4444; background: rgba(255, 68, 68, 0.05); }
   .status-badge::before {
     content: '';
     width: 5px; height: 5px;
@@ -1047,11 +1048,13 @@ function renderProjTable(projects) {
 // ===== RENDER: FULL PROJECTS TABLE =====
 function renderFullProjTable(projects, filter = 'all') {
   const body = document.getElementById('fullProjTable');
+  const overdueProjects = new Set(allTasks.filter(t => t.urgency === 'overdue').map(t => t.project));
   const filtered = filter === 'all' ? projects : projects.filter(p => p.status === filter);
   body.innerHTML = filtered.map((p, i) => {
     const isActive = p.status === 'В работе';
+    const rowClass = overdueProjects.has(p.name) ? ' class="row-overdue"' : '';
     return `
-      <tr ondblclick="goToDetail(this.dataset.name)" data-name="${p.name.replace(/"/g,'&quot;')}" style="cursor:pointer" title="Двойной клик — детализация">
+      <tr ondblclick="goToDetail(this.dataset.name)" data-name="${p.name.replace(/"/g,'&quot;')}"${rowClass} style="cursor:pointer" title="Двойной клик — детализация">
         <td style="color:var(--text-dim);font-size:11px">${i + 1}\u003C/td>
         <td>${p.name}\u003C/td>
         <td><span class="status-badge ${isActive ? 'active' : 'done'}">${p.status}\u003C/span>\u003C/td>
