@@ -1564,7 +1564,7 @@ function renderStatusBadges(filtered) {
 function applyExecFilters() {
   const owner = document.getElementById('ownerFilter').value;
 
-  let filtered = allProjects.filter(p => !p.deadline || p.deadline.split('.')[2] === '2026');
+  let filtered = allProjects.filter(p => p.deadline && p.deadline.endsWith('2026'));
   if (owner !== 'all') filtered = filtered.filter(p => p.owner_short === owner);
 
   const active = filtered.filter(p => p.status === 'В работе');
@@ -1674,7 +1674,7 @@ function initDashboard(data) {
   }
 
   // Exec filter badges
-  renderStatusBadges(allProjects.filter(p => !p.deadline || p.deadline.split('.')[2] === '2026'));
+  renderStatusBadges(allProjects.filter(p => p.deadline && p.deadline.endsWith('2026')));
 
   // Projects screen badge
   document.getElementById('badge-projects-total').innerHTML =
