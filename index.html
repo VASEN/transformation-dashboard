@@ -762,9 +762,9 @@
   <!-- NAV -->
   <nav class="nav">
     <div class="nav-logo">РМ</div>
-    <button class="tab active" onclick="showTab('exec')">Обзор</button>
-    <button class="tab" onclick="showTab('detail')">Детализация</button>
-    <button class="tab" onclick="showTab('tasks')">Задачи</button>
+    <button class="tab active" data-tab="exec">Обзор</button>
+    <button class="tab" data-tab="detail">Детализация</button>
+    <button class="tab" data-tab="tasks">Задачи</button>
     <span class="separator"></span>
     <span id="updated-at" style="font-size:11px;color:var(--text-dim);padding-bottom:10px"></span>
   </nav>
@@ -776,7 +776,7 @@
       <span class="filter-label">Год</span>
       <span class="filter-select" style="cursor:default;pointer-events:none;opacity:0.9">2026</span>
       <span class="filter-label" style="margin-left:16px">Ответственный</span>
-      <select class="filter-select" id="ownerFilter" onchange="applyExecFilters()"><option value="all">Все</option></select>
+      <select class="filter-select" id="ownerFilter"><option value="all">Все</option></select>
       <span class="separator"></span>
       <div class="badge-row" id="status-badges-row"></div>
     </div>
@@ -899,7 +899,7 @@
   <div class="screen" id="screen-projects">
     <div class="filter-bar">
       <span class="filter-label">Статус</span>
-      <select class="filter-select" onchange="filterProjects(this.value)">
+      <select class="filter-select" id="projectStatusFilter">
         <option value="all">Все</option>
         <option value="В работе">В работе</option>
         <option value="Закрыто">Закрыто</option>
@@ -929,18 +929,18 @@
   <!-- ===================== SCREEN: TASKS ===================== -->
   <div class="screen" id="screen-tasks">
     <div class="tasks-stats">
-      <div class="stat-pill selected" id="spill-all" style="--c:var(--accent)" onclick="filterTasksByStat('all')"><span class="stat-pill-val" id="tasks-stat-total">—</span><div class="stat-pill-label">Всего задач</div></div>
-      <div class="stat-pill" id="spill-active" style="--c:var(--accent2)" onclick="filterTasksByStat('active')"><span class="stat-pill-val" id="tasks-stat-active">—</span><div class="stat-pill-label">В работе</div></div>
-      <div class="stat-pill" id="spill-closed" style="--c:var(--accent3)" onclick="filterTasksByStat('closed')"><span class="stat-pill-val" id="tasks-stat-closed">—</span><div class="stat-pill-label">Закрыто</div></div>
-      <div class="stat-pill" id="spill-deadline14" style="--c:var(--warn)" onclick="filterTasksByStat('deadline14')"><span class="stat-pill-val" id="tasks-stat-deadline14">—</span><div class="stat-pill-label">Срок ≤14 дней</div></div>
-      <div class="stat-pill" id="spill-overdue" style="--c:var(--danger)" onclick="filterTasksByStat('overdue')"><span class="stat-pill-val" id="tasks-stat-overdue">—</span><div class="stat-pill-label">Просрочено</div></div>
+      <div class="stat-pill selected" id="spill-all" style="--c:var(--accent)" data-filter="all"><span class="stat-pill-val" id="tasks-stat-total">—</span><div class="stat-pill-label">Всего задач</div></div>
+      <div class="stat-pill" id="spill-active" style="--c:var(--accent2)" data-filter="active"><span class="stat-pill-val" id="tasks-stat-active">—</span><div class="stat-pill-label">В работе</div></div>
+      <div class="stat-pill" id="spill-closed" style="--c:var(--accent3)" data-filter="closed"><span class="stat-pill-val" id="tasks-stat-closed">—</span><div class="stat-pill-label">Закрыто</div></div>
+      <div class="stat-pill" id="spill-deadline14" style="--c:var(--warn)" data-filter="deadline14"><span class="stat-pill-val" id="tasks-stat-deadline14">—</span><div class="stat-pill-label">Срок ≤14 дней</div></div>
+      <div class="stat-pill" id="spill-overdue" style="--c:var(--danger)" data-filter="overdue"><span class="stat-pill-val" id="tasks-stat-overdue">—</span><div class="stat-pill-label">Просрочено</div></div>
     </div>
 
     <div class="section-card">
       <div class="section-header">
         <span class="section-title">Список задач</span>
         <div class="badge-row">
-          <select class="filter-select" id="taskProjectFilter" onchange="filterTasks(this.value)">
+          <select class="filter-select" id="taskProjectFilter">
             <option value="all">Все проекты</option>
           </select>
         </div>
@@ -967,7 +967,7 @@
   <div class="screen" id="screen-detail">
     <div class="filter-bar">
       <span class="filter-label">Проект</span>
-      <select class="filter-select" onchange="loadDetail(this.value)" id="detailSelect">
+      <select class="filter-select" id="detailSelect">
         <!-- populated from data -->
       </select>
     </div>
@@ -1030,20 +1030,25 @@ function renderProjTable(projects) {
     .filter(p => p.status !== 'Закрыта')
     .sort((a, b) => parseDate(a.deadline) - parseDate(b.deadline));
   body.innerHTML = active.map(p => `
-    <tr ondblclick="goToDetail(this.dataset.name)" data-name="${p.name.replace(/"/g,'&quot;')}" style="cursor:pointer" title="Двойной клик — детализация">
-      <td>${p.name}\u003C/td>
-      <td style="color:var(--text-dim);font-size:12px">${p.owner_short || p.person || '—'}\u003C/td>
-      <td style="color:var(--text-dim);font-size:12px">${p.deadline || '—'}\u003C/td>
+    <tr data-name="${p.name.replace(/"/g,'&quot;')}" style="cursor:pointer" title="Двойной клик — детализация">
+      <td>${p.name}</td>
+      <td style="color:var(--text-dim);font-size:12px">${p.owner_short || p.person || '—'}</td>
+      <td style="color:var(--text-dim);font-size:12px">${p.deadline || '—'}</td>
       <td>
         <div class="progress-wrap">
           <div class="progress-bar">
-            <div class="progress-fill" style="width:${p.pct}%;background:${getProgressColor(p.pct)}">\u003C/div>
-          \u003C/div>
-          <span class="progress-pct" style="color:${getProgressColor(p.pct)}">${p.pct}%\u003C/span>
-        \u003C/div>
-      \u003C/td>
-    \u003C/tr>
+            <div class="progress-fill" style="width:${p.pct}%;background:${getProgressColor(p.pct)}"></div>
+          </div>
+          <span class="progress-pct" style="color:${getProgressColor(p.pct)}">${p.pct}%</span>
+        </div>
+      </td>
+    </tr>
   `).join('');
+
+  // Add double-click handlers
+  body.querySelectorAll('tr').forEach(tr => {
+    tr.addEventListener('dblclick', () => goToDetail(tr.dataset.name));
+  });
 }
 
 // ===== RENDER: FULL PROJECTS TABLE =====
@@ -1052,82 +1057,86 @@ function renderFullProjTable(projects, filter = 'all') {
   const overdueProjects = new Set(allTasks.filter(t => t.urgency === 'overdue' && t.status !== 'Закрыта').map(t => t.project));
   const todayProjects = new Set(allTasks.filter(t => t.urgency === 'today' && t.status !== 'Закрыта').map(t => t.project));
   const filtered = filter === 'all' ? projects : projects.filter(p => p.status === filter);
+
   body.innerHTML = filtered.map((p, i) => {
     const isActive = p.status === 'В работе';
     const rowClass = overdueProjects.has(p.name) ? 'row-overdue'
       : todayProjects.has(p.name) ? 'row-today'
       : '';
-      return `
-  <tr ondblclick="goToDetail(this.dataset.name)" data-name="${p.name.replace(/"/g,'&quot;')}"${rowClass ? ' class="' + rowClass + '"' : ''} style="cursor:pointer" title="Двойной клик — детализация">
-    <td style="color:var(--text-dim);font-size:11px">${i + 1}\\u003C/td>
-    <td>${p.name}\\u003C/td>
-    <td><span class="status-badge ${isActive ? 'active' : 'done'}">${p.status}\\u003C/span>\\u003C/td>
-    <td style="color:var(--text-dim);font-size:12px">${p.owner_short || p.person || '—'}\\u003C/td>
-    <td style="color:var(--text-dim);font-size:12px">${p.person || '—'}\\u003C/td>
-    <td style="color:var(--text-dim);font-size:12px">${p.deadline || '—'}\\u003C/td>
-    <td>
-      <div class="progress-wrap">
-        <div class="progress-bar">
-          <div class="progress-fill" style="width:${p.pct}%;background:${getProgressColor(p.pct)}">\\u003C/div>
-        \\u003C/div>
-        <span class="progress-pct" style="color:${getProgressColor(p.pct)}">${p.pct}%\\u003C/span>
-      \\u003C/div>
-    \\u003C/td>
-  \\u003C/tr>
-`;
+    return `
+      <tr data-name="${p.name.replace(/"/g,'&quot;')}"${rowClass ? ' class="' + rowClass + '"' : ''} style="cursor:pointer" title="Двойной клик — детализация">
+        <td style="color:var(--text-dim);font-size:11px">${i + 1}</td>
+        <td>${p.name}</td>
+        <td><span class="status-badge ${isActive ? 'active' : 'done'}">${p.status}</span></td>
+        <td style="color:var(--text-dim);font-size:12px">${p.owner_short || p.person || '—'}</td>
+        <td style="color:var(--text-dim);font-size:12px">${p.deadline || '—'}</td>
+        <td>
+          <div class="progress-wrap">
+            <div class="progress-bar">
+              <div class="progress-fill" style="width:${p.pct}%;background:${getProgressColor(p.pct)}"></div>
+            </div>
+            <span class="progress-pct" style="color:${getProgressColor(p.pct)}">${p.pct}%</span>
+          </div>
+        </td>
+      </tr>
+    `;
   }).join('');
-}
 
-function filterProjects(val) { renderFullProjTable(allProjects, val); }
+  // Add double-click handlers
+  body.querySelectorAll('tr').forEach(tr => {
+    tr.addEventListener('dblclick', () => goToDetail(tr.dataset.name));
+  });
+}
 
 // ===== RENDER: GAUGES =====
 function renderGauges(curators) {
   const grid = document.getElementById('gaugesGrid');
-  // cx=50, cy=50, r=38 → top of arc y=12, with stroke-width=8 extends to y=8
-  // viewBox "0 4 100 54": clip 4px from top (safe margin), show y=4..58
-  // gauge-wrap height 64px → scale ≈ 64/54 = 1.185 → rendered arc fills nicely
-  const r = 38, cx = 50, cy = 50;
+  // Используем единые константы для всех дуг
+  const radius = 40, centerX = 50, centerY = 55;
+
   grid.innerHTML = curators.map(g => {
     const color = getGaugeColor(g.pct_vysv);
     const pct = Math.min(g.pct_vysv, 200) / 200;
-    const r = 40, cx = 50, cy = 55;
     const startAngle = -Math.PI;
     const endAngle = startAngle + pct * Math.PI;
-    const x1 = cx + r * Math.cos(startAngle), y1 = cy + r * Math.sin(startAngle);
-    const x2 = cx + r * Math.cos(endAngle), y2 = cy + r * Math.sin(endAngle);
+    const x1 = centerX + radius * Math.cos(startAngle);
+    const y1 = centerY + radius * Math.sin(startAngle);
+    const x2 = centerX + radius * Math.cos(endAngle);
+    const y2 = centerY + radius * Math.sin(endAngle);
     const largeArc = 0;
     const vysv = Math.round(g.vysv_units * 10) / 10;
     const plan = g.plan_minus20 != null ? Math.round(g.plan_minus20 * 10) / 10 : '—';
+
     return `
       <div class="gauge-card" data-curator-name="${g.name}">
-        <div class="gauge-name">${g.name}\u003C/div>
+        <div class="gauge-name">${g.name}</div>
         <div class="gauge-wrap">
           <svg class="gauge-svg" viewBox="0 0 100 65">
-            <path d="M ${cx - r},${cy} A ${r},${r} 0 0 1 ${cx + r},${cy}"
+            <path d="M ${centerX - radius},${centerY} A ${radius},${radius} 0 0 1 ${centerX + radius},${centerY}"
               fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="8" stroke-linecap="round"/>
-            <path d="M ${x1},${y1} A ${r},${r} 0 ${largeArc} 1 ${x2},${y2}"
+            <path d="M ${x1},${y1} A ${radius},${radius} 0 ${largeArc} 1 ${x2},${y2}"
               fill="none" stroke="${color}" stroke-width="8" stroke-linecap="round"
               style="filter:drop-shadow(0 0 6px ${color})"/>
             <text x="50" y="52" text-anchor="middle" font-family="Orbitron,sans-serif"
-              font-size="13" font-weight="700" fill="${color}">${g.pct_vysv}%\u003C/text>
-          \u003C/svg>
-        \u003C/div>
+              font-size="13" font-weight="700" fill="${color}">${g.pct_vysv}%</text>
+          </svg>
+        </div>
         <div class="gauge-tooltip">
-          <div class="gauge-tooltip-title">${g.name}\u003C/div>
-          <div class="gauge-tooltip-row"><span>Численность\u003C/span><span>${g.headcount} чел.\u003C/span>\u003C/div>
-          <div class="gauge-tooltip-row"><span>ККП план\u003C/span><span>${g.kkp}\u003C/span>\u003C/div>
-          <div class="gauge-tooltip-row"><span>ККП факт\u003C/span><span>${g.kkp_fact}\u003C/span>\u003C/div>
-          <div class="gauge-tooltip-row"><span>РЦТ план\u003C/span><span>${g.rct}\u003C/span>\u003C/div>
-          <div class="gauge-tooltip-row"><span>РЦТ факт\u003C/span><span>${g.rct_fact}\u003C/span>\u003C/div>
+          <div class="gauge-tooltip-title">${g.name}</div>
+          <div class="gauge-tooltip-row"><span>Численность</span><span>${g.headcount} чел.</span></div>
+          <div class="gauge-tooltip-row"><span>ККП план</span><span>${g.kkp}</span></div>
+          <div class="gauge-tooltip-row"><span>ККП факт</span><span>${g.kkp_fact}</span></div>
+          <div class="gauge-tooltip-row"><span>РЦТ план</span><span>${g.rct}</span></div>
+          <div class="gauge-tooltip-row"><span>РЦТ факт</span><span>${g.rct_fact}</span></div>
           <hr class="gauge-tooltip-divider">
-          <div class="gauge-tooltip-row"><span>Итого факт\u003C/span><span>${g.fact_total}\u003C/span>\u003C/div>
-          <div class="gauge-tooltip-row"><span>Вакансии\u003C/span><span>${g.vacancies}\u003C/span>\u003C/div>
-          <div class="gauge-tooltip-row"><span>План −20%\u003C/span><span>${plan} ед.\u003C/span>\u003C/div>
-          <div class="gauge-tooltip-row"><span>Высвобождение\u003C/span><span>${vysv} ед.\u003C/span>\u003C/div>
+          <div class="gauge-tooltip-row"><span>Итого факт</span><span>${g.fact_total}</span></div>
+          <div class="gauge-tooltip-row"><span>Вакансии</span><span>${g.vacancies}</span></div>
+          <div class="gauge-tooltip-row"><span>План −20%</span><span>${plan} ед.</span></div>
+          <div class="gauge-tooltip-row"><span>Высвобождение</span><span>${vysv} ед.</span></div>
           <hr class="gauge-tooltip-divider">
-          <div class="gauge-tooltip-row accent"><span>% высвобождения\u003C/span><span>${g.pct_vysv}%\u003C/span>\u003C/div>
-        \u003C/div>
-      \u003C/div>
+          <div class="gauge-tooltip-row accent"><span>% высвобождения</span><span>${g.pct_vysv}%</span></div>
+        </div>
+      </div>
     `;
   }).join('');
 }
@@ -1178,39 +1187,39 @@ function renderDeadlineMap(tasks) {
   const days = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
   map.innerHTML = `
     <div class="week-row">
-      <div class="week-label">\u003C/div>
+      <div class="week-label"></div>
       <div class="week-bar-wrap">
-        ${days.map(d => `<div style="flex:1;text-align:center;font-size:9px;color:var(--text-dim);letter-spacing:0.5px">${d}\u003C/div>`).join('')}
-      \u003C/div>
-      <div class="week-count">\u003C/div>
-    \u003C/div>
+        ${days.map(d => `<div style="flex:1;text-align:center;font-size:9px;color:var(--text-dim);letter-spacing:0.5px">${d}</div>`).join('')}
+      </div>
+      <div class="week-count"></div>
+    </div>
   ` + weeks.map(w => {
     const maxDay = Math.max(...w.counts, 1);
     return `
       <div class="week-row">
-        <div class="week-label">${w.label}\u003C/div>
+        <div class="week-label">${w.label}</div>
         <div class="week-bar-wrap">
           ${w.counts.map(c => {
             const alpha = c > 0 ? (c / maxDay * 0.7 + 0.15) : 0;
             const col = c >= 5 ? `rgba(255,59,92,${alpha})` : c >= 3 ? `rgba(255,184,0,${alpha})` : `rgba(0,229,255,${alpha})`;
-            return `<div class="day-cell" style="background:${col}" title="${c} задач">\u003C/div>`;
+            return `<div class="day-cell" style="background:${col}" title="${c} задач"></div>`;
           }).join('')}
-        \u003C/div>
-        <div class="week-count" style="color:${w.total >= 15 ? 'var(--danger)' : w.total >= 8 ? 'var(--warn)' : 'var(--text-dim)'}">${w.total}\u003C/div>
-      \u003C/div>
+        </div>
+        <div class="week-count" style="color:${w.total >= 15 ? 'var(--danger)' : w.total >= 8 ? 'var(--warn)' : 'var(--text-dim)'}">${w.total}</div>
+      </div>
     `;
   }).join('') + `
     <div style="display:flex;gap:14px;padding:8px 0 2px;margin-top:4px;border-top:1px solid rgba(255,255,255,0.06)">
       <div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-dim)">
-        <span style="width:10px;height:10px;border-radius:2px;background:rgba(0,229,255,0.55);display:inline-block;flex-shrink:0">\u003C/span>1–2 задачи
-      \u003C/div>
+        <span style="width:10px;height:10px;border-radius:2px;background:rgba(0,229,255,0.55);display:inline-block;flex-shrink:0"></span>1–2 задачи
+      </div>
       <div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-dim)">
-        <span style="width:10px;height:10px;border-radius:2px;background:rgba(255,184,0,0.65);display:inline-block;flex-shrink:0">\u003C/span>3–4 задачи
-      \u003C/div>
+        <span style="width:10px;height:10px;border-radius:2px;background:rgba(255,184,0,0.65);display:inline-block;flex-shrink:0"></span>3–4 задачи
+      </div>
       <div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-dim)">
-        <span style="width:10px;height:10px;border-radius:2px;background:rgba(255,59,92,0.65);display:inline-block;flex-shrink:0">\u003C/span>5+ задач
-      \u003C/div>
-    \u003C/div>
+        <span style="width:10px;height:10px;border-radius:2px;background:rgba(255,59,92,0.65);display:inline-block;flex-shrink:0"></span>5+ задач
+      </div>
+    </div>
   `;
 }
 
@@ -1218,6 +1227,7 @@ function renderDeadlineMap(tasks) {
 function renderTasks(tasks, filter = 'all') {
   const body = document.getElementById('taskTableBody');
   const filtered = (filter === 'all') ? tasks : tasks.filter(t => t.project === filter);
+
   body.innerHTML = filtered.map(t => {
     const ps = getProjectStyle(t.project);
     const isClosed = t.status === 'Закрыта';
@@ -1231,6 +1241,7 @@ function renderTasks(tasks, filter = 'all') {
       : t.urgency === 'today'   ? '🔴 '
       : t.urgency === 'urgent'  ? '🟡 ' : '';
     const statusColor = t.status === 'В работе' ? 'var(--accent)' : 'var(--text-dim)';
+
     const daysLeft = (() => {
       if (!t.deadline || isClosed) return '—';
       const today = new Date(); today.setHours(0,0,0,0);
@@ -1239,23 +1250,18 @@ function renderTasks(tasks, filter = 'all') {
       if (diff < 0)  return `<span style="color:var(--danger)">−${Math.abs(diff)} дн</span>`;
       return `<span style="color:var(--text-dim)">+${diff} дн</span>`;
     })();
+
     return `
       <tr>
-        <td><span class="project-tag" style="background:${ps.bg};color:${ps.color}">${t.project}\u003C/span>\u003C/td>
-        <td style="max-width:280px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t.theme}\u003C/td>
-        <td><span style="color:${statusColor};font-size:12px">${t.status}\u003C/span>\u003C/td>
-        <td style="color:var(--text-dim);font-size:12px">${t.executor_short || t.person || '—'}\u003C/td>
-        <td><span class="deadline-chip ${urgencyLabel}">${urgencyIcon}${t.deadline || '—'}\u003C/span>\u003C/td>
-        <td style="font-size:12px;text-align:right;padding-right:8px">${daysLeft}\u003C/td>
-      \u003C/tr>
+        <td><span class="project-tag" style="background:${ps.bg};color:${ps.color}">${t.project}</span></td>
+        <td style="max-width:280px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t.theme}</td>
+        <td><span style="color:${statusColor};font-size:12px">${t.status}</span></td>
+        <td style="color:var(--text-dim);font-size:12px">${t.executor_short || t.person || '—'}</td>
+        <td><span class="deadline-chip ${urgencyLabel}">${urgencyIcon}${t.deadline || '—'}</span></td>
+        <td style="font-size:12px;text-align:right;padding-right:8px">${daysLeft}</td>
+      </tr>
     `;
   }).join('');
-}
-
-function filterTasks(val) {
-  document.querySelectorAll('.stat-pill').forEach(p => p.classList.remove('selected'));
-  document.getElementById('spill-all').classList.add('selected');
-  renderTasks(allTasks2026, val);
 }
 
 // ===== FILTER TASKS BY STAT PILL =====
@@ -1263,6 +1269,7 @@ function filterTasksByStat(type) {
   document.querySelectorAll('.stat-pill').forEach(p => p.classList.remove('selected'));
   document.getElementById('spill-' + type).classList.add('selected');
   document.getElementById('taskProjectFilter').value = 'all';
+
   const byProjectThenDeadline = (a, b) =>
     (a.project || '').localeCompare(b.project || '', 'ru') || parseDate(a.deadline) - parseDate(b.deadline);
   const byDeadline = (a, b) => parseDate(a.deadline) - parseDate(b.deadline);
@@ -1314,6 +1321,7 @@ function loadDetail(name) {
   const indicatorsArr = d.indicators
     ? d.indicators.split('\n').map(s => s.trim()).filter(Boolean)
     : [];
+
   // Determine active ETAPs from tasks (tasks "В работе" grouped by parent_id)
   const statusText = (d.status_text || '').trim();
   const currentStages = (() => {
@@ -1363,6 +1371,7 @@ function loadDetail(name) {
     });
     return stages;
   })();
+
   // Full status lines for block 2
   const statusFullLines = statusText
     ? statusText.split('\n').map(s => s.trim()).filter(Boolean)
@@ -1379,86 +1388,86 @@ function loadDetail(name) {
     <!-- LEFT: info + team -->
     <div style="display:flex;flex-direction:column;gap:16px">
       <div class="info-block">
-        <div class="info-label">Держатель проекта\u003C/div>
-        <div class="info-value" style="font-size:20px;font-weight:700">${d.owner_short || d.owner || '—'}\u003C/div>
-        <div class="info-label">Руководитель проекта\u003C/div>
-        <div class="info-value" style="color:var(--accent2);font-size:20px;font-weight:700">${d.manager_short || d.manager || '—'}\u003C/div>
-        <div class="info-label">Срок завершения\u003C/div>
-        <div class="info-value" style="color:var(--warn);font-size:20px;font-weight:700">${d.deadline || '—'}\u003C/div>
+        <div class="info-label">Держатель проекта</div>
+        <div class="info-value" style="font-size:20px;font-weight:700">${d.owner_short || d.owner || '—'}</div>
+        <div class="info-label">Руководитель проекта</div>
+        <div class="info-value" style="color:var(--accent2);font-size:20px;font-weight:700">${d.manager_short || d.manager || '—'}</div>
+        <div class="info-label">Срок завершения</div>
+        <div class="info-value" style="color:var(--warn);font-size:20px;font-weight:700">${d.deadline || '—'}</div>
 
         <div style="margin-top:12px">
-          <div class="section-title" style="margin-bottom:12px">Высвобождение часов\u003C/div>
+          <div class="section-title" style="margin-bottom:12px">Высвобождение часов</div>
           <div class="hours-visual">
-            <div class="hour-box"><div class="hour-num" style="color:var(--text-dim)">${planH}\u003C/div><div class="hour-lbl">план всего\u003C/div>\u003C/div>
-            <div class="hour-box"><div class="hour-num" style="color:var(--accent2)">${planUnits}\u003C/div><div class="hour-lbl">план шт.ед.\u003C/div>\u003C/div>
-            <div class="hour-box"><div class="hour-num">${planExt}\u003C/div><div class="hour-lbl">внешнее\u003C/div>\u003C/div>
-            <div class="hour-box"><div class="hour-num" style="color:${factColor}">${factH}\u003C/div><div class="hour-lbl">факт\u003C/div>\u003C/div>
-          \u003C/div>
-        \u003C/div>
-      \u003C/div>
+            <div class="hour-box"><div class="hour-num" style="color:var(--text-dim)">${planH}</div><div class="hour-lbl">план всего</div></div>
+            <div class="hour-box"><div class="hour-num" style="color:var(--accent2)">${planUnits}</div><div class="hour-lbl">план шт.ед.</div></div>
+            <div class="hour-box"><div class="hour-num">${planExt}</div><div class="hour-lbl">внешнее</div></div>
+            <div class="hour-box"><div class="hour-num" style="color:${factColor}">${factH}</div><div class="hour-lbl">факт</div></div>
+          </div>
+        </div>
+      </div>
 
       <div class="info-block">
-        <div class="section-title" style="margin-bottom:12px">Команда проекта\u003C/div>
+        <div class="section-title" style="margin-bottom:12px">Команда проекта</div>
         ${teamArr.length
-          ? teamArr.map(m => `<div style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:13px">${m}\u003C/div>`).join('')
-          : '<div style="color:var(--text-dim);font-size:13px">—\u003C/div>'}
-      \u003C/div>
-    \u003C/div>
+          ? teamArr.map(m => `<div style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:13px">${m}</div>`).join('')
+          : '<div style="color:var(--text-dim);font-size:13px">—</div>'}
+      </div>
+    </div>
 
     <!-- MIDDLE: status + goal -->
     <div style="display:flex;flex-direction:column;gap:16px">
       <div class="info-block">
-        <div class="section-title" style="margin-bottom:12px">Актуальный статус\u003C/div>
+        <div class="section-title" style="margin-bottom:12px">Актуальный статус</div>
 
         <!-- Sub-block 1: current stages -->
         <div style="margin-bottom:12px">
-          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--accent);text-transform:uppercase;margin-bottom:8px">Текущий этап\u003C/div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--accent);text-transform:uppercase;margin-bottom:8px">Текущий этап</div>
           ${currentStages.length
-            ? currentStages.map(s => `<div style="padding:9px 14px;background:rgba(0,229,255,0.09);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;margin-bottom:6px;font-size:13px;line-height:1.5;font-weight:500">${s}\u003C/div>`).join('')
-            : `<div style="padding:9px 14px;background:rgba(255,255,255,0.04);border-left:3px solid rgba(255,255,255,0.15);border-radius:0 8px 8px 0;font-size:13px;color:var(--text-dim)">Нет данных\u003C/div>`}
-        \u003C/div>
+            ? currentStages.map(s => `<div style="padding:9px 14px;background:rgba(0,229,255,0.09);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;margin-bottom:6px;font-size:13px;line-height:1.5;font-weight:500">${s}</div>`).join('')
+            : `<div style="padding:9px 14px;background:rgba(255,255,255,0.04);border-left:3px solid rgba(255,255,255,0.15);border-radius:0 8px 8px 0;font-size:13px;color:var(--text-dim)">Нет данных</div>`}
+        </div>
 
         <!-- Sub-block 2: full status -->
         <div>
-          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--accent2);text-transform:uppercase;margin-bottom:8px">Статус проекта\u003C/div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--accent2);text-transform:uppercase;margin-bottom:8px">Статус проекта</div>
           ${statusFullLines.length
             ? statusFullLines.map(s => {
                 const isStage = /^(ЭТАП\s+\d+|Подпроект|Текущий этап)/i.test(s);
                 const isBullet = /^\d+\./.test(s);
                 const bg = isStage ? 'rgba(100,220,100,0.07)' : 'transparent';
                 const border = isStage ? 'border-left:2px solid var(--accent2);padding-left:10px;' : isBullet ? 'padding-left:14px;' : '';
-                return `<div style="font-size:12px;line-height:1.6;${border}background:${bg};border-radius:4px;margin-bottom:3px;color:${isStage?'var(--accent2)':'var(--text)'}">${s}\u003C/div>`;
+                return `<div style="font-size:12px;line-height:1.6;${border}background:${bg};border-radius:4px;margin-bottom:3px;color:${isStage?'var(--accent2)':'var(--text)'}">${s}</div>`;
               }).join('')
-            : `<div style="font-size:13px;color:var(--text-dim)">Нет данных\u003C/div>`}
-        \u003C/div>
-      \u003C/div>
+            : `<div style="font-size:13px;color:var(--text-dim)">Нет данных</div>`}
+        </div>
+      </div>
 
       <div class="info-block" style="flex:1">
-        <div class="section-title" style="margin-bottom:16px">Критически важная цель\u003C/div>
-        <div class="big-goal">${d.goal || '—'}\u003C/div>
-      \u003C/div>
+        <div class="section-title" style="margin-bottom:16px">Критически важная цель</div>
+        <div class="big-goal">${d.goal || '—'}</div>
+      </div>
 
       ${problemArr.length ? `
       <div class="info-block">
-        <div class="section-title" style="margin-bottom:12px">Описание проекта\u003C/div>
-        ${problemArr.map((s, i) => `<div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)"><span style="color:var(--accent);font-weight:700;font-size:11px">${i+1}.\u003C/span><span style="font-size:13px">${s}\u003C/span>\u003C/div>`).join('')}
-      \u003C/div>` : ''}
-    \u003C/div>
+        <div class="section-title" style="margin-bottom:12px">Описание проекта</div>
+        ${problemArr.map((s, i) => `<div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)"><span style="color:var(--accent);font-weight:700;font-size:11px">${i+1}.</span><span style="font-size:13px">${s}</span></div>`).join('')}
+      </div>` : ''}
+    </div>
 
     <!-- RIGHT: indicators -->
     <div class="info-block">
-      <div class="section-title" style="margin-bottom:16px">Опережающие показатели\u003C/div>
+      <div class="section-title" style="margin-bottom:16px">Опережающие показатели</div>
       <div class="indicators-list">
         ${indicatorsArr.length
           ? indicatorsArr.map((ind, i) => `
             <div class="indicator-item">
-              <span class="indicator-num">${i + 1}\u003C/span>
-              <span class="indicator-text">${ind}\u003C/span>
-            \u003C/div>
+              <span class="indicator-num">${i + 1}</span>
+              <span class="indicator-text">${ind}</span>
+            </div>
           `).join('')
-          : '<div style="color:var(--text-dim);font-size:13px">—\u003C/div>'}
-      \u003C/div>
-    \u003C/div>
+          : '<div style="color:var(--text-dim);font-size:13px">—</div>'}
+      </div>
+    </div>
   `;
 }
 
@@ -1485,17 +1494,6 @@ function populateOwnerFilter(projects) {
     const opt = document.createElement('option');
     opt.value = name;
     opt.textContent = name;
-    sel.appendChild(opt);
-  });
-}
-
-// ===== POPULATE CURATOR FILTER =====
-function populateCuratorFilter(curators) {
-  const sel = document.getElementById('curatorFilter');
-  curators.forEach(c => {
-    const opt = document.createElement('option');
-    opt.value = c.name;
-    opt.textContent = c.name;
     sel.appendChild(opt);
   });
 }
@@ -1581,7 +1579,7 @@ function applyExecFilters() {
   // KPI cards
   document.getElementById('kpi-projects').textContent = filtered.length;
   document.getElementById('kpi-projects-sub').innerHTML =
-    `<span class="trend up">${active.length} активных\u003C/span>&nbsp;/ ${closed.length} закрыто`;
+    `<span class="trend up">${active.length} активных</span>&nbsp;/ ${closed.length} закрыто`;
 
   const avgPct = active.length
     ? Math.round(active.reduce((s, p) => s + (p.pct || 0), 0) / active.length)
@@ -1593,8 +1591,8 @@ function applyExecFilters() {
   document.getElementById('kpi-deadline14').textContent = deadline14;
   document.getElementById('kpi-overdue').textContent = overdue;
   document.getElementById('kpi-overdue-sub').innerHTML = overdue === 0
-    ? `<span class="trend up">✓\u003C/span> Всё в норме`
-    : `<span class="trend down">!\u003C/span> Требует внимания`;
+    ? `<span class="trend up">✓</span> Всё в норме`
+    : `<span class="trend down">!</span> Требует внимания`;
 
   // Badges
   renderStatusBadges(filtered);
@@ -1610,7 +1608,7 @@ function applyExecFilters() {
 function showTab(name) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  event.target.classList.add('active');
+  document.querySelector(`.tab[data-tab="${name}"]`).classList.add('active');
   document.getElementById('screen-' + name).classList.add('active');
 }
 
@@ -1618,7 +1616,7 @@ function showTab(name) {
 function goToDetail(name) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  const detailTab = document.querySelector('.tab[onclick="showTab(\'detail\')"]');
+  const detailTab = document.querySelector('.tab[data-tab="detail"]');
   if (detailTab) detailTab.classList.add('active');
   document.getElementById('screen-detail').classList.add('active');
   const sel = document.getElementById('detailSelect');
@@ -1644,10 +1642,12 @@ function initDashboard(data) {
   allCurators = data.curators;
 
   // Gauges (Высвобождение — never filtered)
+  renderGauges(data.curators);
+
   // KPI cards
   document.getElementById('kpi-projects').textContent = s.projects_total;
   document.getElementById('kpi-projects-sub').innerHTML =
-    `<span class="trend up">${s.projects_active} активных\u003C/span>&nbsp;/ ${s.projects_closed} закрыто`;
+    `<span class="trend up">${s.projects_active} активных</span>&nbsp;/ ${s.projects_closed} закрыто`;
 
   const activeProjs = data.projects.filter(p => p.status === 'В работе');
   const avgPct = activeProjs.length
@@ -1661,31 +1661,25 @@ function initDashboard(data) {
   if (overall) {
     document.getElementById('kpi-vysv').textContent = overall.pct_vysv + '%';
     document.getElementById('kpi-vysv-sub').innerHTML =
-      `<span class="trend ${overall.pct_vysv >= 100 ? 'up' : 'down'}">${overall.pct_vysv >= 100 ? '↑' : '↓'} план\u003C/span> ${overall.name}`;
+      `<span class="trend ${overall.pct_vysv >= 100 ? 'up' : 'down'}">${overall.pct_vysv >= 100 ? '↑' : '↓'} план</span> ${overall.name}`;
   }
-  renderGauges(data.curators);
 
   // Projects screen badge (total unfiltered)
   document.getElementById('badge-projects-total').innerHTML =
-    `<div class="dot" style="background:var(--accent)">\u003C/div>Всего: ${s.projects_total}`;
+    `<div class="dot" style="background:var(--accent)"></div>Всего: ${s.projects_total}`;
 
   // Tasks screen stats (from summary — not filtered)
-
   document.getElementById('kpi-deadline14').textContent = s.tasks_deadline_14 ?? '—';
   document.getElementById('kpi-overdue').textContent = s.tasks_overdue ?? '—';
 
   if ((s.tasks_overdue || 0) === 0) {
-    document.getElementById('kpi-overdue-sub').innerHTML = `<span class="trend up">✓\u003C/span> Всё в норме`;
+    document.getElementById('kpi-overdue-sub').innerHTML = `<span class="trend up">✓</span> Всё в норме`;
   } else {
-    document.getElementById('kpi-overdue-sub').innerHTML = `<span class="trend down">!\u003C/span> Требует внимания`;
+    document.getElementById('kpi-overdue-sub').innerHTML = `<span class="trend down">!</span> Требует внимания`;
   }
 
   // Exec filter badges
   renderStatusBadges(allProjects.filter(p => p.deadline && p.deadline.endsWith('2026')));
-
-  // Projects screen badge
-  document.getElementById('badge-projects-total').innerHTML =
-    `<div class="dot" style="background:var(--accent)">\u003C/div>Всего: ${s.projects_total}`;
 
   // Tasks stats (computed from 2026 tasks only)
   const tTotal = allTasks2026.length;
@@ -1711,6 +1705,39 @@ function initDashboard(data) {
 
   // Apply exec filters (uses default year/owner=all)
   applyExecFilters();
+}
+
+// ===== EVENT LISTENERS SETUP =====
+function setupEventListeners() {
+  // Tab buttons
+  document.querySelectorAll('.tab[data-tab]').forEach(tab => {
+    tab.addEventListener('click', () => showTab(tab.dataset.tab));
+  });
+
+  // Owner filter
+  document.getElementById('ownerFilter').addEventListener('change', applyExecFilters);
+
+  // Project status filter
+  document.getElementById('projectStatusFilter').addEventListener('change', (e) => {
+    renderFullProjTable(allProjects, e.target.value);
+  });
+
+  // Task project filter
+  document.getElementById('taskProjectFilter').addEventListener('change', (e) => {
+    document.querySelectorAll('.stat-pill').forEach(p => p.classList.remove('selected'));
+    document.getElementById('spill-all').classList.add('selected');
+    renderTasks(allTasks2026, e.target.value);
+  });
+
+  // Detail select
+  document.getElementById('detailSelect').addEventListener('change', (e) => {
+    loadDetail(e.target.value);
+  });
+
+  // Stat pills
+  document.querySelectorAll('.stat-pill[data-filter]').forEach(pill => {
+    pill.addEventListener('click', () => filterTasksByStat(pill.dataset.filter));
+  });
 }
 
 // ===== FETCH DATA =====
@@ -1748,6 +1775,7 @@ async function loadData() {
     }
 
     initDashboard(data);
+    setupEventListeners();
     loader.style.display = 'none';
 
   } catch (err) {
@@ -1758,11 +1786,12 @@ async function loadData() {
         <pre style="font-size:10px;color:var(--text-dim);font-family:'Exo 2',sans-serif;
                     margin-top:12px;white-space:pre-wrap;text-align:left;
                     background:rgba(255,255,255,0.06);padding:10px;border-radius:8px;
-                    word-break:break-all">${err.message}\u003C/pre>
-      \u003C/div>`;
+                    word-break:break-all">${err.message}</pre>
+      </div>`;
   }
 }
 
+// Start
 loadData();
 </script>
 </body>
