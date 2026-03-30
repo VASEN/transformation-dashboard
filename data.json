@@ -1,16 +1,16 @@
 {
-  "updated_at": "30.03.2026 09:27",
+  "updated_at": "30.03.2026 09:39",
   "summary": {
     "projects_total": 36,
     "projects_active": 22,
     "projects_closed": 14,
     "projects_avg_pct": 12,
     "tasks_total": 400,
-    "tasks_active": 234,
-    "tasks_closed": 166,
+    "tasks_active": 233,
+    "tasks_closed": 167,
     "tasks_deadline_5": 12,
-    "tasks_deadline_14": 28,
-    "tasks_overdue": 9,
+    "tasks_deadline_14": 27,
+    "tasks_overdue": 8,
     "tasks_today": 2,
     "vysv_pct_total": 128
   },
@@ -433,7 +433,7 @@
       "manager_short": "Заичко В.В.",
       "deadline": "30.09.2026",
       "start_date": "26.01.2026",
-      "pct": 5,
+      "pct": 10,
       "project_type": "Межведомственный",
       "goal": "Снижение трудозатрат со 100% до 80% к 30.09.2026",
       "indicators": "1. Автоматизация подготовки отчетов KPI\n2. Перевод кадрового документооборота в электронную форму",
@@ -2078,7 +2078,7 @@
       "executor_short": "Заичко В.В.",
       "deadline": "28.08.2026",
       "urgency": "ok",
-      "pct": 0,
+      "pct": 14,
       "parent_id": 10862
     },
     {
@@ -4079,12 +4079,12 @@
       "id": 12713,
       "project": "Оптимизация организационного блока РЦТ",
       "theme": "ЭТАП 1. Анализ методики оценки KPI (месяц, квартал, год)",
-      "status": "В работе",
+      "status": "Закрыта",
       "executor": "Заичко Валерий Валерьевич",
       "executor_short": "Заичко В.В.",
       "deadline": "27.03.2026",
       "urgency": "overdue",
-      "pct": 0,
+      "pct": 100,
       "parent_id": 12714
     },
     {
@@ -6882,7 +6882,7 @@
       "executor_short": "Заичко В.В.",
       "deadline": "28.08.2026",
       "urgency": "ok",
-      "pct": 0,
+      "pct": 14,
       "parent_id": 10862
     },
     {
@@ -8881,12 +8881,12 @@
       "id": 12713,
       "project": "Оптимизация организационного блока РЦТ",
       "theme": "ЭТАП 1. Анализ методики оценки KPI (месяц, квартал, год)",
-      "status": "В работе",
+      "status": "Закрыта",
       "executor": "Заичко Валерий Валерьевич",
       "executor_short": "Заичко В.В.",
       "deadline": "27.03.2026",
       "urgency": "overdue",
-      "pct": 0,
+      "pct": 100,
       "parent_id": 12714
     },
     {
