@@ -1,17 +1,17 @@
 {
-  "updated_at": "27.03.2026 08:53",
+  "updated_at": "30.03.2026 09:27",
   "summary": {
     "projects_total": 36,
     "projects_active": 22,
     "projects_closed": 14,
-    "projects_avg_pct": 11,
+    "projects_avg_pct": 12,
     "tasks_total": 400,
-    "tasks_active": 235,
-    "tasks_closed": 165,
-    "tasks_deadline_5": 17,
+    "tasks_active": 234,
+    "tasks_closed": 166,
+    "tasks_deadline_5": 12,
     "tasks_deadline_14": 28,
-    "tasks_overdue": 2,
-    "tasks_today": 5,
+    "tasks_overdue": 9,
+    "tasks_today": 2,
     "vysv_pct_total": 128
   },
   "projects": [
@@ -385,7 +385,7 @@
       "manager_short": "Кукарцева О.В.",
       "deadline": "30.11.2026",
       "start_date": "01.02.2026",
-      "pct": 16,
+      "pct": 19,
       "project_type": "Межведомственный",
       "goal": "Сокращение внутренних трудозатрат со 100% до 80% до 30.11.2026",
       "indicators": "1. Автоматическое заполнение в ЕАСУЗ сроков по основным этапам проведения закупочной процедуры \n2. Автоматическая интеграция данных по договору и дополнительным соглашениям из ПИК в ЕАСУЗ\n3. Настройка получения данных из ГИС РЭБ\n4. Предзаполнение полей в ЕАСУЗ автотекстом",
@@ -426,7 +426,7 @@
     {
       "id": 10862,
       "name": "Оптимизация организационного блока РЦТ",
-      "status": "В работе",
+      "status": "Выполнено",
       "owner": "Родевальд (ККП) Станислав Евгеньевич",
       "owner_short": "Родевальд С.Е.",
       "manager": "Заичко Валерий Валерьевич",
@@ -1209,7 +1209,7 @@
       "id": 12924,
       "project": "ИИ проверка закупок",
       "theme": "Этап 1. Подготовка к формированию условий проверки",
-      "status": "В работе",
+      "status": "Выполнено",
       "executor": "Зернова (ККП) Елена Сергеевна",
       "executor_short": "Зернова Е.С.",
       "deadline": "31.03.2026",
@@ -1561,7 +1561,7 @@
       "executor": "Сабадин (ГКУ \"РЦТ\") Аркадий Дмитриевич",
       "executor_short": "Сабадин А.Д.",
       "deadline": "28.03.2026",
-      "urgency": "urgent",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 11243
     },
@@ -1573,7 +1573,7 @@
       "executor": "Колесников (ККП) Кирилл Владимирович",
       "executor_short": "Колесников К.В.",
       "deadline": "28.03.2026",
-      "urgency": "urgent",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 11243
     },
@@ -1585,7 +1585,7 @@
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
       "deadline": "28.03.2026",
-      "urgency": "urgent",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 11243
     },
@@ -1597,7 +1597,7 @@
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
       "deadline": "28.03.2026",
-      "urgency": "urgent",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 11243
     },
@@ -1969,7 +1969,7 @@
       "executor": "Осипова Наталия Андреевна",
       "executor_short": "Осипова Н.А.",
       "deadline": "13.04.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 100,
       "parent_id": 11607
     },
@@ -1993,7 +1993,7 @@
       "executor": "Мазуров (ККП) Даниил Юрьевич",
       "executor_short": "Мазуров Д.Ю.",
       "deadline": "27.03.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 11607
     },
@@ -2258,7 +2258,7 @@
       "executor_short": "Кукарцева О.В.",
       "deadline": "30.04.2026",
       "urgency": "ok",
-      "pct": 0,
+      "pct": 25,
       "parent_id": 11242
     },
     {
@@ -3303,7 +3303,7 @@
       "executor": "Мазуров (ККП) Даниил Юрьевич",
       "executor_short": "Мазуров Д.Ю.",
       "deadline": "27.03.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 13952
     },
@@ -3338,7 +3338,7 @@
       "status": "Новая",
       "executor": "Гиренко Илья Андреевич",
       "executor_short": "Гиренко И.А.",
-      "deadline": "27.03.2026",
+      "deadline": "30.03.2026",
       "urgency": "today",
       "pct": 0,
       "parent_id": 13952
@@ -3567,7 +3567,7 @@
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
       "deadline": "30.03.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 13085
     },
@@ -3803,7 +3803,7 @@
       "id": 12925,
       "project": "ИИ проверка закупок",
       "theme": "1.1. Анализ замечаний МВК/РГза 2025 год",
-      "status": "В работе",
+      "status": "Выполнено",
       "executor": "Малюгина Екатерина Сергеевна",
       "executor_short": "Малюгина Е.С.",
       "deadline": "31.03.2026",
@@ -3963,7 +3963,7 @@
       "executor": "Мамедова (ККП) Аида Гюльахмедовна",
       "executor_short": "Мамедова А.Г.",
       "deadline": "13.04.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12854
     },
@@ -4023,7 +4023,7 @@
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "03.04.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12793
     },
@@ -4071,7 +4071,7 @@
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "03.04.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12778
     },
@@ -4083,7 +4083,7 @@
       "executor": "Заичко Валерий Валерьевич",
       "executor_short": "Заичко В.В.",
       "deadline": "27.03.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 12714
     },
@@ -4263,7 +4263,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "03.04.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12690
     },
@@ -4595,12 +4595,12 @@
       "id": 12656,
       "project": "Оптимизация закупок 223-ФЗ",
       "theme": "1.1 Вывод на тестовый контур",
-      "status": "В работе",
+      "status": "Закрыта",
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "27.03.2026",
-      "urgency": "today",
-      "pct": 0,
+      "urgency": "overdue",
+      "pct": 100,
       "parent_id": 12655
     },
     {
@@ -6013,7 +6013,7 @@
       "id": 12924,
       "project": "ИИ проверка закупок",
       "theme": "Этап 1. Подготовка к формированию условий проверки",
-      "status": "В работе",
+      "status": "Выполнено",
       "executor": "Зернова (ККП) Елена Сергеевна",
       "executor_short": "Зернова Е.С.",
       "deadline": "31.03.2026",
@@ -6365,7 +6365,7 @@
       "executor": "Сабадин (ГКУ \"РЦТ\") Аркадий Дмитриевич",
       "executor_short": "Сабадин А.Д.",
       "deadline": "28.03.2026",
-      "urgency": "urgent",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 11243
     },
@@ -6377,7 +6377,7 @@
       "executor": "Колесников (ККП) Кирилл Владимирович",
       "executor_short": "Колесников К.В.",
       "deadline": "28.03.2026",
-      "urgency": "urgent",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 11243
     },
@@ -6389,7 +6389,7 @@
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
       "deadline": "28.03.2026",
-      "urgency": "urgent",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 11243
     },
@@ -6401,7 +6401,7 @@
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
       "deadline": "28.03.2026",
-      "urgency": "urgent",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 11243
     },
@@ -6773,7 +6773,7 @@
       "executor": "Осипова Наталия Андреевна",
       "executor_short": "Осипова Н.А.",
       "deadline": "13.04.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 100,
       "parent_id": 11607
     },
@@ -6797,7 +6797,7 @@
       "executor": "Мазуров (ККП) Даниил Юрьевич",
       "executor_short": "Мазуров Д.Ю.",
       "deadline": "27.03.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 11607
     },
@@ -7062,7 +7062,7 @@
       "executor_short": "Кукарцева О.В.",
       "deadline": "30.04.2026",
       "urgency": "ok",
-      "pct": 0,
+      "pct": 25,
       "parent_id": 11242
     },
     {
@@ -8105,7 +8105,7 @@
       "executor": "Мазуров (ККП) Даниил Юрьевич",
       "executor_short": "Мазуров Д.Ю.",
       "deadline": "27.03.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 13952
     },
@@ -8140,7 +8140,7 @@
       "status": "Новая",
       "executor": "Гиренко Илья Андреевич",
       "executor_short": "Гиренко И.А.",
-      "deadline": "27.03.2026",
+      "deadline": "30.03.2026",
       "urgency": "today",
       "pct": 0,
       "parent_id": 13952
@@ -8369,7 +8369,7 @@
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
       "deadline": "30.03.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 13085
     },
@@ -8605,7 +8605,7 @@
       "id": 12925,
       "project": "ИИ проверка закупок",
       "theme": "1.1. Анализ замечаний МВК/РГза 2025 год",
-      "status": "В работе",
+      "status": "Выполнено",
       "executor": "Малюгина Екатерина Сергеевна",
       "executor_short": "Малюгина Е.С.",
       "deadline": "31.03.2026",
@@ -8765,7 +8765,7 @@
       "executor": "Мамедова (ККП) Аида Гюльахмедовна",
       "executor_short": "Мамедова А.Г.",
       "deadline": "13.04.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12854
     },
@@ -8825,7 +8825,7 @@
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "03.04.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12793
     },
@@ -8873,7 +8873,7 @@
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "03.04.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12778
     },
@@ -8885,7 +8885,7 @@
       "executor": "Заичко Валерий Валерьевич",
       "executor_short": "Заичко В.В.",
       "deadline": "27.03.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 12714
     },
@@ -9065,7 +9065,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "03.04.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12690
     },
@@ -9397,12 +9397,12 @@
       "id": 12656,
       "project": "Оптимизация закупок 223-ФЗ",
       "theme": "1.1 Вывод на тестовый контур",
-      "status": "В работе",
+      "status": "Закрыта",
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "27.03.2026",
-      "urgency": "today",
-      "pct": 0,
+      "urgency": "overdue",
+      "pct": 100,
       "parent_id": 12655
     },
     {
