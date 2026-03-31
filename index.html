@@ -329,11 +329,23 @@
   }
 
   /* === GAUGES === */
-  .gauges-grid {
+  .gauges-layout {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 12px;
-    padding: 16px 16px 8px;
+    padding: 16px;
+    align-items: start;
+  }
+
+  .gauges-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .gauge-card[data-curator-name*="Комитет"],
+  .gauge-card[data-curator-name*="РЦТ"] {
+    grid-column: 1 / -1;
   }
 
   .gauge-card {
@@ -381,7 +393,6 @@
   }
 
   .gauge-detail-panel {
-    margin: 0 16px 16px;
     background: rgba(8,12,28,0.97);
     border: 1px solid var(--accent);
     border-radius: 12px;
@@ -389,8 +400,9 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
+    position: sticky;
+    top: 16px;
   }
-  .gauge-detail-panel[hidden] { display: none; }
   .gauge-detail-title {
     font-size: 10px;
     font-weight: 700;
@@ -891,8 +903,10 @@
         <div class="section-header">
           <span class="section-title">Высвобождение %</span>
         </div>
-        <div class="gauges-grid" id="gaugesGrid"></div>
-        <div id="gauge-detail-panel" class="gauge-detail-panel" hidden></div>
+        <div class="gauges-layout">
+          <div class="gauges-grid" id="gaugesGrid"></div>
+          <div id="gauge-detail-panel" class="gauge-detail-panel"></div>
+        </div>
 
         <!-- Deadline heatmap -->
         <div class="section-header" style="margin-top:0">
@@ -1099,7 +1113,7 @@ function renderFullProjTable(projects, filter = 'all') {
 // ===== RENDER: GAUGES =====
 function showGaugeDetail(curator) {
   const panel = document.getElementById('gauge-detail-panel');
-  if (!curator) { panel.hidden = true; return; }
+  if (!curator) return;
   const vysv = Math.round(curator.vysv_units * 10) / 10;
   const plan = curator.plan_minus20 != null ? Math.round(curator.plan_minus20 * 10) / 10 : '—';
   panel.innerHTML = `
@@ -1117,7 +1131,6 @@ function showGaugeDetail(curator) {
     <hr class="gauge-detail-divider">
     <div class="gauge-detail-row accent"><span>% высвобождения</span><span>${curator.pct_vysv}%</span></div>
   `;
-  panel.hidden = false;
   document.querySelectorAll('.gauge-card').forEach(c => {
     c.classList.toggle('expanded', c.dataset.curatorName === curator.name);
   });
@@ -1137,10 +1150,8 @@ function renderGauges(curators) {
     const x2 = centerX + radius * Math.cos(endAngle);
     const y2 = centerY + radius * Math.sin(endAngle);
     const largeArc = 0;
-    const isOverall = g.name === 'Комитет и РЦТ';
-    const colSpan = isOverall ? ' style="grid-column: 1 / -1"' : '';
     return `
-      <div class="gauge-card" data-curator-name="${g.name}"${colSpan}>
+      <div class="gauge-card" data-curator-name="${g.name}">
         <div class="gauge-name">${g.name}</div>
         <div class="gauge-wrap">
           <svg class="gauge-svg" viewBox="0 0 100 65">
