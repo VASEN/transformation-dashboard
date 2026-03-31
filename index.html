@@ -231,7 +231,6 @@
     background: var(--card);
     border: 1px solid var(--card-border);
     border-radius: 16px;
-    overflow: hidden;
   }
 
   .section-header {
@@ -331,11 +330,12 @@
   /* === GAUGES === */
   .gauges-layout {
     display: grid;
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 12px;
     padding: 16px;
     align-items: start;
-    min-width: 0;
+    box-sizing: border-box;
+    width: 100%;
   }
 
   .gauges-grid {
@@ -404,8 +404,9 @@
     position: sticky;
     top: 16px;
     min-width: 0;
-    overflow: hidden;
+    box-sizing: border-box;
     word-break: break-word;
+    white-space: normal;
   }
   .gauge-detail-title {
     font-size: 10px;
@@ -420,11 +421,12 @@
   .gauge-detail-row {
     display: flex;
     justify-content: space-between;
-    font-size: 11px;
-    color: var(--text-dim);
     gap: 8px;
+    font-size: 12px;
+    white-space: nowrap;
   }
-  .gauge-detail-row span:last-child { color: var(--text); font-weight: 600; }
+  .gauge-detail-row span:first-child { color: var(--text-dim); flex-shrink: 1; white-space: normal; }
+  .gauge-detail-row span:last-child { color: var(--text); font-weight: 700; flex-shrink: 0; }
   .gauge-detail-row.accent span:last-child { color: var(--accent); }
   .gauge-detail-divider {
     border: none;
