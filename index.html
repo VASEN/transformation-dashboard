@@ -331,21 +331,18 @@
   /* === GAUGES === */
   .gauges-layout {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 200px 1fr;
     gap: 12px;
     padding: 16px;
     align-items: start;
+    min-width: 0;
   }
 
   .gauges-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-
-  .gauge-card[data-curator-name*="Комитет"],
-  .gauge-card[data-curator-name*="РЦТ"] {
-    grid-column: 1 / -1;
+    gap: 8px;
+    min-width: 0;
   }
 
   .gauge-card {
@@ -392,6 +389,10 @@
     font-weight: 700;
   }
 
+  .gauge-card.gauge-main .gauge-wrap { width: 130px; height: 76px; }
+  .gauge-card.gauge-main .gauge-pct  { font-size: 22px; }
+  .gauge-card.gauge-main .gauge-name { font-size: 13px; }
+
   .gauge-detail-panel {
     background: rgba(8,12,28,0.97);
     border: 1px solid var(--accent);
@@ -402,6 +403,9 @@
     gap: 6px;
     position: sticky;
     top: 16px;
+    min-width: 0;
+    overflow: hidden;
+    word-break: break-word;
   }
   .gauge-detail-title {
     font-size: 10px;
@@ -1150,8 +1154,9 @@ function renderGauges(curators) {
     const x2 = centerX + radius * Math.cos(endAngle);
     const y2 = centerY + radius * Math.sin(endAngle);
     const largeArc = 0;
+    const isMain = g.name === 'Комитет и РЦТ';
     return `
-      <div class="gauge-card" data-curator-name="${g.name}">
+      <div class="gauge-card${isMain ? ' gauge-main' : ''}" data-curator-name="${g.name}">
         <div class="gauge-name">${g.name}</div>
         <div class="gauge-wrap">
           <svg class="gauge-svg" viewBox="0 0 100 65">
