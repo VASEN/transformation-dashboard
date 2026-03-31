@@ -332,6 +332,7 @@
   .gauges-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
     gap: 12px;
     padding: 16px;
   }
@@ -344,11 +345,16 @@
     padding: 16px;
     text-align: center;
     transition: opacity 0.25s, box-shadow 0.25s;
+    cursor: pointer;
   }
   .gauge-card.dimmed { opacity: 0.35; }
   .gauge-card.highlighted {
     box-shadow: 0 0 0 2px var(--accent), 0 0 20px rgba(0,229,255,0.25);
     border-color: var(--accent);
+  }
+  .gauge-card.expanded {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px var(--accent), 0 0 20px rgba(0,229,255,0.25);
   }
 
   .gauge-name {
@@ -375,23 +381,19 @@
     font-weight: 700;
   }
 
-  .gauge-tooltip {
-    position: absolute;
-    inset: 0;
+  .gauge-detail {
     background: rgba(8,12,28,0.97);
+    border: 1px solid var(--card-border);
     border-radius: 12px;
     padding: 14px 16px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.18s;
+    margin-top: -8px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 5px;
-    z-index: 10;
+    gap: 6px;
+    grid-column: inherit;
   }
-  .gauge-card:hover .gauge-tooltip { opacity: 1; }
-  .gauge-tooltip-title {
+  .gauge-detail[hidden] { display: none; }
+  .gauge-detail-title {
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.8px;
@@ -401,16 +403,16 @@
     border-bottom: 1px solid rgba(0,229,255,0.15);
     padding-bottom: 5px;
   }
-  .gauge-tooltip-row {
+  .gauge-detail-row {
     display: flex;
     justify-content: space-between;
     font-size: 11px;
     color: var(--text-dim);
     gap: 8px;
   }
-  .gauge-tooltip-row span:last-child { color: var(--text); font-weight: 600; }
-  .gauge-tooltip-row.accent span:last-child { color: var(--accent); }
-  .gauge-tooltip-divider {
+  .gauge-detail-row span:last-child { color: var(--text); font-weight: 600; }
+  .gauge-detail-row.accent span:last-child { color: var(--accent); }
+  .gauge-detail-divider {
     border: none;
     border-top: 1px solid rgba(255,255,255,0.06);
     margin: 2px 0;
@@ -1114,8 +1116,12 @@ function renderGauges(curators) {
     const vysv = Math.round(g.vysv_units * 10) / 10;
     const plan = g.plan_minus20 != null ? Math.round(g.plan_minus20 * 10) / 10 : '—';
 
+    const isOverall = g.name === 'Комитет и РЦТ';
+    const colSpan = isOverall ? ' style="grid-column: 1 / -1"' : '';
+    const detailColSpan = isOverall ? ' style="grid-column: 1 / -1"' : '';
+
     return `
-      <div class="gauge-card" data-curator-name="${g.name}">
+      <div class="gauge-card" data-curator-name="${g.name}"${colSpan}>
         <div class="gauge-name">${g.name}</div>
         <div class="gauge-wrap">
           <svg class="gauge-svg" viewBox="0 0 100 65">
@@ -1128,24 +1134,38 @@ function renderGauges(curators) {
               font-size="13" font-weight="700" fill="${color}">${g.pct_vysv}%</text>
           </svg>
         </div>
-        <div class="gauge-tooltip">
-          <div class="gauge-tooltip-title">${g.name}</div>
-          <div class="gauge-tooltip-row"><span>Численность</span><span>${g.headcount} чел.</span></div>
-          <div class="gauge-tooltip-row"><span>ККП план</span><span>${g.kkp}</span></div>
-          <div class="gauge-tooltip-row"><span>ККП факт</span><span>${g.kkp_fact}</span></div>
-          <div class="gauge-tooltip-row"><span>РЦТ план</span><span>${g.rct}</span></div>
-          <div class="gauge-tooltip-row"><span>РЦТ факт</span><span>${g.rct_fact}</span></div>
-          <hr class="gauge-tooltip-divider">
-          <div class="gauge-tooltip-row"><span>Итого факт</span><span>${g.fact_total}</span></div>
-          <div class="gauge-tooltip-row"><span>Вакансии</span><span>${g.vacancies}</span></div>
-          <div class="gauge-tooltip-row"><span>План −20%</span><span>${plan} ед.</span></div>
-          <div class="gauge-tooltip-row"><span>Высвобождение</span><span>${vysv} ед.</span></div>
-          <hr class="gauge-tooltip-divider">
-          <div class="gauge-tooltip-row accent"><span>% высвобождения</span><span>${g.pct_vysv}%</span></div>
-        </div>
+      </div>
+      <div class="gauge-detail" hidden${detailColSpan}>
+        <div class="gauge-detail-title">${g.name}</div>
+        <div class="gauge-detail-row"><span>Численность</span><span>${g.headcount} чел.</span></div>
+        <div class="gauge-detail-row"><span>ККП план</span><span>${g.kkp}</span></div>
+        <div class="gauge-detail-row"><span>ККП факт</span><span>${g.kkp_fact}</span></div>
+        <div class="gauge-detail-row"><span>РЦТ план</span><span>${g.rct}</span></div>
+        <div class="gauge-detail-row"><span>РЦТ факт</span><span>${g.rct_fact}</span></div>
+        <hr class="gauge-detail-divider">
+        <div class="gauge-detail-row"><span>Итого факт</span><span>${g.fact_total}</span></div>
+        <div class="gauge-detail-row"><span>Вакансии</span><span>${g.vacancies}</span></div>
+        <div class="gauge-detail-row"><span>План −20%</span><span>${plan} ед.</span></div>
+        <div class="gauge-detail-row"><span>Высвобождение</span><span>${vysv} ед.</span></div>
+        <hr class="gauge-detail-divider">
+        <div class="gauge-detail-row accent"><span>% высвобождения</span><span>${g.pct_vysv}%</span></div>
       </div>
     `;
   }).join('');
+
+  // Click accordion for gauge cards
+  grid.querySelectorAll('.gauge-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const detail = card.nextElementSibling;
+      const isOpen = !detail.hidden;
+      document.querySelectorAll('.gauge-detail').forEach(d => d.hidden = true);
+      document.querySelectorAll('.gauge-card').forEach(c => c.classList.remove('expanded'));
+      if (!isOpen) {
+        detail.hidden = false;
+        card.classList.add('expanded');
+      }
+    });
+  });
 }
 
 // ===== RENDER: DEADLINE HEATMAP =====
@@ -1510,6 +1530,8 @@ function highlightGauge(selectedOwner) {
   const cards = document.querySelectorAll('.gauge-card');
   if (selectedOwner === 'all') {
     cards.forEach(c => c.classList.remove('dimmed', 'highlighted'));
+    document.querySelectorAll('.gauge-detail').forEach(d => d.hidden = true);
+    document.querySelectorAll('.gauge-card').forEach(c => c.classList.remove('expanded'));
     return;
   }
   // Match by last name (normalise ё→е for fuzzy match)
@@ -1523,7 +1545,22 @@ function highlightGauge(selectedOwner) {
     card.classList.toggle('dimmed', !match);
     card.classList.toggle('highlighted', match);
   });
-  if (!anyMatch) cards.forEach(c => c.classList.remove('dimmed', 'highlighted'));
+  if (!anyMatch) {
+    cards.forEach(c => c.classList.remove('dimmed', 'highlighted'));
+  }
+  // Auto-open detail for matched card
+  cards.forEach(card => {
+    const detail = card.nextElementSibling;
+    if (detail && detail.classList.contains('gauge-detail')) {
+      if (card.classList.contains('highlighted')) {
+        detail.hidden = false;
+        card.classList.add('expanded');
+      } else {
+        detail.hidden = true;
+        card.classList.remove('expanded');
+      }
+    }
+  });
 }
 
 // ===== COMPUTE TASK KPIs FOR FILTERED PROJECTS =====
