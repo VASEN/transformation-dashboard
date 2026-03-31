@@ -1230,7 +1230,7 @@ function renderTasks(tasks, filter = 'all') {
 
   body.innerHTML = filtered.map(t => {
     const ps = getProjectStyle(t.project);
-    const isClosed = t.status === 'Закрыта';
+    const isClosed = t.status === 'Закрыта' || t.status === 'Выполнено';
     const urgencyLabel = isClosed ? 'ok'
       : t.urgency === 'overdue' ? 'urgent'
       : t.urgency === 'today'   ? 'today'
@@ -1281,10 +1281,10 @@ function filterTasksByStat(type) {
     filtered = allTasks2026.filter(t => t.status === 'Закрыта').sort(byProjectThenDeadline);
   } else if (type === 'deadline14') {
     filtered = allTasks2026
-      .filter(t => (t.urgency === 'overdue' || t.urgency === 'today' || t.urgency === 'urgent' || t.urgency === 'soon') && t.status !== 'Закрыта')
+      .filter(t => (t.urgency === 'overdue' || t.urgency === 'today' || t.urgency === 'urgent' || t.urgency === 'soon') && t.status !== 'Закрыта' && t.status !== 'Выполнено')
       .sort(byDeadline);
   } else if (type === 'overdue') {
-    filtered = allTasks2026.filter(t => t.urgency === 'overdue' && t.status !== 'Закрыта').sort(byDeadline);
+    filtered = allTasks2026.filter(t => t.urgency === 'overdue' && t.status !== 'Закрыта' && t.status !== 'Выполнено').sort(byDeadline);
   } else {
     filtered = [...allTasks2026].sort(byProjectThenDeadline);
   }
@@ -1522,16 +1522,13 @@ function highlightGauge(selectedOwner) {
 // ===== COMPUTE TASK KPIs FOR FILTERED PROJECTS =====
 function computeTaskKPIs(filteredProjects) {
   const projNames = new Set(filteredProjects.map(p => p.name));
-  const today = new Date(); today.setHours(0, 0, 0, 0);
-  const in14 = new Date(today); in14.setDate(today.getDate() + 14);
-  const closed = new Set(['Выполнена', 'Завершена', 'Закрыта', 'Закрыто', 'Выполнено']);
-  let deadline14 = 0, overdue = 0;
-  allTasks.forEach(t => {
-    if (!projNames.has(t.project) || !t.deadline || closed.has(t.status)) return;
-    const d = parseDate(t.deadline);
-    if (d < today) overdue++;
-    else if (d <= in14) deadline14++;
-  });
+  const notActive = new Set(['Закрыта', 'Закрыто', 'Выполнено', 'Выполнена', 'Завершена']);
+  const tasks = allTasks2026.filter(t => projNames.has(t.project));
+  const deadline14 = tasks.filter(t =>
+    (t.urgency === 'overdue' || t.urgency === 'today' || t.urgency === 'urgent' || t.urgency === 'soon')
+    && !notActive.has(t.status)
+  ).length;
+  const overdue = tasks.filter(t => t.urgency === 'overdue' && !notActive.has(t.status)).length;
   return { deadline14, overdue };
 }
 
@@ -1685,8 +1682,8 @@ function initDashboard(data) {
   const tTotal = allTasks2026.length;
   const tActive = allTasks2026.filter(t => t.status === 'В работе').length;
   const tClosed = allTasks2026.filter(t => t.status === 'Закрыта').length;
-  const tDeadline14 = allTasks2026.filter(t => (t.urgency === 'overdue' || t.urgency === 'today' || t.urgency === 'urgent' || t.urgency === 'soon') && t.status !== 'Закрыта').length;
-  const tOverdue = allTasks2026.filter(t => t.urgency === 'overdue' && t.status !== 'Закрыта').length;
+  const tDeadline14 = allTasks2026.filter(t => (t.urgency === 'overdue' || t.urgency === 'today' || t.urgency === 'urgent' || t.urgency === 'soon') && t.status !== 'Закрыта' && t.status !== 'Выполнено').length;
+  const tOverdue = allTasks2026.filter(t => t.urgency === 'overdue' && t.status !== 'Закрыта' && t.status !== 'Выполнено').length;
   document.getElementById('tasks-stat-total').textContent = tTotal;
   document.getElementById('tasks-stat-active').textContent = tActive;
   document.getElementById('tasks-stat-closed').textContent = tClosed;
