@@ -326,43 +326,45 @@ def _render_group(out, emoji, title, projects):
             out.append('')
 
 
-def build_telegram_message(all_projects, not_reported, report_date):
-    """Return the full Telegram message as a string.
+def _render_not_reported(out, names):
+    """Append the 'no status provided' section to out."""
+    out.append(TELEGRAM_SEPARATOR_THICK)
+    out.append('⚠️ *ИНФОРМАЦИЯ НЕ ПРЕДСТАВЛЕНА*')
+    out.append(TELEGRAM_SEPARATOR_THICK)
+    out.append('')
+    out.append('По следующим проектам статус на эту неделю не предоставлен:')
+    out.append('')
+    for name in names:
+        out.append(f'• {name}')
+    out.append('')
+    out.append(TELEGRAM_SEPARATOR_THICK)
 
-    Grouping is determined by is_priority from data.json:
-      1. ПРИОРИТЕТНЫЕ ПРОЕКТЫ  — is_priority=True,  sorted by deadline asc
-      2. ТРАНСФОРМАЦИОННЫЕ ПРОЕКТЫ — the rest,       sorted by deadline asc
-    Each project is numbered within its group.
-    """
+
+def build_priority_message(priority_projs, not_reported, report_date):
+    """Telegram message for priority projects only."""
     out = []
-
     date_str = report_date.strftime('%d.%m.%Y')
-    out.append('📊 *Еженедельный отчёт по проектам трансформации*')
+    out.append('📊 *Еженедельный отчёт — Приоритетные проекты*')
     out.append(f'_Дата: {date_str}_')
     out.append('')
-
-    priority_projs      = [p for p in all_projects if p.get('is_priority')]
-    transformation_projs = [p for p in all_projects if not p.get('is_priority')]
-
-    if priority_projs:
-        _render_group(out, '🔴', 'ПРИОРИТЕТНЫЕ ПРОЕКТЫ', priority_projs)
-
-    if transformation_projs:
-        _render_group(out, '🔵', 'ТРАНСФОРМАЦИОННЫЕ ПРОЕКТЫ', transformation_projs)
-
-    # Section for projects without a status update
+    _render_group(out, '🔴', 'ПРИОРИТЕТНЫЕ ПРОЕКТЫ', priority_projs)
     if not_reported:
-        out.append(TELEGRAM_SEPARATOR_THICK)
-        out.append('⚠️ *ИНФОРМАЦИЯ НЕ ПРЕДСТАВЛЕНА*')
-        out.append(TELEGRAM_SEPARATOR_THICK)
         out.append('')
-        out.append('По следующим проектам статус на эту неделю не предоставлен:')
-        out.append('')
-        for name in not_reported:
-            out.append(f'• {name}')
-        out.append('')
-        out.append(TELEGRAM_SEPARATOR_THICK)
+        _render_not_reported(out, not_reported)
+    return '\n'.join(out)
 
+
+def build_transform_message(transform_projs, not_reported, report_date):
+    """Telegram message for transformation projects only."""
+    out = []
+    date_str = report_date.strftime('%d.%m.%Y')
+    out.append('📊 *Еженедельный отчёт — Трансформационные проекты*')
+    out.append(f'_Дата: {date_str}_')
+    out.append('')
+    _render_group(out, '🔵', 'ТРАНСФОРМАЦИОННЫЕ ПРОЕКТЫ', transform_projs)
+    if not_reported:
+        out.append('')
+        _render_not_reported(out, not_reported)
     return '\n'.join(out)
 
 
@@ -448,12 +450,17 @@ def main():
         print()
 
     # ------------------------------------------------------------------
-    # Build list of active projects absent from the report
+    # Build lists of active projects absent from the report (split by priority)
     # ------------------------------------------------------------------
-    not_reported = []
+    not_reported_priority  = []
+    not_reported_transform = []
     for dp in data_projects:
         if dp.get('status') not in CLOSED_STATUSES and id(dp) not in matched_dp_object_ids:
-            not_reported.append(dp['name'])
+            if dp.get('is_priority'):
+                not_reported_priority.append(dp['name'])
+            else:
+                not_reported_transform.append(dp['name'])
+    not_reported = not_reported_priority + not_reported_transform
 
     # ------------------------------------------------------------------
     # Update data.json
@@ -484,20 +491,31 @@ def main():
         print()
 
     # ------------------------------------------------------------------
-    # Generate Telegram message
+    # Generate Telegram messages (two files)
     # ------------------------------------------------------------------
     if make_telegram:
-        tg_filename = f'telegram_{report_date.strftime("%d_%m_%Y")}.txt'
-        message     = build_telegram_message(all_report_projects, not_reported, report_date)
+        date_suffix = report_date.strftime('%d_%m_%Y')
 
-        with open(tg_filename, 'w', encoding='utf-8') as f:
-            f.write(message)
+        priority_projs   = [p for p in all_report_projects if p.get('is_priority')]
+        transform_projs  = [p for p in all_report_projects if not p.get('is_priority')]
 
-        char_count = len(message)
-        print(f'📩 Telegram-сообщение: {tg_filename}')
-        print(f'   Символов: {char_count} (Telegram лимит: 4096)')
-        if not_reported:
-            print(f'   ⚠️  Проектов без статуса: {len(not_reported)}')
+        # File 1 — priority projects
+        fn_priority = f'telegram_priority_{date_suffix}.txt'
+        msg_priority = build_priority_message(priority_projs, not_reported_priority, report_date)
+        with open(fn_priority, 'w', encoding='utf-8') as f:
+            f.write(msg_priority)
+        print(f'📩 Приоритетные проекты:     {fn_priority}')
+        print(f'   Символов: {len(msg_priority)} | Проектов: {len(priority_projs)}'
+              + (f' | ⚠️ без статуса: {len(not_reported_priority)}' if not_reported_priority else ''))
+
+        # File 2 — transformation projects
+        fn_transform = f'telegram_transform_{date_suffix}.txt'
+        msg_transform = build_transform_message(transform_projs, not_reported_transform, report_date)
+        with open(fn_transform, 'w', encoding='utf-8') as f:
+            f.write(msg_transform)
+        print(f'📩 Трансформационные проекты: {fn_transform}')
+        print(f'   Символов: {len(msg_transform)} | Проектов: {len(transform_projs)}'
+              + (f' | ⚠️ без статуса: {len(not_reported_transform)}' if not_reported_transform else ''))
         print()
 
     print('✅ Готово!')
