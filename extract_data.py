@@ -110,6 +110,17 @@ def extract():
 
     print(f"  Проектов: {len(passport)}  |  Этапов: {len(etaps)}  |  Подзадач: {len(subtasks)}")
 
+    # Диагностика: показываем уникальные значения поля Приоритет
+    if 'Приоритет' in passport.columns:
+        priority_values = sorted(passport['Приоритет'].dropna().unique().tolist())
+        print(f"  Значения поля 'Приоритет': {priority_values}")
+        priority_counts = passport['Приоритет'].value_counts().to_dict()
+        for val, cnt in sorted(priority_counts.items(), key=lambda x: -x[1]):
+            print(f"    {val}: {cnt} проектов")
+    else:
+        print("  ⚠️  Колонка 'Приоритет' не найдена в файле!")
+        print(f"  Доступные колонки: {list(passport.columns)}")
+
     # ── 2. Проекты ───────────────────────────────────────────────────────────
     projects = []
     for _, r in passport.iterrows():
@@ -126,7 +137,7 @@ def extract():
             'start_date':     clean_date(r.get('Дата начала')),
             'pct':            clean_pct(r.get('Готовность')),
             'project_type':   safe(r.get('Тип проекта')),
-            'is_priority':    safe(r.get('Приоритет')) not in (None, '', 'Нормальный', 'Низкий'),
+            'is_priority':    safe(r.get('Приоритет')) in ('Высокий', 'Срочный', 'Немедленный', 'Приоритетный'),
             'goal':           safe(r.get('Критически важная цель')),
             'indicators':     safe(r.get('Опережающие показатели (что делаем)')),
             'team':           safe(r.get('Команда проекта')),
@@ -139,6 +150,12 @@ def extract():
             'plan_units':     safe_float(r.get('План: в том числе фактическое сокращение сотрудников всего, шт.ед.')),
             'fact_units':     safe_float(r.get('Факт: в том числе фактическое сокращение сотрудников всего, шт.ед.')),
         })
+
+    priority_count = sum(1 for p in projects if p.get('is_priority'))
+    print(f"  Приоритетных проектов (is_priority=true): {priority_count}")
+    for p in projects:
+        if p.get('is_priority'):
+            print(f"    ✓ #{p['id']} {p['name']}")
 
     # ── 3. Этапы ─────────────────────────────────────────────────────────────
     stages = []
