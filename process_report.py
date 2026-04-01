@@ -294,11 +294,45 @@ def _deadline_sort_key(proj):
         return date.max  # no deadline → sort last
 
 
-def build_telegram_message(groups, not_reported, report_date):
+def _render_group(out, emoji, title, projects):
+    """Append one group section (header + numbered projects) to out."""
+    count = len(projects)
+    sorted_projs = sorted(projects, key=_deadline_sort_key)
+
+    out.append(TELEGRAM_SEPARATOR_THICK)
+    out.append(f'{emoji} *{title} ({count})*')
+    out.append(TELEGRAM_SEPARATOR_THICK)
+    out.append('')
+
+    for idx, proj in enumerate(sorted_projs):
+        proj_emoji = '🔴' if proj.get('is_priority') else '🔵'
+        out.append(f'{idx + 1}. {proj_emoji} *{proj["name"]}*')
+        if proj.get('person'):
+            out.append(f'👤 {proj["person"]}')
+        out.append('')
+
+        if proj.get('completed'):
+            out.append('✅ Выполнено:')
+            out.append(proj['completed'])
+            out.append('')
+
+        if proj.get('current'):
+            out.append('📍 В работе:')
+            out.append(proj['current'])
+            out.append('')
+
+        if idx < count - 1:
+            out.append(TELEGRAM_SEPARATOR_THIN)
+            out.append('')
+
+
+def build_telegram_message(all_projects, not_reported, report_date):
     """Return the full Telegram message as a string.
 
-    Groups are reordered so 🔴 (priority) groups come first;
-    projects within each group are sorted by ascending deadline.
+    Grouping is determined by is_priority from data.json:
+      1. ПРИОРИТЕТНЫЕ ПРОЕКТЫ  — is_priority=True,  sorted by deadline asc
+      2. ТРАНСФОРМАЦИОННЫЕ ПРОЕКТЫ — the rest,       sorted by deadline asc
+    Each project is numbered within its group.
     """
     out = []
 
@@ -307,37 +341,14 @@ def build_telegram_message(groups, not_reported, report_date):
     out.append(f'_Дата: {date_str}_')
     out.append('')
 
-    # Priority groups (🔴) first, then the rest; original order preserved within each tier
-    sorted_groups = sorted(groups, key=lambda g: (0 if g['emoji'] == '🔴' else 1))
+    priority_projs      = [p for p in all_projects if p.get('is_priority')]
+    transformation_projs = [p for p in all_projects if not p.get('is_priority')]
 
-    for group in sorted_groups:
-        out.append(TELEGRAM_SEPARATOR_THICK)
-        out.append(f'{group["emoji"]} *{group["name"]}*')
-        out.append(TELEGRAM_SEPARATOR_THICK)
-        out.append('')
+    if priority_projs:
+        _render_group(out, '🔴', 'ПРИОРИТЕТНЫЕ ПРОЕКТЫ', priority_projs)
 
-        projects = sorted(group['projects'], key=_deadline_sort_key)
-        for idx, proj in enumerate(projects):
-            emoji = '🔴' if proj.get('priority') else '🔵'
-            out.append(f'{emoji} *{proj["name"]}*')
-            if proj.get('person'):
-                out.append(f'👤 {proj["person"]}')
-            out.append('')
-
-            if proj.get('completed'):
-                out.append('✅ Выполнено:')
-                out.append(proj['completed'])
-                out.append('')
-
-            if proj.get('current'):
-                out.append('📍 В работе:')
-                out.append(proj['current'])
-                out.append('')
-
-            # Thin separator between projects within a group (not after the last)
-            if idx < len(projects) - 1:
-                out.append(TELEGRAM_SEPARATOR_THIN)
-                out.append('')
+    if transformation_projs:
+        _render_group(out, '🔵', 'ТРАНСФОРМАЦИОННЫЕ ПРОЕКТЫ', transformation_projs)
 
     # Section for projects without a status update
     if not_reported:
@@ -425,7 +436,8 @@ def main():
 
             if dp is not None:
                 matched_dp_object_ids.add(id(dp))
-                proj['deadline'] = dp.get('deadline')
+                proj['deadline']    = dp.get('deadline')
+                proj['is_priority'] = dp.get('is_priority', False)
                 if match_type == 'id':
                     print(f'   ✓ {proj["name"]:<42} — найден по ID #{proj["issue_id"]}')
                 else:
@@ -476,7 +488,7 @@ def main():
     # ------------------------------------------------------------------
     if make_telegram:
         tg_filename = f'telegram_{report_date.strftime("%d_%m_%Y")}.txt'
-        message     = build_telegram_message(groups, not_reported, report_date)
+        message     = build_telegram_message(all_report_projects, not_reported, report_date)
 
         with open(tg_filename, 'w', encoding='utf-8') as f:
             f.write(message)
