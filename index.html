@@ -1370,7 +1370,7 @@ function loadDetail(name) {
     : [];
 
   // Determine active ETAPs from tasks (tasks "В работе" grouped by parent_id)
-  const statusText = (d.status_text || '').trim();
+  const statusText = (d.current_status || '').trim();
   const currentStages = (() => {
     const projTasks = allTasks.filter(t => t && t.project === name);
     if (!projTasks.length) return [];
