@@ -110,15 +110,15 @@ def extract():
 
     print(f"  Проектов: {len(passport)}  |  Этапов: {len(etaps)}  |  Подзадач: {len(subtasks)}")
 
-    # Диагностика: показываем уникальные значения поля Приоритет
-    if 'Приоритет' in passport.columns:
-        priority_values = sorted(passport['Приоритет'].dropna().unique().tolist())
-        print(f"  Значения поля 'Приоритет': {priority_values}")
-        priority_counts = passport['Приоритет'].value_counts().to_dict()
+    # Диагностика: показываем уникальные значения поля Приоритетный проект
+    if 'Приоритетный проект' in passport.columns:
+        priority_values = sorted(passport['Приоритетный проект'].dropna().unique().tolist())
+        print(f"  Значения поля 'Приоритетный проект': {priority_values}")
+        priority_counts = passport['Приоритетный проект'].value_counts().to_dict()
         for val, cnt in sorted(priority_counts.items(), key=lambda x: -x[1]):
             print(f"    {val}: {cnt} проектов")
     else:
-        print("  ⚠️  Колонка 'Приоритет' не найдена в файле!")
+        print("  ⚠️  Колонка 'Приоритетный проект' не найдена в файле!")
         print(f"  Доступные колонки: {list(passport.columns)}")
 
     # ── 2. Проекты ───────────────────────────────────────────────────────────
@@ -137,7 +137,7 @@ def extract():
             'start_date':     clean_date(r.get('Дата начала')),
             'pct':            clean_pct(r.get('Готовность')),
             'project_type':   safe(r.get('Тип проекта')),
-            'is_priority':    safe(r.get('Приоритет')) in ('Высокий', 'Срочный', 'Немедленный', 'Приоритетный'),
+            'is_priority':    bool(safe(r.get('Приоритетный проект'))),
             'goal':           safe(r.get('Критически важная цель')),
             'indicators':     safe(r.get('Опережающие показатели (что делаем)')),
             'team':           safe(r.get('Команда проекта')),

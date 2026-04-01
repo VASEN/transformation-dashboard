@@ -54,8 +54,13 @@ def parse_date_from_filename(filename):
 # ---------------------------------------------------------------------------
 
 def extract_id_from_url(url):
-    """Extract issue ID from Redmine URL like https://.../#/issues/11498."""
-    m = re.search(r'#/issues/(\d+)', url)
+    """Extract issue ID from Redmine URL.
+
+    Handles variants:
+      https://...rm.mosreg.ru/#/issues/11498
+      https://...rm.mosreg.ru/issues/11245
+    """
+    m = re.search(r'(?:#/issues|/issues)/(\d+)', url)
     return int(m.group(1)) if m else None
 
 

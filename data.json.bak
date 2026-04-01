@@ -38,7 +38,8 @@
       "plan_hours_cio": 0.0,
       "fact_hours_cio": null,
       "plan_units": 0.0,
-      "fact_units": null
+      "fact_units": null,
+      "is_priority": false
     },
     {
       "id": 11610,
@@ -63,7 +64,8 @@
       "plan_hours_cio": 1824.0,
       "fact_hours_cio": null,
       "plan_units": 0.9249492900608519,
-      "fact_units": null
+      "fact_units": null,
+      "is_priority": true
     },
     {
       "id": 11609,
@@ -88,7 +90,8 @@
       "plan_hours_cio": 1296.0,
       "fact_hours_cio": null,
       "plan_units": 0.6572008113590264,
-      "fact_units": null
+      "fact_units": null,
+      "is_priority": true
     },
     {
       "id": 11608,
@@ -113,7 +116,8 @@
       "plan_hours_cio": 2993.0,
       "fact_hours_cio": 2993.0,
       "plan_units": 1.5177484787018256,
-      "fact_units": 0.0
+      "fact_units": 0.0,
+      "is_priority": false
     },
     {
       "id": 11607,
@@ -138,7 +142,8 @@
       "plan_hours_cio": 8782.0,
       "fact_hours_cio": null,
       "plan_units": 4.453346855983773,
-      "fact_units": null
+      "fact_units": null,
+      "is_priority": false
     },
     {
       "id": 11606,
@@ -163,7 +168,8 @@
       "plan_hours_cio": 1359.0,
       "fact_hours_cio": null,
       "plan_units": 0.6891480730223124,
-      "fact_units": null
+      "fact_units": null,
+      "is_priority": false
     },
     {
       "id": 11594,
@@ -188,7 +194,8 @@
       "plan_hours_cio": 1334.0,
       "fact_hours_cio": null,
       "plan_units": 0.6764705882352942,
-      "fact_units": null
+      "fact_units": null,
+      "is_priority": false
     },
     {
       "id": 11584,
@@ -213,7 +220,8 @@
       "plan_hours_cio": 0.0,
       "fact_hours_cio": null,
       "plan_units": 0.0,
-      "fact_units": null
+      "fact_units": null,
+      "is_priority": false
     },
     {
       "id": 11575,
@@ -238,7 +246,8 @@
       "plan_hours_cio": 3768.0,
       "fact_hours_cio": null,
       "plan_units": 1.9107505070993915,
-      "fact_units": null
+      "fact_units": null,
+      "is_priority": true
     },
     {
       "id": 11498,
@@ -263,7 +272,8 @@
       "plan_hours_cio": 2964.0,
       "fact_hours_cio": null,
       "plan_units": 1.5030425963488845,
-      "fact_units": null
+      "fact_units": null,
+      "is_priority": false
     },
     {
       "id": 11497,
@@ -288,7 +298,8 @@
       "plan_hours_cio": 4045.0,
       "fact_hours_cio": null,
       "plan_units": 2.0512170385395536,
-      "fact_units": null
+      "fact_units": null,
+      "is_priority": true
     },
     {
       "id": 11246,
@@ -313,7 +324,8 @@
       "plan_hours_cio": 0.0,
       "fact_hours_cio": null,
       "plan_units": 0.0,
-      "fact_units": null
+      "fact_units": null,
+      "is_priority": false
     },
     {
       "id": 11245,
@@ -338,7 +350,8 @@
       "plan_hours_cio": null,
       "fact_hours_cio": null,
       "plan_units": 0.0,
-      "fact_units": null
+      "fact_units": null,
+      "is_priority": false
     },
     {
       "id": 11244,
@@ -363,7 +376,8 @@
       "plan_hours_cio": 8089.0,
       "fact_hours_cio": null,
       "plan_units": 4.101926977687627,
-      "fact_units": null
+      "fact_units": null,
+      "is_priority": false
     },
     {
       "id": 11243,
@@ -388,7 +402,8 @@
       "plan_hours_cio": 6085.0,
       "fact_hours_cio": null,
       "plan_units": 3.0856997971602436,
-      "fact_units": null
+      "fact_units": null,
+      "is_priority": false
     },
     {
       "id": 11242,
@@ -413,7 +428,8 @@
       "plan_hours_cio": 1456.0,
       "fact_hours_cio": null,
       "plan_units": 0.7383367139959433,
-      "fact_units": null
+      "fact_units": null,
+      "is_priority": true
     },
     {
       "id": 11241,
@@ -438,7 +454,8 @@
       "plan_hours_cio": 2321.0,
       "fact_hours_cio": null,
       "plan_units": 1.1769776876267748,
-      "fact_units": null
+      "fact_units": null,
+      "is_priority": true
     },
     {
       "id": 10862,
@@ -456,14 +473,15 @@
       "goal": "Снижение трудозатрат со 100% до 80% к 30.09.2026",
       "indicators": "1. Автоматизация подготовки отчетов KPI\n2. Перевод кадрового документооборота в электронную форму",
       "team": "Заичко Валерий Валерьевич, Федорова Наталья Михайловна, Кострова Ирина Валерьевна, Ермакова Анастасия Юрьевна, Саркисян (ККП) Мартирос Сосикович",
-      "current_status": null,
+      "current_status": "✅ Выполнено:\n1. Подготовлен перечень заявлений (31 форма) (16.03.2026)\n2. Разработаны технические задания по 17 формам заявлений (16.03.2026)\n3. Направлено письмо о включении ГКУ «РЦТ» в пилотную группу ГКУ МО ЦБ МО (24.03.2026)\nЭТАП 1. Анализ методики оценки KPI (месяц, квартал, год) (27.03.2026)\n- проведен анализ методики оценки KPI\n- определены типы отчетов\n- проведена классификация критериев оценки KPI\n- проведены интервью с руководителями структурных подразделений\n\n📍 В работе:\nВ работе:\n1. Согласование форм заявлений с ЦБ (15.04.2026)\n2. Разработка функционала заявлений в 1С (15.04.2026)\nЭТАП 2. Подготовка окружения ППО Redmine для учета операционной деятельности сотрудников (24.04.2026)",
       "problem": "Как сейчас:\n1. Заявления работниками оформляются разными способами (частично на бумаге, частично в эл. форме).\n2. Проекты трудовых договоров готовятся вручную и подписываются на бумаге.\n \nКак будет:\n1. Формирование, согласование заявлений в 1С: кабинет сотрудника в полном объеме.\n2. Автоматическое формирование трудовых договоров в 1С: ЗУП, подписание ЭЦП.\n3. Единая библиотека шаблонов\n\nСуществующая проблематика:\n1. Бумажный документооборот\n2. Человеческий фактор\n3. Двойной ввод дублированной информации",
       "plan_hours": 3255.0,
       "fact_hours": null,
       "plan_hours_cio": 3255.0,
       "fact_hours_cio": null,
       "plan_units": 1.6506085192697768,
-      "fact_units": null
+      "fact_units": null,
+      "is_priority": false
     },
     {
       "id": 10861,
@@ -488,7 +506,8 @@
       "plan_hours_cio": 1995.0,
       "fact_hours_cio": null,
       "plan_units": 1.0116632860040569,
-      "fact_units": null
+      "fact_units": null,
+      "is_priority": true
     },
     {
       "id": 10860,
@@ -513,7 +532,8 @@
       "plan_hours_cio": 390.0,
       "fact_hours_cio": null,
       "plan_units": 0.19776876267748478,
-      "fact_units": null
+      "fact_units": null,
+      "is_priority": false
     },
     {
       "id": 10110,
@@ -538,7 +558,8 @@
       "plan_hours_cio": 9920.0,
       "fact_hours_cio": null,
       "plan_units": 5.0304259634888435,
-      "fact_units": null
+      "fact_units": null,
+      "is_priority": false
     },
     {
       "id": 9099,
@@ -563,7 +584,8 @@
       "plan_hours_cio": 1200.0,
       "fact_hours_cio": null,
       "plan_units": 0.6085192697768763,
-      "fact_units": null
+      "fact_units": null,
+      "is_priority": false
     },
     {
       "id": 8891,
@@ -588,7 +610,8 @@
       "plan_hours_cio": 151.0,
       "fact_hours_cio": 151.0,
       "plan_units": 0.0,
-      "fact_units": 0.0
+      "fact_units": 0.0,
+      "is_priority": false
     },
     {
       "id": 8209,
@@ -613,7 +636,8 @@
       "plan_hours_cio": 600.0,
       "fact_hours_cio": 600.0,
       "plan_units": 0.0,
-      "fact_units": 0.0
+      "fact_units": 0.0,
+      "is_priority": false
     },
     {
       "id": 6020,
@@ -638,7 +662,8 @@
       "plan_hours_cio": 0.0,
       "fact_hours_cio": null,
       "plan_units": null,
-      "fact_units": null
+      "fact_units": null,
+      "is_priority": false
     },
     {
       "id": 1477,
@@ -663,7 +688,8 @@
       "plan_hours_cio": 1400.0,
       "fact_hours_cio": 1400.0,
       "plan_units": null,
-      "fact_units": null
+      "fact_units": null,
+      "is_priority": false
     },
     {
       "id": 1476,
@@ -688,7 +714,8 @@
       "plan_hours_cio": 0.0,
       "fact_hours_cio": 0.0,
       "plan_units": null,
-      "fact_units": null
+      "fact_units": null,
+      "is_priority": false
     },
     {
       "id": 1475,
@@ -713,7 +740,8 @@
       "plan_hours_cio": 125.0,
       "fact_hours_cio": 125.0,
       "plan_units": 0.0,
-      "fact_units": 0.0
+      "fact_units": 0.0,
+      "is_priority": false
     },
     {
       "id": 1474,
@@ -738,7 +766,8 @@
       "plan_hours_cio": 648.0,
       "fact_hours_cio": 648.0,
       "plan_units": 0.0,
-      "fact_units": 0.0
+      "fact_units": 0.0,
+      "is_priority": false
     },
     {
       "id": 1473,
@@ -763,7 +792,8 @@
       "plan_hours_cio": 354.0,
       "fact_hours_cio": 354.0,
       "plan_units": 0.0,
-      "fact_units": 0.0
+      "fact_units": 0.0,
+      "is_priority": false
     },
     {
       "id": 1472,
@@ -788,7 +818,8 @@
       "plan_hours_cio": 40.0,
       "fact_hours_cio": 40.0,
       "plan_units": 0.0,
-      "fact_units": null
+      "fact_units": null,
+      "is_priority": false
     },
     {
       "id": 1470,
@@ -813,7 +844,8 @@
       "plan_hours_cio": 542.0,
       "fact_hours_cio": 542.0,
       "plan_units": 0.0,
-      "fact_units": 0.0
+      "fact_units": 0.0,
+      "is_priority": false
     },
     {
       "id": 1469,
@@ -838,7 +870,8 @@
       "plan_hours_cio": 611.0,
       "fact_hours_cio": null,
       "plan_units": 0.0,
-      "fact_units": 0.0
+      "fact_units": 0.0,
+      "is_priority": false
     },
     {
       "id": 1468,
@@ -863,7 +896,8 @@
       "plan_hours_cio": 0.0,
       "fact_hours_cio": 0.0,
       "plan_units": 0.0,
-      "fact_units": 0.0
+      "fact_units": 0.0,
+      "is_priority": false
     },
     {
       "id": 1467,
@@ -888,7 +922,8 @@
       "plan_hours_cio": 40.0,
       "fact_hours_cio": 40.0,
       "plan_units": 0.0,
-      "fact_units": null
+      "fact_units": null,
+      "is_priority": false
     },
     {
       "id": 1464,
@@ -913,7 +948,8 @@
       "plan_hours_cio": 4866.0,
       "fact_hours_cio": 4866.0,
       "plan_units": null,
-      "fact_units": null
+      "fact_units": null,
+      "is_priority": false
     }
   ],
   "stages": [
