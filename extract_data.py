@@ -137,7 +137,7 @@ def extract():
             'start_date':     clean_date(r.get('Дата начала')),
             'pct':            clean_pct(r.get('Готовность')),
             'project_type':   safe(r.get('Тип проекта')),
-            'is_priority':    bool(safe(r.get('Приоритетный проект'))),
+            'is_priority':    safe(r.get('Приоритетный проект')) == 'Да',
             'goal':           safe(r.get('Критически важная цель')),
             'indicators':     safe(r.get('Опережающие показатели (что делаем)')),
             'team':           safe(r.get('Команда проекта')),
