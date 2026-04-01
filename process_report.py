@@ -24,7 +24,7 @@ CLOSED_STATUSES = {'Закрыта', 'Закрыто', 'Выполнено', 'В
 TELEGRAM_SEPARATOR_THICK = '━━━━━━━━━━━━━━━━'
 TELEGRAM_SEPARATOR_THIN  = '─────────────────'
 
-DEFAULT_FIRST_GROUP_NAME  = 'ПРОЕКТЫ ЗИТ'
+DEFAULT_FIRST_GROUP_NAME  = 'ТРАНСФОРМАЦИОННЫЕ ПРОЕКТЫ'
 DEFAULT_FIRST_GROUP_EMOJI = '🔵'
 
 FUZZY_MATCH_THRESHOLD = 0.6
