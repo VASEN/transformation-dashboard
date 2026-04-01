@@ -284,8 +284,22 @@ def build_current_status(completed, current):
 # Telegram message builder
 # ---------------------------------------------------------------------------
 
+def _deadline_sort_key(proj):
+    """Return a sortable date from a project's deadline string (DD.MM.YYYY)."""
+    dl = proj.get('deadline') or ''
+    try:
+        d, m, y = dl.split('.')
+        return date(int(y), int(m), int(d))
+    except (ValueError, AttributeError):
+        return date.max  # no deadline → sort last
+
+
 def build_telegram_message(groups, not_reported, report_date):
-    """Return the full Telegram message as a string."""
+    """Return the full Telegram message as a string.
+
+    Groups are reordered so 🔴 (priority) groups come first;
+    projects within each group are sorted by ascending deadline.
+    """
     out = []
 
     date_str = report_date.strftime('%d.%m.%Y')
@@ -293,13 +307,16 @@ def build_telegram_message(groups, not_reported, report_date):
     out.append(f'_Дата: {date_str}_')
     out.append('')
 
-    for group in groups:
+    # Priority groups (🔴) first, then the rest; original order preserved within each tier
+    sorted_groups = sorted(groups, key=lambda g: (0 if g['emoji'] == '🔴' else 1))
+
+    for group in sorted_groups:
         out.append(TELEGRAM_SEPARATOR_THICK)
         out.append(f'{group["emoji"]} *{group["name"]}*')
         out.append(TELEGRAM_SEPARATOR_THICK)
         out.append('')
 
-        projects = group['projects']
+        projects = sorted(group['projects'], key=_deadline_sort_key)
         for idx, proj in enumerate(projects):
             emoji = '🔴' if proj.get('priority') else '🔵'
             out.append(f'{emoji} *{proj["name"]}*')
@@ -381,12 +398,12 @@ def main():
     print()
 
     # ------------------------------------------------------------------
-    # Load data.json
+    # Load data.json (always, if available — needed for matching/deadlines)
     # ------------------------------------------------------------------
     data          = None
     data_projects = []
 
-    if update_data:
+    if os.path.exists(args.data):
         with open(args.data, encoding='utf-8') as f:
             data = json.load(f)
         data_projects = data.get('projects', [])
@@ -408,6 +425,7 @@ def main():
 
             if dp is not None:
                 matched_dp_object_ids.add(id(dp))
+                proj['deadline'] = dp.get('deadline')
                 if match_type == 'id':
                     print(f'   ✓ {proj["name"]:<42} — найден по ID #{proj["issue_id"]}')
                 else:
