@@ -305,13 +305,13 @@ def _render_group(out, emoji, title, projects):
     sorted_projs = sorted(projects, key=_deadline_sort_key)
 
     out.append(TELEGRAM_SEPARATOR_THICK)
-    out.append(f'{emoji} *{title} ({count})*')
+    out.append(f'{emoji} {title} ({count})')
     out.append(TELEGRAM_SEPARATOR_THICK)
     out.append('')
 
     for idx, proj in enumerate(sorted_projs):
         proj_emoji = '🔴' if proj.get('is_priority') else '🔵'
-        out.append(f'{idx + 1}. {proj_emoji} *{proj["name"]}*')
+        out.append(f'{idx + 1}. {proj_emoji} {proj["name"]}')
         if proj.get('person'):
             out.append(f'👤 {proj["person"]}')
         out.append('')
@@ -334,7 +334,7 @@ def _render_group(out, emoji, title, projects):
 def _render_not_reported(out, names):
     """Append the 'no status provided' section to out."""
     out.append(TELEGRAM_SEPARATOR_THICK)
-    out.append('⚠️ *ИНФОРМАЦИЯ НЕ ПРЕДСТАВЛЕНА*')
+    out.append('⚠️ ИНФОРМАЦИЯ НЕ ПРЕДСТАВЛЕНА')
     out.append(TELEGRAM_SEPARATOR_THICK)
     out.append('')
     out.append('По следующим проектам статус на эту неделю не предоставлен:')
@@ -349,8 +349,8 @@ def build_priority_message(priority_projs, not_reported, report_date):
     """Telegram message for priority projects only."""
     out = []
     date_str = report_date.strftime('%d.%m.%Y')
-    out.append('📊 *Еженедельный отчёт — Приоритетные проекты*')
-    out.append(f'_Дата: {date_str}_')
+    out.append('📊 Еженедельный отчёт — Приоритетные проекты')
+    out.append(f'Дата: {date_str}')
     out.append('')
     _render_group(out, '🔴', 'ПРИОРИТЕТНЫЕ ПРОЕКТЫ', priority_projs)
     if not_reported:
@@ -363,8 +363,8 @@ def build_transform_message(transform_projs, not_reported, report_date):
     """Telegram message for transformation projects only."""
     out = []
     date_str = report_date.strftime('%d.%m.%Y')
-    out.append('📊 *Еженедельный отчёт — Трансформационные проекты*')
-    out.append(f'_Дата: {date_str}_')
+    out.append('📊 Еженедельный отчёт — Трансформационные проекты')
+    out.append(f'Дата: {date_str}')
     out.append('')
     _render_group(out, '🔵', 'ТРАНСФОРМАЦИОННЫЕ ПРОЕКТЫ', transform_projs)
     if not_reported:

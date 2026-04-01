@@ -1,3 +1,4 @@
 # Excel source data files
 *.xlsx
 *.xls
+*.txt
