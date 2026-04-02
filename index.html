@@ -327,23 +327,15 @@
     text-align: right;
   }
 
-  /* === GAUGES === */
-  .gauges-layout {
+  /* === VYSV GRID === */
+  .vysv-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: 1fr 1fr;
     gap: 12px;
     padding: 16px;
-    align-items: start;
     box-sizing: border-box;
-    width: 100%;
   }
-
-  .gauges-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    min-width: 0;
-  }
+  .vysv-span2 { grid-column: 1 / -1; }
 
   .gauge-card {
     position: relative;
@@ -356,13 +348,10 @@
     cursor: pointer;
   }
   .gauge-card.dimmed { opacity: 0.35; }
-  .gauge-card.highlighted {
-    box-shadow: 0 0 0 2px var(--accent), 0 0 20px rgba(0,229,255,0.25);
-    border-color: var(--accent);
-  }
+  .gauge-card.highlighted,
   .gauge-card.expanded {
-    border-color: var(--accent);
     box-shadow: 0 0 0 2px var(--accent), 0 0 20px rgba(0,229,255,0.25);
+    border-color: var(--accent);
   }
 
   .gauge-name {
@@ -380,55 +369,60 @@
     margin: 0 auto 8px;
     overflow: visible;
   }
-
   .gauge-svg { width: 100%; height: 100%; overflow: visible; }
 
-  .gauge-pct {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 18px;
-    font-weight: 700;
+  /* Wide gauge card (span 2): SVG left, metrics right */
+  .gauge-card--wide {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    text-align: left;
+    padding: 12px 20px;
   }
+  .gauge-card--wide .gauge-wrap { flex-shrink: 0; margin: 0; }
+  .gauge-card--wide .gauge-name { font-size: 13px; margin-bottom: 10px; }
+  .gauge-wide-metrics { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+  .gauge-wide-metric { display: flex; flex-direction: column; gap: 2px; }
+  .gwm-label { font-size: 10px; color: var(--text-dim); }
+  .gwm-val { font-size: 13px; font-weight: 700; color: var(--text); }
 
-.gauge-detail-panel {
+  /* Detail panel */
+  .vysv-detail {
     background: rgba(8,12,28,0.97);
     border: 1px solid var(--accent);
     border-radius: 12px;
     padding: 16px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    position: sticky;
-    top: 16px;
-    min-width: 0;
     box-sizing: border-box;
-    word-break: break-word;
-    white-space: normal;
   }
-  .gauge-detail-title {
+  .vysv-detail-title {
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.8px;
     color: var(--accent);
     text-transform: uppercase;
-    margin-bottom: 4px;
+    margin-bottom: 10px;
     border-bottom: 1px solid rgba(0,229,255,0.15);
     padding-bottom: 5px;
   }
-  .gauge-detail-row {
+  .vysv-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px 8px;
+    margin-bottom: 12px;
+  }
+  .vysv-metric-label { font-size: 10px; color: var(--text-dim); margin-bottom: 2px; }
+  .vysv-metric-val { font-size: 13px; font-weight: 700; color: var(--text); }
+  .vysv-detail-accent {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
     gap: 8px;
-    font-size: 12px;
-    white-space: nowrap;
+    border-top: 1px solid rgba(0,229,255,0.2);
+    padding-top: 10px;
+    font-size: 13px;
+    flex-wrap: wrap;
   }
-  .gauge-detail-row span:first-child { color: var(--text-dim); flex-shrink: 1; white-space: normal; }
-  .gauge-detail-row span:last-child { color: var(--text); font-weight: 700; flex-shrink: 0; }
-  .gauge-detail-row.accent span:last-child { color: var(--accent); }
-  .gauge-detail-divider {
-    border: none;
-    border-top: 1px solid rgba(255,255,255,0.06);
-    margin: 2px 0;
-  }
+  .vysv-detail-accent .accent-label { color: var(--text-dim); }
+  .vysv-detail-accent .accent-val { font-weight: 700; color: var(--accent); margin-right: 16px; }
 
   /* === DEADLINE HEATMAP === */
   .deadline-map {
@@ -905,10 +899,7 @@
         <div class="section-header">
           <span class="section-title">Высвобождение %</span>
         </div>
-        <div class="gauges-layout">
-          <div class="gauges-grid" id="gaugesGrid"></div>
-          <div id="gauge-detail-panel" class="gauge-detail-panel"></div>
-        </div>
+        <div class="vysv-grid" id="vysvGrid"></div>
 
         <!-- Deadline heatmap -->
         <div class="section-header" style="margin-top:0">
@@ -1112,80 +1103,129 @@ function renderFullProjTable(projects, filter = 'all') {
   });
 }
 
-// ===== RENDER: GAUGES =====
-function showGaugeDetail(curator) {
-  const panel = document.getElementById('gauge-detail-panel');
-  if (!curator) return;
-  const vysv = Math.round(curator.vysv_units * 10) / 10;
-  const plan = curator.plan_minus20 != null ? Math.round(curator.plan_minus20 * 10) / 10 : '—';
-  panel.innerHTML = `
-    <div class="gauge-detail-title">${curator.name}</div>
-    <div class="gauge-detail-row"><span>Численность</span><span>${curator.headcount} чел.</span></div>
-    <div class="gauge-detail-row"><span>ККП план</span><span>${curator.kkp}</span></div>
-    <div class="gauge-detail-row"><span>ККП факт</span><span>${curator.kkp_fact}</span></div>
-    <div class="gauge-detail-row"><span>РЦТ план</span><span>${curator.rct}</span></div>
-    <div class="gauge-detail-row"><span>РЦТ факт</span><span>${curator.rct_fact}</span></div>
-    <hr class="gauge-detail-divider">
-    <div class="gauge-detail-row"><span>Итого факт</span><span>${curator.fact_total}</span></div>
-    <div class="gauge-detail-row"><span>Вакансии</span><span>${curator.vacancies}</span></div>
-    <div class="gauge-detail-row"><span>План −20%</span><span>${plan} ед.</span></div>
-    <div class="gauge-detail-row"><span>Высвобождение</span><span>${vysv} ед.</span></div>
-    <hr class="gauge-detail-divider">
-    <div class="gauge-detail-row accent"><span>% высвобождения</span><span>${curator.pct_vysv}%</span></div>
-  `;
-  document.querySelectorAll('.gauge-card').forEach(c => {
-    c.classList.toggle('expanded', c.dataset.curatorName === curator.name);
-  });
+// ===== RENDER: VYSV BLOCK =====
+function _gaugeSVG(pct_vysv) {
+  const radius = 40, cx = 50, cy = 55;
+  const color = getGaugeColor(pct_vysv);
+  const pct = Math.min(pct_vysv, 200) / 200;
+  const a0 = -Math.PI, a1 = a0 + pct * Math.PI;
+  const x1 = cx + radius * Math.cos(a0), y1 = cy + radius * Math.sin(a0);
+  const x2 = cx + radius * Math.cos(a1), y2 = cy + radius * Math.sin(a1);
+  return `<svg class="gauge-svg" viewBox="0 0 100 65">
+    <path d="M ${cx-radius},${cy} A ${radius},${radius} 0 0 1 ${cx+radius},${cy}"
+      fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="8" stroke-linecap="round"/>
+    <path d="M ${x1},${y1} A ${radius},${radius} 0 0 1 ${x2},${y2}"
+      fill="none" stroke="${color}" stroke-width="8" stroke-linecap="round"
+      style="filter:drop-shadow(0 0 6px ${color})"/>
+    <text x="50" y="52" text-anchor="middle" font-family="Orbitron,sans-serif"
+      font-size="13" font-weight="700" fill="${color}">${pct_vysv}%</text>
+  </svg>`;
 }
 
-function renderGauges(curators) {
-  const grid = document.getElementById('gaugesGrid');
-  const radius = 40, centerX = 50, centerY = 55;
-
-  grid.innerHTML = curators.map(g => {
-    const color = getGaugeColor(g.pct_vysv);
-    const pct = Math.min(g.pct_vysv, 200) / 200;
-    const startAngle = -Math.PI;
-    const endAngle = startAngle + pct * Math.PI;
-    const x1 = centerX + radius * Math.cos(startAngle);
-    const y1 = centerY + radius * Math.sin(startAngle);
-    const x2 = centerX + radius * Math.cos(endAngle);
-    const y2 = centerY + radius * Math.sin(endAngle);
-    const largeArc = 0;
-    return `
-      <div class="gauge-card" data-curator-name="${g.name}">
-        <div class="gauge-name">${g.name}</div>
-        <div class="gauge-wrap">
-          <svg class="gauge-svg" viewBox="0 0 100 65">
-            <path d="M ${centerX - radius},${centerY} A ${radius},${radius} 0 0 1 ${centerX + radius},${centerY}"
-              fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="8" stroke-linecap="round"/>
-            <path d="M ${x1},${y1} A ${radius},${radius} 0 ${largeArc} 1 ${x2},${y2}"
-              fill="none" stroke="${color}" stroke-width="8" stroke-linecap="round"
-              style="filter:drop-shadow(0 0 6px ${color})"/>
-            <text x="50" y="52" text-anchor="middle" font-family="Orbitron,sans-serif"
-              font-size="13" font-weight="700" fill="${color}">${g.pct_vysv}%</text>
-          </svg>
+function buildWideGaugeCard(curator) {
+  return `
+    <div class="gauge-card gauge-card--wide vysv-span2" data-curator-name="${curator.name}">
+      <div class="gauge-wrap">${_gaugeSVG(curator.pct_vysv)}</div>
+      <div class="gauge-wide-info">
+        <div class="gauge-name">${curator.name}</div>
+        <div class="gauge-wide-metrics">
+          <div class="gauge-wide-metric">
+            <span class="gwm-label">Численность</span>
+            <span class="gwm-val">${curator.headcount} чел.</span>
+          </div>
+          <div class="gauge-wide-metric">
+            <span class="gwm-label">ККП факт / план</span>
+            <span class="gwm-val">${curator.kkp_fact} / ${curator.kkp}</span>
+          </div>
+          <div class="gauge-wide-metric">
+            <span class="gwm-label">РЦТ факт / план</span>
+            <span class="gwm-val">${curator.rct_fact} / ${curator.rct}</span>
+          </div>
         </div>
       </div>
-    `;
-  }).join('');
+    </div>`;
+}
 
-  // Click: toggle detail panel (only when ownerFilter = 'all')
-  const komitet = curators.find(c => c.name === 'Комитет и РЦТ') || curators[0];
+function buildCompactGaugeCard(curator) {
+  return `
+    <div class="gauge-card" data-curator-name="${curator.name}">
+      <div class="gauge-name">${curator.name}</div>
+      <div class="gauge-wrap">${_gaugeSVG(curator.pct_vysv)}</div>
+    </div>`;
+}
+
+function buildDetailPanel(curator) {
+  const vysv = Math.round(curator.vysv_units * 10) / 10;
+  const plan = curator.plan_minus20 != null ? Math.round(curator.plan_minus20 * 10) / 10 : '—';
+  const metrics = [
+    ['Численность', curator.headcount + ' чел.'],
+    ['ККП план',    curator.kkp],
+    ['ККП факт',    curator.kkp_fact],
+    ['РЦТ план',    curator.rct],
+    ['РЦТ факт',    curator.rct_fact],
+    ['Итого факт',  curator.fact_total],
+    ['Вакансии',    curator.vacancies],
+    ['План −20%',   plan + ' ед.'],
+  ];
+  return `
+    <div class="vysv-detail vysv-span2">
+      <div class="vysv-detail-title">${curator.name}</div>
+      <div class="vysv-detail-grid">
+        ${metrics.map(([lbl, val]) => `
+          <div class="vysv-metric">
+            <div class="vysv-metric-label">${lbl}</div>
+            <div class="vysv-metric-val">${val}</div>
+          </div>`).join('')}
+      </div>
+      <div class="vysv-detail-accent">
+        <span class="accent-label">% высвобождения</span>
+        <span class="accent-val">${curator.pct_vysv}%</span>
+        <span class="accent-label">Высвобождение</span>
+        <span class="accent-val">${vysv} ед.</span>
+      </div>
+    </div>`;
+}
+
+function renderVysvBlock(selectedCuratorName) {
+  const grid = document.getElementById('vysvGrid');
+  if (!grid || !allCurators || !allCurators.length) return;
+
+  const komitet = allCurators.find(c => c.name === 'Комитет и РЦТ') || allCurators[0];
+  const individuals = allCurators.filter(c => c.name !== 'Комитет и РЦТ');
+  const isFiltered = selectedCuratorName && selectedCuratorName !== 'all';
+
+  let html = buildWideGaugeCard(komitet);
+
+  if (!isFiltered) {
+    individuals.forEach(c => { html += buildCompactGaugeCard(c); });
+    if (individuals.length % 2 !== 0) html += '<div></div>';
+    html += buildDetailPanel(komitet);
+  } else {
+    const norm = s => (s || '').toLowerCase().replace(/ё/g, 'е');
+    const lastName = norm(selectedCuratorName).split(' ')[0];
+    const target = allCurators.find(c => norm(c.name).includes(lastName)) || komitet;
+    html += buildWideGaugeCard(target);
+    html += buildDetailPanel(target);
+  }
+
+  grid.innerHTML = html;
+
+  // Click handlers (only active when ownerFilter = 'all')
   grid.querySelectorAll('.gauge-card').forEach(card => {
     card.addEventListener('click', () => {
       if (document.getElementById('ownerFilter').value !== 'all') return;
-      const curator = curators.find(c => c.name === card.dataset.curatorName);
-      if (card.classList.contains('expanded') && curator !== komitet) {
-        showGaugeDetail(komitet);
+      const name = card.dataset.curatorName;
+      if (name === komitet.name) {
+        // Clicking komitet in selected mode → back to default
+        if (isFiltered) renderVysvBlock(null);
+      } else if (card.classList.contains('gauge-card--wide')) {
+        // Clicking selected wide card → back to default
+        renderVysvBlock(null);
       } else {
-        showGaugeDetail(curator);
+        renderVysvBlock(name);
       }
     });
   });
-
-  // Default: show Комитет и РЦТ on load
-  showGaugeDetail(komitet);
 }
 
 // ===== RENDER: DEADLINE HEATMAP =====
@@ -1547,32 +1587,7 @@ function populateOwnerFilter(projects) {
 
 // ===== GAUGE HIGHLIGHT =====
 function highlightGauge(selectedOwner) {
-  const cards = document.querySelectorAll('.gauge-card');
-  const norm = s => (s || '').toLowerCase().replace(/ё/g, 'е');
-  const komitet = allCurators.find(c => c.name === 'Комитет и РЦТ') || allCurators[0];
-
-  if (selectedOwner === 'all') {
-    cards.forEach(c => c.classList.remove('dimmed', 'highlighted'));
-    showGaugeDetail(komitet);
-    return;
-  }
-
-  const lastName = norm(selectedOwner).split(' ')[0];
-  let matchedCurator = null;
-  cards.forEach(card => {
-    const cn = norm(card.dataset.curatorName || '');
-    const match = cn.includes(lastName);
-    if (match) matchedCurator = allCurators.find(c => c.name === card.dataset.curatorName) || null;
-    card.classList.toggle('dimmed', !match);
-    card.classList.toggle('highlighted', match);
-  });
-
-  if (matchedCurator) {
-    showGaugeDetail(matchedCurator);
-  } else {
-    cards.forEach(c => c.classList.remove('dimmed', 'highlighted'));
-    showGaugeDetail(komitet);
-  }
+  renderVysvBlock(selectedOwner);
 }
 
 // ===== COMPUTE TASK KPIs FOR FILTERED PROJECTS =====
@@ -1695,7 +1710,7 @@ function initDashboard(data) {
   allCurators = data.curators;
 
   // Gauges (Высвобождение — never filtered)
-  renderGauges(data.curators);
+  renderVysvBlock();
 
   // KPI cards
   document.getElementById('kpi-projects').textContent = s.projects_total;
