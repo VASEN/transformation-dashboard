@@ -1,19 +1,19 @@
 {
-  "updated_at": "01.04.2026 22:42",
+  "updated_at": "02.04.2026 08:47",
   "summary": {
     "projects_total": 36,
     "projects_active": 22,
     "projects_closed": 14,
-    "projects_avg_pct": 12,
-    "tasks_total": 400,
-    "tasks_active": 233,
-    "tasks_closed": 167,
-    "tasks_deadline_5": 9,
-    "tasks_deadline_14": 28,
-    "tasks_overdue": 15,
-    "tasks_today": 1,
+    "projects_avg_pct": 14,
+    "tasks_total": 405,
+    "tasks_active": 230,
+    "tasks_closed": 175,
+    "tasks_deadline_5": 7,
+    "tasks_deadline_14": 21,
+    "tasks_overdue": 9,
+    "tasks_today": 0,
     "vysv_pct_total": 128,
-    "report_updated_at": "01.04.2026"
+    "report_updated_at": "02.04.2026"
   },
   "projects": [
     {
@@ -39,7 +39,11 @@
       "plan_hours_cio": 0.0,
       "fact_hours_cio": null,
       "plan_units": 0.0,
-      "fact_units": null
+      "fact_units": null,
+      "url": null,
+      "internal_hours": 0.0,
+      "external_hours": 43340.0,
+      "total_units": 0.0
     },
     {
       "id": 11610,
@@ -64,7 +68,11 @@
       "plan_hours_cio": 1824.0,
       "fact_hours_cio": null,
       "plan_units": 0.9249492900608519,
-      "fact_units": null
+      "fact_units": null,
+      "url": "https://transformation.rm.mosreg.ru/#/issues/11562",
+      "internal_hours": 1824.0,
+      "external_hours": 0.0,
+      "total_units": 0.9249492900608519
     },
     {
       "id": 11609,
@@ -89,7 +97,11 @@
       "plan_hours_cio": 1296.0,
       "fact_hours_cio": null,
       "plan_units": 0.6572008113590264,
-      "fact_units": null
+      "fact_units": null,
+      "url": "https://transformation.rm.mosreg.ru/#/issues/11556",
+      "internal_hours": 1296.0,
+      "external_hours": 0.0,
+      "total_units": 0.6572008113590264
     },
     {
       "id": 11608,
@@ -114,7 +126,11 @@
       "plan_hours_cio": 2993.0,
       "fact_hours_cio": 2993.0,
       "plan_units": 1.5177484787018256,
-      "fact_units": 0.0
+      "fact_units": 0.0,
+      "url": "https://transformation.rm.mosreg.ru/#/issues/11554",
+      "internal_hours": 2993.0,
+      "external_hours": 0.0,
+      "total_units": 1.5177484787018256
     },
     {
       "id": 11607,
@@ -139,7 +155,11 @@
       "plan_hours_cio": 8782.0,
       "fact_hours_cio": null,
       "plan_units": 4.453346855983773,
-      "fact_units": null
+      "fact_units": null,
+      "url": "https://transformation.rm.mosreg.ru/#/issues/11571",
+      "internal_hours": 8782.0,
+      "external_hours": 0.0,
+      "total_units": 4.453346855983773
     },
     {
       "id": 11606,
@@ -164,7 +184,11 @@
       "plan_hours_cio": 1359.0,
       "fact_hours_cio": null,
       "plan_units": 0.6891480730223124,
-      "fact_units": null
+      "fact_units": null,
+      "url": "https://transformation.rm.mosreg.ru/#/issues/11552",
+      "internal_hours": 1359.0,
+      "external_hours": 0.0,
+      "total_units": 0.6891480730223124
     },
     {
       "id": 11594,
@@ -176,7 +200,7 @@
       "manager_short": "Саркисян М.С.",
       "deadline": "11.12.2026",
       "start_date": "06.02.2026",
-      "pct": 20,
+      "pct": 17,
       "project_type": "Межведомственный",
       "is_priority": false,
       "goal": "Снижение внутренних трудозатрат со 100% до 80% к 11.12.2026",
@@ -189,7 +213,11 @@
       "plan_hours_cio": 1334.0,
       "fact_hours_cio": null,
       "plan_units": 0.6764705882352942,
-      "fact_units": null
+      "fact_units": null,
+      "url": "https://transformation.rm.mosreg.ru/#/issues/11553",
+      "internal_hours": 1334.0,
+      "external_hours": 440.0,
+      "total_units": 0.6764705882352942
     },
     {
       "id": 11584,
@@ -214,7 +242,11 @@
       "plan_hours_cio": 0.0,
       "fact_hours_cio": null,
       "plan_units": 0.0,
-      "fact_units": null
+      "fact_units": null,
+      "url": "https://transformation.rm.mosreg.ru/#/issues/10536",
+      "internal_hours": 0.0,
+      "external_hours": 0.0,
+      "total_units": 0.0
     },
     {
       "id": 11575,
@@ -239,7 +271,11 @@
       "plan_hours_cio": 3768.0,
       "fact_hours_cio": null,
       "plan_units": 1.9107505070993915,
-      "fact_units": null
+      "fact_units": null,
+      "url": "https://transformation.rm.mosreg.ru/#/issues/11570",
+      "internal_hours": 3768.0,
+      "external_hours": 60288.0,
+      "total_units": 1.9107505070993915
     },
     {
       "id": 11498,
@@ -264,7 +300,11 @@
       "plan_hours_cio": 2964.0,
       "fact_hours_cio": null,
       "plan_units": 1.5030425963488845,
-      "fact_units": null
+      "fact_units": null,
+      "url": "https://transformation.rm.mosreg.ru/#/issues/11551",
+      "internal_hours": 2964.0,
+      "external_hours": 0.0,
+      "total_units": 1.5030425963488845
     },
     {
       "id": 11497,
@@ -276,7 +316,7 @@
       "manager_short": "Зернова Е.С.",
       "deadline": "30.11.2026",
       "start_date": "05.02.2026",
-      "pct": 0,
+      "pct": 11,
       "project_type": "Межведомственный",
       "is_priority": false,
       "goal": "Снижение трудозатрат со 100% до 70% к 30.11.2026",
@@ -289,7 +329,11 @@
       "plan_hours_cio": 4045.0,
       "fact_hours_cio": null,
       "plan_units": 2.0512170385395536,
-      "fact_units": null
+      "fact_units": null,
+      "url": "https://transformation.rm.mosreg.ru/#/issues/11550",
+      "internal_hours": 4045.0,
+      "external_hours": 13480.0,
+      "total_units": 2.0512170385395536
     },
     {
       "id": 11246,
@@ -301,7 +345,7 @@
       "manager_short": "Кренева А.А.",
       "deadline": "27.11.2026",
       "start_date": "01.02.2026",
-      "pct": 0,
+      "pct": 14,
       "project_type": "Межведомственный",
       "is_priority": true,
       "goal": "Сокращение трудозатрат со 100% до 80% до 27.11.2026",
@@ -314,7 +358,11 @@
       "plan_hours_cio": 0.0,
       "fact_hours_cio": null,
       "plan_units": 0.0,
-      "fact_units": null
+      "fact_units": null,
+      "url": "https://transformation.rm.mosreg.ru/#/issues/10521",
+      "internal_hours": 0.0,
+      "external_hours": 6920.0,
+      "total_units": 0.0
     },
     {
       "id": 11245,
@@ -336,10 +384,14 @@
       "problem": "1. В ЕАСУЗ 44 отсутствует аналитическая информация по закупочной деятельности (вечные вопросы \"где закупка?\" и \"что делать дальше?\")\n2. В связи с отсутствием единого окна, для контроля всех закупок заказчика, возникает риск попадания в красные зоны (теряем сроки — нет единого контроля дедлайнов)\n3. В случае болезни / увольнения контрактного управляющего нет системного инструмента, отображающего статусы и этапы закупок",
       "plan_hours": 55500.0,
       "fact_hours": null,
-      "plan_hours_cio": null,
+      "plan_hours_cio": 0.0,
       "fact_hours_cio": null,
       "plan_units": 0.0,
-      "fact_units": null
+      "fact_units": null,
+      "url": "https://transformation.rm.mosreg.ru/#/issues/10525",
+      "internal_hours": 0.0,
+      "external_hours": 55500.0,
+      "total_units": 0.0
     },
     {
       "id": 11244,
@@ -364,7 +416,11 @@
       "plan_hours_cio": 8089.0,
       "fact_hours_cio": null,
       "plan_units": 4.101926977687627,
-      "fact_units": null
+      "fact_units": null,
+      "url": "https://transformation.rm.mosreg.ru/#/issues/10543",
+      "internal_hours": 8089.0,
+      "external_hours": 0.0,
+      "total_units": 4.101926977687627
     },
     {
       "id": 11243,
@@ -376,7 +432,7 @@
       "manager_short": "Гуляев В.А.",
       "deadline": "30.08.2026",
       "start_date": "02.03.2026",
-      "pct": 7,
+      "pct": 21,
       "project_type": "Внутриведомственный",
       "is_priority": false,
       "goal": "Сокращение внутренних трудозатрат со 100% до 80% к 30.08.2026",
@@ -389,7 +445,11 @@
       "plan_hours_cio": 6085.0,
       "fact_hours_cio": null,
       "plan_units": 3.0856997971602436,
-      "fact_units": null
+      "fact_units": null,
+      "url": "https://transformation.rm.mosreg.ru/#/issues/10550",
+      "internal_hours": 6085.0,
+      "external_hours": 0.0,
+      "total_units": 3.0856997971602436
     },
     {
       "id": 11242,
@@ -414,7 +474,11 @@
       "plan_hours_cio": 1456.0,
       "fact_hours_cio": null,
       "plan_units": 0.7383367139959433,
-      "fact_units": null
+      "fact_units": null,
+      "url": "https://transformation.rm.mosreg.ru/#/issues/10552",
+      "internal_hours": 1456.0,
+      "external_hours": 41625.0,
+      "total_units": 0.7383367139959433
     },
     {
       "id": 11241,
@@ -439,7 +503,11 @@
       "plan_hours_cio": 2321.0,
       "fact_hours_cio": null,
       "plan_units": 1.1769776876267748,
-      "fact_units": null
+      "fact_units": null,
+      "url": "https://transformation.rm.mosreg.ru/#/issues/10553",
+      "internal_hours": 2321.0,
+      "external_hours": 0.0,
+      "total_units": 1.1769776876267748
     },
     {
       "id": 10862,
@@ -464,7 +532,11 @@
       "plan_hours_cio": 3255.0,
       "fact_hours_cio": null,
       "plan_units": 1.6506085192697768,
-      "fact_units": null
+      "fact_units": null,
+      "url": "https://transformation.rm.mosreg.ru/#/issues/10554",
+      "internal_hours": 3255.0,
+      "external_hours": 0.0,
+      "total_units": 1.6506085192697768
     },
     {
       "id": 10861,
@@ -489,7 +561,11 @@
       "plan_hours_cio": 1995.0,
       "fact_hours_cio": null,
       "plan_units": 1.0116632860040569,
-      "fact_units": null
+      "fact_units": null,
+      "url": "https://transformation.rm.mosreg.ru/#/issues/10532",
+      "internal_hours": 1995.0,
+      "external_hours": 90806.0,
+      "total_units": 1.0116632860040569
     },
     {
       "id": 10860,
@@ -514,7 +590,11 @@
       "plan_hours_cio": 390.0,
       "fact_hours_cio": null,
       "plan_units": 0.19776876267748478,
-      "fact_units": null
+      "fact_units": null,
+      "url": "https://transformation.rm.mosreg.ru/#/issues/10518",
+      "internal_hours": 390.0,
+      "external_hours": 140327.0,
+      "total_units": 0.19776876267748478
     },
     {
       "id": 10110,
@@ -539,7 +619,11 @@
       "plan_hours_cio": 9920.0,
       "fact_hours_cio": null,
       "plan_units": 5.0304259634888435,
-      "fact_units": null
+      "fact_units": null,
+      "url": "https://transformation.rm.mosreg.ru/#/issues/9389",
+      "internal_hours": 9920.0,
+      "external_hours": 0.0,
+      "total_units": 5.0304259634888435
     },
     {
       "id": 9099,
@@ -551,7 +635,7 @@
       "manager_short": "Гуляев В.А.",
       "deadline": "22.05.2026",
       "start_date": "04.08.2025",
-      "pct": 29,
+      "pct": 36,
       "project_type": "Внутриведомственный",
       "is_priority": true,
       "goal": "Сократить время обработки запросов с 40 минут до 1 минуты к 22.05.2026",
@@ -564,7 +648,11 @@
       "plan_hours_cio": 1200.0,
       "fact_hours_cio": null,
       "plan_units": 0.6085192697768763,
-      "fact_units": null
+      "fact_units": null,
+      "url": "https://transformation.rm.mosreg.ru/#/issues/8948",
+      "internal_hours": 1200.0,
+      "external_hours": 92800.0,
+      "total_units": 0.6085192697768763
     },
     {
       "id": 8891,
@@ -589,7 +677,11 @@
       "plan_hours_cio": 151.0,
       "fact_hours_cio": 151.0,
       "plan_units": 0.0,
-      "fact_units": 0.0
+      "fact_units": 0.0,
+      "url": null,
+      "internal_hours": null,
+      "external_hours": null,
+      "total_units": null
     },
     {
       "id": 8209,
@@ -614,7 +706,11 @@
       "plan_hours_cio": 600.0,
       "fact_hours_cio": 600.0,
       "plan_units": 0.0,
-      "fact_units": 0.0
+      "fact_units": 0.0,
+      "url": null,
+      "internal_hours": null,
+      "external_hours": null,
+      "total_units": null
     },
     {
       "id": 6020,
@@ -639,7 +735,11 @@
       "plan_hours_cio": 0.0,
       "fact_hours_cio": null,
       "plan_units": null,
-      "fact_units": null
+      "fact_units": null,
+      "url": null,
+      "internal_hours": null,
+      "external_hours": null,
+      "total_units": null
     },
     {
       "id": 1477,
@@ -664,7 +764,11 @@
       "plan_hours_cio": 1400.0,
       "fact_hours_cio": 1400.0,
       "plan_units": null,
-      "fact_units": null
+      "fact_units": null,
+      "url": null,
+      "internal_hours": null,
+      "external_hours": null,
+      "total_units": null
     },
     {
       "id": 1476,
@@ -689,7 +793,11 @@
       "plan_hours_cio": 0.0,
       "fact_hours_cio": 0.0,
       "plan_units": null,
-      "fact_units": null
+      "fact_units": null,
+      "url": null,
+      "internal_hours": null,
+      "external_hours": null,
+      "total_units": null
     },
     {
       "id": 1475,
@@ -714,7 +822,11 @@
       "plan_hours_cio": 125.0,
       "fact_hours_cio": 125.0,
       "plan_units": 0.0,
-      "fact_units": 0.0
+      "fact_units": 0.0,
+      "url": null,
+      "internal_hours": null,
+      "external_hours": null,
+      "total_units": null
     },
     {
       "id": 1474,
@@ -739,7 +851,11 @@
       "plan_hours_cio": 648.0,
       "fact_hours_cio": 648.0,
       "plan_units": 0.0,
-      "fact_units": 0.0
+      "fact_units": 0.0,
+      "url": null,
+      "internal_hours": null,
+      "external_hours": null,
+      "total_units": null
     },
     {
       "id": 1473,
@@ -764,7 +880,11 @@
       "plan_hours_cio": 354.0,
       "fact_hours_cio": 354.0,
       "plan_units": 0.0,
-      "fact_units": 0.0
+      "fact_units": 0.0,
+      "url": null,
+      "internal_hours": null,
+      "external_hours": null,
+      "total_units": null
     },
     {
       "id": 1472,
@@ -789,7 +909,11 @@
       "plan_hours_cio": 40.0,
       "fact_hours_cio": 40.0,
       "plan_units": 0.0,
-      "fact_units": null
+      "fact_units": null,
+      "url": null,
+      "internal_hours": null,
+      "external_hours": null,
+      "total_units": null
     },
     {
       "id": 1470,
@@ -814,7 +938,11 @@
       "plan_hours_cio": 542.0,
       "fact_hours_cio": 542.0,
       "plan_units": 0.0,
-      "fact_units": 0.0
+      "fact_units": 0.0,
+      "url": null,
+      "internal_hours": null,
+      "external_hours": null,
+      "total_units": null
     },
     {
       "id": 1469,
@@ -826,7 +954,7 @@
       "manager_short": "Потапчик Т.П.",
       "deadline": "30.06.2026",
       "start_date": "14.02.2025",
-      "pct": 40,
+      "pct": 39,
       "project_type": "Межведомственный",
       "is_priority": false,
       "goal": "Снижение внутренних и внешних трудозатрат со 100% до 80% к 30.11.2026",
@@ -839,7 +967,11 @@
       "plan_hours_cio": 611.0,
       "fact_hours_cio": null,
       "plan_units": 0.0,
-      "fact_units": 0.0
+      "fact_units": 0.0,
+      "url": null,
+      "internal_hours": null,
+      "external_hours": null,
+      "total_units": null
     },
     {
       "id": 1468,
@@ -864,7 +996,11 @@
       "plan_hours_cio": 0.0,
       "fact_hours_cio": 0.0,
       "plan_units": 0.0,
-      "fact_units": 0.0
+      "fact_units": 0.0,
+      "url": null,
+      "internal_hours": null,
+      "external_hours": null,
+      "total_units": null
     },
     {
       "id": 1467,
@@ -889,7 +1025,11 @@
       "plan_hours_cio": 40.0,
       "fact_hours_cio": 40.0,
       "plan_units": 0.0,
-      "fact_units": null
+      "fact_units": null,
+      "url": null,
+      "internal_hours": null,
+      "external_hours": null,
+      "total_units": null
     },
     {
       "id": 1464,
@@ -914,19 +1054,47 @@
       "plan_hours_cio": 4866.0,
       "fact_hours_cio": 4866.0,
       "plan_units": null,
-      "fact_units": null
+      "fact_units": null,
+      "url": null,
+      "internal_hours": null,
+      "external_hours": null,
+      "total_units": null
     }
   ],
   "stages": [
     {
+      "id": 14092,
+      "project": "Цифровой двойник сотрудника (ИИ)",
+      "theme": "ЭТАП 2. Приоритизация сценариев",
+      "status": "Новая",
+      "executor": "Заичко Валерий Валерьевич",
+      "executor_short": "Заичко В.В.",
+      "deadline": "17.04.2026",
+      "urgency": "ok",
+      "pct": 0,
+      "parent_id": 11244
+    },
+    {
+      "id": 14091,
+      "project": "Цифровой двойник сотрудника (ИИ)",
+      "theme": "ЭТАП 1. Сбор информации (сценарии, документы, инструкции, чек-листы)",
+      "status": "В работе",
+      "executor": "Заичко Валерий Валерьевич",
+      "executor_short": "Заичко В.В.",
+      "deadline": "13.04.2026",
+      "urgency": "soon",
+      "pct": 0,
+      "parent_id": 11244
+    },
+    {
       "id": 13952,
       "project": "Интеллектуальный анализ цен",
       "theme": "Поручения",
-      "status": "Новая",
+      "status": "В работе",
       "executor": "Мазуров (ККП) Даниил Юрьевич",
       "executor_short": "Мазуров Д.Ю.",
-      "deadline": "07.09.2026",
-      "urgency": "ok",
+      "deadline": "01.04.2026",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 12546
     },
@@ -1059,7 +1227,7 @@
       "executor_short": "Володин К.О.",
       "deadline": "11.05.2026",
       "urgency": "ok",
-      "pct": 0,
+      "pct": 33,
       "parent_id": 9099
     },
     {
@@ -1246,12 +1414,12 @@
       "id": 12924,
       "project": "ИИ проверка закупок",
       "theme": "Этап 1. Подготовка к формированию условий проверки",
-      "status": "Выполнено",
+      "status": "Закрыта",
       "executor": "Зернова (ККП) Елена Сергеевна",
       "executor_short": "Зернова Е.С.",
       "deadline": "31.03.2026",
       "urgency": "overdue",
-      "pct": 0,
+      "pct": 100,
       "parent_id": 11497
     },
     {
@@ -1594,48 +1762,48 @@
       "id": 12772,
       "project": "Трансформация управления аналитики",
       "theme": "Анализ связей КТРУ ↔ КОЗ 2.0",
-      "status": "Выполнено",
+      "status": "Закрыта",
       "executor": "Сабадин (ГКУ \"РЦТ\") Аркадий Дмитриевич",
       "executor_short": "Сабадин А.Д.",
       "deadline": "28.03.2026",
       "urgency": "overdue",
-      "pct": 0,
+      "pct": 100,
       "parent_id": 11243
     },
     {
       "id": 12771,
       "project": "Трансформация управления аналитики",
       "theme": "Подбор ценовых аналогов (демо на 50 закупках)",
-      "status": "Выполнено",
+      "status": "Закрыта",
       "executor": "Колесников (ККП) Кирилл Владимирович",
       "executor_short": "Колесников К.В.",
       "deadline": "28.03.2026",
       "urgency": "overdue",
-      "pct": 0,
+      "pct": 100,
       "parent_id": 11243
     },
     {
       "id": 12770,
       "project": "Трансформация управления аналитики",
       "theme": "Проектирование архитектуры ИИ-платформы (RAG-pipeline)",
-      "status": "Выполнено",
+      "status": "Закрыта",
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
       "deadline": "28.03.2026",
       "urgency": "overdue",
-      "pct": 0,
+      "pct": 100,
       "parent_id": 11243
     },
     {
       "id": 12769,
       "project": "Трансформация управления аналитики",
       "theme": "Анализ ИИ-моделей и технологий (LLM, RAG, NLP)",
-      "status": "Выполнено",
+      "status": "Закрыта",
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
       "deadline": "28.03.2026",
       "urgency": "overdue",
-      "pct": 0,
+      "pct": 100,
       "parent_id": 11243
     },
     {
@@ -1666,7 +1834,7 @@
       "id": 12763,
       "project": "Робот закупщик (пилот – учебники и ямочный ремонт во дворах)",
       "theme": "Этап 6. Получение обратной связи и подведение итогов проекта.",
-      "status": "Новая",
+      "status": "В работе",
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "25.12.2026",
@@ -1726,12 +1894,12 @@
       "id": 12756,
       "project": "Робот закупщик (пилот – учебники и ямочный ремонт во дворах)",
       "theme": "Этап 1. Описания бизнес процесса (закупка учебников / ямочного ремонта) для составления технического задания на закупку RPA-робота и диалогового окна на основе ИИ (агента-закупщика)",
-      "status": "Новая",
+      "status": "Закрыта",
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "31.03.2026",
       "urgency": "overdue",
-      "pct": 0,
+      "pct": 100,
       "parent_id": 11246
     },
     {
@@ -2029,8 +2197,8 @@
       "status": "Новая",
       "executor": "Мазуров (ККП) Даниил Юрьевич",
       "executor_short": "Мазуров Д.Ю.",
-      "deadline": "03.04.2026",
-      "urgency": "urgent",
+      "deadline": "17.04.2026",
+      "urgency": "ok",
       "pct": 0,
       "parent_id": 11607
     },
@@ -2378,7 +2546,7 @@
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "01.04.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 11245
     },
@@ -3205,9 +3373,9 @@
       "status": "Новая",
       "executor": "Потапчик (ККП) Татьяна Павловна",
       "executor_short": "Потапчик Т.П.",
-      "deadline": "31.03.2026",
-      "urgency": "overdue",
-      "pct": 100,
+      "deadline": "30.06.2026",
+      "urgency": "ok",
+      "pct": 95,
       "parent_id": 1469
     },
     {
@@ -3333,6 +3501,42 @@
   ],
   "tasks": [
     {
+      "id": 14074,
+      "project": "Интеллектуальный анализ цен",
+      "theme": "ЦИО определить пилотные объекты",
+      "status": "Выполнено",
+      "executor": "Мазуров (ККП) Даниил Юрьевич",
+      "executor_short": "Мазуров Д.Ю.",
+      "deadline": "01.04.2026",
+      "urgency": "overdue",
+      "pct": 0,
+      "parent_id": 13952
+    },
+    {
+      "id": 14073,
+      "project": "Цифровые коммуникации ЗИТ",
+      "theme": "Анализ Мингос ТЗ по подпроекту «Голосового помощника на номер ГКУ \"РЦТ\"»",
+      "status": "В работе",
+      "executor": "Воронина (ККП) Ольга Николаевна",
+      "executor_short": "Воронина О.Н.",
+      "deadline": "23.04.2026",
+      "urgency": "ok",
+      "pct": 0,
+      "parent_id": 12735
+    },
+    {
+      "id": 14072,
+      "project": "Цифровые коммуникации ЗИТ",
+      "theme": "Анализ Мингос ТЗ по подпроекту «ИИ помощник ОМСУ (векторное хранилище)»",
+      "status": "В работе",
+      "executor": "Воронина (ККП) Ольга Николаевна",
+      "executor_short": "Воронина О.Н.",
+      "deadline": "23.04.2026",
+      "urgency": "ok",
+      "pct": 0,
+      "parent_id": 12734
+    },
+    {
       "id": 13964,
       "project": "Интеллектуальный анализ цен",
       "theme": "Прошу пройти опрос по формированию и актуализации Реестра оборудования",
@@ -3348,7 +3552,7 @@
       "id": 13963,
       "project": "Интеллектуальный анализ цен",
       "theme": "Определить этапы внедрения нового функционала в рамках всего проекта (реестр оборудования, проверка КАЦ, доп функционал формирования НМЦК и обоснования БА) + отобразить этапы в презентации",
-      "status": "Новая",
+      "status": "Выполнено",
       "executor": "Мазуров (ККП) Даниил Юрьевич",
       "executor_short": "Мазуров Д.Ю.",
       "deadline": "31.03.2026",
@@ -3360,10 +3564,10 @@
       "id": 13962,
       "project": "Интеллектуальный анализ цен",
       "theme": "Провести демонстрацию закупаемого ПО",
-      "status": "Новая",
+      "status": "В работе",
       "executor": "Мазуров (ККП) Даниил Юрьевич",
       "executor_short": "Мазуров Д.Ю.",
-      "deadline": "31.03.2026",
+      "deadline": "01.04.2026",
       "urgency": "overdue",
       "pct": 0,
       "parent_id": 13952
@@ -3600,12 +3804,12 @@
       "id": 13086,
       "project": "ИИ аналитика рисков",
       "theme": "Настройки API‑подключений",
-      "status": "В работе",
+      "status": "Закрыта",
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
       "deadline": "30.03.2026",
       "urgency": "overdue",
-      "pct": 0,
+      "pct": 100,
       "parent_id": 13085
     },
     {
@@ -3732,7 +3936,7 @@
       "id": 12996,
       "project": "Оптимизация организационного блока РЦТ",
       "theme": "Разработка функционала форм заявлений",
-      "status": "Новая",
+      "status": "В работе",
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
       "deadline": "15.04.2026",
@@ -3840,12 +4044,12 @@
       "id": 12925,
       "project": "ИИ проверка закупок",
       "theme": "1.1. Анализ замечаний МВК/РГза 2025 год",
-      "status": "Выполнено",
+      "status": "Закрыта",
       "executor": "Малюгина Екатерина Сергеевна",
       "executor_short": "Малюгина Е.С.",
       "deadline": "31.03.2026",
       "urgency": "overdue",
-      "pct": 0,
+      "pct": 100,
       "parent_id": 12924
     },
     {
@@ -5489,7 +5693,7 @@
       "executor_short": "Шендакова Н.С.",
       "deadline": "30.06.2026",
       "urgency": "ok",
-      "pct": 100,
+      "pct": 90,
       "parent_id": 2155
     },
     {
@@ -5723,14 +5927,38 @@
   ],
   "all_tasks": [
     {
+      "id": 14092,
+      "project": "Цифровой двойник сотрудника (ИИ)",
+      "theme": "ЭТАП 2. Приоритизация сценариев",
+      "status": "Новая",
+      "executor": "Заичко Валерий Валерьевич",
+      "executor_short": "Заичко В.В.",
+      "deadline": "17.04.2026",
+      "urgency": "ok",
+      "pct": 0,
+      "parent_id": 11244
+    },
+    {
+      "id": 14091,
+      "project": "Цифровой двойник сотрудника (ИИ)",
+      "theme": "ЭТАП 1. Сбор информации (сценарии, документы, инструкции, чек-листы)",
+      "status": "В работе",
+      "executor": "Заичко Валерий Валерьевич",
+      "executor_short": "Заичко В.В.",
+      "deadline": "13.04.2026",
+      "urgency": "soon",
+      "pct": 0,
+      "parent_id": 11244
+    },
+    {
       "id": 13952,
       "project": "Интеллектуальный анализ цен",
       "theme": "Поручения",
-      "status": "Новая",
+      "status": "В работе",
       "executor": "Мазуров (ККП) Даниил Юрьевич",
       "executor_short": "Мазуров Д.Ю.",
-      "deadline": "07.09.2026",
-      "urgency": "ok",
+      "deadline": "01.04.2026",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 12546
     },
@@ -5863,7 +6091,7 @@
       "executor_short": "Володин К.О.",
       "deadline": "11.05.2026",
       "urgency": "ok",
-      "pct": 0,
+      "pct": 33,
       "parent_id": 9099
     },
     {
@@ -6050,12 +6278,12 @@
       "id": 12924,
       "project": "ИИ проверка закупок",
       "theme": "Этап 1. Подготовка к формированию условий проверки",
-      "status": "Выполнено",
+      "status": "Закрыта",
       "executor": "Зернова (ККП) Елена Сергеевна",
       "executor_short": "Зернова Е.С.",
       "deadline": "31.03.2026",
       "urgency": "overdue",
-      "pct": 0,
+      "pct": 100,
       "parent_id": 11497
     },
     {
@@ -6398,48 +6626,48 @@
       "id": 12772,
       "project": "Трансформация управления аналитики",
       "theme": "Анализ связей КТРУ ↔ КОЗ 2.0",
-      "status": "Выполнено",
+      "status": "Закрыта",
       "executor": "Сабадин (ГКУ \"РЦТ\") Аркадий Дмитриевич",
       "executor_short": "Сабадин А.Д.",
       "deadline": "28.03.2026",
       "urgency": "overdue",
-      "pct": 0,
+      "pct": 100,
       "parent_id": 11243
     },
     {
       "id": 12771,
       "project": "Трансформация управления аналитики",
       "theme": "Подбор ценовых аналогов (демо на 50 закупках)",
-      "status": "Выполнено",
+      "status": "Закрыта",
       "executor": "Колесников (ККП) Кирилл Владимирович",
       "executor_short": "Колесников К.В.",
       "deadline": "28.03.2026",
       "urgency": "overdue",
-      "pct": 0,
+      "pct": 100,
       "parent_id": 11243
     },
     {
       "id": 12770,
       "project": "Трансформация управления аналитики",
       "theme": "Проектирование архитектуры ИИ-платформы (RAG-pipeline)",
-      "status": "Выполнено",
+      "status": "Закрыта",
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
       "deadline": "28.03.2026",
       "urgency": "overdue",
-      "pct": 0,
+      "pct": 100,
       "parent_id": 11243
     },
     {
       "id": 12769,
       "project": "Трансформация управления аналитики",
       "theme": "Анализ ИИ-моделей и технологий (LLM, RAG, NLP)",
-      "status": "Выполнено",
+      "status": "Закрыта",
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
       "deadline": "28.03.2026",
       "urgency": "overdue",
-      "pct": 0,
+      "pct": 100,
       "parent_id": 11243
     },
     {
@@ -6470,7 +6698,7 @@
       "id": 12763,
       "project": "Робот закупщик (пилот – учебники и ямочный ремонт во дворах)",
       "theme": "Этап 6. Получение обратной связи и подведение итогов проекта.",
-      "status": "Новая",
+      "status": "В работе",
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "25.12.2026",
@@ -6530,12 +6758,12 @@
       "id": 12756,
       "project": "Робот закупщик (пилот – учебники и ямочный ремонт во дворах)",
       "theme": "Этап 1. Описания бизнес процесса (закупка учебников / ямочного ремонта) для составления технического задания на закупку RPA-робота и диалогового окна на основе ИИ (агента-закупщика)",
-      "status": "Новая",
+      "status": "Закрыта",
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "31.03.2026",
       "urgency": "overdue",
-      "pct": 0,
+      "pct": 100,
       "parent_id": 11246
     },
     {
@@ -6833,8 +7061,8 @@
       "status": "Новая",
       "executor": "Мазуров (ККП) Даниил Юрьевич",
       "executor_short": "Мазуров Д.Ю.",
-      "deadline": "03.04.2026",
-      "urgency": "urgent",
+      "deadline": "17.04.2026",
+      "urgency": "ok",
       "pct": 0,
       "parent_id": 11607
     },
@@ -7182,7 +7410,7 @@
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "01.04.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 11245
     },
@@ -8009,9 +8237,9 @@
       "status": "Новая",
       "executor": "Потапчик (ККП) Татьяна Павловна",
       "executor_short": "Потапчик Т.П.",
-      "deadline": "31.03.2026",
-      "urgency": "overdue",
-      "pct": 100,
+      "deadline": "30.06.2026",
+      "urgency": "ok",
+      "pct": 95,
       "parent_id": 1469
     },
     {
@@ -8135,6 +8363,42 @@
       "parent_id": 1472
     },
     {
+      "id": 14074,
+      "project": "Интеллектуальный анализ цен",
+      "theme": "ЦИО определить пилотные объекты",
+      "status": "Выполнено",
+      "executor": "Мазуров (ККП) Даниил Юрьевич",
+      "executor_short": "Мазуров Д.Ю.",
+      "deadline": "01.04.2026",
+      "urgency": "overdue",
+      "pct": 0,
+      "parent_id": 13952
+    },
+    {
+      "id": 14073,
+      "project": "Цифровые коммуникации ЗИТ",
+      "theme": "Анализ Мингос ТЗ по подпроекту «Голосового помощника на номер ГКУ \"РЦТ\"»",
+      "status": "В работе",
+      "executor": "Воронина (ККП) Ольга Николаевна",
+      "executor_short": "Воронина О.Н.",
+      "deadline": "23.04.2026",
+      "urgency": "ok",
+      "pct": 0,
+      "parent_id": 12735
+    },
+    {
+      "id": 14072,
+      "project": "Цифровые коммуникации ЗИТ",
+      "theme": "Анализ Мингос ТЗ по подпроекту «ИИ помощник ОМСУ (векторное хранилище)»",
+      "status": "В работе",
+      "executor": "Воронина (ККП) Ольга Николаевна",
+      "executor_short": "Воронина О.Н.",
+      "deadline": "23.04.2026",
+      "urgency": "ok",
+      "pct": 0,
+      "parent_id": 12734
+    },
+    {
       "id": 13964,
       "project": "Интеллектуальный анализ цен",
       "theme": "Прошу пройти опрос по формированию и актуализации Реестра оборудования",
@@ -8150,7 +8414,7 @@
       "id": 13963,
       "project": "Интеллектуальный анализ цен",
       "theme": "Определить этапы внедрения нового функционала в рамках всего проекта (реестр оборудования, проверка КАЦ, доп функционал формирования НМЦК и обоснования БА) + отобразить этапы в презентации",
-      "status": "Новая",
+      "status": "Выполнено",
       "executor": "Мазуров (ККП) Даниил Юрьевич",
       "executor_short": "Мазуров Д.Ю.",
       "deadline": "31.03.2026",
@@ -8162,10 +8426,10 @@
       "id": 13962,
       "project": "Интеллектуальный анализ цен",
       "theme": "Провести демонстрацию закупаемого ПО",
-      "status": "Новая",
+      "status": "В работе",
       "executor": "Мазуров (ККП) Даниил Юрьевич",
       "executor_short": "Мазуров Д.Ю.",
-      "deadline": "31.03.2026",
+      "deadline": "01.04.2026",
       "urgency": "overdue",
       "pct": 0,
       "parent_id": 13952
@@ -8402,12 +8666,12 @@
       "id": 13086,
       "project": "ИИ аналитика рисков",
       "theme": "Настройки API‑подключений",
-      "status": "В работе",
+      "status": "Закрыта",
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
       "deadline": "30.03.2026",
       "urgency": "overdue",
-      "pct": 0,
+      "pct": 100,
       "parent_id": 13085
     },
     {
@@ -8534,7 +8798,7 @@
       "id": 12996,
       "project": "Оптимизация организационного блока РЦТ",
       "theme": "Разработка функционала форм заявлений",
-      "status": "Новая",
+      "status": "В работе",
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
       "deadline": "15.04.2026",
@@ -8642,12 +8906,12 @@
       "id": 12925,
       "project": "ИИ проверка закупок",
       "theme": "1.1. Анализ замечаний МВК/РГза 2025 год",
-      "status": "Выполнено",
+      "status": "Закрыта",
       "executor": "Малюгина Екатерина Сергеевна",
       "executor_short": "Малюгина Е.С.",
       "deadline": "31.03.2026",
       "urgency": "overdue",
-      "pct": 0,
+      "pct": 100,
       "parent_id": 12924
     },
     {
@@ -10291,7 +10555,7 @@
       "executor_short": "Шендакова Н.С.",
       "deadline": "30.06.2026",
       "urgency": "ok",
-      "pct": 100,
+      "pct": 90,
       "parent_id": 2155
     },
     {
