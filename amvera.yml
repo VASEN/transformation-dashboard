@@ -1,0 +1,4 @@
+meta:
+  environment: docker
+  toolchain:
+    name: docker
