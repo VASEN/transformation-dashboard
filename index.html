@@ -1122,39 +1122,7 @@ function _gaugeSVG(pct_vysv) {
   </svg>`;
 }
 
-function buildWideGaugeCard(curator) {
-  return `
-    <div class="gauge-card gauge-card--wide" style="grid-column:1/-1" data-curator-name="${curator.name}">
-      <div class="gauge-wrap">${_gaugeSVG(curator.pct_vysv)}</div>
-      <div class="gauge-wide-info">
-        <div class="gauge-name">${curator.name}</div>
-        <div class="gauge-wide-metrics">
-          <div class="gauge-wide-metric">
-            <span class="gwm-label">Численность</span>
-            <span class="gwm-val">${curator.headcount} чел.</span>
-          </div>
-          <div class="gauge-wide-metric">
-            <span class="gwm-label">ККП факт / план</span>
-            <span class="gwm-val">${curator.kkp_fact} / ${curator.kkp}</span>
-          </div>
-          <div class="gauge-wide-metric">
-            <span class="gwm-label">РЦТ факт / план</span>
-            <span class="gwm-val">${curator.rct_fact} / ${curator.rct}</span>
-          </div>
-        </div>
-      </div>
-    </div>`;
-}
-
-function buildCompactGaugeCard(curator) {
-  return `
-    <div class="gauge-card" data-curator-name="${curator.name}">
-      <div class="gauge-name">${curator.name}</div>
-      <div class="gauge-wrap">${_gaugeSVG(curator.pct_vysv)}</div>
-    </div>`;
-}
-
-function buildDetailPanel(curator) {
+function _vysvDetailHTML(curator) {
   const vysv = Math.round(curator.vysv_units * 10) / 10;
   const plan = curator.plan_minus20 != null ? Math.round(curator.plan_minus20 * 10) / 10 : '—';
   const metrics = [
@@ -1168,64 +1136,64 @@ function buildDetailPanel(curator) {
     ['План −20%',   plan + ' ед.'],
   ];
   return `
-    <div class="vysv-detail" style="grid-column:1/-1">
-      <div class="vysv-detail-title">${curator.name}</div>
-      <div class="vysv-detail-grid">
-        ${metrics.map(([lbl, val]) => `
-          <div class="vysv-metric">
-            <div class="vysv-metric-label">${lbl}</div>
-            <div class="vysv-metric-val">${val}</div>
-          </div>`).join('')}
-      </div>
-      <div class="vysv-detail-accent">
-        <span class="accent-label">% высвобождения</span>
-        <span class="accent-val">${curator.pct_vysv}%</span>
-        <span class="accent-label">Высвобождение</span>
-        <span class="accent-val">${vysv} ед.</span>
-      </div>
+    <div class="vysv-detail-title">${curator.name}</div>
+    <div class="vysv-detail-grid">
+      ${metrics.map(([lbl, val]) => `
+        <div class="vysv-metric">
+          <div class="vysv-metric-label">${lbl}</div>
+          <div class="vysv-metric-val">${val}</div>
+        </div>`).join('')}
+    </div>
+    <div class="vysv-detail-accent">
+      <span class="accent-label">% высвобождения</span>
+      <span class="accent-val">${curator.pct_vysv}%</span>
+      <span class="accent-label">Высвобождение</span>
+      <span class="accent-val">${vysv} ед.</span>
     </div>`;
 }
 
-function renderVysvBlock(selectedCuratorName) {
+function renderVysvBlock(selectedName) {
   const grid = document.getElementById('vysvGrid');
   if (!grid || !allCurators || !allCurators.length) return;
 
+  const norm = s => (s || '').toLowerCase().replace(/ё/g, 'е');
   const komitet = allCurators.find(c => c.name === 'Комитет и РЦТ') || allCurators[0];
-  const individuals = allCurators.filter(c => c.name !== 'Комитет и РЦТ');
-  const isFiltered = selectedCuratorName && selectedCuratorName !== 'all';
 
-  let html = buildWideGaugeCard(komitet);
-
-  if (!isFiltered) {
-    individuals.forEach(c => { html += buildCompactGaugeCard(c); });
-    if (individuals.length % 2 !== 0) html += '<div></div>';
-    html += buildDetailPanel(komitet);
-  } else {
-    const norm = s => (s || '').toLowerCase().replace(/ё/g, 'е');
-    const lastName = norm(selectedCuratorName).split(' ')[0];
-    const target = allCurators.find(c => norm(c.name).includes(lastName)) || komitet;
-    html += buildWideGaugeCard(target);
-    html += buildDetailPanel(target);
+  // Resolve target curator from owner filter name or curator name
+  let target = komitet;
+  if (selectedName && selectedName !== 'all') {
+    const ln = norm(selectedName).split(' ')[0];
+    target = allCurators.find(c => norm(c.name).includes(ln)) || komitet;
   }
 
-  grid.innerHTML = html;
-
-  // Click handlers (only active when ownerFilter = 'all')
-  grid.querySelectorAll('.gauge-card').forEach(card => {
-    card.addEventListener('click', () => {
-      if (document.getElementById('ownerFilter').value !== 'all') return;
-      const name = card.dataset.curatorName;
-      if (name === komitet.name) {
-        // Clicking komitet in selected mode → back to default
-        if (isFiltered) renderVysvBlock(null);
-      } else if (card.classList.contains('gauge-card--wide')) {
-        // Clicking selected wide card → back to default
-        renderVysvBlock(null);
-      } else {
-        renderVysvBlock(name);
-      }
+  // 1. Render grid structure once (detail panel + all cards)
+  if (!document.getElementById('vysvDetailPanel')) {
+    let html = `<div class="vysv-detail" id="vysvDetailPanel" style="grid-column:1/-1"></div>`;
+    allCurators.forEach(c => {
+      html += `<div class="gauge-card" data-curator-name="${c.name}">
+        <div class="gauge-name">${c.name}</div>
+        <div class="gauge-wrap">${_gaugeSVG(c.pct_vysv)}</div>
+      </div>`;
     });
+    grid.innerHTML = html;
+
+    // Attach click handlers once
+    grid.querySelectorAll('.gauge-card').forEach(card => {
+      card.addEventListener('click', () => {
+        if (document.getElementById('ownerFilter').value !== 'all') return;
+        renderVysvBlock(card.dataset.curatorName);
+      });
+    });
+  }
+
+  // 2. Update highlight — selected card gets accent border, others plain
+  grid.querySelectorAll('.gauge-card').forEach(card => {
+    card.classList.toggle('highlighted', card.dataset.curatorName === target.name);
   });
+
+  // 3. Update detail panel content only
+  const panel = document.getElementById('vysvDetailPanel');
+  if (panel) panel.innerHTML = _vysvDetailHTML(target);
 }
 
 // ===== RENDER: DEADLINE HEATMAP =====
