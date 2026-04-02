@@ -149,6 +149,10 @@ def extract():
             'fact_hours_cio': safe_float(r.get('Факт высвобождения трудозатрат ЦИО (отвечающего за проект), часы')),
             'plan_units':     safe_float(r.get('План: в том числе фактическое сокращение сотрудников всего, шт.ед.')),
             'fact_units':     safe_float(r.get('Факт: в том числе фактическое сокращение сотрудников всего, шт.ед.')),
+            'url':            None,
+            'internal_hours': None,
+            'external_hours': None,
+            'total_units':    None,
         })
 
     priority_count = sum(1 for p in projects if p.get('is_priority'))
@@ -201,11 +205,19 @@ def extract():
     vysv_proj = {}
     for _, r in vdf[vdf['Проект'].notna()].iterrows():
         name = str(r['Проект']).strip()
+        # Осторожно с опечаткой в заголовке: проверяем оба варианта
+        internal_raw = r.get('Внутрнее высвобождение')
+        if internal_raw is None or (hasattr(internal_raw, '__float__') and pd.isna(internal_raw)):
+            internal_raw = r.get('Внутреннее высвобождение')
         vysv_proj[name] = {
             'plan_hours':     safe_float(r.get('План по проектам, часы')),
-            'plan_hours_cio': safe_float(r.get('Внутрнее высвобождение') or r.get('Внутреннее высвобождение')),
+            'plan_hours_cio': safe_float(internal_raw),
             'plan_units':     safe_float(r.get('высвобождение, шт. ед.')),
             'fact_hours':     safe_float(r.get('Факт высвобождения трудозатрат всего, часы')),
+            'url':            safe(r.get('Ссылка на акцептованную идею')),
+            'internal_hours': safe_float(internal_raw),
+            'external_hours': safe_float(r.get('Внешнее высвобождение, часы')),
+            'total_units':    safe_float(r.get('высвобождение, шт. ед.')),
         }
     for p in projects:
         v = vysv_proj.get(p['name'].strip())
@@ -219,6 +231,14 @@ def extract():
             p['plan_units'] = v['plan_units']
         if v['fact_hours'] is not None:
             p['fact_hours'] = v['fact_hours']
+        if v.get('url'):
+            p['url'] = v['url']
+        if v.get('internal_hours') is not None:
+            p['internal_hours'] = v['internal_hours']
+        if v.get('external_hours') is not None:
+            p['external_hours'] = v['external_hours']
+        if v.get('total_units') is not None:
+            p['total_units'] = v['total_units']
 
     # NaN строки — итоги по группам кураторов (в порядке CURATOR_ORDER)
     nan_rows = vdf[vdf['Проект'].isna()].reset_index(drop=True)

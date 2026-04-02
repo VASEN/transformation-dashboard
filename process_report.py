@@ -312,8 +312,33 @@ def _render_group(out, emoji, title, projects):
     for idx, proj in enumerate(sorted_projs):
         proj_emoji = '🔴' if proj.get('is_priority') else '🔵'
         out.append(f'{idx + 1}. {proj_emoji} {proj["name"]}')
-        if proj.get('person'):
-            out.append(f'👤 {proj["person"]}')
+
+        dp = proj.get('_data_project') or {}
+        manager = dp.get('manager_short') or proj.get('person')
+        if manager:
+            out.append(f'👤 {manager}')
+
+        url = proj.get('url') or dp.get('url')
+        if url:
+            out.append(f'🔗 {url}')
+
+        internal = dp.get('internal_hours')
+        external = dp.get('external_hours')
+        units    = dp.get('total_units')
+        lines_vysv = []
+        if internal:
+            lines_vysv.append(f'   Внутреннее: {int(round(internal))} ч')
+        if external:
+            lines_vysv.append(f'   Внешнее:    {int(round(external))} ч')
+        total_h = (internal or 0) + (external or 0)
+        if total_h:
+            lines_vysv.append(f'   Итого:      {int(round(total_h))} ч')
+        if units:
+            lines_vysv.append(f'   Шт.ед.:     {units:.2f}')
+        if lines_vysv:
+            out.append('📉 Высвобождение:')
+            out.extend(lines_vysv)
+
         out.append('')
 
         if proj.get('completed'):
