@@ -1071,8 +1071,9 @@ function renderProjTable(projects) {
 // ===== RENDER: FULL PROJECTS TABLE =====
 function renderFullProjTable(projects, filter = 'all') {
   const body = document.getElementById('fullProjTable');
-  const overdueProjects = new Set(allTasks.filter(t => t.urgency === 'overdue' && t.status !== 'Закрыта').map(t => t.project));
-  const todayProjects = new Set(allTasks.filter(t => t.urgency === 'today' && t.status !== 'Закрыта').map(t => t.project));
+  const _closed = new Set(['Закрыта', 'Закрыто', 'Выполнено', 'Выполнена', 'Завершена']);
+  const overdueProjects = new Set(allTasks.filter(t => t.urgency === 'overdue' && !_closed.has(t.status)).map(t => t.project));
+  const todayProjects   = new Set(allTasks.filter(t => t.urgency === 'today'   && !_closed.has(t.status)).map(t => t.project));
   const filtered = filter === 'all' ? projects : projects.filter(p => p.status === filter);
 
   body.innerHTML = filtered.map((p, i) => {
