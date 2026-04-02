@@ -371,16 +371,16 @@
   }
   .gauge-svg { width: 100%; height: 100%; overflow: visible; }
 
-  /* Wide gauge card (span 2): SVG left, metrics right */
-  .gauge-card--wide {
-    display: flex;
+  /* Wide gauge card: SVG left, metrics right */
+  .gauge-card.gauge-card--wide {
+    display: flex !important;
     align-items: center;
     gap: 20px;
     text-align: left;
     padding: 12px 20px;
   }
-  .gauge-card--wide .gauge-wrap { flex-shrink: 0; margin: 0; }
-  .gauge-card--wide .gauge-name { font-size: 13px; margin-bottom: 10px; }
+  .gauge-card.gauge-card--wide .gauge-wrap { flex-shrink: 0; margin: 0; }
+  .gauge-card.gauge-card--wide .gauge-name { font-size: 13px; margin-bottom: 10px; }
   .gauge-wide-metrics { display: flex; flex-wrap: wrap; gap: 8px 24px; }
   .gauge-wide-metric { display: flex; flex-direction: column; gap: 2px; }
   .gwm-label { font-size: 10px; color: var(--text-dim); }
@@ -1126,7 +1126,7 @@ function _gaugeSVG(pct_vysv) {
 
 function buildWideGaugeCard(curator) {
   return `
-    <div class="gauge-card gauge-card--wide vysv-span2" data-curator-name="${curator.name}">
+    <div class="gauge-card gauge-card--wide" style="grid-column:1/-1" data-curator-name="${curator.name}">
       <div class="gauge-wrap">${_gaugeSVG(curator.pct_vysv)}</div>
       <div class="gauge-wide-info">
         <div class="gauge-name">${curator.name}</div>
@@ -1170,7 +1170,7 @@ function buildDetailPanel(curator) {
     ['План −20%',   plan + ' ед.'],
   ];
   return `
-    <div class="vysv-detail vysv-span2">
+    <div class="vysv-detail" style="grid-column:1/-1">
       <div class="vysv-detail-title">${curator.name}</div>
       <div class="vysv-detail-grid">
         ${metrics.map(([lbl, val]) => `
