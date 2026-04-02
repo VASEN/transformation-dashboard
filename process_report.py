@@ -314,7 +314,7 @@ def _render_group(out, emoji, title, projects):
         out.append(f'{idx + 1}. {proj_emoji} {proj["name"]}')
 
         dp = proj.get('_data_project') or {}
-        manager = dp.get('manager_short') or proj.get('person')
+        manager = dp.get('owner_short') or proj.get('person')
         if manager:
             out.append(f'👤 {manager}')
 
