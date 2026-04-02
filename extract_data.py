@@ -34,8 +34,8 @@ SHTATKA_FILE = "ШТАТКА_ДБ.xlsx"
 VYSV_FILE    = "ПРОЕКТЫ_Данные по высвобождению.xlsx"
 OUTPUT_FILE  = "data.json"
 
-ACTIVE_STATUSES = ('В работе', 'Новая', 'На проверке', 'Выполнено')
-CLOSED_STATUSES = ('Закрыта',)
+ACTIVE_STATUSES = ('В работе', 'Новая', 'На проверке')
+CLOSED_STATUSES = ('Закрыта', 'Закрыто', 'Выполнено', 'Выполнена', 'Завершена')
 
 # Порядок групп в VYSV_FILE → имена кураторов в штатке
 CURATOR_ORDER = ['Кренёва АА', 'Родевальд СЕ', 'Гуляев ВА']
@@ -70,7 +70,8 @@ def safe_int(v):
     try: return int(v) if pd.notna(v) else None
     except: return None
 
-def get_urgency(deadline_str):
+def get_urgency(deadline_str, status=None):
+    if status in CLOSED_STATUSES: return 'ok'
     if not deadline_str: return 'ok'
     try:
         from datetime import date as _date
@@ -164,16 +165,17 @@ def extract():
     # ── 3. Этапы ─────────────────────────────────────────────────────────────
     stages = []
     for _, r in etaps.iterrows():
-        dl = clean_date(r.get('Срок завершения'))
+        dl  = clean_date(r.get('Срок завершения'))
+        st  = safe(r.get('Статус'))
         stages.append({
             'id':             safe_int(r.get('#')),
             'project':        safe(r.get('Проект')),
             'theme':          safe(r.get('Тема')),
-            'status':         safe(r.get('Статус')),
+            'status':         st,
             'executor':       safe(r.get('Назначена')),
             'executor_short': short_name(safe(r.get('Назначена'))),
             'deadline':       dl,
-            'urgency':        get_urgency(dl),
+            'urgency':        get_urgency(dl, st),
             'pct':            clean_pct(r.get('Готовность')),
             'parent_id':      safe_int(r.get('Родительская задача')),
         })
@@ -181,16 +183,17 @@ def extract():
     # ── 4. Подзадачи ─────────────────────────────────────────────────────────
     tasks = []
     for _, r in subtasks.iterrows():
-        dl = clean_date(r.get('Срок завершения'))
+        dl  = clean_date(r.get('Срок завершения'))
+        st  = safe(r.get('Статус'))
         tasks.append({
             'id':             safe_int(r.get('#')),
             'project':        safe(r.get('Проект')),
             'theme':          safe(r.get('Тема')),
-            'status':         safe(r.get('Статус')),
+            'status':         st,
             'executor':       safe(r.get('Назначена')),
             'executor_short': short_name(safe(r.get('Назначена'))),
             'deadline':       dl,
-            'urgency':        get_urgency(dl),
+            'urgency':        get_urgency(dl, st),
             'pct':            clean_pct(r.get('Готовность')),
             'parent_id':      safe_int(r.get('Родительская задача')),
         })

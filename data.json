@@ -1,16 +1,16 @@
 {
-  "updated_at": "02.04.2026 10:20",
+  "updated_at": "02.04.2026 10:24",
   "summary": {
     "projects_total": 36,
     "projects_active": 22,
     "projects_closed": 14,
     "projects_avg_pct": 14,
     "tasks_total": 405,
-    "tasks_active": 230,
-    "tasks_closed": 175,
+    "tasks_active": 228,
+    "tasks_closed": 177,
     "tasks_deadline_5": 7,
-    "tasks_deadline_14": 21,
-    "tasks_overdue": 9,
+    "tasks_deadline_14": 19,
+    "tasks_overdue": 7,
     "tasks_today": 0,
     "vysv_pct_total": 128,
     "report_updated_at": "02.04.2026"
@@ -1202,7 +1202,7 @@
       "executor": "Зернова (ККП) Елена Сергеевна",
       "executor_short": "Зернова Е.С.",
       "deadline": "16.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11575
     },
@@ -1418,7 +1418,7 @@
       "executor": "Зернова (ККП) Елена Сергеевна",
       "executor_short": "Зернова Е.С.",
       "deadline": "31.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11497
     },
@@ -1766,7 +1766,7 @@
       "executor": "Сабадин (ГКУ \"РЦТ\") Аркадий Дмитриевич",
       "executor_short": "Сабадин А.Д.",
       "deadline": "28.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11243
     },
@@ -1778,7 +1778,7 @@
       "executor": "Колесников (ККП) Кирилл Владимирович",
       "executor_short": "Колесников К.В.",
       "deadline": "28.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11243
     },
@@ -1790,7 +1790,7 @@
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
       "deadline": "28.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11243
     },
@@ -1802,7 +1802,7 @@
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
       "deadline": "28.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11243
     },
@@ -1814,7 +1814,7 @@
       "executor": "Колесников (ККП) Кирилл Владимирович",
       "executor_short": "Колесников К.В.",
       "deadline": "14.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11243
     },
@@ -1826,7 +1826,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "07.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11243
     },
@@ -1898,7 +1898,7 @@
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "31.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11246
     },
@@ -1970,7 +1970,7 @@
       "executor": "Осипова Наталия Андреевна",
       "executor_short": "Осипова Н.А.",
       "deadline": "31.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11498
     },
@@ -2054,7 +2054,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "24.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11594
     },
@@ -2066,7 +2066,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "12.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11594
     },
@@ -2174,7 +2174,7 @@
       "executor": "Осипова Наталия Андреевна",
       "executor_short": "Осипова Н.А.",
       "deadline": "13.04.2026",
-      "urgency": "soon",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11607
     },
@@ -2186,7 +2186,7 @@
       "executor": "Хасарокова Светлана Сергеевна",
       "executor_short": "Хасарокова С.С.",
       "deadline": "25.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11607
     },
@@ -2210,7 +2210,7 @@
       "executor": "Теслина Анна Сергеевна",
       "executor_short": "Теслина А.С.",
       "deadline": "20.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11607
     },
@@ -2558,7 +2558,7 @@
       "executor": "Кренева (ККП) Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "19.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 10861
     },
@@ -2570,7 +2570,7 @@
       "executor": "Кренева (ККП) Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "06.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 10861
     },
@@ -2582,7 +2582,7 @@
       "executor": "Хорев Олег Геннадьевич",
       "executor_short": "Хорев О.Г.",
       "deadline": "19.02.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 10861
     },
@@ -2618,7 +2618,7 @@
       "executor": "Кудряшов (ККП) Евгений Сергеевич",
       "executor_short": "Кудряшов Е.С.",
       "deadline": "20.02.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11608
     },
@@ -2642,7 +2642,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "24.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 9099
     },
@@ -2654,7 +2654,7 @@
       "executor": "Кренева (ККП) Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "24.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 9099
     },
@@ -2666,7 +2666,7 @@
       "executor": "Гиренко Илья Андреевич",
       "executor_short": "Гиренко И.А.",
       "deadline": "28.11.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 9099
     },
@@ -2678,7 +2678,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "30.09.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 9099
     },
@@ -2690,7 +2690,7 @@
       "executor": "Суханова (ЦРЦТ) Ирина Владимировна",
       "executor_short": "Суханова И.В.",
       "deadline": "03.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1470
     },
@@ -2702,7 +2702,7 @@
       "executor": "Косолапов Никита Вячеславович",
       "executor_short": "Косолапов Н.В.",
       "deadline": "20.11.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1470
     },
@@ -2714,7 +2714,7 @@
       "executor": "Кренева (ККП) Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "11.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 8891
     },
@@ -2726,7 +2726,7 @@
       "executor": "Кренева (ККП) Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "05.08.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 8891
     },
@@ -2738,7 +2738,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "30.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 8209
     },
@@ -2750,7 +2750,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "12.09.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 8209
     },
@@ -2762,7 +2762,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "22.08.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 8209
     },
@@ -2774,7 +2774,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "30.05.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 8209
     },
@@ -2786,7 +2786,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "28.02.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 8209
     },
@@ -2798,7 +2798,7 @@
       "executor": "Кренева (ККП) Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "15.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1464
     },
@@ -2810,7 +2810,7 @@
       "executor": "Родевальд (ККП) Станислав Евгеньевич",
       "executor_short": "Родевальд С.Е.",
       "deadline": "15.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1464
     },
@@ -2822,7 +2822,7 @@
       "executor": "Корина (ККП) Юлия Олеговна",
       "executor_short": "Корина Ю.О.",
       "deadline": "28.11.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6020
     },
@@ -2834,7 +2834,7 @@
       "executor": "Корина (ККП) Юлия Олеговна",
       "executor_short": "Корина Ю.О.",
       "deadline": "14.11.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6020
     },
@@ -2846,7 +2846,7 @@
       "executor": "Тихомирова Наталья Николаевна",
       "executor_short": "Тихомирова Н.Н.",
       "deadline": "21.11.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6020
     },
@@ -2858,7 +2858,7 @@
       "executor": "Вернигор (МТДИ) Артем Васильевич",
       "executor_short": "Вернигор А.В.",
       "deadline": "16.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6020
     },
@@ -2870,7 +2870,7 @@
       "executor": "Корина (ККП) Юлия Олеговна",
       "executor_short": "Корина Ю.О.",
       "deadline": "31.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6020
     },
@@ -2882,7 +2882,7 @@
       "executor": "Корина (ККП) Юлия Олеговна",
       "executor_short": "Корина Ю.О.",
       "deadline": "15.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1468
     },
@@ -2894,7 +2894,7 @@
       "executor": "Корина (ККП) Юлия Олеговна",
       "executor_short": "Корина Ю.О.",
       "deadline": "09.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1468
     },
@@ -2906,7 +2906,7 @@
       "executor": "Пахарев (ККП) Павел Андреевич",
       "executor_short": "Пахарев П.А.",
       "deadline": "05.09.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1468
     },
@@ -2918,7 +2918,7 @@
       "executor": "Пахарев (ККП) Павел Андреевич",
       "executor_short": "Пахарев П.А.",
       "deadline": "23.05.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1468
     },
@@ -2930,7 +2930,7 @@
       "executor": "Пахарев (ККП) Павел Андреевич",
       "executor_short": "Пахарев П.А.",
       "deadline": "03.05.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1468
     },
@@ -2942,7 +2942,7 @@
       "executor": "Пахарев (ККП) Павел Андреевич",
       "executor_short": "Пахарев П.А.",
       "deadline": "18.04.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1468
     },
@@ -2954,7 +2954,7 @@
       "executor": "Пахарев (ККП) Павел Андреевич",
       "executor_short": "Пахарев П.А.",
       "deadline": "07.04.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1468
     },
@@ -2966,7 +2966,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "01.09.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1473
     },
@@ -2978,7 +2978,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "31.07.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1473
     },
@@ -2990,7 +2990,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "31.07.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1473
     },
@@ -3002,7 +3002,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "30.05.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1473
     },
@@ -3014,7 +3014,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "03.03.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1476
     },
@@ -3026,7 +3026,7 @@
       "executor": "Лавряков (Минимущество) Юрий Юрьевич",
       "executor_short": "Лавряков Ю.Ю.",
       "deadline": "07.11.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1470
     },
@@ -3038,7 +3038,7 @@
       "executor": "Гиренко Илья Андреевич",
       "executor_short": "Гиренко И.А.",
       "deadline": "25.07.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1470
     },
@@ -3050,7 +3050,7 @@
       "executor": "Лавряков (Минимущество) Юрий Юрьевич",
       "executor_short": "Лавряков Ю.Ю.",
       "deadline": "04.04.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1470
     },
@@ -3062,7 +3062,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "27.03.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1470
     },
@@ -3074,7 +3074,7 @@
       "executor": "Лавряков (Минимущество) Юрий Юрьевич",
       "executor_short": "Лавряков Ю.Ю.",
       "deadline": "21.03.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1470
     },
@@ -3086,7 +3086,7 @@
       "executor": "Саркисян (ККП) Мартирос Сосикович",
       "executor_short": "Саркисян М.С.",
       "deadline": "21.02.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1470
     },
@@ -3098,7 +3098,7 @@
       "executor": "Лавряков (Минимущество) Юрий Юрьевич",
       "executor_short": "Лавряков Ю.Ю.",
       "deadline": "27.08.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1476
     },
@@ -3110,7 +3110,7 @@
       "executor": "Лавряков (Минимущество) Юрий Юрьевич",
       "executor_short": "Лавряков Ю.Ю.",
       "deadline": "20.08.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1476
     },
@@ -3122,7 +3122,7 @@
       "executor": "Лавряков (Минимущество) Юрий Юрьевич",
       "executor_short": "Лавряков Ю.Ю.",
       "deadline": "25.06.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1476
     },
@@ -3134,7 +3134,7 @@
       "executor": "Лавряков (Минимущество) Юрий Юрьевич",
       "executor_short": "Лавряков Ю.Ю.",
       "deadline": "16.05.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1476
     },
@@ -3146,7 +3146,7 @@
       "executor": "Лавряков (Минимущество) Юрий Юрьевич",
       "executor_short": "Лавряков Ю.Ю.",
       "deadline": "21.04.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1476
     },
@@ -3158,7 +3158,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "28.03.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1476
     },
@@ -3170,7 +3170,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "15.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 0,
       "parent_id": 1467
     },
@@ -3182,7 +3182,7 @@
       "executor": "Зернова (ККП) Елена Сергеевна",
       "executor_short": "Зернова Е.С.",
       "deadline": "15.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 0,
       "parent_id": 1467
     },
@@ -3194,7 +3194,7 @@
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "15.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 0,
       "parent_id": 1467
     },
@@ -3206,7 +3206,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "15.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 0,
       "parent_id": 1467
     },
@@ -3218,7 +3218,7 @@
       "executor": "Артамонова (ККП) Елена Владимировна",
       "executor_short": "Артамонова Е.В.",
       "deadline": "01.04.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1467
     },
@@ -3230,7 +3230,7 @@
       "executor": "Артамонова (ККП) Елена Владимировна",
       "executor_short": "Артамонова Е.В.",
       "deadline": "20.03.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1467
     },
@@ -3242,7 +3242,7 @@
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "14.03.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1467
     },
@@ -3254,7 +3254,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "25.09.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1475
     },
@@ -3266,7 +3266,7 @@
       "executor": "Мамедова (ККП) Аида Гюльахмедовна",
       "executor_short": "Мамедова А.Г.",
       "deadline": "22.09.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1475
     },
@@ -3278,7 +3278,7 @@
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "23.07.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1475
     },
@@ -3290,7 +3290,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "25.09.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1475
     },
@@ -3302,7 +3302,7 @@
       "executor": "Артамонова (ККП) Елена Владимировна",
       "executor_short": "Артамонова Е.В.",
       "deadline": "31.03.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1475
     },
@@ -3314,7 +3314,7 @@
       "executor": "Мамедова (ККП) Аида Гюльахмедовна",
       "executor_short": "Мамедова А.Г.",
       "deadline": "10.03.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1475
     },
@@ -3326,7 +3326,7 @@
       "executor": "Зернова (ККП) Елена Сергеевна",
       "executor_short": "Зернова Е.С.",
       "deadline": "10.03.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1475
     },
@@ -3386,7 +3386,7 @@
       "executor": "Шендакова (ККП) Наталья Сергеевна",
       "executor_short": "Шендакова Н.С.",
       "deadline": "21.02.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1469
     },
@@ -3398,7 +3398,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "30.08.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1477
     },
@@ -3410,7 +3410,7 @@
       "executor": "Забейворота (ККП) Максим Андреевич",
       "executor_short": "Забейворота М.А.",
       "deadline": "15.08.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1477
     },
@@ -3422,7 +3422,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "31.03.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1477
     },
@@ -3434,7 +3434,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "07.11.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1474
     },
@@ -3446,7 +3446,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "31.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1474
     },
@@ -3458,7 +3458,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "07.11.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1474
     },
@@ -3470,7 +3470,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "12.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1472
     },
@@ -3482,7 +3482,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "28.11.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1472
     },
@@ -3494,7 +3494,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "19.05.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1472
     }
@@ -3508,7 +3508,7 @@
       "executor": "Мазуров (ККП) Даниил Юрьевич",
       "executor_short": "Мазуров Д.Ю.",
       "deadline": "01.04.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 0,
       "parent_id": 13952
     },
@@ -3556,7 +3556,7 @@
       "executor": "Мазуров (ККП) Даниил Юрьевич",
       "executor_short": "Мазуров Д.Ю.",
       "deadline": "31.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 0,
       "parent_id": 13952
     },
@@ -3808,7 +3808,7 @@
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
       "deadline": "30.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 13085
     },
@@ -3952,7 +3952,7 @@
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
       "deadline": "16.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12994
     },
@@ -3964,7 +3964,7 @@
       "executor": "Кренева (ККП) Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "13.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12548
     },
@@ -4048,7 +4048,7 @@
       "executor": "Малюгина Екатерина Сергеевна",
       "executor_short": "Малюгина Е.С.",
       "deadline": "31.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12924
     },
@@ -4324,7 +4324,7 @@
       "executor": "Заичко Валерий Валерьевич",
       "executor_short": "Заичко В.В.",
       "deadline": "27.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12714
     },
@@ -4408,7 +4408,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "16.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12701
     },
@@ -4516,7 +4516,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "16.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12690
     },
@@ -4612,7 +4612,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "23.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12680
     },
@@ -4624,7 +4624,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "06.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12680
     },
@@ -4696,7 +4696,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "23.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12672
     },
@@ -4708,7 +4708,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "13.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12672
     },
@@ -4780,7 +4780,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "25.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12662
     },
@@ -4792,7 +4792,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "16.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12662
     },
@@ -4840,7 +4840,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "27.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12655
     },
@@ -4936,7 +4936,7 @@
       "executor": "Кренева (ККП) Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "16.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12548
     },
@@ -4948,7 +4948,7 @@
       "executor": "Гиренко Илья Андреевич",
       "executor_short": "Гиренко И.А.",
       "deadline": "13.02.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12548
     },
@@ -4960,7 +4960,7 @@
       "executor": "Гиренко Илья Андреевич",
       "executor_short": "Гиренко И.А.",
       "deadline": "09.02.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12547
     },
@@ -5068,7 +5068,7 @@
       "executor": "Кренева (ККП) Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "05.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6848
     },
@@ -5080,7 +5080,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "11.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 8905
     },
@@ -5092,7 +5092,7 @@
       "executor": "Комаров Андрей Дмитриевич",
       "executor_short": "Комаров А.Д.",
       "deadline": "02.07.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 8905
     },
@@ -5104,7 +5104,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "05.08.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 8896
     },
@@ -5116,7 +5116,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "04.07.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 8896
     },
@@ -5128,7 +5128,7 @@
       "executor": "Комаров Андрей Дмитриевич",
       "executor_short": "Комаров А.Д.",
       "deadline": "01.07.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 8896
     },
@@ -5140,7 +5140,7 @@
       "executor": "Нартикова Ирина Магомедовна",
       "executor_short": "Нартикова И.М.",
       "deadline": "31.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6021
     },
@@ -5152,7 +5152,7 @@
       "executor": "Петрова (ККП) Анна Юрьевна",
       "executor_short": "Петрова А.Ю.",
       "deadline": "09.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2043
     },
@@ -5164,7 +5164,7 @@
       "executor": "Шаталова (ККП) Светлана Алексеевна",
       "executor_short": "Шаталова С.А.",
       "deadline": "24.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2043
     },
@@ -5176,7 +5176,7 @@
       "executor": "Быстрова (ККП) Алина Андреевна",
       "executor_short": "Быстрова А.А.",
       "deadline": "07.11.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2043
     },
@@ -5188,7 +5188,7 @@
       "executor": "Быстрова (ККП) Алина Андреевна",
       "executor_short": "Быстрова А.А.",
       "deadline": "06.11.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2043
     },
@@ -5200,7 +5200,7 @@
       "executor": "Беленков (ККП/ГКУ \"РЦТ\") Юрий Андреевич",
       "executor_short": "Беленков Ю.А.",
       "deadline": "06.11.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2043
     },
@@ -5212,7 +5212,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "15.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6848
     },
@@ -5224,7 +5224,7 @@
       "executor": "Кренева (ККП) Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "15.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6848
     },
@@ -5236,7 +5236,7 @@
       "executor": "Кренева (ККП) Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "28.11.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6848
     },
@@ -5248,7 +5248,7 @@
       "executor": "Янушкевич (ККП) Ирина Евгеньевна",
       "executor_short": "Янушкевич И.Е.",
       "deadline": "12.08.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2043
     },
@@ -5260,7 +5260,7 @@
       "executor": "Янушкевич (ККП) Ирина Евгеньевна",
       "executor_short": "Янушкевич И.Е.",
       "deadline": "20.08.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2043
     },
@@ -5272,7 +5272,7 @@
       "executor": "Беленков (ККП/ГКУ \"РЦТ\") Юрий Андреевич",
       "executor_short": "Беленков Ю.А.",
       "deadline": "24.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2043
     },
@@ -5284,7 +5284,7 @@
       "executor": "Нартикова Ирина Магомедовна",
       "executor_short": "Нартикова И.М.",
       "deadline": "16.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6021
     },
@@ -5296,7 +5296,7 @@
       "executor": "Корина (ККП) Юлия Олеговна",
       "executor_short": "Корина Ю.О.",
       "deadline": "16.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6021
     },
@@ -5308,7 +5308,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "17.07.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2724
     },
@@ -5320,7 +5320,7 @@
       "executor": "Суханова (ЦРЦТ) Ирина Владимировна",
       "executor_short": "Суханова И.В.",
       "deadline": "02.07.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2724
     },
@@ -5332,7 +5332,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "01.07.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2724
     },
@@ -5344,7 +5344,7 @@
       "executor": "Суханова (ЦРЦТ) Ирина Владимировна",
       "executor_short": "Суханова И.В.",
       "deadline": "26.06.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2724
     },
@@ -5356,7 +5356,7 @@
       "executor": "Шаталова (ККП) Светлана Алексеевна",
       "executor_short": "Шаталова С.А.",
       "deadline": "01.11.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2052
     },
@@ -5368,7 +5368,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "20.08.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2688
     },
@@ -5380,7 +5380,7 @@
       "executor": "Лавряков (Минимущество) Юрий Юрьевич",
       "executor_short": "Лавряков Ю.Ю.",
       "deadline": "20.08.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2688
     },
@@ -5392,7 +5392,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "16.06.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2043
     },
@@ -5404,7 +5404,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "31.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2052
     },
@@ -5416,7 +5416,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "31.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2052
     },
@@ -5428,7 +5428,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "31.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2052
     },
@@ -5440,7 +5440,7 @@
       "executor": "Силаков (ККП) Сергей Анатольевич",
       "executor_short": "Силаков С.А.",
       "deadline": "31.07.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2031
     },
@@ -5452,7 +5452,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "21.04.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2685
     },
@@ -5464,7 +5464,7 @@
       "executor": "Мустафин Булат Маратович",
       "executor_short": "Мустафин Б.М.",
       "deadline": "12.03.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2684
     },
@@ -5476,7 +5476,7 @@
       "executor": "Кренева (ККП) Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "15.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6847
     },
@@ -5488,7 +5488,7 @@
       "executor": "Шендакова (ККП) Наталья Сергеевна",
       "executor_short": "Шендакова Н.С.",
       "deadline": "12.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6847
     },
@@ -5500,7 +5500,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "15.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6847
     },
@@ -5512,7 +5512,7 @@
       "executor": "Родевальд (ККП) Станислав Евгеньевич",
       "executor_short": "Родевальд С.Е.",
       "deadline": "31.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6847
     },
@@ -5524,7 +5524,7 @@
       "executor": "Журавлева Светлана Николаевна",
       "executor_short": "Журавлева С.Н.",
       "deadline": "28.02.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6847
     },
@@ -5536,7 +5536,7 @@
       "executor": "Корина (ККП) Юлия Олеговна",
       "executor_short": "Корина Ю.О.",
       "deadline": "15.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 3442
     },
@@ -5548,7 +5548,7 @@
       "executor": "Петров (ККП/ГКУ \"РЦТ\") Александр Михайлович",
       "executor_short": "Петров А.М.",
       "deadline": "15.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 3442
     },
@@ -5560,7 +5560,7 @@
       "executor": "Петров (ККП/ГКУ \"РЦТ\") Александр Михайлович",
       "executor_short": "Петров А.М.",
       "deadline": "09.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 3440
     },
@@ -5572,7 +5572,7 @@
       "executor": "Корина (ККП) Юлия Олеговна",
       "executor_short": "Корина Ю.О.",
       "deadline": "09.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 3440
     },
@@ -5584,7 +5584,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "05.09.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 3437
     },
@@ -5596,7 +5596,7 @@
       "executor": "Петров (ККП/ГКУ \"РЦТ\") Александр Михайлович",
       "executor_short": "Петров А.М.",
       "deadline": "23.05.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 3436
     },
@@ -5608,7 +5608,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "23.05.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 3436
     },
@@ -5620,7 +5620,7 @@
       "executor": "Корина (ККП) Юлия Олеговна",
       "executor_short": "Корина Ю.О.",
       "deadline": "03.05.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 3423
     },
@@ -5632,7 +5632,7 @@
       "executor": "Кабанов (МЭФ/ГКУ \"ФАЦ\") Андрей Олегович",
       "executor_short": "Кабанов А.О.",
       "deadline": "03.05.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 3423
     },
@@ -5644,7 +5644,7 @@
       "executor": "Петров (ККП/ГКУ \"РЦТ\") Александр Михайлович",
       "executor_short": "Петров А.М.",
       "deadline": "18.04.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 3402
     },
@@ -5656,7 +5656,7 @@
       "executor": "Симбухова (КПП) Алёна Ивановна",
       "executor_short": "Симбухова А.И.",
       "deadline": "18.04.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 3402
     },
@@ -5668,7 +5668,7 @@
       "executor": "Кабанов (МЭФ/ГКУ \"ФАЦ\") Андрей Олегович",
       "executor_short": "Кабанов А.О.",
       "deadline": "07.04.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 3396
     },
@@ -5680,7 +5680,7 @@
       "executor": "Симбухова (КПП) Алёна Ивановна",
       "executor_short": "Симбухова А.И.",
       "deadline": "07.04.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 3396
     },
@@ -5704,7 +5704,7 @@
       "executor": "Потапчик (ККП) Татьяна Павловна",
       "executor_short": "Потапчик Т.П.",
       "deadline": "28.02.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2155
     },
@@ -5716,7 +5716,7 @@
       "executor": "Колесников (ККП) Кирилл Владимирович",
       "executor_short": "Колесников К.В.",
       "deadline": "30.08.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2080
     },
@@ -5728,7 +5728,7 @@
       "executor": "Колесников (ККП) Кирилл Владимирович",
       "executor_short": "Колесников К.В.",
       "deadline": "30.08.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2080
     },
@@ -5740,7 +5740,7 @@
       "executor": "Забейворота (ККП) Максим Андреевич",
       "executor_short": "Забейворота М.А.",
       "deadline": "31.03.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2073
     },
@@ -5752,7 +5752,7 @@
       "executor": "Колесников (ККП) Кирилл Владимирович",
       "executor_short": "Колесников К.В.",
       "deadline": "14.03.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2073
     },
@@ -5764,7 +5764,7 @@
       "executor": "Колесников (ККП) Кирилл Владимирович",
       "executor_short": "Колесников К.В.",
       "deadline": "14.03.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2073
     },
@@ -5776,7 +5776,7 @@
       "executor": "Шаталова (ККП) Светлана Алексеевна",
       "executor_short": "Шаталова С.А.",
       "deadline": "07.11.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2053
     },
@@ -5788,7 +5788,7 @@
       "executor": "Шаталова (ККП) Светлана Алексеевна",
       "executor_short": "Шаталова С.А.",
       "deadline": "05.11.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2053
     },
@@ -5800,7 +5800,7 @@
       "executor": "Янушкевич (ККП) Ирина Евгеньевна",
       "executor_short": "Янушкевич И.Е.",
       "deadline": "04.07.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2043
     },
@@ -5812,7 +5812,7 @@
       "executor": "Янушкевич (ККП) Ирина Евгеньевна",
       "executor_short": "Янушкевич И.Е.",
       "deadline": "20.06.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2043
     },
@@ -5824,7 +5824,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "12.03.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2043
     },
@@ -5836,7 +5836,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "18.03.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2043
     },
@@ -5848,7 +5848,7 @@
       "executor": "Янушкевич (ККП) Ирина Евгеньевна",
       "executor_short": "Янушкевич И.Е.",
       "deadline": "18.02.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2043
     },
@@ -5860,7 +5860,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "17.02.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2043
     },
@@ -5872,7 +5872,7 @@
       "executor": "Колесников (ККП) Кирилл Владимирович",
       "executor_short": "Колесников К.В.",
       "deadline": "12.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2032
     },
@@ -5884,7 +5884,7 @@
       "executor": "Колесников (ККП) Кирилл Владимирович",
       "executor_short": "Колесников К.В.",
       "deadline": "12.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2032
     },
@@ -5896,7 +5896,7 @@
       "executor": "Колесников (ККП) Кирилл Владимирович",
       "executor_short": "Колесников К.В.",
       "deadline": "19.05.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1977
     },
@@ -5908,7 +5908,7 @@
       "executor": "Колесников (ККП) Кирилл Владимирович",
       "executor_short": "Колесников К.В.",
       "deadline": "18.02.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1977
     },
@@ -5920,7 +5920,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "17.02.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1977
     }
@@ -6066,7 +6066,7 @@
       "executor": "Зернова (ККП) Елена Сергеевна",
       "executor_short": "Зернова Е.С.",
       "deadline": "16.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11575
     },
@@ -6282,7 +6282,7 @@
       "executor": "Зернова (ККП) Елена Сергеевна",
       "executor_short": "Зернова Е.С.",
       "deadline": "31.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11497
     },
@@ -6630,7 +6630,7 @@
       "executor": "Сабадин (ГКУ \"РЦТ\") Аркадий Дмитриевич",
       "executor_short": "Сабадин А.Д.",
       "deadline": "28.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11243
     },
@@ -6642,7 +6642,7 @@
       "executor": "Колесников (ККП) Кирилл Владимирович",
       "executor_short": "Колесников К.В.",
       "deadline": "28.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11243
     },
@@ -6654,7 +6654,7 @@
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
       "deadline": "28.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11243
     },
@@ -6666,7 +6666,7 @@
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
       "deadline": "28.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11243
     },
@@ -6678,7 +6678,7 @@
       "executor": "Колесников (ККП) Кирилл Владимирович",
       "executor_short": "Колесников К.В.",
       "deadline": "14.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11243
     },
@@ -6690,7 +6690,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "07.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11243
     },
@@ -6762,7 +6762,7 @@
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "31.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11246
     },
@@ -6834,7 +6834,7 @@
       "executor": "Осипова Наталия Андреевна",
       "executor_short": "Осипова Н.А.",
       "deadline": "31.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11498
     },
@@ -6918,7 +6918,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "24.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11594
     },
@@ -6930,7 +6930,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "12.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11594
     },
@@ -7038,7 +7038,7 @@
       "executor": "Осипова Наталия Андреевна",
       "executor_short": "Осипова Н.А.",
       "deadline": "13.04.2026",
-      "urgency": "soon",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11607
     },
@@ -7050,7 +7050,7 @@
       "executor": "Хасарокова Светлана Сергеевна",
       "executor_short": "Хасарокова С.С.",
       "deadline": "25.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11607
     },
@@ -7074,7 +7074,7 @@
       "executor": "Теслина Анна Сергеевна",
       "executor_short": "Теслина А.С.",
       "deadline": "20.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11607
     },
@@ -7422,7 +7422,7 @@
       "executor": "Кренева (ККП) Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "19.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 10861
     },
@@ -7434,7 +7434,7 @@
       "executor": "Кренева (ККП) Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "06.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 10861
     },
@@ -7446,7 +7446,7 @@
       "executor": "Хорев Олег Геннадьевич",
       "executor_short": "Хорев О.Г.",
       "deadline": "19.02.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 10861
     },
@@ -7482,7 +7482,7 @@
       "executor": "Кудряшов (ККП) Евгений Сергеевич",
       "executor_short": "Кудряшов Е.С.",
       "deadline": "20.02.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11608
     },
@@ -7506,7 +7506,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "24.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 9099
     },
@@ -7518,7 +7518,7 @@
       "executor": "Кренева (ККП) Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "24.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 9099
     },
@@ -7530,7 +7530,7 @@
       "executor": "Гиренко Илья Андреевич",
       "executor_short": "Гиренко И.А.",
       "deadline": "28.11.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 9099
     },
@@ -7542,7 +7542,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "30.09.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 9099
     },
@@ -7554,7 +7554,7 @@
       "executor": "Суханова (ЦРЦТ) Ирина Владимировна",
       "executor_short": "Суханова И.В.",
       "deadline": "03.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1470
     },
@@ -7566,7 +7566,7 @@
       "executor": "Косолапов Никита Вячеславович",
       "executor_short": "Косолапов Н.В.",
       "deadline": "20.11.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1470
     },
@@ -7578,7 +7578,7 @@
       "executor": "Кренева (ККП) Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "11.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 8891
     },
@@ -7590,7 +7590,7 @@
       "executor": "Кренева (ККП) Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "05.08.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 8891
     },
@@ -7602,7 +7602,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "30.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 8209
     },
@@ -7614,7 +7614,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "12.09.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 8209
     },
@@ -7626,7 +7626,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "22.08.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 8209
     },
@@ -7638,7 +7638,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "30.05.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 8209
     },
@@ -7650,7 +7650,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "28.02.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 8209
     },
@@ -7662,7 +7662,7 @@
       "executor": "Кренева (ККП) Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "15.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1464
     },
@@ -7674,7 +7674,7 @@
       "executor": "Родевальд (ККП) Станислав Евгеньевич",
       "executor_short": "Родевальд С.Е.",
       "deadline": "15.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1464
     },
@@ -7686,7 +7686,7 @@
       "executor": "Корина (ККП) Юлия Олеговна",
       "executor_short": "Корина Ю.О.",
       "deadline": "28.11.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6020
     },
@@ -7698,7 +7698,7 @@
       "executor": "Корина (ККП) Юлия Олеговна",
       "executor_short": "Корина Ю.О.",
       "deadline": "14.11.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6020
     },
@@ -7710,7 +7710,7 @@
       "executor": "Тихомирова Наталья Николаевна",
       "executor_short": "Тихомирова Н.Н.",
       "deadline": "21.11.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6020
     },
@@ -7722,7 +7722,7 @@
       "executor": "Вернигор (МТДИ) Артем Васильевич",
       "executor_short": "Вернигор А.В.",
       "deadline": "16.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6020
     },
@@ -7734,7 +7734,7 @@
       "executor": "Корина (ККП) Юлия Олеговна",
       "executor_short": "Корина Ю.О.",
       "deadline": "31.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6020
     },
@@ -7746,7 +7746,7 @@
       "executor": "Корина (ККП) Юлия Олеговна",
       "executor_short": "Корина Ю.О.",
       "deadline": "15.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1468
     },
@@ -7758,7 +7758,7 @@
       "executor": "Корина (ККП) Юлия Олеговна",
       "executor_short": "Корина Ю.О.",
       "deadline": "09.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1468
     },
@@ -7770,7 +7770,7 @@
       "executor": "Пахарев (ККП) Павел Андреевич",
       "executor_short": "Пахарев П.А.",
       "deadline": "05.09.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1468
     },
@@ -7782,7 +7782,7 @@
       "executor": "Пахарев (ККП) Павел Андреевич",
       "executor_short": "Пахарев П.А.",
       "deadline": "23.05.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1468
     },
@@ -7794,7 +7794,7 @@
       "executor": "Пахарев (ККП) Павел Андреевич",
       "executor_short": "Пахарев П.А.",
       "deadline": "03.05.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1468
     },
@@ -7806,7 +7806,7 @@
       "executor": "Пахарев (ККП) Павел Андреевич",
       "executor_short": "Пахарев П.А.",
       "deadline": "18.04.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1468
     },
@@ -7818,7 +7818,7 @@
       "executor": "Пахарев (ККП) Павел Андреевич",
       "executor_short": "Пахарев П.А.",
       "deadline": "07.04.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1468
     },
@@ -7830,7 +7830,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "01.09.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1473
     },
@@ -7842,7 +7842,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "31.07.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1473
     },
@@ -7854,7 +7854,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "31.07.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1473
     },
@@ -7866,7 +7866,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "30.05.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1473
     },
@@ -7878,7 +7878,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "03.03.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1476
     },
@@ -7890,7 +7890,7 @@
       "executor": "Лавряков (Минимущество) Юрий Юрьевич",
       "executor_short": "Лавряков Ю.Ю.",
       "deadline": "07.11.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1470
     },
@@ -7902,7 +7902,7 @@
       "executor": "Гиренко Илья Андреевич",
       "executor_short": "Гиренко И.А.",
       "deadline": "25.07.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1470
     },
@@ -7914,7 +7914,7 @@
       "executor": "Лавряков (Минимущество) Юрий Юрьевич",
       "executor_short": "Лавряков Ю.Ю.",
       "deadline": "04.04.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1470
     },
@@ -7926,7 +7926,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "27.03.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1470
     },
@@ -7938,7 +7938,7 @@
       "executor": "Лавряков (Минимущество) Юрий Юрьевич",
       "executor_short": "Лавряков Ю.Ю.",
       "deadline": "21.03.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1470
     },
@@ -7950,7 +7950,7 @@
       "executor": "Саркисян (ККП) Мартирос Сосикович",
       "executor_short": "Саркисян М.С.",
       "deadline": "21.02.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1470
     },
@@ -7962,7 +7962,7 @@
       "executor": "Лавряков (Минимущество) Юрий Юрьевич",
       "executor_short": "Лавряков Ю.Ю.",
       "deadline": "27.08.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1476
     },
@@ -7974,7 +7974,7 @@
       "executor": "Лавряков (Минимущество) Юрий Юрьевич",
       "executor_short": "Лавряков Ю.Ю.",
       "deadline": "20.08.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1476
     },
@@ -7986,7 +7986,7 @@
       "executor": "Лавряков (Минимущество) Юрий Юрьевич",
       "executor_short": "Лавряков Ю.Ю.",
       "deadline": "25.06.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1476
     },
@@ -7998,7 +7998,7 @@
       "executor": "Лавряков (Минимущество) Юрий Юрьевич",
       "executor_short": "Лавряков Ю.Ю.",
       "deadline": "16.05.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1476
     },
@@ -8010,7 +8010,7 @@
       "executor": "Лавряков (Минимущество) Юрий Юрьевич",
       "executor_short": "Лавряков Ю.Ю.",
       "deadline": "21.04.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1476
     },
@@ -8022,7 +8022,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "28.03.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1476
     },
@@ -8034,7 +8034,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "15.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 0,
       "parent_id": 1467
     },
@@ -8046,7 +8046,7 @@
       "executor": "Зернова (ККП) Елена Сергеевна",
       "executor_short": "Зернова Е.С.",
       "deadline": "15.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 0,
       "parent_id": 1467
     },
@@ -8058,7 +8058,7 @@
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "15.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 0,
       "parent_id": 1467
     },
@@ -8070,7 +8070,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "15.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 0,
       "parent_id": 1467
     },
@@ -8082,7 +8082,7 @@
       "executor": "Артамонова (ККП) Елена Владимировна",
       "executor_short": "Артамонова Е.В.",
       "deadline": "01.04.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1467
     },
@@ -8094,7 +8094,7 @@
       "executor": "Артамонова (ККП) Елена Владимировна",
       "executor_short": "Артамонова Е.В.",
       "deadline": "20.03.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1467
     },
@@ -8106,7 +8106,7 @@
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "14.03.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1467
     },
@@ -8118,7 +8118,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "25.09.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1475
     },
@@ -8130,7 +8130,7 @@
       "executor": "Мамедова (ККП) Аида Гюльахмедовна",
       "executor_short": "Мамедова А.Г.",
       "deadline": "22.09.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1475
     },
@@ -8142,7 +8142,7 @@
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "23.07.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1475
     },
@@ -8154,7 +8154,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "25.09.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1475
     },
@@ -8166,7 +8166,7 @@
       "executor": "Артамонова (ККП) Елена Владимировна",
       "executor_short": "Артамонова Е.В.",
       "deadline": "31.03.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1475
     },
@@ -8178,7 +8178,7 @@
       "executor": "Мамедова (ККП) Аида Гюльахмедовна",
       "executor_short": "Мамедова А.Г.",
       "deadline": "10.03.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1475
     },
@@ -8190,7 +8190,7 @@
       "executor": "Зернова (ККП) Елена Сергеевна",
       "executor_short": "Зернова Е.С.",
       "deadline": "10.03.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1475
     },
@@ -8250,7 +8250,7 @@
       "executor": "Шендакова (ККП) Наталья Сергеевна",
       "executor_short": "Шендакова Н.С.",
       "deadline": "21.02.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1469
     },
@@ -8262,7 +8262,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "30.08.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1477
     },
@@ -8274,7 +8274,7 @@
       "executor": "Забейворота (ККП) Максим Андреевич",
       "executor_short": "Забейворота М.А.",
       "deadline": "15.08.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1477
     },
@@ -8286,7 +8286,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "31.03.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1477
     },
@@ -8298,7 +8298,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "07.11.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1474
     },
@@ -8310,7 +8310,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "31.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1474
     },
@@ -8322,7 +8322,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "07.11.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1474
     },
@@ -8334,7 +8334,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "12.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1472
     },
@@ -8346,7 +8346,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "28.11.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1472
     },
@@ -8358,7 +8358,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "19.05.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1472
     },
@@ -8370,7 +8370,7 @@
       "executor": "Мазуров (ККП) Даниил Юрьевич",
       "executor_short": "Мазуров Д.Ю.",
       "deadline": "01.04.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 0,
       "parent_id": 13952
     },
@@ -8418,7 +8418,7 @@
       "executor": "Мазуров (ККП) Даниил Юрьевич",
       "executor_short": "Мазуров Д.Ю.",
       "deadline": "31.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 0,
       "parent_id": 13952
     },
@@ -8670,7 +8670,7 @@
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
       "deadline": "30.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 13085
     },
@@ -8814,7 +8814,7 @@
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
       "deadline": "16.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12994
     },
@@ -8826,7 +8826,7 @@
       "executor": "Кренева (ККП) Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "13.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12548
     },
@@ -8910,7 +8910,7 @@
       "executor": "Малюгина Екатерина Сергеевна",
       "executor_short": "Малюгина Е.С.",
       "deadline": "31.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12924
     },
@@ -9186,7 +9186,7 @@
       "executor": "Заичко Валерий Валерьевич",
       "executor_short": "Заичко В.В.",
       "deadline": "27.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12714
     },
@@ -9270,7 +9270,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "16.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12701
     },
@@ -9378,7 +9378,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "16.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12690
     },
@@ -9474,7 +9474,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "23.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12680
     },
@@ -9486,7 +9486,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "06.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12680
     },
@@ -9558,7 +9558,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "23.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12672
     },
@@ -9570,7 +9570,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "13.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12672
     },
@@ -9642,7 +9642,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "25.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12662
     },
@@ -9654,7 +9654,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "16.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12662
     },
@@ -9702,7 +9702,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "27.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12655
     },
@@ -9798,7 +9798,7 @@
       "executor": "Кренева (ККП) Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "16.03.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12548
     },
@@ -9810,7 +9810,7 @@
       "executor": "Гиренко Илья Андреевич",
       "executor_short": "Гиренко И.А.",
       "deadline": "13.02.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12548
     },
@@ -9822,7 +9822,7 @@
       "executor": "Гиренко Илья Андреевич",
       "executor_short": "Гиренко И.А.",
       "deadline": "09.02.2026",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12547
     },
@@ -9930,7 +9930,7 @@
       "executor": "Кренева (ККП) Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "05.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6848
     },
@@ -9942,7 +9942,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "11.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 8905
     },
@@ -9954,7 +9954,7 @@
       "executor": "Комаров Андрей Дмитриевич",
       "executor_short": "Комаров А.Д.",
       "deadline": "02.07.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 8905
     },
@@ -9966,7 +9966,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "05.08.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 8896
     },
@@ -9978,7 +9978,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "04.07.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 8896
     },
@@ -9990,7 +9990,7 @@
       "executor": "Комаров Андрей Дмитриевич",
       "executor_short": "Комаров А.Д.",
       "deadline": "01.07.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 8896
     },
@@ -10002,7 +10002,7 @@
       "executor": "Нартикова Ирина Магомедовна",
       "executor_short": "Нартикова И.М.",
       "deadline": "31.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6021
     },
@@ -10014,7 +10014,7 @@
       "executor": "Петрова (ККП) Анна Юрьевна",
       "executor_short": "Петрова А.Ю.",
       "deadline": "09.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2043
     },
@@ -10026,7 +10026,7 @@
       "executor": "Шаталова (ККП) Светлана Алексеевна",
       "executor_short": "Шаталова С.А.",
       "deadline": "24.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2043
     },
@@ -10038,7 +10038,7 @@
       "executor": "Быстрова (ККП) Алина Андреевна",
       "executor_short": "Быстрова А.А.",
       "deadline": "07.11.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2043
     },
@@ -10050,7 +10050,7 @@
       "executor": "Быстрова (ККП) Алина Андреевна",
       "executor_short": "Быстрова А.А.",
       "deadline": "06.11.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2043
     },
@@ -10062,7 +10062,7 @@
       "executor": "Беленков (ККП/ГКУ \"РЦТ\") Юрий Андреевич",
       "executor_short": "Беленков Ю.А.",
       "deadline": "06.11.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2043
     },
@@ -10074,7 +10074,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "15.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6848
     },
@@ -10086,7 +10086,7 @@
       "executor": "Кренева (ККП) Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "15.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6848
     },
@@ -10098,7 +10098,7 @@
       "executor": "Кренева (ККП) Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "28.11.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6848
     },
@@ -10110,7 +10110,7 @@
       "executor": "Янушкевич (ККП) Ирина Евгеньевна",
       "executor_short": "Янушкевич И.Е.",
       "deadline": "12.08.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2043
     },
@@ -10122,7 +10122,7 @@
       "executor": "Янушкевич (ККП) Ирина Евгеньевна",
       "executor_short": "Янушкевич И.Е.",
       "deadline": "20.08.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2043
     },
@@ -10134,7 +10134,7 @@
       "executor": "Беленков (ККП/ГКУ \"РЦТ\") Юрий Андреевич",
       "executor_short": "Беленков Ю.А.",
       "deadline": "24.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2043
     },
@@ -10146,7 +10146,7 @@
       "executor": "Нартикова Ирина Магомедовна",
       "executor_short": "Нартикова И.М.",
       "deadline": "16.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6021
     },
@@ -10158,7 +10158,7 @@
       "executor": "Корина (ККП) Юлия Олеговна",
       "executor_short": "Корина Ю.О.",
       "deadline": "16.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6021
     },
@@ -10170,7 +10170,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "17.07.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2724
     },
@@ -10182,7 +10182,7 @@
       "executor": "Суханова (ЦРЦТ) Ирина Владимировна",
       "executor_short": "Суханова И.В.",
       "deadline": "02.07.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2724
     },
@@ -10194,7 +10194,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "01.07.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2724
     },
@@ -10206,7 +10206,7 @@
       "executor": "Суханова (ЦРЦТ) Ирина Владимировна",
       "executor_short": "Суханова И.В.",
       "deadline": "26.06.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2724
     },
@@ -10218,7 +10218,7 @@
       "executor": "Шаталова (ККП) Светлана Алексеевна",
       "executor_short": "Шаталова С.А.",
       "deadline": "01.11.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2052
     },
@@ -10230,7 +10230,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "20.08.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2688
     },
@@ -10242,7 +10242,7 @@
       "executor": "Лавряков (Минимущество) Юрий Юрьевич",
       "executor_short": "Лавряков Ю.Ю.",
       "deadline": "20.08.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2688
     },
@@ -10254,7 +10254,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "16.06.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2043
     },
@@ -10266,7 +10266,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "31.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2052
     },
@@ -10278,7 +10278,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "31.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2052
     },
@@ -10290,7 +10290,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "31.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2052
     },
@@ -10302,7 +10302,7 @@
       "executor": "Силаков (ККП) Сергей Анатольевич",
       "executor_short": "Силаков С.А.",
       "deadline": "31.07.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2031
     },
@@ -10314,7 +10314,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "21.04.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2685
     },
@@ -10326,7 +10326,7 @@
       "executor": "Мустафин Булат Маратович",
       "executor_short": "Мустафин Б.М.",
       "deadline": "12.03.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2684
     },
@@ -10338,7 +10338,7 @@
       "executor": "Кренева (ККП) Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "15.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6847
     },
@@ -10350,7 +10350,7 @@
       "executor": "Шендакова (ККП) Наталья Сергеевна",
       "executor_short": "Шендакова Н.С.",
       "deadline": "12.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6847
     },
@@ -10362,7 +10362,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "15.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6847
     },
@@ -10374,7 +10374,7 @@
       "executor": "Родевальд (ККП) Станислав Евгеньевич",
       "executor_short": "Родевальд С.Е.",
       "deadline": "31.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6847
     },
@@ -10386,7 +10386,7 @@
       "executor": "Журавлева Светлана Николаевна",
       "executor_short": "Журавлева С.Н.",
       "deadline": "28.02.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 6847
     },
@@ -10398,7 +10398,7 @@
       "executor": "Корина (ККП) Юлия Олеговна",
       "executor_short": "Корина Ю.О.",
       "deadline": "15.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 3442
     },
@@ -10410,7 +10410,7 @@
       "executor": "Петров (ККП/ГКУ \"РЦТ\") Александр Михайлович",
       "executor_short": "Петров А.М.",
       "deadline": "15.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 3442
     },
@@ -10422,7 +10422,7 @@
       "executor": "Петров (ККП/ГКУ \"РЦТ\") Александр Михайлович",
       "executor_short": "Петров А.М.",
       "deadline": "09.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 3440
     },
@@ -10434,7 +10434,7 @@
       "executor": "Корина (ККП) Юлия Олеговна",
       "executor_short": "Корина Ю.О.",
       "deadline": "09.10.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 3440
     },
@@ -10446,7 +10446,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "05.09.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 3437
     },
@@ -10458,7 +10458,7 @@
       "executor": "Петров (ККП/ГКУ \"РЦТ\") Александр Михайлович",
       "executor_short": "Петров А.М.",
       "deadline": "23.05.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 3436
     },
@@ -10470,7 +10470,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "23.05.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 3436
     },
@@ -10482,7 +10482,7 @@
       "executor": "Корина (ККП) Юлия Олеговна",
       "executor_short": "Корина Ю.О.",
       "deadline": "03.05.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 3423
     },
@@ -10494,7 +10494,7 @@
       "executor": "Кабанов (МЭФ/ГКУ \"ФАЦ\") Андрей Олегович",
       "executor_short": "Кабанов А.О.",
       "deadline": "03.05.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 3423
     },
@@ -10506,7 +10506,7 @@
       "executor": "Петров (ККП/ГКУ \"РЦТ\") Александр Михайлович",
       "executor_short": "Петров А.М.",
       "deadline": "18.04.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 3402
     },
@@ -10518,7 +10518,7 @@
       "executor": "Симбухова (КПП) Алёна Ивановна",
       "executor_short": "Симбухова А.И.",
       "deadline": "18.04.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 3402
     },
@@ -10530,7 +10530,7 @@
       "executor": "Кабанов (МЭФ/ГКУ \"ФАЦ\") Андрей Олегович",
       "executor_short": "Кабанов А.О.",
       "deadline": "07.04.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 3396
     },
@@ -10542,7 +10542,7 @@
       "executor": "Симбухова (КПП) Алёна Ивановна",
       "executor_short": "Симбухова А.И.",
       "deadline": "07.04.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 3396
     },
@@ -10566,7 +10566,7 @@
       "executor": "Потапчик (ККП) Татьяна Павловна",
       "executor_short": "Потапчик Т.П.",
       "deadline": "28.02.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2155
     },
@@ -10578,7 +10578,7 @@
       "executor": "Колесников (ККП) Кирилл Владимирович",
       "executor_short": "Колесников К.В.",
       "deadline": "30.08.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2080
     },
@@ -10590,7 +10590,7 @@
       "executor": "Колесников (ККП) Кирилл Владимирович",
       "executor_short": "Колесников К.В.",
       "deadline": "30.08.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2080
     },
@@ -10602,7 +10602,7 @@
       "executor": "Забейворота (ККП) Максим Андреевич",
       "executor_short": "Забейворота М.А.",
       "deadline": "31.03.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2073
     },
@@ -10614,7 +10614,7 @@
       "executor": "Колесников (ККП) Кирилл Владимирович",
       "executor_short": "Колесников К.В.",
       "deadline": "14.03.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2073
     },
@@ -10626,7 +10626,7 @@
       "executor": "Колесников (ККП) Кирилл Владимирович",
       "executor_short": "Колесников К.В.",
       "deadline": "14.03.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2073
     },
@@ -10638,7 +10638,7 @@
       "executor": "Шаталова (ККП) Светлана Алексеевна",
       "executor_short": "Шаталова С.А.",
       "deadline": "07.11.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2053
     },
@@ -10650,7 +10650,7 @@
       "executor": "Шаталова (ККП) Светлана Алексеевна",
       "executor_short": "Шаталова С.А.",
       "deadline": "05.11.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2053
     },
@@ -10662,7 +10662,7 @@
       "executor": "Янушкевич (ККП) Ирина Евгеньевна",
       "executor_short": "Янушкевич И.Е.",
       "deadline": "04.07.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2043
     },
@@ -10674,7 +10674,7 @@
       "executor": "Янушкевич (ККП) Ирина Евгеньевна",
       "executor_short": "Янушкевич И.Е.",
       "deadline": "20.06.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2043
     },
@@ -10686,7 +10686,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "12.03.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2043
     },
@@ -10698,7 +10698,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "18.03.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2043
     },
@@ -10710,7 +10710,7 @@
       "executor": "Янушкевич (ККП) Ирина Евгеньевна",
       "executor_short": "Янушкевич И.Е.",
       "deadline": "18.02.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2043
     },
@@ -10722,7 +10722,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "17.02.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2043
     },
@@ -10734,7 +10734,7 @@
       "executor": "Колесников (ККП) Кирилл Владимирович",
       "executor_short": "Колесников К.В.",
       "deadline": "12.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2032
     },
@@ -10746,7 +10746,7 @@
       "executor": "Колесников (ККП) Кирилл Владимирович",
       "executor_short": "Колесников К.В.",
       "deadline": "12.12.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 2032
     },
@@ -10758,7 +10758,7 @@
       "executor": "Колесников (ККП) Кирилл Владимирович",
       "executor_short": "Колесников К.В.",
       "deadline": "19.05.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1977
     },
@@ -10770,7 +10770,7 @@
       "executor": "Колесников (ККП) Кирилл Владимирович",
       "executor_short": "Колесников К.В.",
       "deadline": "18.02.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1977
     },
@@ -10782,7 +10782,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "17.02.2025",
-      "urgency": "overdue",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 1977
     }
