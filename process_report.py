@@ -322,19 +322,16 @@ def _render_group(out, emoji, title, projects):
         if url:
             out.append(f'🔗 {url}')
 
+        HOURS_PER_UNIT = 1972
         internal = dp.get('internal_hours')
         external = dp.get('external_hours')
-        units    = dp.get('total_units')
         lines_vysv = []
         if internal:
-            lines_vysv.append(f'   Внутреннее: {int(round(internal))} ч')
+            i_units = round(internal / HOURS_PER_UNIT, 2)
+            lines_vysv.append(f'   Внутреннее: {int(round(internal))} ч / {i_units} шт.ед.')
         if external:
-            lines_vysv.append(f'   Внешнее:    {int(round(external))} ч')
-        total_h = (internal or 0) + (external or 0)
-        if total_h:
-            lines_vysv.append(f'   Итого:      {int(round(total_h))} ч')
-        if units:
-            lines_vysv.append(f'   Шт.ед.:     {units:.2f}')
+            e_units = round(external / HOURS_PER_UNIT, 2)
+            lines_vysv.append(f'   Внешнее:    {int(round(external))} ч / {e_units} шт.ед.')
         if lines_vysv:
             out.append('📉 Высвобождение:')
             out.extend(lines_vysv)
