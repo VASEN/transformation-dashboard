@@ -1168,7 +1168,6 @@ function _gaugeSVG(pct_vysv) {
 
 function _vysvDetailHTML(curator) {
   const fmtH = h => h != null ? Math.round(h).toLocaleString('ru') + ' ч' : '—';
-  const fmtU = h => h != null ? (h / 1972).toFixed(1) + ' шт.ед.' : null;
   const fmtN = v => v != null ? v : '—';
   const planMinus20 = curator.plan_minus20 != null ? (Math.round(curator.plan_minus20 * 10) / 10) + ' шт.ед.' : '—';
   const vysvUnits   = curator.vysv_units   != null ? (Math.round(curator.vysv_units * 10) / 10)   + ' шт.ед.' : '—';
@@ -1180,18 +1179,38 @@ function _vysvDetailHTML(curator) {
   const intH = curator.vysv_internal_hours;
   const extH = curator.vysv_external_hours;
 
+  const BASE = 'min-width:0;overflow:hidden;word-break:break-word;padding:5px 8px;background:rgba(255,255,255,0.03);border-radius:6px';
+  const LBL  = 'font-size:10px;color:var(--text-dim)';
+  const VAL  = 'font-size:13px;font-weight:700;color:var(--text)';
+
+  // simple cell: label top, value bottom
   const cell = (lbl, val) =>
-    `<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:5px 8px;background:rgba(255,255,255,0.03);border-radius:6px">
-      <span style="font-size:10px;color:var(--text-dim);white-space:nowrap">${lbl}</span>
-      <span style="font-size:13px;font-weight:700;color:var(--text);white-space:nowrap">${val}</span>
+    `<div style="${BASE}">
+      <div style="${LBL};margin-bottom:2px">${lbl}</div>
+      <div style="${VAL}">${val}</div>
     </div>`;
 
+  // combined cell: label + two sub-rows (e.g. ККП plan/fact)
+  const cellDuo = (lbl, row1lbl, row1val, row2lbl, row2val) =>
+    `<div style="${BASE}">
+      <div style="${LBL};margin-bottom:4px">${lbl}</div>
+      <div style="display:flex;justify-content:space-between;gap:4px;margin-bottom:2px">
+        <span style="font-size:10px;color:var(--text-dim)">${row1lbl}</span>
+        <span style="${VAL}">${row1val}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;gap:4px">
+        <span style="font-size:10px;color:var(--text-dim)">${row2lbl}</span>
+        <span style="${VAL}">${row2val}</span>
+      </div>
+    </div>`;
+
+  // vysv cell: label, hours large, units small below
   const vysvCell = (lbl, h) => {
-    const u = fmtU(h);
-    const val = h != null ? fmtH(h) + (u ? ' / ' + u : '') : '—';
-    return `<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:5px 8px;background:rgba(255,255,255,0.03);border-radius:6px">
-      <span style="font-size:10px;color:var(--text-dim);white-space:nowrap">${lbl}</span>
-      <span style="font-size:12px;font-weight:700;color:var(--text);white-space:nowrap">${val}</span>
+    const u = h != null ? (h / 1972).toFixed(1) + ' шт.ед.' : null;
+    return `<div style="${BASE}">
+      <div style="${LBL};margin-bottom:4px">${lbl}</div>
+      <div style="font-size:14px;font-weight:700;color:var(--text)">${h != null ? fmtH(h) : '—'}</div>
+      ${u ? `<div style="font-size:10px;color:var(--text-dim);margin-top:2px">${u}</div>` : ''}
     </div>`;
   };
 
@@ -1199,19 +1218,17 @@ function _vysvDetailHTML(curator) {
     <div class="vysv-detail-title">${curator.name}</div>
 
     <div style="font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-dim);text-transform:uppercase;margin-bottom:6px">Кадры</div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:12px">
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:5px;margin-bottom:12px">
       ${cell('Штат', fmtN(curator.headcount))}
-      ${cell('ККП план', fmtN(curator.kkp))}
-      ${cell('РЦТ план', fmtN(curator.rct))}
+      ${cellDuo('ККП', 'Штат', fmtN(curator.kkp), 'Факт', fmtN(curator.kkp_fact))}
       ${cell('Итого факт', fmtN(curator.fact_total))}
-      ${cell('ККП факт', fmtN(curator.kkp_fact))}
-      ${cell('РЦТ факт', fmtN(curator.rct_fact))}
+      ${cellDuo('РЦТ', 'Штат', fmtN(curator.rct), 'Факт', fmtN(curator.rct_fact))}
       ${cell('План −20%', planMinus20)}
       ${cell('Вакансии', fmtN(curator.vacancies))}
     </div>
 
     <div style="font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-dim);text-transform:uppercase;margin-bottom:6px">Высвобождение</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:10px">
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:5px;margin-bottom:10px">
       ${vysvCell('Внутреннее', intH)}
       ${vysvCell('Внешнее', extH)}
     </div>
