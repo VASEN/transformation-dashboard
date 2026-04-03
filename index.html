@@ -1168,66 +1168,52 @@ function _gaugeSVG(pct_vysv) {
 
 function _vysvDetailHTML(curator) {
   const fmtH = h => h != null ? Math.round(h).toLocaleString('ru') + ' ч' : '—';
-  const fmtU = h => h != null ? (h / 1972).toFixed(1) + ' ед.' : '—';
-  const planMinus20 = curator.plan_minus20 != null ? (Math.round(curator.plan_minus20 * 10) / 10) + ' ед.' : '—';
-  const vysvUnits   = curator.vysv_units != null   ? (Math.round(curator.vysv_units * 10) / 10) + ' ед.' : '—';
-  const pctColor    = curator.pct_vysv >= 100 ? 'var(--accent3)' : curator.pct_vysv >= 50 ? 'var(--accent)' : 'var(--danger)';
-  const pctStr      = curator.pct_vysv != null ? curator.pct_vysv + '%' : '—';
+  const fmtU = h => h != null ? (h / 1972).toFixed(1) + ' шт.ед.' : null;
+  const fmtN = v => v != null ? v : '—';
+  const planMinus20 = curator.plan_minus20 != null ? (Math.round(curator.plan_minus20 * 10) / 10) + ' шт.ед.' : '—';
+  const vysvUnits   = curator.vysv_units   != null ? (Math.round(curator.vysv_units * 10) / 10)   + ' шт.ед.' : '—';
+
+  const pct = curator.pct_vysv;
+  const pctColor = pct === 100 ? 'var(--warn)' : pct > 100 ? 'var(--accent3)' : 'var(--danger)';
+  const pctStr   = pct != null ? pct + '%' : '—';
 
   const intH = curator.vysv_internal_hours;
   const extH = curator.vysv_external_hours;
+
+  const cell = (lbl, val) =>
+    `<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:5px 8px;background:rgba(255,255,255,0.03);border-radius:6px">
+      <span style="font-size:10px;color:var(--text-dim);white-space:nowrap">${lbl}</span>
+      <span style="font-size:13px;font-weight:700;color:var(--text);white-space:nowrap">${val}</span>
+    </div>`;
+
+  const vysvCell = (lbl, h) => {
+    const u = fmtU(h);
+    const val = h != null ? fmtH(h) + (u ? ' / ' + u : '') : '—';
+    return `<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:5px 8px;background:rgba(255,255,255,0.03);border-radius:6px">
+      <span style="font-size:10px;color:var(--text-dim);white-space:nowrap">${lbl}</span>
+      <span style="font-size:12px;font-weight:700;color:var(--text);white-space:nowrap">${val}</span>
+    </div>`;
+  };
 
   return `
     <div class="vysv-detail-title">${curator.name}</div>
 
     <div style="font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-dim);text-transform:uppercase;margin-bottom:6px">Кадры</div>
-    <div class="vysv-detail-grid" style="margin-bottom:12px">
-      <div class="vysv-metric">
-        <div class="vysv-metric-label">Штат</div>
-        <div class="vysv-metric-val">${curator.headcount != null ? curator.headcount : '—'}</div>
-      </div>
-      <div class="vysv-metric">
-        <div class="vysv-metric-label">ККП факт / план</div>
-        <div class="vysv-metric-val">${curator.kkp_fact != null ? curator.kkp_fact : '—'} / ${curator.kkp != null ? curator.kkp : '—'}</div>
-      </div>
-      <div class="vysv-metric">
-        <div class="vysv-metric-label">РЦТ факт / план</div>
-        <div class="vysv-metric-val">${curator.rct_fact != null ? curator.rct_fact : '—'} / ${curator.rct != null ? curator.rct : '—'}</div>
-      </div>
-      <div class="vysv-metric">
-        <div class="vysv-metric-label">Итого факт</div>
-        <div class="vysv-metric-val">${curator.fact_total != null ? curator.fact_total : '—'}</div>
-      </div>
-      <div class="vysv-metric">
-        <div class="vysv-metric-label">Вакансии</div>
-        <div class="vysv-metric-val">${curator.vacancies != null ? curator.vacancies : '—'}</div>
-      </div>
-      <div class="vysv-metric">
-        <div class="vysv-metric-label">План −20%</div>
-        <div class="vysv-metric-val">${planMinus20}</div>
-      </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:12px">
+      ${cell('Штат', fmtN(curator.headcount))}
+      ${cell('ККП план', fmtN(curator.kkp))}
+      ${cell('РЦТ план', fmtN(curator.rct))}
+      ${cell('Итого факт', fmtN(curator.fact_total))}
+      ${cell('ККП факт', fmtN(curator.kkp_fact))}
+      ${cell('РЦТ факт', fmtN(curator.rct_fact))}
+      ${cell('План −20%', planMinus20)}
+      ${cell('Вакансии', fmtN(curator.vacancies))}
     </div>
 
     <div style="font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-dim);text-transform:uppercase;margin-bottom:6px">Высвобождение</div>
-    <div class="vysv-detail-grid" style="margin-bottom:10px">
-      <div class="vysv-metric">
-        <div class="vysv-metric-label">Внутреннее</div>
-        <div class="vysv-metric-val">${fmtH(intH)}</div>
-        <div style="font-size:10px;color:var(--text-dim)">${fmtU(intH)}</div>
-      </div>
-      <div class="vysv-metric">
-        <div class="vysv-metric-label">Внешнее</div>
-        <div class="vysv-metric-val">${fmtH(extH)}</div>
-        <div style="font-size:10px;color:var(--text-dim)">${fmtU(extH)}</div>
-      </div>
-      <div class="vysv-metric">
-        <div class="vysv-metric-label">Итого план</div>
-        <div class="vysv-metric-val">${fmtH(curator.vysv_plan_hours)}</div>
-      </div>
-      <div class="vysv-metric">
-        <div class="vysv-metric-label">Факт</div>
-        <div class="vysv-metric-val">${fmtH(curator.vysv_fact_hours)}</div>
-      </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:10px">
+      ${vysvCell('Внутреннее', intH)}
+      ${vysvCell('Внешнее', extH)}
     </div>
 
     <div class="vysv-detail-accent">
