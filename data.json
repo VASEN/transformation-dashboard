@@ -1,5 +1,5 @@
 {
-  "updated_at": "03.04.2026 08:19",
+  "updated_at": "03.04.2026 11:37",
   "summary": {
     "projects_total": 36,
     "projects_active": 22,
@@ -10800,6 +10800,8 @@
       "vysv_units": 33.81,
       "vysv_plan_hours": null,
       "vysv_fact_hours": null,
+      "vysv_internal_hours": 66676.0,
+      "vysv_external_hours": 593043.0,
       "pct_vysv": 128
     },
     {
@@ -10815,6 +10817,8 @@
       "vysv_units": 13.036511156186611,
       "vysv_plan_hours": 362601.0,
       "vysv_fact_hours": 2993.0,
+      "vysv_internal_hours": 25708.0,
+      "vysv_external_hours": 336893.0,
       "pct_vysv": 130
     },
     {
@@ -10830,6 +10834,8 @@
       "vysv_units": 16.155679513184584,
       "vysv_plan_hours": 195209.0,
       "vysv_fact_hours": 0.0,
+      "vysv_internal_hours": 31859.0,
+      "vysv_external_hours": 163350.0,
       "pct_vysv": 144
     },
     {
@@ -10845,6 +10851,8 @@
       "vysv_units": 4.619168356997972,
       "vysv_plan_hours": 101909.0,
       "vysv_fact_hours": 0.0,
+      "vysv_internal_hours": 9109.0,
+      "vysv_external_hours": 92800.0,
       "pct_vysv": 89
     }
   ]
