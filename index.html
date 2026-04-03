@@ -283,6 +283,18 @@
   .status-badge.done { background: rgba(0,255,157,0.1); color: var(--accent3); }
   .row-overdue { border-left: 3px solid #ff4444; background: rgba(255, 68, 68, 0.05); }
   .row-today { border-left: 3px solid #f5a623; background: rgba(245, 166, 35, 0.05); }
+  .row-q1 { border-left: 3px solid #7c6af7; background: rgba(124,106,247,0.04); }
+  .row-q2 { border-left: 3px solid #00e5ff; background: rgba(0,229,255,0.04); }
+  .row-q3 { border-left: 3px solid #00ff9d; background: rgba(0,255,157,0.04); }
+  .row-q4 { border-left: 3px solid #ffb800; background: rgba(255,184,0,0.04); }
+  .q-badge {
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
   .status-badge::before {
     content: '';
     width: 5px; height: 5px;
@@ -880,6 +892,7 @@
       <div class="section-card">
         <div class="section-header">
           <span class="section-title">Проекты — Готовность</span>
+          <div id="qBadgesRow" style="display:flex;gap:6px;flex-wrap:wrap"></div>
         </div>
         <table class="proj-table">
           <thead>
@@ -1037,14 +1050,36 @@ function parseDate(str) {
   return new Date(+yyyy, +mm - 1, +dd);
 }
 
+// ===== HELPERS: quarter from deadline =====
+function getQuarter(deadlineStr) {
+  if (!deadlineStr) return null;
+  const month = parseInt((deadlineStr.split('.'))[1], 10);
+  if (!month) return null;
+  return month <= 3 ? 1 : month <= 6 ? 2 : month <= 9 ? 3 : 4;
+}
+
+const Q_COLORS = {
+  1: { color: '#7c6af7', bg: 'rgba(124,106,247,0.12)', border: 'rgba(124,106,247,0.3)' },
+  2: { color: '#00e5ff', bg: 'rgba(0,229,255,0.12)',   border: 'rgba(0,229,255,0.3)' },
+  3: { color: '#00ff9d', bg: 'rgba(0,255,157,0.12)',   border: 'rgba(0,255,157,0.3)' },
+  4: { color: '#ffb800', bg: 'rgba(255,184,0,0.12)',   border: 'rgba(255,184,0,0.3)' },
+};
+
 // ===== RENDER: PROJ TABLE (exec mini) =====
 function renderProjTable(projects) {
   const body = document.getElementById('projTableBody');
   const active = projects
     .filter(p => p.status !== 'Закрыта')
     .sort((a, b) => parseDate(a.deadline) - parseDate(b.deadline));
-  body.innerHTML = active.map(p => `
-    <tr data-name="${p.name.replace(/"/g,'&quot;')}" style="cursor:pointer" title="Двойной клик — детализация">
+
+  const qCounts = {1: 0, 2: 0, 3: 0, 4: 0};
+  active.forEach(p => { const q = getQuarter(p.deadline); if (q) qCounts[q]++; });
+
+  body.innerHTML = active.map(p => {
+    const q = getQuarter(p.deadline);
+    const rowClass = q ? ` class="row-q${q}"` : '';
+    return `
+    <tr data-name="${p.name.replace(/"/g,'&quot;')}"${rowClass} style="cursor:pointer" title="Двойной клик — детализация">
       <td>${p.name}</td>
       <td style="color:var(--text-dim);font-size:12px">${p.owner_short || p.person || '—'}</td>
       <td style="color:var(--text-dim);font-size:12px">${p.deadline || '—'}</td>
@@ -1057,7 +1092,16 @@ function renderProjTable(projects) {
         </div>
       </td>
     </tr>
-  `).join('');
+  `}).join('');
+
+  // Update quarter badges
+  const badgesRow = document.getElementById('qBadgesRow');
+  if (badgesRow) {
+    badgesRow.innerHTML = [1,2,3,4].map(q => {
+      const c = Q_COLORS[q];
+      return `<span class="q-badge" style="background:${c.bg};color:${c.color};border:1px solid ${c.border}">Q${q}: ${qCounts[q]}</span>`;
+    }).join('');
+  }
 
   // Add double-click handlers
   body.querySelectorAll('tr').forEach(tr => {
@@ -1123,32 +1167,78 @@ function _gaugeSVG(pct_vysv) {
 }
 
 function _vysvDetailHTML(curator) {
-  const vysv = Math.round(curator.vysv_units * 10) / 10;
-  const plan = curator.plan_minus20 != null ? Math.round(curator.plan_minus20 * 10) / 10 : '—';
-  const metrics = [
-    ['Численность', curator.headcount + ' чел.'],
-    ['ККП план',    curator.kkp],
-    ['ККП факт',    curator.kkp_fact],
-    ['РЦТ план',    curator.rct],
-    ['РЦТ факт',    curator.rct_fact],
-    ['Итого факт',  curator.fact_total],
-    ['Вакансии',    curator.vacancies],
-    ['План −20%',   plan + ' ед.'],
-  ];
+  const fmtH = h => h != null ? Math.round(h).toLocaleString('ru') + ' ч' : '—';
+  const fmtU = h => h != null ? (h / 1972).toFixed(1) + ' ед.' : '—';
+  const planMinus20 = curator.plan_minus20 != null ? (Math.round(curator.plan_minus20 * 10) / 10) + ' ед.' : '—';
+  const vysvUnits   = curator.vysv_units != null   ? (Math.round(curator.vysv_units * 10) / 10) + ' ед.' : '—';
+  const pctColor    = curator.pct_vysv >= 100 ? 'var(--accent3)' : curator.pct_vysv >= 50 ? 'var(--accent)' : 'var(--danger)';
+  const pctStr      = curator.pct_vysv != null ? curator.pct_vysv + '%' : '—';
+
+  const intH = curator.vysv_internal_hours;
+  const extH = curator.vysv_external_hours;
+
   return `
     <div class="vysv-detail-title">${curator.name}</div>
-    <div class="vysv-detail-grid">
-      ${metrics.map(([lbl, val]) => `
-        <div class="vysv-metric">
-          <div class="vysv-metric-label">${lbl}</div>
-          <div class="vysv-metric-val">${val}</div>
-        </div>`).join('')}
+
+    <div style="font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-dim);text-transform:uppercase;margin-bottom:6px">Кадры</div>
+    <div class="vysv-detail-grid" style="margin-bottom:12px">
+      <div class="vysv-metric">
+        <div class="vysv-metric-label">Штат</div>
+        <div class="vysv-metric-val">${curator.headcount != null ? curator.headcount : '—'}</div>
+      </div>
+      <div class="vysv-metric">
+        <div class="vysv-metric-label">ККП факт / план</div>
+        <div class="vysv-metric-val">${curator.kkp_fact != null ? curator.kkp_fact : '—'} / ${curator.kkp != null ? curator.kkp : '—'}</div>
+      </div>
+      <div class="vysv-metric">
+        <div class="vysv-metric-label">РЦТ факт / план</div>
+        <div class="vysv-metric-val">${curator.rct_fact != null ? curator.rct_fact : '—'} / ${curator.rct != null ? curator.rct : '—'}</div>
+      </div>
+      <div class="vysv-metric">
+        <div class="vysv-metric-label">Итого факт</div>
+        <div class="vysv-metric-val">${curator.fact_total != null ? curator.fact_total : '—'}</div>
+      </div>
+      <div class="vysv-metric">
+        <div class="vysv-metric-label">Вакансии</div>
+        <div class="vysv-metric-val">${curator.vacancies != null ? curator.vacancies : '—'}</div>
+      </div>
+      <div class="vysv-metric">
+        <div class="vysv-metric-label">План −20%</div>
+        <div class="vysv-metric-val">${planMinus20}</div>
+      </div>
     </div>
+
+    <div style="font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-dim);text-transform:uppercase;margin-bottom:6px">Высвобождение</div>
+    <div class="vysv-detail-grid" style="margin-bottom:10px">
+      <div class="vysv-metric">
+        <div class="vysv-metric-label">Внутреннее</div>
+        <div class="vysv-metric-val">${fmtH(intH)}</div>
+        <div style="font-size:10px;color:var(--text-dim)">${fmtU(intH)}</div>
+      </div>
+      <div class="vysv-metric">
+        <div class="vysv-metric-label">Внешнее</div>
+        <div class="vysv-metric-val">${fmtH(extH)}</div>
+        <div style="font-size:10px;color:var(--text-dim)">${fmtU(extH)}</div>
+      </div>
+      <div class="vysv-metric">
+        <div class="vysv-metric-label">Итого план</div>
+        <div class="vysv-metric-val">${fmtH(curator.vysv_plan_hours)}</div>
+      </div>
+      <div class="vysv-metric">
+        <div class="vysv-metric-label">Факт</div>
+        <div class="vysv-metric-val">${fmtH(curator.vysv_fact_hours)}</div>
+      </div>
+    </div>
+
     <div class="vysv-detail-accent">
-      <span class="accent-label">% высвобождения</span>
-      <span class="accent-val">${curator.pct_vysv}%</span>
-      <span class="accent-label">Высвобождение</span>
-      <span class="accent-val">${vysv} ед.</span>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">
+        <div style="font-family:'Orbitron',sans-serif;font-size:28px;font-weight:700;color:${pctColor}">${pctStr}</div>
+        <div style="font-size:10px;color:var(--text-dim)">% высвобождения</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:5px;justify-content:center">
+        <div style="font-size:11px;color:var(--text-dim)">План: <span style="color:var(--text);font-weight:600">${planMinus20}</span></div>
+        <div style="font-size:11px;color:var(--text-dim)">Факт: <span style="color:var(--text);font-weight:600">${vysvUnits}</span></div>
+      </div>
     </div>`;
 }
 

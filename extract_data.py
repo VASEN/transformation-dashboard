@@ -249,19 +249,27 @@ def extract():
     vysv_by_curator = {}
     for i, curator_name in enumerate(CURATOR_ORDER):
         if i < len(nan_rows):
+            row = nan_rows.iloc[i]
+            internal_raw = row.get('Внутрнее высвобождение')
+            if internal_raw is None or (hasattr(internal_raw, '__float__') and pd.isna(internal_raw)):
+                internal_raw = row.get('Внутреннее высвобождение')
             vysv_by_curator[curator_name] = {
-                'plan_hours': safe_float(nan_rows.iloc[i].get('План по проектам, часы')),
-                'units':      safe_float(nan_rows.iloc[i].get('высвобождение, шт. ед.')),
-                'fact_hours': safe_float(nan_rows.iloc[i].get('Факт высвобождения трудозатрат всего, часы')),
+                'plan_hours':     safe_float(row.get('План по проектам, часы')),
+                'units':          safe_float(row.get('высвобождение, шт. ед.')),
+                'fact_hours':     safe_float(row.get('Факт высвобождения трудозатрат всего, часы')),
+                'internal_hours': safe_float(internal_raw),
+                'external_hours': safe_float(row.get('Внешнее высвобождение, часы')),
             }
 
     # ── 6. Штатка + % высвобождения ──────────────────────────────────────────
     print(f"📂 Читаем {SHTATKA_FILE}...")
     sh = pd.read_excel(SHTATKA_FILE)
 
-    curators     = []
-    total_units  = 0.0
-    total_plan20 = 0.0
+    curators        = []
+    total_units     = 0.0
+    total_plan20    = 0.0
+    total_internal  = 0.0
+    total_external  = 0.0
 
     for _, r in sh.iterrows():
         name = safe(r.get('Куратор направления'))
@@ -276,31 +284,39 @@ def extract():
             if name != TOTAL_CURATOR:
                 total_units  += units
                 total_plan20 += plan20
+                if vysv.get('internal_hours') is not None:
+                    total_internal += vysv['internal_hours']
+                if vysv.get('external_hours') is not None:
+                    total_external += vysv['external_hours']
         else:
             pct_vysv = None
 
         curators.append({
-            'name':         name,
-            'headcount':    safe_int(r.get('Кол-во ставок')),
-            'kkp':          safe_int(r.get('из них ККП')),
-            'kkp_fact':     safe_int(r.get('Факт ККП')),
-            'rct':          safe_int(r.get(' из них РЦТ')),
-            'rct_fact':     safe_int(r.get('Факт РЦТ')),
-            'fact_total':   safe_int(r.get('Кол-во фактическое')),
-            'vacancies':    safe_int(r.get('Вакансии')),
-            'plan_minus20': plan20,
-            'vysv_units':   units,
-            'vysv_plan_hours': vysv.get('plan_hours'),
-            'vysv_fact_hours': vysv.get('fact_hours'),
-            'pct_vysv':     pct_vysv,
+            'name':                name,
+            'headcount':           safe_int(r.get('Кол-во ставок')),
+            'kkp':                 safe_int(r.get('из них ККП')),
+            'kkp_fact':            safe_int(r.get('Факт ККП')),
+            'rct':                 safe_int(r.get(' из них РЦТ')),
+            'rct_fact':            safe_int(r.get('Факт РЦТ')),
+            'fact_total':          safe_int(r.get('Кол-во фактическое')),
+            'vacancies':           safe_int(r.get('Вакансии')),
+            'plan_minus20':        plan20,
+            'vysv_units':          units,
+            'vysv_plan_hours':     vysv.get('plan_hours'),
+            'vysv_fact_hours':     vysv.get('fact_hours'),
+            'vysv_internal_hours': vysv.get('internal_hours'),
+            'vysv_external_hours': vysv.get('external_hours'),
+            'pct_vysv':            pct_vysv,
         })
 
     # Пересчитываем итог для "Комитет и РЦТ"
     total_pct = round(total_units / total_plan20 * 100) if total_plan20 else None
     for c in curators:
         if c['name'] == TOTAL_CURATOR:
-            c['vysv_units'] = round(total_units, 2)
-            c['pct_vysv']   = total_pct
+            c['vysv_units']          = round(total_units, 2)
+            c['pct_vysv']            = total_pct
+            c['vysv_internal_hours'] = round(total_internal, 2) if total_internal else None
+            c['vysv_external_hours'] = round(total_external, 2) if total_external else None
 
     # ── 7. Сводная статистика ─────────────────────────────────────────────────
     t_active = [t for t in all_tasks if t['status'] in ACTIVE_STATUSES]
