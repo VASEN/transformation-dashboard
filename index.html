@@ -1458,12 +1458,16 @@ function loadDetail(name) {
   if (!d) return;
 
   const planH = d.plan_hours ? Math.round(d.plan_hours).toLocaleString('ru') : '—';
-  const factH = d.fact_hours ? Math.round(d.fact_hours).toLocaleString('ru') : '—';
   const planInt = d.plan_hours_cio ? Math.round(d.plan_hours_cio).toLocaleString('ru') : '—';
-  const planExt = (d.plan_hours && d.plan_hours_cio)
-    ? Math.round(d.plan_hours - d.plan_hours_cio).toLocaleString('ru') : '—';
   const planUnits = d.plan_units ? d.plan_units.toFixed(2) : '—';
-  const factColor = d.fact_hours && d.plan_hours && d.fact_hours >= d.plan_hours ? 'var(--accent3)' : 'var(--warn)';
+  const planIntUnits = d.plan_hours_cio
+    ? (d.plan_hours_cio / 1972).toFixed(2) : '—';
+  const planExtVal = (d.plan_hours && d.plan_hours_cio != null)
+    ? d.plan_hours - d.plan_hours_cio : null;
+  const planExtH = planExtVal != null
+    ? Math.round(planExtVal).toLocaleString('ru') : '—';
+  const planExtUnits = planExtVal != null
+    ? (planExtVal / 1972).toFixed(2) : '—';
 
   const teamArr = d.team ? d.team.split(',').map(s => s.trim()).filter(Boolean) : [];
   const indicatorsArr = d.indicators
@@ -1546,10 +1550,30 @@ function loadDetail(name) {
         <div style="margin-top:12px">
           <div class="section-title" style="margin-bottom:12px">Высвобождение часов</div>
           <div class="hours-visual">
-            <div class="hour-box"><div class="hour-num" style="color:var(--text-dim)">${planH}</div><div class="hour-lbl">план всего</div></div>
-            <div class="hour-box"><div class="hour-num" style="color:var(--accent2)">${planUnits}</div><div class="hour-lbl">план шт.ед.</div></div>
-            <div class="hour-box"><div class="hour-num">${planExt}</div><div class="hour-lbl">внешнее</div></div>
-            <div class="hour-box"><div class="hour-num" style="color:${factColor}">${factH}</div><div class="hour-lbl">факт</div></div>
+            <div class="hour-box">
+              <div class="hour-num" style="color:var(--text-dim)">${planH}</div>
+              <div class="hour-lbl">план всего</div>
+            </div>
+            <div class="hour-box">
+              <div class="hour-num" style="color:var(--accent2)">${planUnits}</div>
+              <div class="hour-lbl">план шт.ед.</div>
+            </div>
+            <div class="hour-box">
+              <div class="hour-num">${planInt}</div>
+              <div class="hour-lbl">внутреннее</div>
+            </div>
+            <div class="hour-box">
+              <div class="hour-num" style="color:var(--text-dim)">${planIntUnits}</div>
+              <div class="hour-lbl">внутр. шт.ед.</div>
+            </div>
+            <div class="hour-box">
+              <div class="hour-num">${planExtH}</div>
+              <div class="hour-lbl">внешнее</div>
+            </div>
+            <div class="hour-box">
+              <div class="hour-num" style="color:var(--text-dim)">${planExtUnits}</div>
+              <div class="hour-lbl">внешн. шт.ед.</div>
+            </div>
           </div>
         </div>
       </div>
