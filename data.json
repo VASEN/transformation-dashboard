@@ -1,5 +1,5 @@
 {
-  "updated_at": "03.04.2026 16:01",
+  "updated_at": "05.04.2026 21:34",
   "summary": {
     "projects_total": 36,
     "projects_active": 22,
@@ -8,10 +8,10 @@
     "tasks_total": 405,
     "tasks_active": 228,
     "tasks_closed": 177,
-    "tasks_deadline_5": 8,
+    "tasks_deadline_5": 6,
     "tasks_deadline_14": 25,
-    "tasks_overdue": 7,
-    "tasks_today": 3,
+    "tasks_overdue": 10,
+    "tasks_today": 0,
     "vysv_pct_total": 128,
     "report_updated_at": "02.04.2026"
   },
@@ -4264,7 +4264,7 @@
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "03.04.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 12793
     },
@@ -4312,7 +4312,7 @@
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "03.04.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 12778
     },
@@ -4504,7 +4504,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "03.04.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 12690
     },
@@ -4600,7 +4600,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "10.04.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12680
     },
@@ -9126,7 +9126,7 @@
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "03.04.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 12793
     },
@@ -9174,7 +9174,7 @@
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "03.04.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 12778
     },
@@ -9366,7 +9366,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "03.04.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 12690
     },
@@ -9462,7 +9462,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "10.04.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12680
     },
