@@ -345,8 +345,6 @@ def extract():
         'updated_at': datetime.now().strftime('%d.%m.%Y %H:%M'),
         'summary':    summary,
         'projects':   projects,
-        'stages':     stages,
-        'tasks':      tasks,
         'all_tasks':  all_tasks,
         'curators':   curators,
     }
