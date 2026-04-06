@@ -287,6 +287,8 @@
   .row-q2 { border-left: 3px solid #00e5ff; background: rgba(0,229,255,0.04); }
   .row-q3 { border-left: 3px solid #00ff9d; background: rgba(0,255,157,0.04); }
   .row-q4 { border-left: 3px solid #ffb800; background: rgba(255,184,0,0.04); }
+  .row-closed td { background: rgba(76, 175, 80, 0.08) !important; }
+  .row-closed td:first-child { border-left: 3px solid #4caf50; }
   .q-badge {
     padding: 2px 8px;
     border-radius: 4px;
@@ -1068,33 +1070,42 @@ const Q_COLORS = {
 // ===== RENDER: PROJ TABLE (exec mini) =====
 function renderProjTable(projects) {
   const body = document.getElementById('projTableBody');
-  const active = projects
-    .filter(p => p.status !== 'Закрыта')
-    .sort((a, b) => parseDate(a.deadline) - parseDate(b.deadline));
 
-  const qCounts = {1: 0, 2: 0, 3: 0, 4: 0};
+  const CLOSED = new Set(['Закрыта', 'Закрыто', 'Выполнено', 'Выполнена', 'Завершена']);
+  const byDeadline = (a, b) => parseDate(a.deadline) - parseDate(b.deadline);
+
+  const closed = projects.filter(p => CLOSED.has(p.status)).sort(byDeadline);
+  const active = projects.filter(p => !CLOSED.has(p.status)).sort(byDeadline);
+
+  const qCounts = {1:0, 2:0, 3:0, 4:0};
   active.forEach(p => { const q = getQuarter(p.deadline); if (q) qCounts[q]++; });
 
-  body.innerHTML = active.map(p => {
+  const renderRow = (p, isClosed) => {
     const q = getQuarter(p.deadline);
-    const rowClass = q ? ` class="row-q${q}"` : '';
+    const rowClass = isClosed ? 'row-closed' : (q ? `row-q${q}` : '');
+    const pctDisplay = isClosed
+      ? `<span style="color:#4caf50;font-weight:700;font-size:12px">✓ Завершён</span>`
+      : `<div class="progress-wrap">
+           <div class="progress-bar">
+             <div class="progress-fill" style="width:${p.pct}%;background:${getProgressColor(p.pct)}"></div>
+           </div>
+           <span class="progress-pct" style="color:${getProgressColor(p.pct)}">${p.pct}%</span>
+         </div>`;
     return `
-    <tr data-name="${p.name.replace(/"/g,'&quot;')}"${rowClass} style="cursor:pointer" title="Двойной клик — детализация">
-      <td>${p.name}</td>
-      <td style="color:var(--text-dim);font-size:12px">${p.owner_short || p.person || '—'}</td>
-      <td style="color:var(--text-dim);font-size:12px">${p.deadline || '—'}</td>
-      <td>
-        <div class="progress-wrap">
-          <div class="progress-bar">
-            <div class="progress-fill" style="width:${p.pct}%;background:${getProgressColor(p.pct)}"></div>
-          </div>
-          <span class="progress-pct" style="color:${getProgressColor(p.pct)}">${p.pct}%</span>
-        </div>
-      </td>
-    </tr>
-  `}).join('');
+      <tr data-name="${p.name.replace(/"/g,'&quot;')}"${rowClass ? ` class="${rowClass}"` : ''} style="cursor:pointer" title="Двойной клик — детализация">
+        <td>${p.name}</td>
+        <td style="color:var(--text-dim);font-size:12px">${p.owner_short || p.person || '—'}</td>
+        <td style="color:var(--text-dim);font-size:12px">${p.deadline || '—'}</td>
+        <td>${pctDisplay}</td>
+      </tr>`;
+  };
 
-  // Update quarter badges
+  body.innerHTML = [
+    ...closed.map(p => renderRow(p, true)),
+    ...active.map(p => renderRow(p, false))
+  ].join('');
+
+  // Update quarter badges (only active)
   const badgesRow = document.getElementById('qBadgesRow');
   if (badgesRow) {
     badgesRow.innerHTML = [1,2,3,4].map(q => {
