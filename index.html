@@ -1718,7 +1718,7 @@ function computeTaskKPIs(filteredProjects) {
     (t.urgency === 'overdue' || t.urgency === 'today' || t.urgency === 'urgent' || t.urgency === 'soon')
     && !CLOSED_STATUSES.has(t.status)
   ).length;
-  const overdue = tasks.filter(t => t.urgency === 'overdue' && !notActive.has(t.status)).length;
+  const overdue = tasks.filter(t => t.urgency === 'overdue' && !CLOSED_STATUSES.has(t.status)).length;
   return { deadline14, overdue };
 }
 
