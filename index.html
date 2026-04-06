@@ -1503,25 +1503,32 @@ function loadDetail(name) {
       }
     }
 
-    const stages = [];
+    const stageEntries = []; // { num: Number, label: String }
+
     activeGroups.forEach(g => {
-      // Extract ЭТАП number from task theme prefix like "3.5 ..." → "3"
       const sampleTheme = g[0].theme || '';
       const numMatch = sampleTheme.match(/^(\d+)\./);
       const etapNum = numMatch ? numMatch[1] : null;
+      const numInt = etapNum ? parseInt(etapNum, 10) : null;
 
+      let label;
       if (etapNum && etapMap[etapNum]) {
-        if (!stages.includes(etapMap[etapNum])) stages.push(etapMap[etapNum]);
+        label = etapMap[etapNum];
       } else if (etapNum) {
-        const label = `ЭТАП ${etapNum}`;
-        if (!stages.includes(label)) stages.push(label);
+        label = `ЭТАП ${etapNum}`;
       } else {
-        // No numbered etap — use first active task theme as label
         const activeTask = g.find(t => t.status === 'В работе');
-        if (activeTask && !stages.includes(activeTask.theme)) stages.push(activeTask.theme);
+        label = activeTask ? activeTask.theme : null;
+      }
+
+      if (label && !stageEntries.find(e => e.label === label)) {
+        stageEntries.push({ num: numInt ?? 9999, label });
       }
     });
-    return stages;
+
+    // Sort by ЭТАП number ascending
+    stageEntries.sort((a, b) => a.num - b.num);
+    return stageEntries.map(e => e.label);
   })();
 
   // Full status lines for block 2
