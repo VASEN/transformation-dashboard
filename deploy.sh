@@ -1,11 +1,18 @@
 #!/bin/bash
 set -e
 
-echo "🔄 Извлечение данных..."
-python3 extract_data.py
+ISSUES_FILE="${1:-issues.xlsx}"
+REPORT_FILE="${2:-}"
+
+echo "🔄 Извлечение данных из ${ISSUES_FILE}..."
+python3 extract_data.py "$ISSUES_FILE"
 
 echo "📋 Генерация отчёта..."
-python3 process_report.py
+if [ -n "$REPORT_FILE" ]; then
+  python3 process_report.py "$REPORT_FILE"
+else
+  python3 process_report.py
+fi
 
 echo "📦 Коммит data.json..."
 git add data.json
