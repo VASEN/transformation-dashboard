@@ -1066,16 +1066,15 @@ const Q_COLORS = {
   3: { color: '#00ff9d', bg: 'rgba(0,255,157,0.12)',   border: 'rgba(0,255,157,0.3)' },
   4: { color: '#ffb800', bg: 'rgba(255,184,0,0.12)',   border: 'rgba(255,184,0,0.3)' },
 };
+const CLOSED_STATUSES = new Set(['Закрыта', 'Закрыто', 'Выполнено', 'Выполнена', 'Завершена']);
+const byDeadline = (a, b) => parseDate(a.deadline) - parseDate(b.deadline);
 
 // ===== RENDER: PROJ TABLE (exec mini) =====
 function renderProjTable(projects) {
   const body = document.getElementById('projTableBody');
 
-  const CLOSED = new Set(['Закрыта', 'Закрыто', 'Выполнено', 'Выполнена', 'Завершена']);
-  const byDeadline = (a, b) => parseDate(a.deadline) - parseDate(b.deadline);
-
-  const closed = projects.filter(p => CLOSED.has(p.status)).sort(byDeadline);
-  const active = projects.filter(p => !CLOSED.has(p.status)).sort(byDeadline);
+  const closed = projects.filter(p => CLOSED_STATUSES.has(p.status)).sort(byDeadline);
+  const active = projects.filter(p => !CLOSED_STATUSES.has(p.status)).sort(byDeadline);
 
   const qCounts = {1:0, 2:0, 3:0, 4:0};
   active.forEach(p => { const q = getQuarter(p.deadline); if (q) qCounts[q]++; });
@@ -1123,9 +1122,8 @@ function renderProjTable(projects) {
 // ===== RENDER: FULL PROJECTS TABLE =====
 function renderFullProjTable(projects, filter = 'all') {
   const body = document.getElementById('fullProjTable');
-  const _closed = new Set(['Закрыта', 'Закрыто', 'Выполнено', 'Выполнена', 'Завершена']);
-  const overdueProjects = new Set(allTasks.filter(t => t.urgency === 'overdue' && !_closed.has(t.status)).map(t => t.project));
-  const todayProjects   = new Set(allTasks.filter(t => t.urgency === 'today'   && !_closed.has(t.status)).map(t => t.project));
+  const overdueProjects = new Set(allTasks.filter(t => t.urgency === 'overdue' && !CLOSED_STATUSES.has(t.status)).map(t => t.project));
+  const todayProjects   = new Set(allTasks.filter(t => t.urgency === 'today'   && !CLOSED_STATUSES.has(t.status)).map(t => t.project));
   const filtered = filter === 'all' ? projects : projects.filter(p => p.status === filter);
 
   body.innerHTML = filtered.map((p, i) => {
@@ -1431,7 +1429,6 @@ function filterTasksByStat(type) {
 
   const byProjectThenDeadline = (a, b) =>
     (a.project || '').localeCompare(b.project || '', 'ru') || parseDate(a.deadline) - parseDate(b.deadline);
-  const byDeadline = (a, b) => parseDate(a.deadline) - parseDate(b.deadline);
 
   let filtered;
   if (type === 'active') {
@@ -1542,23 +1539,15 @@ function loadDetail(name) {
     return stageEntries.map(e => e.label);
   })();
 
-  const CLOSED_STATUSES = new Set(['Закрыта', 'Закрыто', 'Выполнено', 'Выполнена', 'Завершена']);
   const isClosed = CLOSED_STATUSES.has(d.status);
 
   // Текущий этап
-  const currentStageHTML = (() => {
-    if (isClosed) {
-      const lines = [];
-      lines.push(`<div style="padding:9px 14px;background:rgba(76,175,80,0.12);border-left:3px solid #4caf50;border-radius:0 8px 8px 0;font-size:13px;font-weight:600;color:#4caf50">✓ Реализован</div>`);
-      if (d.defense_at) {
-        lines.push(`<div style="padding:6px 14px;font-size:12px;color:var(--text-dim);margin-top:4px">Защищён: <span style="color:var(--text);font-weight:600">${d.defense_at}</span></div>`);
-      }
-      return lines.join('');
-    }
-    return currentStages.length
+  const currentStageHTML = isClosed
+    ? `<div style="padding:9px 14px;background:rgba(76,175,80,0.12);border-left:3px solid #4caf50;border-radius:0 8px 8px 0;font-size:13px;font-weight:600;color:#4caf50">✓ Реализован</div>`
+      + (d.defense_at ? `<div style="padding:6px 14px;font-size:12px;color:var(--text-dim);margin-top:4px">Защищён: <span style="color:var(--text);font-weight:600">${d.defense_at}</span></div>` : '')
+    : currentStages.length
       ? currentStages.map(s => `<div style="padding:9px 14px;background:rgba(0,229,255,0.09);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;margin-bottom:6px;font-size:13px;line-height:1.5;font-weight:500">${s}</div>`).join('')
       : `<div style="padding:9px 14px;background:rgba(255,255,255,0.04);border-left:3px solid rgba(255,255,255,0.15);border-radius:0 8px 8px 0;font-size:13px;color:var(--text-dim)">Нет данных</div>`;
-  })();
 
   // Full status lines for block 2
   const statusFullLines = statusText
@@ -1682,17 +1671,20 @@ function populateDetailSelect(details) {
   const sel = document.getElementById('detailSelect');
   sel.innerHTML = '';
 
-  const CLOSED = new Set(['Закрыта', 'Закрыто', 'Выполнено', 'Выполнена', 'Завершена']);
-  const byDeadline = (a, b) => parseDate(a.deadline) - parseDate(b.deadline);
-
   const proj2026 = details.filter(d => d.deadline && d.deadline.split('.')[2] === '2026');
-  const closed = proj2026.filter(d => CLOSED.has(d.status)).sort(byDeadline);
-  const active = proj2026.filter(d => !CLOSED.has(d.status)).sort(byDeadline);
+  const closed = proj2026.filter(d => CLOSED_STATUSES.has(d.status)).sort(byDeadline);
+  const active = proj2026.filter(d => !CLOSED_STATUSES.has(d.status)).sort(byDeadline);
 
-  [...closed, ...active].forEach(d => {
+  closed.forEach(d => {
     const opt = document.createElement('option');
     opt.value = d.name;
-    opt.textContent = (CLOSED.has(d.status) ? '✓ ' : '') + d.name;
+    opt.textContent = '✓ ' + d.name;
+    sel.appendChild(opt);
+  });
+  active.forEach(d => {
+    const opt = document.createElement('option');
+    opt.value = d.name;
+    opt.textContent = d.name;
     sel.appendChild(opt);
   });
 
@@ -1721,11 +1713,10 @@ function highlightGauge(selectedOwner) {
 // ===== COMPUTE TASK KPIs FOR FILTERED PROJECTS =====
 function computeTaskKPIs(filteredProjects) {
   const projNames = new Set(filteredProjects.map(p => p.name));
-  const notActive = new Set(['Закрыта', 'Закрыто', 'Выполнено', 'Выполнена', 'Завершена']);
   const tasks = allTasks2026.filter(t => projNames.has(t.project));
   const deadline14 = tasks.filter(t =>
     (t.urgency === 'overdue' || t.urgency === 'today' || t.urgency === 'urgent' || t.urgency === 'soon')
-    && !notActive.has(t.status)
+    && !CLOSED_STATUSES.has(t.status)
   ).length;
   const overdue = tasks.filter(t => t.urgency === 'overdue' && !notActive.has(t.status)).length;
   return { deadline14, overdue };
