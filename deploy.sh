@@ -15,7 +15,7 @@ else
 fi
 
 echo "📦 Коммит data.json..."
-git add data.json
+git add .
 git commit -m "data: обновление $(date '+%d.%m.%Y %H:%M')"
 
 echo "📤 Пуш в репозитории..."
