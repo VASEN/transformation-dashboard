@@ -109,7 +109,10 @@ def extract():
     etap_ids = set(etaps['#'].tolist())
     subtasks = activities[activities['Родительская задача'].isin(etap_ids)].copy()
 
-    print(f"  Проектов: {len(passport)}  |  Этапов: {len(etaps)}  |  Подзадач: {len(subtasks)}")
+    subtask_ids = set(subtasks['#'].tolist())
+    subsubtasks = activities[activities['Родительская задача'].isin(subtask_ids)].copy()
+
+    print(f"  Проектов: {len(passport)}  |  Этапов: {len(etaps)}  |  Подзадач: {len(subtasks)}  |  Под-подзадач: {len(subsubtasks)}")
 
     # Диагностика: показываем уникальные значения поля Приоритетный проект
     if 'Приоритетный проект' in passport.columns:
@@ -198,7 +201,24 @@ def extract():
             'parent_id':      safe_int(r.get('Родительская задача')),
         })
 
-    all_tasks = stages + tasks
+    subsubtasks_list = []
+    for _, r in subsubtasks.iterrows():
+        dl  = clean_date(r.get('Срок завершения'))
+        st  = safe(r.get('Статус'))
+        subsubtasks_list.append({
+            'id':             safe_int(r.get('#')),
+            'project':        safe(r.get('Проект')),
+            'theme':          safe(r.get('Тема')),
+            'status':         st,
+            'executor':       safe(r.get('Назначена')),
+            'executor_short': short_name(safe(r.get('Назначена'))),
+            'deadline':       dl,
+            'urgency':        get_urgency(dl, st),
+            'pct':            clean_pct(r.get('Готовность')),
+            'parent_id':      safe_int(r.get('Родительская задача')),
+        })
+
+    all_tasks = stages + tasks + subsubtasks_list
 
     # ── 5. Высвобождение (ПРОЕКТЫ_НМА) ───────────────────────────────────────
     print(f"📂 Читаем {VYSV_FILE}...")
