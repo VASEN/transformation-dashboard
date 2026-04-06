@@ -152,6 +152,8 @@ def extract():
             'manager_short':  short_name(safe(r.get('Назначена'))),
             'deadline':       dl,
             'start_date':     clean_date(r.get('Дата начала')),
+            'closed_at':      clean_date(r.get('Закрыта')),
+            'defense_at':     clean_date(r.get('Дата и время защиты')),
             'pct':            clean_pct(r.get('Готовность')),
             'project_type':   safe(r.get('Тип проекта')),
             'is_priority':    safe(r.get('Приоритетный проект')) == 'Да',
