@@ -1665,14 +1665,23 @@ function loadDetail(name) {
 function populateDetailSelect(details) {
   const sel = document.getElementById('detailSelect');
   sel.innerHTML = '';
+
+  const CLOSED = new Set(['Закрыта', 'Закрыто', 'Выполнено', 'Выполнена', 'Завершена']);
+  const byDeadline = (a, b) => parseDate(a.deadline) - parseDate(b.deadline);
+
   const proj2026 = details.filter(d => d.deadline && d.deadline.split('.')[2] === '2026');
-  proj2026.forEach(d => {
+  const closed = proj2026.filter(d => CLOSED.has(d.status)).sort(byDeadline);
+  const active = proj2026.filter(d => !CLOSED.has(d.status)).sort(byDeadline);
+
+  [...closed, ...active].forEach(d => {
     const opt = document.createElement('option');
     opt.value = d.name;
-    opt.textContent = d.name;
+    opt.textContent = (CLOSED.has(d.status) ? '✓ ' : '') + d.name;
     sel.appendChild(opt);
   });
-  if (proj2026.length) loadDetail(proj2026[0].name);
+
+  const first = closed[0] || active[0];
+  if (first) loadDetail(first.name);
 }
 
 // ===== POPULATE OWNER FILTER =====
