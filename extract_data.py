@@ -105,14 +105,27 @@ def extract():
     activities = df[df['Трекер'] == 'Мероприятие проекта'].copy()
     passport_ids = set(passport['#'].tolist())
 
-    etaps    = activities[activities['Родительская задача'].isin(passport_ids)].copy()
-    etap_ids = set(etaps['#'].tolist())
-    subtasks = activities[activities['Родительская задача'].isin(etap_ids)].copy()
+    all_tasks_df_rows = []
+    covered_ids = set()
+    parent_ids = passport_ids.copy()
+    level = 0
 
-    subtask_ids = set(subtasks['#'].tolist())
-    subsubtasks = activities[activities['Родительская задача'].isin(subtask_ids)].copy()
+    while True:
+        children = activities[
+            activities['Родительская задача'].isin(parent_ids) &
+            ~activities['#'].isin(covered_ids)
+        ].copy()
+        if children.empty:
+            break
+        level += 1
+        new_ids = set(children['#'].tolist())
+        print(f"  L{level}: {len(children)} задач")
+        all_tasks_df_rows.append(children)
+        covered_ids |= new_ids
+        parent_ids = new_ids
 
-    print(f"  Проектов: {len(passport)}  |  Этапов: {len(etaps)}  |  Подзадач: {len(subtasks)}  |  Под-подзадач: {len(subsubtasks)}")
+    all_tasks_df = pd.concat(all_tasks_df_rows) if all_tasks_df_rows else pd.DataFrame()
+    print(f"  Итого задач всех уровней: {len(all_tasks_df)}")
 
     # Диагностика: показываем уникальные значения поля Приоритетный проект
     if 'Приоритетный проект' in passport.columns:
@@ -165,12 +178,12 @@ def extract():
         if p.get('is_priority'):
             print(f"    ✓ #{p['id']} {p['name']}")
 
-    # ── 3. Этапы ─────────────────────────────────────────────────────────────
-    stages = []
-    for _, r in etaps.iterrows():
+    # ── 3–4. Все задачи (все уровни) ─────────────────────────────────────────
+    all_tasks = []
+    for _, r in all_tasks_df.iterrows():
         dl  = clean_date(r.get('Срок завершения'))
         st  = safe(r.get('Статус'))
-        stages.append({
+        all_tasks.append({
             'id':             safe_int(r.get('#')),
             'project':        safe(r.get('Проект')),
             'theme':          safe(r.get('Тема')),
@@ -182,43 +195,6 @@ def extract():
             'pct':            clean_pct(r.get('Готовность')),
             'parent_id':      safe_int(r.get('Родительская задача')),
         })
-
-    # ── 4. Подзадачи ─────────────────────────────────────────────────────────
-    tasks = []
-    for _, r in subtasks.iterrows():
-        dl  = clean_date(r.get('Срок завершения'))
-        st  = safe(r.get('Статус'))
-        tasks.append({
-            'id':             safe_int(r.get('#')),
-            'project':        safe(r.get('Проект')),
-            'theme':          safe(r.get('Тема')),
-            'status':         st,
-            'executor':       safe(r.get('Назначена')),
-            'executor_short': short_name(safe(r.get('Назначена'))),
-            'deadline':       dl,
-            'urgency':        get_urgency(dl, st),
-            'pct':            clean_pct(r.get('Готовность')),
-            'parent_id':      safe_int(r.get('Родительская задача')),
-        })
-
-    subsubtasks_list = []
-    for _, r in subsubtasks.iterrows():
-        dl  = clean_date(r.get('Срок завершения'))
-        st  = safe(r.get('Статус'))
-        subsubtasks_list.append({
-            'id':             safe_int(r.get('#')),
-            'project':        safe(r.get('Проект')),
-            'theme':          safe(r.get('Тема')),
-            'status':         st,
-            'executor':       safe(r.get('Назначена')),
-            'executor_short': short_name(safe(r.get('Назначена'))),
-            'deadline':       dl,
-            'urgency':        get_urgency(dl, st),
-            'pct':            clean_pct(r.get('Готовность')),
-            'parent_id':      safe_int(r.get('Родительская задача')),
-        })
-
-    all_tasks = stages + tasks + subsubtasks_list
 
     # ── 5. Высвобождение (ПРОЕКТЫ_НМА) ───────────────────────────────────────
     print(f"📂 Читаем {VYSV_FILE}...")
