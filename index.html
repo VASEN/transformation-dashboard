@@ -1542,6 +1542,24 @@ function loadDetail(name) {
     return stageEntries.map(e => e.label);
   })();
 
+  const CLOSED_STATUSES = new Set(['Закрыта', 'Закрыто', 'Выполнено', 'Выполнена', 'Завершена']);
+  const isClosed = CLOSED_STATUSES.has(d.status);
+
+  // Текущий этап
+  const currentStageHTML = (() => {
+    if (isClosed) {
+      const lines = [];
+      lines.push(`<div style="padding:9px 14px;background:rgba(76,175,80,0.12);border-left:3px solid #4caf50;border-radius:0 8px 8px 0;font-size:13px;font-weight:600;color:#4caf50">✓ Реализован</div>`);
+      if (d.defense_at) {
+        lines.push(`<div style="padding:6px 14px;font-size:12px;color:var(--text-dim);margin-top:4px">Защищён: <span style="color:var(--text);font-weight:600">${d.defense_at}</span></div>`);
+      }
+      return lines.join('');
+    }
+    return currentStages.length
+      ? currentStages.map(s => `<div style="padding:9px 14px;background:rgba(0,229,255,0.09);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;margin-bottom:6px;font-size:13px;line-height:1.5;font-weight:500">${s}</div>`).join('')
+      : `<div style="padding:9px 14px;background:rgba(255,255,255,0.04);border-left:3px solid rgba(255,255,255,0.15);border-radius:0 8px 8px 0;font-size:13px;color:var(--text-dim)">Нет данных</div>`;
+  })();
+
   // Full status lines for block 2
   const statusFullLines = statusText
     ? statusText.split('\n').map(s => s.trim()).filter(Boolean)
@@ -1612,9 +1630,7 @@ function loadDetail(name) {
         <!-- Sub-block 1: current stages -->
         <div style="margin-bottom:12px">
           <div style="font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--accent);text-transform:uppercase;margin-bottom:8px">Текущий этап</div>
-          ${currentStages.length
-            ? currentStages.map(s => `<div style="padding:9px 14px;background:rgba(0,229,255,0.09);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;margin-bottom:6px;font-size:13px;line-height:1.5;font-weight:500">${s}</div>`).join('')
-            : `<div style="padding:9px 14px;background:rgba(255,255,255,0.04);border-left:3px solid rgba(255,255,255,0.15);border-radius:0 8px 8px 0;font-size:13px;color:var(--text-dim)">Нет данных</div>`}
+          ${currentStageHTML}
         </div>
 
         <!-- Sub-block 2: full status -->
