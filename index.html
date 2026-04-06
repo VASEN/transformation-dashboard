@@ -1459,7 +1459,7 @@ function loadDetail(name) {
 
   const planH = d.plan_hours ? Math.round(d.plan_hours).toLocaleString('ru') : '—';
   const planInt = d.plan_hours_cio ? Math.round(d.plan_hours_cio).toLocaleString('ru') : '—';
-  const planUnits = d.plan_units ? d.plan_units.toFixed(2) : '—';
+  const planUnits = d.plan_hours ? (d.plan_hours / 1972).toFixed(2) : '—';
   const planIntUnits = d.plan_hours_cio
     ? (d.plan_hours_cio / 1972).toFixed(2) : '—';
   const planExtVal = (d.plan_hours && d.plan_hours_cio != null)
@@ -1551,7 +1551,7 @@ function loadDetail(name) {
           <div class="section-title" style="margin-bottom:12px">Высвобождение часов</div>
           <div class="hours-visual">
             <div class="hour-box">
-              <div class="hour-num" style="color:var(--text-dim)">${planH}</div>
+              <div class="hour-num" style="color:var(--accent)">${planH}</div>
               <div class="hour-lbl">план всего</div>
             </div>
             <div class="hour-box">
@@ -1559,19 +1559,19 @@ function loadDetail(name) {
               <div class="hour-lbl">план шт.ед.</div>
             </div>
             <div class="hour-box">
-              <div class="hour-num">${planInt}</div>
+              <div class="hour-num" style="color:var(--accent)">${planInt}</div>
               <div class="hour-lbl">внутреннее</div>
             </div>
             <div class="hour-box">
-              <div class="hour-num" style="color:var(--text-dim)">${planIntUnits}</div>
+              <div class="hour-num" style="color:var(--accent2)">${planIntUnits}</div>
               <div class="hour-lbl">внутр. шт.ед.</div>
             </div>
             <div class="hour-box">
-              <div class="hour-num">${planExtH}</div>
+              <div class="hour-num" style="color:var(--accent)">${planExtH}</div>
               <div class="hour-lbl">внешнее</div>
             </div>
             <div class="hour-box">
-              <div class="hour-num" style="color:var(--text-dim)">${planExtUnits}</div>
+              <div class="hour-num" style="color:var(--accent2)">${planExtUnits}</div>
               <div class="hour-lbl">внешн. шт.ед.</div>
             </div>
           </div>
