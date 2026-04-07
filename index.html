@@ -1092,7 +1092,7 @@ function renderProjTable(projects) {
          </div>`;
     return `
       <tr data-name="${p.name.replace(/"/g,'&quot;')}"${rowClass ? ` class="${rowClass}"` : ''} style="cursor:pointer" title="Двойной клик — детализация">
-        <td>${p.name}</td>
+        <td>${p.is_priority ? '<span style="color:var(--warn);margin-right:4px" title="Приоритетный проект">★</span>' : ''}${p.name}</td>
         <td style="color:var(--text-dim);font-size:12px">${p.owner_short || p.person || '—'}</td>
         <td style="color:var(--text-dim);font-size:12px">${p.deadline || '—'}</td>
         <td>${pctDisplay}</td>
@@ -1134,7 +1134,7 @@ function renderFullProjTable(projects, filter = 'all') {
     return `
       <tr data-name="${p.name.replace(/"/g,'&quot;')}"${rowClass ? ' class="' + rowClass + '"' : ''} style="cursor:pointer" title="Двойной клик — детализация">
         <td style="color:var(--text-dim);font-size:11px">${i + 1}</td>
-        <td>${p.name}</td>
+        <td>${p.is_priority ? '<span style="color:var(--warn);margin-right:4px" title="Приоритетный проект">★</span>' : ''}${p.name}</td>
         <td><span class="status-badge ${isActive ? 'active' : 'done'}">${p.status}</span></td>
         <td style="color:var(--text-dim);font-size:12px">${p.owner_short || p.person || '—'}</td>
         <td style="color:var(--text-dim);font-size:12px">${p.deadline || '—'}</td>
@@ -1678,13 +1678,13 @@ function populateDetailSelect(details) {
   closed.forEach(d => {
     const opt = document.createElement('option');
     opt.value = d.name;
-    opt.textContent = '✓ ' + d.name;
+    opt.textContent = '✓ ' + (d.is_priority ? '★ ' : '') + d.name;
     sel.appendChild(opt);
   });
   active.forEach(d => {
     const opt = document.createElement('option');
     opt.value = d.name;
-    opt.textContent = d.name;
+    opt.textContent = (d.is_priority ? '★ ' : '') + d.name;
     sel.appendChild(opt);
   });
 
