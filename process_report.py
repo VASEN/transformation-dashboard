@@ -216,7 +216,7 @@ def parse_report(filepath):
         # -------------------------------------------------------------------
         if re.match(r'^📍', line) and proj[0] is not None:
             state['value'] = 'current'
-            after = re.sub(r'^📍\s*(?:Текущие\s*этапы[^:]*:?)?\s*', '', line).strip()
+            after = re.sub(r'^📍\s*(?:(?:Текущие\s*этапы|В работе)[^:]*:?)?\s*', '', line).strip()
             if after:
                 proj[0]['_current'].append(after)
             i += 1
