@@ -289,6 +289,7 @@
   .row-q4 { border-left: 3px solid #ffb800; background: rgba(255,184,0,0.04); }
   .row-closed td { background: rgba(76, 175, 80, 0.08) !important; }
   .row-closed td:first-child { border-left: 3px solid #4caf50; }
+  .priority-marker { color: var(--warn); margin-right: 4px; }
   .q-badge {
     padding: 2px 8px;
     border-radius: 4px;
@@ -1067,6 +1068,7 @@ const Q_COLORS = {
   4: { color: '#ffb800', bg: 'rgba(255,184,0,0.12)',   border: 'rgba(255,184,0,0.3)' },
 };
 const CLOSED_STATUSES = new Set(['Закрыта', 'Закрыто', 'Выполнено', 'Выполнена', 'Завершена']);
+const PRIORITY_STAR = '<span class="priority-marker" title="Приоритетный проект">★</span>';
 const byDeadline = (a, b) => parseDate(a.deadline) - parseDate(b.deadline);
 
 // ===== RENDER: PROJ TABLE (exec mini) =====
@@ -1092,7 +1094,7 @@ function renderProjTable(projects) {
          </div>`;
     return `
       <tr data-name="${p.name.replace(/"/g,'&quot;')}"${rowClass ? ` class="${rowClass}"` : ''} style="cursor:pointer" title="Двойной клик — детализация">
-        <td>${p.is_priority ? '<span style="color:var(--warn);margin-right:4px" title="Приоритетный проект">★</span>' : ''}${p.name}</td>
+        <td>${p.is_priority ? PRIORITY_STAR : ''}${p.name}</td>
         <td style="color:var(--text-dim);font-size:12px">${p.owner_short || p.person || '—'}</td>
         <td style="color:var(--text-dim);font-size:12px">${p.deadline || '—'}</td>
         <td>${pctDisplay}</td>
@@ -1134,7 +1136,7 @@ function renderFullProjTable(projects, filter = 'all') {
     return `
       <tr data-name="${p.name.replace(/"/g,'&quot;')}"${rowClass ? ' class="' + rowClass + '"' : ''} style="cursor:pointer" title="Двойной клик — детализация">
         <td style="color:var(--text-dim);font-size:11px">${i + 1}</td>
-        <td>${p.is_priority ? '<span style="color:var(--warn);margin-right:4px" title="Приоритетный проект">★</span>' : ''}${p.name}</td>
+        <td>${p.is_priority ? PRIORITY_STAR : ''}${p.name}</td>
         <td><span class="status-badge ${isActive ? 'active' : 'done'}">${p.status}</span></td>
         <td style="color:var(--text-dim);font-size:12px">${p.owner_short || p.person || '—'}</td>
         <td style="color:var(--text-dim);font-size:12px">${p.deadline || '—'}</td>
