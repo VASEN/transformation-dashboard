@@ -242,6 +242,100 @@ def parse_report(filepath):
 
 
 # ---------------------------------------------------------------------------
+# Diff helpers
+# ---------------------------------------------------------------------------
+
+def strip_dates(s):
+    """Remove date patterns like (01.04) or (01.04.2026) from string."""
+    return re.sub(r'\(\d{1,2}\.\d{1,2}(?:\.\d{4})?\)', '', s).strip()
+
+
+def normalize_line(s):
+    """Normalize a line for comparison: strip bullet markers, lowercase."""
+    s = strip_dates(s)
+    s = re.sub(r'^[\s]*(?:[•\-\*]|\d+\.)\s*', '', s)
+    return s.lower().strip()
+
+
+def _text_to_norm_set(text):
+    if not text:
+        return set()
+    result = set()
+    for line in text.split('\n'):
+        norm = normalize_line(line)
+        if norm:
+            result.add(norm)
+    return result
+
+
+def compute_new_lines(current_text, prev_completed, prev_current):
+    """
+    Return a set of normalized lines from current_text that don't appear
+    in either prev_completed or prev_current (after normalization + date stripping).
+    """
+    prev_all = _text_to_norm_set(prev_completed) | _text_to_norm_set(prev_current)
+    new_lines = set()
+    if current_text:
+        for line in current_text.split('\n'):
+            norm = normalize_line(line)
+            if norm and norm not in prev_all:
+                new_lines.add(norm)
+    return new_lines
+
+
+def find_prev_project(proj, prev_index):
+    """
+    Find the previous version of a project in prev_index.
+    Matches by issue_id first, then fuzzy name.
+    Returns prev_proj dict or None.
+    """
+    issue_id = proj.get('issue_id')
+    if issue_id is not None and issue_id in prev_index['by_id']:
+        return prev_index['by_id'][issue_id]
+
+    name_lower = proj['name'].lower()
+    best_ratio = 0.0
+    best_proj  = None
+    for pname, pp in prev_index['by_name']:
+        ratio = SequenceMatcher(None, name_lower, pname).ratio()
+        if ratio > best_ratio:
+            best_ratio = ratio
+            best_proj  = pp
+    if best_ratio >= FUZZY_MATCH_THRESHOLD:
+        return best_proj
+    return None
+
+
+def build_prev_index(prev_groups):
+    """Build lookup structure from parsed previous report groups."""
+    by_id   = {}
+    by_name = []
+    for g in prev_groups:
+        for p in g['projects']:
+            if p.get('issue_id') is not None:
+                by_id[p['issue_id']] = p
+            by_name.append((p['name'].lower(), p))
+    return {'by_id': by_id, 'by_name': by_name}
+
+
+def render_block_with_diff(block_text, new_lines_set):
+    """
+    Return list of lines from block_text, with new lines prefixed by '🆕 '.
+    A line is "new" if normalize_line(line) is in new_lines_set.
+    """
+    if not block_text:
+        return []
+    result = []
+    for line in block_text.split('\n'):
+        norm = normalize_line(line)
+        if norm and norm in new_lines_set:
+            result.append(f'🆕 {line}')
+        else:
+            result.append(line)
+    return result
+
+
+# ---------------------------------------------------------------------------
 # Matching report projects to data.json
 # ---------------------------------------------------------------------------
 
@@ -299,7 +393,7 @@ def _deadline_sort_key(proj):
         return date.max  # no deadline → sort last
 
 
-def _render_group(out, emoji, title, projects):
+def _render_group(out, emoji, title, projects, prev_index=None):
     """Append one group section (header + numbered projects) to out."""
     count = len(projects)
     sorted_projs = sorted(projects, key=_deadline_sort_key)
@@ -311,7 +405,13 @@ def _render_group(out, emoji, title, projects):
 
     for idx, proj in enumerate(sorted_projs):
         proj_emoji = '🔴' if proj.get('is_priority') else '🔵'
-        out.append(f'{idx + 1}. {proj_emoji} {proj["name"]}')
+
+        # Diff: detect new projects and new lines within blocks
+        prev_proj = find_prev_project(proj, prev_index) if prev_index else None
+        is_new_project = prev_index is not None and prev_proj is None
+
+        name_suffix = ' 🆕 новый проект' if is_new_project else ''
+        out.append(f'{idx + 1}. {proj_emoji} {proj["name"]}{name_suffix}')
 
         dp = proj.get('_data_project') or {}
         manager = dp.get('owner_short') or proj.get('person')
@@ -340,12 +440,28 @@ def _render_group(out, emoji, title, projects):
 
         if proj.get('completed'):
             out.append('✅ Выполнено:')
-            out.append(proj['completed'])
+            if prev_proj is not None:
+                new_completed = compute_new_lines(
+                    proj.get('completed'),
+                    prev_proj.get('completed'),
+                    prev_proj.get('current'),
+                )
+                out.extend(render_block_with_diff(proj['completed'], new_completed))
+            else:
+                out.append(proj['completed'])
             out.append('')
 
         if proj.get('current'):
             out.append('📍 В работе:')
-            out.append(proj['current'])
+            if prev_proj is not None:
+                new_current = compute_new_lines(
+                    proj.get('current'),
+                    None,
+                    prev_proj.get('current'),
+                )
+                out.extend(render_block_with_diff(proj['current'], new_current))
+            else:
+                out.append(proj['current'])
             out.append('')
 
         if idx < count - 1:
@@ -367,28 +483,34 @@ def _render_not_reported(out, names):
     out.append(TELEGRAM_SEPARATOR_THICK)
 
 
-def build_priority_message(priority_projs, not_reported, report_date):
+def build_priority_message(priority_projs, not_reported, report_date,
+                           prev_index=None, prev_date=None):
     """Telegram message for priority projects only."""
     out = []
     date_str = report_date.strftime('%d.%m.%Y')
     out.append('📊 Еженедельный отчёт — Приоритетные проекты')
     out.append(f'Дата: {date_str}')
+    if prev_date is not None:
+        out.append(f'🔄 Сравнение с отчётом от {prev_date.strftime("%d.%m.%Y")}')
     out.append('')
-    _render_group(out, '🔴', 'ПРИОРИТЕТНЫЕ ПРОЕКТЫ', priority_projs)
+    _render_group(out, '🔴', 'ПРИОРИТЕТНЫЕ ПРОЕКТЫ', priority_projs, prev_index)
     if not_reported:
         out.append('')
         _render_not_reported(out, not_reported)
     return '\n'.join(out)
 
 
-def build_transform_message(transform_projs, not_reported, report_date):
+def build_transform_message(transform_projs, not_reported, report_date,
+                            prev_index=None, prev_date=None):
     """Telegram message for transformation projects only."""
     out = []
     date_str = report_date.strftime('%d.%m.%Y')
     out.append('📊 Еженедельный отчёт — Трансформационные проекты')
     out.append(f'Дата: {date_str}')
+    if prev_date is not None:
+        out.append(f'🔄 Сравнение с отчётом от {prev_date.strftime("%d.%m.%Y")}')
     out.append('')
-    _render_group(out, '🔵', 'ТРАНСФОРМАЦИОННЫЕ ПРОЕКТЫ', transform_projs)
+    _render_group(out, '🔵', 'ТРАНСФОРМАЦИОННЫЕ ПРОЕКТЫ', transform_projs, prev_index)
     if not_reported:
         out.append('')
         _render_not_reported(out, not_reported)
@@ -410,6 +532,8 @@ def main():
                         help='Только сформировать Telegram-сообщение, не изменять data.json')
     parser.add_argument('--no-telegram', action='store_true',
                         help='Только обновить data.json, не формировать Telegram-сообщение')
+    parser.add_argument('--prev', default=None, metavar='PREV_REPORT',
+                        help='Предыдущий .md-файл отчёта для сравнения (diff)')
     args = parser.parse_args()
 
     update_data     = not args.telegram_only
@@ -426,6 +550,10 @@ def main():
         print(f'❌ Ошибка: файл {args.data} не найден', file=sys.stderr)
         sys.exit(1)
 
+    if args.prev and not os.path.exists(args.prev):
+        print(f'❌ Ошибка: предыдущий отчёт не найден: {args.prev}', file=sys.stderr)
+        sys.exit(1)
+
     # ------------------------------------------------------------------
     # Parse report
     # ------------------------------------------------------------------
@@ -436,6 +564,21 @@ def main():
     all_report_projects = [p for g in groups for p in g['projects']]
     print(f'   Найдено проектов в отчёте: {len(all_report_projects)}')
     print()
+
+    # ------------------------------------------------------------------
+    # Parse previous report for diff (optional)
+    # ------------------------------------------------------------------
+    prev_index = None
+    prev_date  = None
+
+    if args.prev:
+        print(f'📂 Читаем предыдущий отчёт: {args.prev}')
+        prev_groups = parse_report(args.prev)
+        prev_index  = build_prev_index(prev_groups)
+        prev_date   = parse_date_from_filename(args.prev)
+        prev_count  = sum(len(g['projects']) for g in prev_groups)
+        print(f'   Проектов в предыдущем отчёте: {prev_count}')
+        print()
 
     # ------------------------------------------------------------------
     # Load data.json (always, if available — needed for matching/deadlines)
@@ -527,8 +670,11 @@ def main():
         transform_projs  = [p for p in all_report_projects if not p.get('is_priority')]
 
         # File 1 — priority projects
-        fn_priority = f'telegram_priority_{date_suffix}.txt'
-        msg_priority = build_priority_message(priority_projs, not_reported_priority, report_date)
+        fn_priority  = f'telegram_priority_{date_suffix}.txt'
+        msg_priority = build_priority_message(
+            priority_projs, not_reported_priority, report_date,
+            prev_index=prev_index, prev_date=prev_date,
+        )
         with open(fn_priority, 'w', encoding='utf-8') as f:
             f.write(msg_priority)
         print(f'📩 Приоритетные проекты:     {fn_priority}')
@@ -536,8 +682,11 @@ def main():
               + (f' | ⚠️ без статуса: {len(not_reported_priority)}' if not_reported_priority else ''))
 
         # File 2 — transformation projects
-        fn_transform = f'telegram_transform_{date_suffix}.txt'
-        msg_transform = build_transform_message(transform_projs, not_reported_transform, report_date)
+        fn_transform  = f'telegram_transform_{date_suffix}.txt'
+        msg_transform = build_transform_message(
+            transform_projs, not_reported_transform, report_date,
+            prev_index=prev_index, prev_date=prev_date,
+        )
         with open(fn_transform, 'w', encoding='utf-8') as f:
             f.write(msg_transform)
         print(f'📩 Трансформационные проекты: {fn_transform}')
