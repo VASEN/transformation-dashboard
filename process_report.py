@@ -143,7 +143,7 @@ def parse_report(filepath):
         # -------------------------------------------------------------------
         # Detect lines starting with 🔵 or 🔴
         # -------------------------------------------------------------------
-        emoji_m = re.match(r'^([🔵🔴])\s*(.*)', line)
+        emoji_m = re.match(r'^(?:\d+\.\s*)?([🔵🔴])\s*(.*)', line)
         if emoji_m:
             emoji = emoji_m.group(1)
             rest  = emoji_m.group(2).strip()
