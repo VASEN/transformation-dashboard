@@ -1,17 +1,17 @@
 {
-  "updated_at": "08.04.2026 19:11",
+  "updated_at": "09.04.2026 08:24",
   "summary": {
     "projects_total": 36,
     "projects_active": 22,
     "projects_closed": 14,
     "projects_avg_pct": 18,
     "tasks_total": 517,
-    "tasks_active": 253,
-    "tasks_closed": 264,
-    "tasks_deadline_5": 10,
-    "tasks_deadline_14": 36,
-    "tasks_overdue": 6,
-    "tasks_today": 4,
+    "tasks_active": 251,
+    "tasks_closed": 266,
+    "tasks_deadline_5": 7,
+    "tasks_deadline_14": 37,
+    "tasks_overdue": 7,
+    "tasks_today": 1,
     "vysv_pct_total": 128,
     "report_updated_at": "08.04.2026"
   },
@@ -493,7 +493,7 @@
       "start_date": "01.02.2026",
       "closed_at": null,
       "defense_at": null,
-      "pct": 25,
+      "pct": 28,
       "project_type": "Межведомственный",
       "is_priority": false,
       "goal": "Сокращение внутренних трудозатрат со 100% до 80% до 30.11.2026",
@@ -1239,7 +1239,7 @@
       "executor_short": "Родевальд С.Е.",
       "deadline": "01.09.2026",
       "urgency": "ok",
-      "pct": 0,
+      "pct": 4,
       "parent_id": 11575
     },
     {
@@ -2126,7 +2126,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "23.04.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 11594
     },
@@ -2547,7 +2547,7 @@
       "executor_short": "Кукарцева О.В.",
       "deadline": "30.04.2026",
       "urgency": "ok",
-      "pct": 25,
+      "pct": 50,
       "parent_id": 11242
     },
     {
@@ -3625,7 +3625,7 @@
       "status": "Новая",
       "executor": "Хорев Олег Геннадьевич",
       "executor_short": "Хорев О.Г.",
-      "deadline": "08.04.2026",
+      "deadline": "09.04.2026",
       "urgency": "today",
       "pct": 0,
       "parent_id": 14194
@@ -3650,7 +3650,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "23.04.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12735
     },
@@ -3662,7 +3662,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "23.04.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12734
     },
@@ -3855,7 +3855,7 @@
       "executor_short": "Кордзахия В.М.",
       "deadline": "01.09.2026",
       "urgency": "ok",
-      "pct": 0,
+      "pct": 20,
       "parent_id": 13176
     },
     {
@@ -4394,7 +4394,7 @@
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "08.04.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 12793
     },
@@ -4442,7 +4442,7 @@
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "08.04.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 12778
     },
@@ -4954,12 +4954,12 @@
       "id": 12657,
       "project": "Оптимизация закупок 223-ФЗ",
       "theme": "1.2 Тестирование функционала",
-      "status": "В работе",
+      "status": "Закрыта",
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "08.04.2026",
-      "urgency": "today",
-      "pct": 0,
+      "urgency": "ok",
+      "pct": 100,
       "parent_id": 12655
     },
     {
@@ -6358,12 +6358,12 @@
       "id": 13498,
       "project": "Задание на проектирование и инженерные изыскания в xml",
       "theme": "5.3.1. Аудит существующих вариантов ЗНП и определение количества шаблонов",
-      "status": "Новая",
+      "status": "Закрыта",
       "executor": "Кордзахия Вахтанг Михайлович",
       "executor_short": "Кордзахия В.М.",
       "deadline": "01.04.2026",
-      "urgency": "overdue",
-      "pct": 0,
+      "urgency": "ok",
+      "pct": 100,
       "parent_id": 13179
     },
     {
