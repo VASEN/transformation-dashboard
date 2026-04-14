@@ -1,17 +1,17 @@
 {
-  "updated_at": "13.04.2026 08:25",
+  "updated_at": "14.04.2026 08:25",
   "summary": {
     "projects_total": 36,
     "projects_active": 22,
     "projects_closed": 14,
     "projects_avg_pct": 14,
     "tasks_total": 579,
-    "tasks_active": 311,
-    "tasks_closed": 268,
-    "tasks_deadline_5": 14,
-    "tasks_deadline_14": 44,
-    "tasks_overdue": 7,
-    "tasks_today": 3,
+    "tasks_active": 310,
+    "tasks_closed": 269,
+    "tasks_deadline_5": 11,
+    "tasks_deadline_14": 45,
+    "tasks_overdue": 9,
+    "tasks_today": 0,
     "vysv_pct_total": 128
   },
   "projects": [
@@ -89,7 +89,7 @@
       "start_date": "08.02.2026",
       "closed_at": null,
       "defense_at": null,
-      "pct": 6,
+      "pct": 12,
       "project_type": "Внутриведомственный",
       "is_priority": false,
       "goal": "Снижение внутренних трудозатрат со 100% до 80% к 30.11.2026",
@@ -1225,7 +1225,7 @@
       "executor": "Заичко Валерий Валерьевич",
       "executor_short": "Заичко В.В.",
       "deadline": "13.04.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 11244
     },
@@ -1598,7 +1598,7 @@
       "executor_short": "Мамедова А.Г.",
       "deadline": "21.04.2026",
       "urgency": "soon",
-      "pct": 25,
+      "pct": 50,
       "parent_id": 11609
     },
     {
@@ -4345,7 +4345,7 @@
       "executor": "Хорев Олег Геннадьевич",
       "executor_short": "Хорев О.Г.",
       "deadline": "13.04.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 14194
     },
@@ -4789,7 +4789,7 @@
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
       "deadline": "28.04.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5061,7 +5061,7 @@
       "id": 12857,
       "project": "ИИ робот Ник",
       "theme": "1.3. Пилотный проект",
-      "status": "Новая",
+      "status": "В работе",
       "executor": "Мамедова (ККП) Аида Гюльахмедовна",
       "executor_short": "Мамедова А.Г.",
       "deadline": "20.04.2026",
@@ -5073,12 +5073,12 @@
       "id": 12856,
       "project": "ИИ робот Ник",
       "theme": "1.2. Тестирование базового функционала",
-      "status": "В работе",
+      "status": "Закрыта",
       "executor": "Мамедова (ККП) Аида Гюльахмедовна",
       "executor_short": "Мамедова А.Г.",
       "deadline": "13.04.2026",
-      "urgency": "today",
-      "pct": 0,
+      "urgency": "ok",
+      "pct": 100,
       "parent_id": 12854
     },
     {
@@ -5461,7 +5461,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "28.04.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12680
     },
