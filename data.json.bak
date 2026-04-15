@@ -1,17 +1,17 @@
 {
-  "updated_at": "14.04.2026 08:25",
+  "updated_at": "15.04.2026 08:10",
   "summary": {
     "projects_total": 36,
     "projects_active": 22,
     "projects_closed": 14,
-    "projects_avg_pct": 14,
+    "projects_avg_pct": 15,
     "tasks_total": 579,
-    "tasks_active": 310,
-    "tasks_closed": 269,
-    "tasks_deadline_5": 11,
-    "tasks_deadline_14": 45,
-    "tasks_overdue": 9,
-    "tasks_today": 0,
+    "tasks_active": 309,
+    "tasks_closed": 270,
+    "tasks_deadline_5": 20,
+    "tasks_deadline_14": 44,
+    "tasks_overdue": 7,
+    "tasks_today": 2,
     "vysv_pct_total": 128
   },
   "projects": [
@@ -585,7 +585,7 @@
       "start_date": "26.01.2026",
       "closed_at": null,
       "defense_at": null,
-      "pct": 50,
+      "pct": 60,
       "project_type": "Межведомственный",
       "is_priority": true,
       "goal": "Снижение внутренних трудозатрат со 100% до 20% к 19.03.2026\nСокращение внешних трудозатрат со 100% до 10% к 19.03.2026",
@@ -1202,7 +1202,7 @@
       "executor_short": "Хорев О.Г.",
       "deadline": "16.04.2026",
       "urgency": "urgent",
-      "pct": 25,
+      "pct": 50,
       "parent_id": 10861
     },
     {
@@ -2485,7 +2485,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "20.04.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 50,
       "parent_id": 11241
     },
@@ -4344,8 +4344,8 @@
       "status": "Новая",
       "executor": "Хорев Олег Геннадьевич",
       "executor_short": "Хорев О.Г.",
-      "deadline": "13.04.2026",
-      "urgency": "overdue",
+      "deadline": "15.04.2026",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 14194
     },
@@ -4353,12 +4353,12 @@
       "id": 14196,
       "project": "Электронные ДС с ПИК",
       "theme": "5.2. Защита проекта у Министра",
-      "status": "В работе",
+      "status": "Закрыта",
       "executor": "Хорев Олег Геннадьевич",
       "executor_short": "Хорев О.Г.",
-      "deadline": "10.04.2026",
-      "urgency": "overdue",
-      "pct": 0,
+      "deadline": "14.04.2026",
+      "urgency": "ok",
+      "pct": 100,
       "parent_id": 14194
     },
     {
@@ -4441,7 +4441,7 @@
       "executor": "Мазуров (ККП) Даниил Юрьевич",
       "executor_short": "Мазуров Д.Ю.",
       "deadline": "20.04.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13952
     },
@@ -4453,7 +4453,7 @@
       "executor": "Гиренко Илья Андреевич",
       "executor_short": "Гиренко И.А.",
       "deadline": "20.04.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13952
     },
@@ -4633,7 +4633,7 @@
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
       "deadline": "20.04.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13089
     },
@@ -4813,7 +4813,7 @@
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
       "deadline": "15.04.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 12994
     },
@@ -4909,7 +4909,7 @@
       "executor": "Малюгина Екатерина Сергеевна",
       "executor_short": "Малюгина Е.С.",
       "deadline": "20.04.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12927
     },
@@ -5065,7 +5065,7 @@
       "executor": "Мамедова (ККП) Аида Гюльахмедовна",
       "executor_short": "Мамедова А.Г.",
       "deadline": "20.04.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12854
     },
@@ -5269,7 +5269,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "20.04.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12701
     },
@@ -5365,7 +5365,7 @@
       "executor": "Дьяченко (ГКУ) Олег Григорьевич",
       "executor_short": "Дьяченко О.Г.",
       "deadline": "20.04.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12690
     },
