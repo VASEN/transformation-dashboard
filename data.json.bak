@@ -1,15 +1,15 @@
 {
-  "updated_at": "15.04.2026 13:33",
+  "updated_at": "16.04.2026 08:11",
   "summary": {
     "projects_total": 36,
     "projects_active": 22,
     "projects_closed": 14,
-    "projects_avg_pct": 17,
+    "projects_avg_pct": 16,
     "tasks_total": 599,
-    "tasks_active": 325,
-    "tasks_closed": 274,
-    "tasks_deadline_5": 20,
-    "tasks_deadline_14": 43,
+    "tasks_active": 324,
+    "tasks_closed": 275,
+    "tasks_deadline_5": 22,
+    "tasks_deadline_14": 48,
     "tasks_overdue": 4,
     "tasks_today": 2,
     "vysv_pct_total": 128
@@ -585,7 +585,7 @@
       "start_date": "26.01.2026",
       "closed_at": null,
       "defense_at": "16.04.2026",
-      "pct": 90,
+      "pct": 70,
       "project_type": "Межведомственный",
       "is_priority": true,
       "goal": "Снижение внутренних трудозатрат со 100% до 20% к 19.03.2026\nСокращение внешних трудозатрат со 100% до 10% к 19.03.2026",
@@ -1261,8 +1261,8 @@
       "executor": "Хорев Олег Геннадьевич",
       "executor_short": "Хорев О.Г.",
       "deadline": "16.04.2026",
-      "urgency": "urgent",
-      "pct": 50,
+      "urgency": "today",
+      "pct": 75,
       "parent_id": 10861
     },
     {
@@ -1657,7 +1657,7 @@
       "executor": "Мамедова (ККП) Аида Гюльахмедовна",
       "executor_short": "Мамедова А.Г.",
       "deadline": "21.04.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 50,
       "parent_id": 11609
     },
@@ -2665,7 +2665,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "30.04.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 50,
       "parent_id": 11242
     },
@@ -3829,7 +3829,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "30.04.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 14430
     },
@@ -3841,7 +3841,7 @@
       "executor": "Гиренко Илья Андреевич",
       "executor_short": "Гиренко И.А.",
       "deadline": "30.04.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 14430
     },
@@ -4573,7 +4573,7 @@
       "executor": "Хорев Олег Геннадьевич",
       "executor_short": "Хорев О.Г.",
       "deadline": "16.04.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 14194
     },
@@ -4581,12 +4581,12 @@
       "id": 14197,
       "project": "Электронные ДС с ПИК",
       "theme": "5.3. Сбор фотографий участников проекта",
-      "status": "Новая",
+      "status": "Закрыта",
       "executor": "Хорев Олег Геннадьевич",
       "executor_short": "Хорев О.Г.",
       "deadline": "15.04.2026",
-      "urgency": "today",
-      "pct": 0,
+      "urgency": "ok",
+      "pct": 100,
       "parent_id": 14194
     },
     {
@@ -5013,7 +5013,7 @@
       "id": 12999,
       "project": "Оптимизация организационного блока РЦТ",
       "theme": "Внедрение функционала форм заявлений",
-      "status": "Новая",
+      "status": "В работе",
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
       "deadline": "07.05.2026",
@@ -5025,7 +5025,7 @@
       "id": 12998,
       "project": "Оптимизация организационного блока РЦТ",
       "theme": "Тестирование форм заявлений",
-      "status": "Новая",
+      "status": "В работе",
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
       "deadline": "28.04.2026",
@@ -5041,7 +5041,7 @@
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
       "deadline": "21.04.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5052,8 +5052,8 @@
       "status": "В работе",
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
-      "deadline": "15.04.2026",
-      "urgency": "today",
+      "deadline": "29.04.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5293,7 +5293,7 @@
       "executor": "Мамедова (ККП) Аида Гюльахмедовна",
       "executor_short": "Мамедова А.Г.",
       "deadline": "21.04.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12854
     },
@@ -5377,7 +5377,7 @@
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "21.04.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12793
     },
@@ -5869,7 +5869,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "30.04.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12662
     },
@@ -5917,7 +5917,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "30.04.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12655
     },
@@ -7045,7 +7045,7 @@
       "executor": "Хорев Олег Геннадьевич",
       "executor_short": "Хорев О.Г.",
       "deadline": "30.04.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 2157
     },
