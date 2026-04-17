@@ -1,5 +1,5 @@
 {
-  "updated_at": "16.04.2026 13:05",
+  "updated_at": "17.04.2026 08:19",
   "summary": {
     "projects_total": 36,
     "projects_active": 21,
@@ -8,10 +8,10 @@
     "tasks_total": 599,
     "tasks_active": 322,
     "tasks_closed": 277,
-    "tasks_deadline_5": 20,
-    "tasks_deadline_14": 46,
+    "tasks_deadline_5": 21,
+    "tasks_deadline_14": 51,
     "tasks_overdue": 4,
-    "tasks_today": 0,
+    "tasks_today": 8,
     "vysv_pct_total": 128
   },
   "projects": [
@@ -1273,7 +1273,7 @@
       "executor": "Заичко Валерий Валерьевич",
       "executor_short": "Заичко В.В.",
       "deadline": "17.04.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 11244
     },
@@ -1285,7 +1285,7 @@
       "executor": "Заичко Валерий Валерьевич",
       "executor_short": "Заичко В.В.",
       "deadline": "17.04.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 11244
     },
@@ -2401,7 +2401,7 @@
       "executor": "Мазуров (ККП) Даниил Юрьевич",
       "executor_short": "Мазуров Д.Ю.",
       "deadline": "17.04.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 11607
     },
@@ -2749,7 +2749,7 @@
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "17.04.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 11245
     },
@@ -4909,7 +4909,7 @@
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
       "deadline": "17.04.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 13085
     },
@@ -5413,7 +5413,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "17.04.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 12778
     },
@@ -5425,7 +5425,7 @@
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "22.04.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12778
     },
@@ -5929,7 +5929,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "17.04.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 12655
     },
@@ -7213,7 +7213,7 @@
       "executor": "Кучеров (МТДИ) Алексей Владимирович",
       "executor_short": "Кучеров А.В.",
       "deadline": "01.05.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 13510
     },
@@ -7273,7 +7273,7 @@
       "executor": "Верещагин Виктор Александрович",
       "executor_short": "Верещагин В.А.",
       "deadline": "01.05.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 13180
     },
@@ -7333,7 +7333,7 @@
       "executor": "Кордзахия Вахтанг Михайлович",
       "executor_short": "Кордзахия В.М.",
       "deadline": "01.05.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 13179
     },
@@ -7393,7 +7393,7 @@
       "executor": "Макаров (Минэнерго) Дмитрий Борисович",
       "executor_short": "Макаров Д.Б.",
       "deadline": "01.05.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 13178
     },
@@ -7453,7 +7453,7 @@
       "executor": "Никулин (Минстрой) Никита Александрович",
       "executor_short": "Никулин Н.А.",
       "deadline": "01.05.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 13177
     },
@@ -7645,7 +7645,7 @@
       "executor": "Волкова (МЭФ) Валерия Александровна",
       "executor_short": "Волкова В.А.",
       "deadline": "17.04.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 100,
       "parent_id": 2157
     },
