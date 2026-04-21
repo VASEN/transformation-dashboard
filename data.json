@@ -1,17 +1,17 @@
 {
-  "updated_at": "20.04.2026 02:30",
+  "updated_at": "21.04.2026 01:47",
   "summary": {
     "projects_total": 36,
     "projects_active": 21,
     "projects_closed": 15,
     "projects_avg_pct": 14,
     "tasks_total": 599,
-    "tasks_active": 320,
-    "tasks_closed": 279,
-    "tasks_deadline_5": 20,
-    "tasks_deadline_14": 57,
-    "tasks_overdue": 10,
-    "tasks_today": 8,
+    "tasks_active": 317,
+    "tasks_closed": 282,
+    "tasks_deadline_5": 12,
+    "tasks_deadline_14": 54,
+    "tasks_overdue": 15,
+    "tasks_today": 4,
     "vysv_pct_total": 128,
     "report_updated_at": "15.04.2026"
   },
@@ -493,7 +493,7 @@
       "start_date": "01.02.2026",
       "closed_at": null,
       "defense_at": null,
-      "pct": 35,
+      "pct": 37,
       "project_type": "Межведомственный",
       "is_priority": false,
       "goal": "Сокращение внутренних трудозатрат со 100% до 80% до 30.11.2026",
@@ -524,7 +524,7 @@
       "start_date": "01.02.2026",
       "closed_at": null,
       "defense_at": null,
-      "pct": 10,
+      "pct": 17,
       "project_type": "Межведомственный",
       "is_priority": false,
       "goal": "Сокращение внутренних трудозатрат со 100% до 80% до 30.11.2026",
@@ -1658,7 +1658,7 @@
       "executor": "Мамедова (ККП) Аида Гюльахмедовна",
       "executor_short": "Мамедова А.Г.",
       "deadline": "21.04.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 50,
       "parent_id": 11609
     },
@@ -2542,12 +2542,12 @@
       "id": 12701,
       "project": "ИИ мониторинг закупок 223-ФЗ",
       "theme": "ЭТАП 1. Подготовительный",
-      "status": "В работе",
+      "status": "Закрыта",
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "20.04.2026",
-      "urgency": "today",
-      "pct": 50,
+      "urgency": "ok",
+      "pct": 100,
       "parent_id": 11241
     },
     {
@@ -2571,7 +2571,7 @@
       "executor_short": "Кукарцева О.В.",
       "deadline": "02.11.2026",
       "urgency": "ok",
-      "pct": 22,
+      "pct": 33,
       "parent_id": 11242
     },
     {
@@ -4682,7 +4682,7 @@
       "executor": "Мазуров (ККП) Даниил Юрьевич",
       "executor_short": "Мазуров Д.Ю.",
       "deadline": "20.04.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 13952
     },
@@ -4694,7 +4694,7 @@
       "executor": "Гиренко Илья Андреевич",
       "executor_short": "Гиренко И.А.",
       "deadline": "20.04.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 13952
     },
@@ -4874,7 +4874,7 @@
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
       "deadline": "20.04.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 13089
     },
@@ -5042,7 +5042,7 @@
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
       "deadline": "21.04.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5150,7 +5150,7 @@
       "executor": "Малюгина Екатерина Сергеевна",
       "executor_short": "Малюгина Е.С.",
       "deadline": "20.04.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 12927
     },
@@ -5294,7 +5294,7 @@
       "executor": "Мамедова (ККП) Аида Гюльахмедовна",
       "executor_short": "Мамедова А.Г.",
       "deadline": "21.04.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 12854
     },
@@ -5306,7 +5306,7 @@
       "executor": "Мамедова (ККП) Аида Гюльахмедовна",
       "executor_short": "Мамедова А.Г.",
       "deadline": "20.04.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 12854
     },
@@ -5378,7 +5378,7 @@
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "21.04.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 12793
     },
@@ -5506,12 +5506,12 @@
       "id": 12703,
       "project": "ИИ мониторинг закупок 223-ФЗ",
       "theme": "1.2 Подготовка ТЗ + формирование базы знаний",
-      "status": "В работе",
+      "status": "Закрыта",
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "20.04.2026",
-      "urgency": "today",
-      "pct": 0,
+      "urgency": "ok",
+      "pct": 100,
       "parent_id": 12701
     },
     {
@@ -5602,12 +5602,12 @@
       "id": 12693,
       "project": "Оптимизация закупок 223-ФЗ",
       "theme": "5.3 Анализ ТЗ - ГКУ",
-      "status": "В работе",
+      "status": "Закрыта",
       "executor": "Дьяченко (ГКУ) Олег Григорьевич",
       "executor_short": "Дьяченко О.Г.",
       "deadline": "20.04.2026",
-      "urgency": "today",
-      "pct": 0,
+      "urgency": "ok",
+      "pct": 100,
       "parent_id": 12690
     },
     {
