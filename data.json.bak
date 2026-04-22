@@ -1,5 +1,5 @@
 {
-  "updated_at": "22.04.2026 07:48",
+  "updated_at": "22.04.2026 08:02",
   "summary": {
     "projects_total": 36,
     "projects_active": 21,
@@ -10,7 +10,7 @@
     "tasks_closed": 287,
     "tasks_deadline_5": 14,
     "tasks_deadline_14": 47,
-    "tasks_overdue": 9,
+    "tasks_overdue": 7,
     "tasks_today": 1,
     "vysv_pct_total": 128
   },
@@ -1272,8 +1272,8 @@
       "status": "Новая",
       "executor": "Заичко Валерий Валерьевич",
       "executor_short": "Заичко В.В.",
-      "deadline": "17.04.2026",
-      "urgency": "overdue",
+      "deadline": "29.04.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 11244
     },
@@ -1284,8 +1284,8 @@
       "status": "В работе",
       "executor": "Заичко Валерий Валерьевич",
       "executor_short": "Заичко В.В.",
-      "deadline": "17.04.2026",
-      "urgency": "overdue",
+      "deadline": "29.04.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 11244
     },
