@@ -1,5 +1,5 @@
 {
-  "updated_at": "22.04.2026 11:04",
+  "updated_at": "23.04.2026 02:19",
   "summary": {
     "projects_total": 36,
     "projects_active": 21,
@@ -10,8 +10,8 @@
     "tasks_closed": 287,
     "tasks_deadline_5": 14,
     "tasks_deadline_14": 47,
-    "tasks_overdue": 7,
-    "tasks_today": 1,
+    "tasks_overdue": 8,
+    "tasks_today": 4,
     "vysv_pct_total": 128
   },
   "projects": [
@@ -2245,7 +2245,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "23.04.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 11594
     },
@@ -4633,7 +4633,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "23.04.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 12735
     },
@@ -4645,7 +4645,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "23.04.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 12734
     },
@@ -5017,7 +5017,7 @@
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
       "deadline": "07.05.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5029,7 +5029,7 @@
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
       "deadline": "28.04.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5377,7 +5377,7 @@
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "23.04.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 12793
     },
@@ -5425,7 +5425,7 @@
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "22.04.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 12778
     },
@@ -5701,7 +5701,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "28.04.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12680
     },
@@ -7044,8 +7044,8 @@
       "status": "В работе",
       "executor": "Хорев Олег Геннадьевич",
       "executor_short": "Хорев О.Г.",
-      "deadline": "30.04.2026",
-      "urgency": "soon",
+      "deadline": "14.05.2026",
+      "urgency": "ok",
       "pct": 0,
       "parent_id": 2157
     },
@@ -7056,8 +7056,8 @@
       "status": "В работе",
       "executor": "Потапчик (ККП) Татьяна Павловна",
       "executor_short": "Потапчик Т.П.",
-      "deadline": "25.04.2026",
-      "urgency": "urgent",
+      "deadline": "30.04.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 2157
     },
