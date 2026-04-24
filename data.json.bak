@@ -1,17 +1,17 @@
 {
-  "updated_at": "23.04.2026 02:23",
+  "updated_at": "24.04.2026 06:01",
   "summary": {
     "projects_total": 36,
     "projects_active": 21,
     "projects_closed": 15,
     "projects_avg_pct": 16,
     "tasks_total": 599,
-    "tasks_active": 312,
-    "tasks_closed": 287,
-    "tasks_deadline_5": 14,
+    "tasks_active": 311,
+    "tasks_closed": 288,
+    "tasks_deadline_5": 13,
     "tasks_deadline_14": 47,
-    "tasks_overdue": 8,
-    "tasks_today": 4,
+    "tasks_overdue": 11,
+    "tasks_today": 1,
     "vysv_pct_total": 128
   },
   "projects": [
@@ -337,7 +337,7 @@
       "start_date": "05.02.2026",
       "closed_at": null,
       "defense_at": null,
-      "pct": 10,
+      "pct": 13,
       "project_type": "Межведомственный",
       "is_priority": false,
       "goal": "Снижение трудозатрат со 100% до 70% к 30.11.2026",
@@ -1273,7 +1273,7 @@
       "executor": "Заичко Валерий Валерьевич",
       "executor_short": "Заичко В.В.",
       "deadline": "29.04.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 11244
     },
@@ -1285,7 +1285,7 @@
       "executor": "Заичко Валерий Валерьевич",
       "executor_short": "Заичко В.В.",
       "deadline": "29.04.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 11244
     },
@@ -1610,7 +1610,7 @@
       "executor_short": "Зернова Е.С.",
       "deadline": "01.06.2026",
       "urgency": "ok",
-      "pct": 0,
+      "pct": 33,
       "parent_id": 11497
     },
     {
@@ -2245,7 +2245,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "23.04.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 11594
     },
@@ -4633,7 +4633,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "23.04.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 12735
     },
@@ -4645,7 +4645,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "23.04.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 12734
     },
@@ -5041,7 +5041,7 @@
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
       "deadline": "08.05.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5053,7 +5053,7 @@
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
       "deadline": "29.04.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5145,12 +5145,12 @@
       "id": 12928,
       "project": "ИИ проверка закупок",
       "theme": "2.1. Модуль Комплектность",
-      "status": "Новая",
-      "executor": "Малюгина Екатерина Сергеевна",
-      "executor_short": "Малюгина Е.С.",
+      "status": "Закрыта",
+      "executor": "Зернова (ККП) Елена Сергеевна",
+      "executor_short": "Зернова Е.С.",
       "deadline": "20.04.2026",
-      "urgency": "overdue",
-      "pct": 0,
+      "urgency": "ok",
+      "pct": 100,
       "parent_id": 12927
     },
     {
@@ -5233,7 +5233,7 @@
       "executor": "Заичко Валерий Валерьевич",
       "executor_short": "Заичко В.В.",
       "deadline": "24.04.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 12714
     },
@@ -5377,7 +5377,7 @@
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "23.04.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 12793
     },
