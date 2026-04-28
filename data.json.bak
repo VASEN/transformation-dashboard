@@ -1,17 +1,17 @@
 {
-  "updated_at": "27.04.2026 01:52",
+  "updated_at": "28.04.2026 01:42",
   "summary": {
     "projects_total": 36,
     "projects_active": 21,
     "projects_closed": 15,
     "projects_avg_pct": 17,
     "tasks_total": 600,
-    "tasks_active": 308,
-    "tasks_closed": 292,
-    "tasks_deadline_5": 27,
-    "tasks_deadline_14": 46,
-    "tasks_overdue": 3,
-    "tasks_today": 5,
+    "tasks_active": 307,
+    "tasks_closed": 293,
+    "tasks_deadline_5": 22,
+    "tasks_deadline_14": 47,
+    "tasks_overdue": 7,
+    "tasks_today": 2,
     "vysv_pct_total": 128
   },
   "projects": [
@@ -554,7 +554,7 @@
       "start_date": "26.01.2026",
       "closed_at": null,
       "defense_at": null,
-      "pct": 8,
+      "pct": 12,
       "project_type": "Межведомственный",
       "is_priority": false,
       "goal": "Снижение трудозатрат со 100% до 80% к 30.09.2026",
@@ -1933,7 +1933,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "27.04.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 11243
     },
@@ -2353,7 +2353,7 @@
       "executor": "Осипова Наталия Андреевна",
       "executor_short": "Осипова Н.А.",
       "deadline": "12.05.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 11607
     },
@@ -2486,7 +2486,7 @@
       "executor_short": "Заичко В.В.",
       "deadline": "28.08.2026",
       "urgency": "ok",
-      "pct": 14,
+      "pct": 28,
       "parent_id": 10862
     },
     {
@@ -5041,7 +5041,7 @@
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
       "deadline": "28.04.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5229,7 +5229,7 @@
       "id": 12868,
       "project": "Оптимизация организационного блока РЦТ",
       "theme": "ЭТАП 3. Внедрение нового подхода учета операционной деятельности работников для формирования выборки данных",
-      "status": "Новая",
+      "status": "В работе",
       "executor": "Заичко Валерий Валерьевич",
       "executor_short": "Заичко В.В.",
       "deadline": "15.05.2026",
@@ -5241,12 +5241,12 @@
       "id": 12867,
       "project": "Оптимизация организационного блока РЦТ",
       "theme": "ЭТАП 2. Подготовка окружения ППО Redmine для учета операционной деятельности сотрудников",
-      "status": "В работе",
+      "status": "Закрыта",
       "executor": "Заичко Валерий Валерьевич",
       "executor_short": "Заичко В.В.",
       "deadline": "24.04.2026",
-      "urgency": "overdue",
-      "pct": 0,
+      "urgency": "ok",
+      "pct": 100,
       "parent_id": 12714
     },
     {
@@ -5293,7 +5293,7 @@
       "executor": "Мамедова (ККП) Аида Гюльахмедовна",
       "executor_short": "Мамедова А.Г.",
       "deadline": "12.05.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12859
     },
@@ -5437,7 +5437,7 @@
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "27.04.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 12778
     },
@@ -5713,7 +5713,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "28.04.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 12680
     },
@@ -6049,7 +6049,7 @@
       "executor": "Кренева (ККП) Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "27.04.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 12548
     },
@@ -6145,7 +6145,7 @@
       "executor": "Дьяченко (ГКУ) Олег Григорьевич",
       "executor_short": "Дьяченко О.Г.",
       "deadline": "27.04.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 12547
     },
@@ -6157,7 +6157,7 @@
       "executor": "Гиренко Илья Андреевич",
       "executor_short": "Гиренко И.А.",
       "deadline": "27.04.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 100,
       "parent_id": 12547
     },
