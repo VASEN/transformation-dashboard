@@ -1,17 +1,17 @@
 {
-  "updated_at": "29.04.2026 10:13",
+  "updated_at": "30.04.2026 03:24",
   "summary": {
     "projects_total": 36,
     "projects_active": 21,
     "projects_closed": 15,
-    "projects_avg_pct": 20,
-    "tasks_total": 602,
-    "tasks_active": 300,
+    "projects_avg_pct": 21,
+    "tasks_total": 603,
+    "tasks_active": 301,
     "tasks_closed": 302,
-    "tasks_deadline_5": 23,
-    "tasks_deadline_14": 43,
+    "tasks_deadline_5": 22,
+    "tasks_deadline_14": 45,
     "tasks_overdue": 3,
-    "tasks_today": 0,
+    "tasks_today": 9,
     "vysv_pct_total": 128,
     "report_updated_at": "29.04.2026"
   },
@@ -214,7 +214,7 @@
       "start_date": "06.02.2026",
       "closed_at": null,
       "defense_at": null,
-      "pct": 26,
+      "pct": 44,
       "project_type": "Межведомственный",
       "is_priority": false,
       "goal": "Снижение внутренних трудозатрат со 100% до 80% к 11.12.2026",
@@ -338,7 +338,7 @@
       "start_date": "05.02.2026",
       "closed_at": null,
       "defense_at": null,
-      "pct": 14,
+      "pct": 12,
       "project_type": "Межведомственный",
       "is_priority": false,
       "goal": "Снижение трудозатрат со 100% до 70% к 30.11.2026",
@@ -1611,7 +1611,7 @@
       "executor_short": "Зернова Е.С.",
       "deadline": "01.06.2026",
       "urgency": "ok",
-      "pct": 33,
+      "pct": 25,
       "parent_id": 11497
     },
     {
@@ -2246,7 +2246,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "30.04.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 50,
       "parent_id": 11594
     },
@@ -2666,7 +2666,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "30.04.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 75,
       "parent_id": 11242
     },
@@ -2750,7 +2750,7 @@
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "30.04.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 11245
     },
@@ -3703,6 +3703,18 @@
       "parent_id": 1472
     },
     {
+      "id": 14933,
+      "project": "ИИ проверка закупок",
+      "theme": "Контроль комплектности документов по КОЗ 2.0 в ГИС ЕАСУЗ",
+      "status": "Новая",
+      "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
+      "executor_short": "Степанов А.Д.",
+      "deadline": "01.06.2026",
+      "urgency": "ok",
+      "pct": 0,
+      "parent_id": 12927
+    },
+    {
       "id": 14889,
       "project": "Цифровые коммуникации ЗИТ",
       "theme": "Тестирование на ИИ-платформе МО (Госчат) ИИ-агента \"Чат-бот ЕАСУЗ\"",
@@ -3722,7 +3734,7 @@
       "executor": "Шебанова Светлана Сергеевна",
       "executor_short": "Шебанова С.С.",
       "deadline": "30.04.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 12735
     },
@@ -3731,8 +3743,8 @@
       "project": "Цифровые коммуникации ЗИТ",
       "theme": "Реализация на ИИ платформе МО (Госчат) ИИ-агента",
       "status": "В работе",
-      "executor": "Заичко Валерий Валерьевич",
-      "executor_short": "Заичко В.В.",
+      "executor": "Абрамов Максим Игоревич",
+      "executor_short": "Абрамов М.И.",
       "deadline": "31.07.2026",
       "urgency": "ok",
       "pct": 0,
@@ -3866,7 +3878,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "30.04.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 14430
     },
@@ -3878,7 +3890,7 @@
       "executor": "Гиренко Илья Андреевич",
       "executor_short": "Гиренко И.А.",
       "deadline": "30.04.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 14430
     },
@@ -4730,7 +4742,7 @@
       "executor": "Гиренко Илья Андреевич",
       "executor_short": "Гиренко И.А.",
       "deadline": "14.05.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 13952
     },
@@ -5414,7 +5426,7 @@
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "30.04.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 12793
     },
@@ -5906,7 +5918,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "30.04.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 12662
     },
@@ -5954,7 +5966,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "30.04.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 12655
     },
@@ -7082,7 +7094,7 @@
       "executor": "Хорев Олег Геннадьевич",
       "executor_short": "Хорев О.Г.",
       "deadline": "14.05.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 2157
     },
@@ -7093,8 +7105,8 @@
       "status": "В работе",
       "executor": "Потапчик (ККП) Татьяна Павловна",
       "executor_short": "Потапчик Т.П.",
-      "deadline": "30.04.2026",
-      "urgency": "urgent",
+      "deadline": "08.05.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 2157
     },
