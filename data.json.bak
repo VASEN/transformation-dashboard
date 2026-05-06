@@ -1,5 +1,5 @@
 {
-  "updated_at": "06.05.2026 05:38",
+  "updated_at": "06.05.2026 05:57",
   "summary": {
     "projects_total": 36,
     "projects_active": 21,
@@ -8,9 +8,9 @@
     "tasks_total": 603,
     "tasks_active": 297,
     "tasks_closed": 306,
-    "tasks_deadline_5": 12,
+    "tasks_deadline_5": 17,
     "tasks_deadline_14": 44,
-    "tasks_overdue": 5,
+    "tasks_overdue": 0,
     "tasks_today": 0,
     "vysv_pct_total": 128
   },
@@ -7260,8 +7260,8 @@
       "status": "Новая",
       "executor": "Кучеров (МТДИ) Алексей Владимирович",
       "executor_short": "Кучеров А.В.",
-      "deadline": "01.05.2026",
-      "urgency": "overdue",
+      "deadline": "11.05.2026",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13510
     },
@@ -7320,8 +7320,8 @@
       "status": "Новая",
       "executor": "Верещагин Виктор Александрович",
       "executor_short": "Верещагин В.А.",
-      "deadline": "01.05.2026",
-      "urgency": "overdue",
+      "deadline": "11.05.2026",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13180
     },
@@ -7380,8 +7380,8 @@
       "status": "Новая",
       "executor": "Кордзахия Вахтанг Михайлович",
       "executor_short": "Кордзахия В.М.",
-      "deadline": "01.05.2026",
-      "urgency": "overdue",
+      "deadline": "11.05.2026",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13179
     },
@@ -7440,8 +7440,8 @@
       "status": "Новая",
       "executor": "Макаров (Минэнерго) Дмитрий Борисович",
       "executor_short": "Макаров Д.Б.",
-      "deadline": "01.05.2026",
-      "urgency": "overdue",
+      "deadline": "11.05.2026",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13178
     },
@@ -7500,8 +7500,8 @@
       "status": "Новая",
       "executor": "Никулин (Минстрой) Никита Александрович",
       "executor_short": "Никулин Н.А.",
-      "deadline": "01.05.2026",
-      "urgency": "overdue",
+      "deadline": "11.05.2026",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13177
     },
