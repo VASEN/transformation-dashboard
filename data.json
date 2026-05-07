@@ -1,5 +1,5 @@
 {
-  "updated_at": "06.05.2026 05:57",
+  "updated_at": "07.05.2026 01:28",
   "summary": {
     "projects_total": 36,
     "projects_active": 21,
@@ -8,10 +8,10 @@
     "tasks_total": 603,
     "tasks_active": 297,
     "tasks_closed": 306,
-    "tasks_deadline_5": 17,
-    "tasks_deadline_14": 44,
+    "tasks_deadline_5": 19,
+    "tasks_deadline_14": 47,
     "tasks_overdue": 0,
-    "tasks_today": 0,
+    "tasks_today": 1,
     "vysv_pct_total": 128,
     "report_updated_at": "06.05.2026"
   },
@@ -2234,7 +2234,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "21.05.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 100,
       "parent_id": 11594
     },
@@ -2354,7 +2354,7 @@
       "executor": "Осипова Наталия Андреевна",
       "executor_short": "Осипова Н.А.",
       "deadline": "12.05.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 11607
     },
@@ -3722,7 +3722,7 @@
       "executor": "Осипова Наталия Андреевна",
       "executor_short": "Осипова Н.А.",
       "deadline": "21.05.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12739
     },
@@ -4934,7 +4934,7 @@
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
       "deadline": "21.05.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 13089
     },
@@ -5066,7 +5066,7 @@
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
       "deadline": "07.05.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5330,7 +5330,7 @@
       "executor": "Мамедова (ККП) Аида Гюльахмедовна",
       "executor_short": "Мамедова А.Г.",
       "deadline": "12.05.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12859
     },
