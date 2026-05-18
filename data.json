@@ -1,5 +1,5 @@
 {
-  "updated_at": "18.05.2026 01:42",
+  "updated_at": "18.05.2026 01:55",
   "summary": {
     "projects_total": 36,
     "projects_active": 21,
@@ -10,7 +10,7 @@
     "tasks_closed": 317,
     "tasks_deadline_5": 24,
     "tasks_deadline_14": 72,
-    "tasks_overdue": 17,
+    "tasks_overdue": 16,
     "tasks_today": 2,
     "vysv_pct_total": 128,
     "report_updated_at": "13.05.2026"
@@ -555,7 +555,7 @@
       "start_date": "26.01.2026",
       "closed_at": null,
       "defense_at": null,
-      "pct": 12,
+      "pct": 16,
       "project_type": "Межведомственный",
       "is_priority": false,
       "goal": "Снижение трудозатрат со 100% до 80% к 30.09.2026",
@@ -5269,8 +5269,8 @@
       "status": "В работе",
       "executor": "Заичко Валерий Валерьевич",
       "executor_short": "Заичко В.В.",
-      "deadline": "15.05.2026",
-      "urgency": "overdue",
+      "deadline": "29.05.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12714
     },
