@@ -1,5 +1,5 @@
 {
-  "updated_at": "19.05.2026 02:35",
+  "updated_at": "20.05.2026 02:33",
   "summary": {
     "projects_total": 36,
     "projects_active": 21,
@@ -10,8 +10,8 @@
     "tasks_closed": 320,
     "tasks_deadline_5": 24,
     "tasks_deadline_14": 71,
-    "tasks_overdue": 14,
-    "tasks_today": 2,
+    "tasks_overdue": 15,
+    "tasks_today": 3,
     "vysv_pct_total": 128
   },
   "projects": [
@@ -2245,7 +2245,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "20.05.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 50,
       "parent_id": 11594
     },
@@ -2353,7 +2353,7 @@
       "executor": "Осипова Наталия Андреевна",
       "executor_short": "Осипова Н.А.",
       "deadline": "19.05.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 11607
     },
@@ -3853,7 +3853,7 @@
       "executor": "Мазуров (ККП) Даниил Юрьевич",
       "executor_short": "Мазуров Д.Ю.",
       "deadline": "25.05.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 14434
     },
@@ -5101,7 +5101,7 @@
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
       "deadline": "20.05.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5185,7 +5185,7 @@
       "executor": "Малюгина Екатерина Сергеевна",
       "executor_short": "Малюгина Е.С.",
       "deadline": "20.05.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 12927
     },
@@ -5425,7 +5425,7 @@
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "19.05.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 12793
     },
@@ -5722,8 +5722,8 @@
       "project": "Оптимизация закупок 223-ФЗ",
       "theme": "4.6 Вывод на тестовый контур (ПИК, ЕАСУЗ)",
       "status": "В работе",
-      "executor": "Кукарцева Ольга Владимировна",
-      "executor_short": "Кукарцева О.В.",
+      "executor": "Дьяченко Олег Григорьевич",
+      "executor_short": "Дьяченко О.Г.",
       "deadline": "15.07.2026",
       "urgency": "ok",
       "pct": 0,
@@ -5904,8 +5904,8 @@
       "status": "В работе",
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
-      "deadline": "18.05.2026",
-      "urgency": "overdue",
+      "deadline": "22.05.2026",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12662
     },
