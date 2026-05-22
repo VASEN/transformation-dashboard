@@ -1,5 +1,5 @@
 {
-  "updated_at": "22.05.2026 01:33",
+  "updated_at": "22.05.2026 06:47",
   "summary": {
     "projects_total": 36,
     "projects_active": 21,
@@ -10,7 +10,7 @@
     "tasks_closed": 321,
     "tasks_deadline_5": 15,
     "tasks_deadline_14": 72,
-    "tasks_overdue": 16,
+    "tasks_overdue": 7,
     "tasks_today": 5,
     "vysv_pct_total": 128
   },
@@ -7260,8 +7260,8 @@
       "status": "Новая",
       "executor": "Кучеров (МТДИ) Алексей Владимирович",
       "executor_short": "Кучеров А.В.",
-      "deadline": "11.05.2026",
-      "urgency": "overdue",
+      "deadline": "01.06.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 13510
     },
@@ -7272,8 +7272,8 @@
       "status": "Новая",
       "executor": "Кучеров (МТДИ) Алексей Владимирович",
       "executor_short": "Кучеров А.В.",
-      "deadline": "11.05.2026",
-      "urgency": "overdue",
+      "deadline": "01.06.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 13510
     },
@@ -7320,8 +7320,8 @@
       "status": "Новая",
       "executor": "Верещагин Виктор Александрович",
       "executor_short": "Верещагин В.А.",
-      "deadline": "11.05.2026",
-      "urgency": "overdue",
+      "deadline": "01.06.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 13180
     },
@@ -7332,8 +7332,8 @@
       "status": "Новая",
       "executor": "Верещагин Виктор Александрович",
       "executor_short": "Верещагин В.А.",
-      "deadline": "11.05.2026",
-      "urgency": "overdue",
+      "deadline": "01.06.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 13180
     },
@@ -7380,8 +7380,8 @@
       "status": "Новая",
       "executor": "Кордзахия Вахтанг Михайлович",
       "executor_short": "Кордзахия В.М.",
-      "deadline": "11.05.2026",
-      "urgency": "overdue",
+      "deadline": "01.06.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 13179
     },
@@ -7440,8 +7440,8 @@
       "status": "Новая",
       "executor": "Макаров (Минэнерго) Дмитрий Борисович",
       "executor_short": "Макаров Д.Б.",
-      "deadline": "11.05.2026",
-      "urgency": "overdue",
+      "deadline": "01.06.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 13178
     },
@@ -7452,8 +7452,8 @@
       "status": "В работе",
       "executor": "Макаров (Минэнерго) Дмитрий Борисович",
       "executor_short": "Макаров Д.Б.",
-      "deadline": "11.05.2026",
-      "urgency": "overdue",
+      "deadline": "01.06.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 13178
     },
@@ -7500,8 +7500,8 @@
       "status": "Новая",
       "executor": "Никулин (Минстрой) Никита Александрович",
       "executor_short": "Никулин Н.А.",
-      "deadline": "11.05.2026",
-      "urgency": "overdue",
+      "deadline": "01.06.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 13177
     },
@@ -7512,8 +7512,8 @@
       "status": "В работе",
       "executor": "Никулин (Минстрой) Никита Александрович",
       "executor_short": "Никулин Н.А.",
-      "deadline": "11.05.2026",
-      "urgency": "overdue",
+      "deadline": "01.06.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 13177
     },
