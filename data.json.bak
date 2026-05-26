@@ -1,17 +1,17 @@
 {
-  "updated_at": "25.05.2026 01:34",
+  "updated_at": "26.05.2026 01:59",
   "summary": {
     "projects_total": 36,
     "projects_active": 21,
     "projects_closed": 15,
     "projects_avg_pct": 26,
     "tasks_total": 603,
-    "tasks_active": 281,
-    "tasks_closed": 322,
-    "tasks_deadline_5": 30,
-    "tasks_deadline_14": 72,
-    "tasks_overdue": 11,
-    "tasks_today": 8,
+    "tasks_active": 280,
+    "tasks_closed": 323,
+    "tasks_deadline_5": 23,
+    "tasks_deadline_14": 69,
+    "tasks_overdue": 15,
+    "tasks_today": 0,
     "vysv_pct_total": 128
   },
   "projects": [
@@ -337,7 +337,7 @@
       "start_date": "05.02.2026",
       "closed_at": null,
       "defense_at": null,
-      "pct": 12,
+      "pct": 17,
       "project_type": "Межведомственный",
       "is_priority": false,
       "goal": "Снижение трудозатрат со 100% до 70% к 30.11.2026",
@@ -1165,7 +1165,7 @@
       "executor": "Заичко Валерий Валерьевич",
       "executor_short": "Заичко В.В.",
       "deadline": "25.05.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 10110
     },
@@ -1610,7 +1610,7 @@
       "executor_short": "Зернова Е.С.",
       "deadline": "01.06.2026",
       "urgency": "soon",
-      "pct": 25,
+      "pct": 50,
       "parent_id": 11497
     },
     {
@@ -2089,7 +2089,7 @@
       "executor": "Громов (ЦРЦТ) Михаил",
       "executor_short": "Громов Михаил",
       "deadline": "31.05.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 11246
     },
@@ -2232,8 +2232,8 @@
       "status": "В работе",
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
-      "deadline": "21.05.2026",
-      "urgency": "overdue",
+      "deadline": "17.06.2026",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 11594
     },
@@ -2244,8 +2244,8 @@
       "status": "В работе",
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
-      "deadline": "20.05.2026",
-      "urgency": "overdue",
+      "deadline": "31.07.2026",
+      "urgency": "ok",
       "pct": 50,
       "parent_id": 11594
     },
@@ -2352,8 +2352,8 @@
       "status": "В работе",
       "executor": "Осипова Наталия Андреевна",
       "executor_short": "Осипова Н.А.",
-      "deadline": "19.05.2026",
-      "urgency": "overdue",
+      "deadline": "03.06.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 11607
     },
@@ -3793,7 +3793,7 @@
       "executor": "Заичко Валерий Валерьевич",
       "executor_short": "Заичко В.В.",
       "deadline": "25.05.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 14440
     },
@@ -3805,7 +3805,7 @@
       "executor": "Заичко Валерий Валерьевич",
       "executor_short": "Заичко В.В.",
       "deadline": "25.05.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 14440
     },
@@ -3817,7 +3817,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "25.05.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 14434
     },
@@ -3829,7 +3829,7 @@
       "executor": "Хорев Олег Геннадьевич",
       "executor_short": "Хорев О.Г.",
       "deadline": "25.05.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 14434
     },
@@ -3841,7 +3841,7 @@
       "executor": "Хорев Олег Геннадьевич",
       "executor_short": "Хорев О.Г.",
       "deadline": "25.05.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 14434
     },
@@ -3853,7 +3853,7 @@
       "executor": "Мазуров (ККП) Даниил Юрьевич",
       "executor_short": "Мазуров Д.Ю.",
       "deadline": "25.05.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 14434
     },
@@ -5181,12 +5181,12 @@
       "id": 12930,
       "project": "ИИ проверка закупок",
       "theme": "2.2. Модуль Разночтения",
-      "status": "В работе",
+      "status": "Закрыта",
       "executor": "Малюгина Екатерина Сергеевна",
       "executor_short": "Малюгина Е.С.",
       "deadline": "25.05.2026",
-      "urgency": "today",
-      "pct": 0,
+      "urgency": "ok",
+      "pct": 100,
       "parent_id": 12927
     },
     {
