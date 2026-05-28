@@ -1,15 +1,15 @@
 {
-  "updated_at": "27.05.2026 07:08",
+  "updated_at": "28.05.2026 02:02",
   "summary": {
     "projects_total": 36,
     "projects_active": 21,
     "projects_closed": 15,
-    "projects_avg_pct": 26,
-    "tasks_total": 603,
-    "tasks_active": 279,
-    "tasks_closed": 324,
-    "tasks_deadline_5": 40,
-    "tasks_deadline_14": 62,
+    "projects_avg_pct": 27,
+    "tasks_total": 607,
+    "tasks_active": 282,
+    "tasks_closed": 325,
+    "tasks_deadline_5": 42,
+    "tasks_deadline_14": 64,
     "tasks_overdue": 1,
     "tasks_today": 0,
     "vysv_pct_total": 128
@@ -1019,7 +1019,7 @@
       "start_date": "14.02.2025",
       "closed_at": null,
       "defense_at": null,
-      "pct": 39,
+      "pct": 60,
       "project_type": "Межведомственный",
       "is_priority": false,
       "goal": "Снижение внутренних и внешних трудозатрат со 100% до 80% к 30.11.2026",
@@ -1633,7 +1633,7 @@
       "executor": "Мамедова (ККП) Аида Гюльахмедовна",
       "executor_short": "Мамедова А.Г.",
       "deadline": "02.06.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 11609
     },
@@ -2665,7 +2665,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "11.06.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 75,
       "parent_id": 11242
     },
@@ -3578,7 +3578,7 @@
       "executor_short": "Потапчик Т.П.",
       "deadline": "30.06.2026",
       "urgency": "ok",
-      "pct": 96,
+      "pct": 60,
       "parent_id": 1469
     },
     {
@@ -3700,6 +3700,18 @@
       "urgency": "ok",
       "pct": 100,
       "parent_id": 1472
+    },
+    {
+      "id": 15612,
+      "project": "Цифровое нормирование 2.0",
+      "theme": "Разработка правил определения порядка формирования, ведения и использования реестра РХО",
+      "status": "В работе",
+      "executor": "Потапчик (ККП) Татьяна Павловна",
+      "executor_short": "Потапчик Т.П.",
+      "deadline": "30.06.2026",
+      "urgency": "ok",
+      "pct": 0,
+      "parent_id": 2155
     },
     {
       "id": 14933,
@@ -5293,7 +5305,7 @@
       "executor": "Мамедова (ККП) Аида Гюльахмедовна",
       "executor_short": "Мамедова А.Г.",
       "deadline": "02.06.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12862
     },
@@ -5965,7 +5977,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "11.06.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12655
     },
@@ -6854,7 +6866,7 @@
       "executor_short": "Шендакова Н.С.",
       "deadline": "30.06.2026",
       "urgency": "ok",
-      "pct": 92,
+      "pct": 81,
       "parent_id": 2155
     },
     {
@@ -7086,15 +7098,51 @@
       "parent_id": 1977
     },
     {
-      "id": 14184,
+      "id": 15611,
       "project": "Цифровое нормирование 2.0",
-      "theme": "Доработка системы по уточненному ТЗ. Релиз.",
+      "theme": "Доработка функционала по утверждению ПА в табличной форме",
+      "status": "Новая",
+      "executor": "Хорев Олег Геннадьевич",
+      "executor_short": "Хорев О.Г.",
+      "deadline": "30.06.2026",
+      "urgency": "ok",
+      "pct": 0,
+      "parent_id": 2157
+    },
+    {
+      "id": 15610,
+      "project": "Цифровое нормирование 2.0",
+      "theme": "Анализ разработчиками ТЗ на предмет возможности внедрения функционала  по утверждению ПА в табличной форме",
       "status": "В работе",
       "executor": "Хорев Олег Геннадьевич",
       "executor_short": "Хорев О.Г.",
+      "deadline": "15.06.2026",
+      "urgency": "ok",
+      "pct": 0,
+      "parent_id": 2157
+    },
+    {
+      "id": 15609,
+      "project": "Цифровое нормирование 2.0",
+      "theme": "Разработка ТЗ на доработку ЕАСУЗ в части утверждения ПА в табличной форме",
+      "status": "В работе",
+      "executor": "Потапчик (ККП) Татьяна Павловна",
+      "executor_short": "Потапчик Т.П.",
       "deadline": "29.05.2026",
       "urgency": "urgent",
       "pct": 0,
+      "parent_id": 2157
+    },
+    {
+      "id": 14184,
+      "project": "Цифровое нормирование 2.0",
+      "theme": "Доработка системы по уточненному ТЗ. Релиз.",
+      "status": "Закрыта",
+      "executor": "Хорев Олег Геннадьевич",
+      "executor_short": "Хорев О.Г.",
+      "deadline": "29.05.2026",
+      "urgency": "ok",
+      "pct": 100,
       "parent_id": 2157
     },
     {
