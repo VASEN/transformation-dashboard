@@ -15,6 +15,9 @@ elif [ -n "$REPORT_FILE" ]; then
   python3 process_report.py "$REPORT_FILE"
 fi
 
+echo "⏰ Отчёт по просроченным задачам..."
+python3 overdue_report.py
+
 echo "📦 Коммит data.json..."
 git add .
 git commit -m "data: обновление $(date '+%d.%m.%Y %H:%M')"

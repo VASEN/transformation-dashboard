@@ -3,7 +3,9 @@
     "allow": [
       "Bash(git push *)",
       "Bash(./deploy.sh *)",
-      "Bash(arch *)"
+      "Bash(arch *)",
+      "Bash(python3 -c \"import json; d=json.load\\(open\\('/Users/valeriy/transformation/data.json'\\)\\); print\\('keys:', list\\(d.keys\\(\\)\\)\\); print\\('all_tasks count:', len\\(d.get\\('all_tasks', []\\)\\)\\); print\\('sample task:', json.dumps\\(d['all_tasks'][0], ensure_ascii=False, indent=2\\) if d.get\\('all_tasks'\\) else 'none'\\); print\\('sample project keys:', list\\(d['projects'][0].keys\\(\\)\\) if d.get\\('projects'\\) else 'none'\\)\")",
+      "Bash(python3 overdue_report.py)"
     ]
   }
 }
