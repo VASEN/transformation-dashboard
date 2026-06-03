@@ -1,16 +1,16 @@
 {
-  "updated_at": "02.06.2026 01:12",
+  "updated_at": "03.06.2026 01:25",
   "summary": {
     "projects_total": 21,
     "projects_active": 21,
     "projects_closed": 0,
-    "projects_avg_pct": 30,
-    "tasks_total": 275,
-    "tasks_active": 274,
+    "projects_avg_pct": 31,
+    "tasks_total": 273,
+    "tasks_active": 272,
     "tasks_closed": 1,
-    "tasks_deadline_5": 16,
-    "tasks_deadline_14": 50,
-    "tasks_overdue": 2,
+    "tasks_deadline_5": 17,
+    "tasks_deadline_14": 48,
+    "tasks_overdue": 0,
     "tasks_today": 2,
     "vysv_pct_total": 128,
     "report_updated_at": "27.05.2026"
@@ -369,7 +369,7 @@
       "start_date": "08.02.2026",
       "closed_at": null,
       "defense_at": null,
-      "pct": 53,
+      "pct": 65,
       "project_type": "Внутриведомственный",
       "is_priority": false,
       "goal": "Снижение внутренних трудозатрат со 100% до 80% к 30.11.2026",
@@ -431,7 +431,7 @@
       "start_date": "05.02.2026",
       "closed_at": null,
       "defense_at": null,
-      "pct": 43,
+      "pct": 37,
       "project_type": "Межведомственный",
       "is_priority": false,
       "goal": "Снижение трудозатрат со 100% до 70% к 30.11.2026",
@@ -670,30 +670,6 @@
   ],
   "all_tasks": [
     {
-      "id": 12927,
-      "project": "ИИ проверка закупок",
-      "theme": "Этап 2. Разработка ТЗ (что должен проверить ИИ)",
-      "status": "В работе",
-      "executor": "Зернова (ККП) Елена Сергеевна",
-      "executor_short": "Зернова Е.С.",
-      "deadline": "01.06.2026",
-      "urgency": "overdue",
-      "pct": 75,
-      "parent_id": 11497
-    },
-    {
-      "id": 12862,
-      "project": "ИИ робот Ник",
-      "theme": "ЭТАП 3. Расширение функционала (пуш уведомления, заявки на изменение существенных условий контракта, ДС МВК)",
-      "status": "В работе",
-      "executor": "Мамедова (ККП) Аида Гюльахмедовна",
-      "executor_short": "Мамедова А.Г.",
-      "deadline": "02.06.2026",
-      "urgency": "today",
-      "pct": 50,
-      "parent_id": 11609
-    },
-    {
       "id": 12777,
       "project": "Трансформация управления аналитики",
       "theme": "Разработка модуля «КОЗ 2.0 позиции»: мониторинг КТРУ, генерация",
@@ -701,7 +677,7 @@
       "executor": "Сабадин (ГКУ \"РЦТ\") Аркадий Дмитриевич",
       "executor_short": "Сабадин А.Д.",
       "deadline": "03.06.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 11243
     },
@@ -713,7 +689,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "03.06.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 9099
     },
@@ -809,7 +785,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "08.06.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 50,
       "parent_id": 11241
     },
@@ -821,7 +797,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "08.06.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 71,
       "parent_id": 11242
     },
@@ -884,6 +860,18 @@
       "urgency": "soon",
       "pct": 0,
       "parent_id": 11575
+    },
+    {
+      "id": 12927,
+      "project": "ИИ проверка закупок",
+      "theme": "Этап 2. Разработка ТЗ (что должен проверить ИИ)",
+      "status": "В работе",
+      "executor": "Зернова (ККП) Елена Сергеевна",
+      "executor_short": "Зернова Е.С.",
+      "deadline": "15.06.2026",
+      "urgency": "soon",
+      "pct": 75,
+      "parent_id": 11497
     },
     {
       "id": 14439,
@@ -1966,30 +1954,6 @@
       "parent_id": 10860
     },
     {
-      "id": 14933,
-      "project": "ИИ проверка закупок",
-      "theme": "Контроль комплектности документов по КОЗ 2.0 в ГИС ЕАСУЗ",
-      "status": "В работе",
-      "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
-      "executor_short": "Степанов А.Д.",
-      "deadline": "01.06.2026",
-      "urgency": "overdue",
-      "pct": 0,
-      "parent_id": 12927
-    },
-    {
-      "id": 12864,
-      "project": "ИИ робот Ник",
-      "theme": "3.2. Релиз проекта",
-      "status": "В работе",
-      "executor": "Мамедова (ККП) Аида Гюльахмедовна",
-      "executor_short": "Мамедова А.Г.",
-      "deadline": "02.06.2026",
-      "urgency": "today",
-      "pct": 0,
-      "parent_id": 12862
-    },
-    {
       "id": 14889,
       "project": "Цифровые коммуникации ЗИТ",
       "theme": "Тестирование на ИИ-платформе МО (Госчат) ИИ-агента \"Чат-бот ЕАСУЗ\"",
@@ -2057,7 +2021,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "08.06.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12704
     },
@@ -2132,6 +2096,18 @@
       "urgency": "soon",
       "pct": 0,
       "parent_id": 15699
+    },
+    {
+      "id": 14933,
+      "project": "ИИ проверка закупок",
+      "theme": "Контроль комплектности документов по КОЗ 2.0 в ГИС ЕАСУЗ",
+      "status": "В работе",
+      "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
+      "executor_short": "Степанов А.Д.",
+      "deadline": "15.06.2026",
+      "urgency": "soon",
+      "pct": 0,
+      "parent_id": 12927
     },
     {
       "id": 13488,
