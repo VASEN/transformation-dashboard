@@ -1,5 +1,5 @@
 {
-  "updated_at": "08.06.2026 01:28",
+  "updated_at": "09.06.2026 02:01",
   "summary": {
     "projects_total": 36,
     "projects_active": 21,
@@ -9,8 +9,8 @@
     "tasks_active": 269,
     "tasks_closed": 342,
     "tasks_deadline_5": 11,
-    "tasks_deadline_14": 54,
-    "tasks_overdue": 3,
+    "tasks_deadline_14": 53,
+    "tasks_overdue": 0,
     "tasks_today": 0,
     "vysv_pct_total": 128,
     "report_updated_at": "03.06.2026"
@@ -679,7 +679,7 @@
       "start_date": "04.08.2025",
       "closed_at": null,
       "defense_at": null,
-      "pct": 67,
+      "pct": 70,
       "project_type": "Внутриведомственный",
       "is_priority": true,
       "goal": "Сократить время обработки запросов с 40 минут до 1 минуты к 22.05.2026",
@@ -1225,8 +1225,8 @@
       "status": "В работе",
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
-      "deadline": "05.06.2026",
-      "urgency": "overdue",
+      "deadline": "26.06.2026",
+      "urgency": "ok",
       "pct": 0,
       "parent_id": 9099
     },
@@ -1441,8 +1441,8 @@
       "status": "В работе",
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
-      "deadline": "05.06.2026",
-      "urgency": "overdue",
+      "deadline": "22.06.2026",
+      "urgency": "soon",
       "pct": 66,
       "parent_id": 9099
     },
@@ -4993,8 +4993,8 @@
       "status": "В работе",
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
-      "deadline": "05.06.2026",
-      "urgency": "overdue",
+      "deadline": "22.06.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 13089
     },
