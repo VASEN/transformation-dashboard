@@ -1,15 +1,15 @@
 {
-  "updated_at": "09.06.2026 02:01",
+  "updated_at": "10.06.2026 02:42",
   "summary": {
     "projects_total": 36,
     "projects_active": 21,
     "projects_closed": 15,
-    "projects_avg_pct": 31,
+    "projects_avg_pct": 32,
     "tasks_total": 611,
     "tasks_active": 269,
     "tasks_closed": 342,
-    "tasks_deadline_5": 11,
-    "tasks_deadline_14": 53,
+    "tasks_deadline_5": 28,
+    "tasks_deadline_14": 48,
     "tasks_overdue": 0,
     "tasks_today": 0,
     "vysv_pct_total": 128
@@ -89,7 +89,7 @@
       "start_date": "08.02.2026",
       "closed_at": null,
       "defense_at": null,
-      "pct": 65,
+      "pct": 75,
       "project_type": "Внутриведомственный",
       "is_priority": false,
       "goal": "Снижение внутренних трудозатрат со 100% до 80% к 30.11.2026",
@@ -1153,7 +1153,7 @@
       "executor": "Родевальд (ККП) Станислав Евгеньевич",
       "executor_short": "Родевальд С.Е.",
       "deadline": "15.06.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 11575
     },
@@ -1405,7 +1405,7 @@
       "executor": "Родевальд (ККП) Станислав Евгеньевич",
       "executor_short": "Родевальд С.Е.",
       "deadline": "15.06.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 11575
     },
@@ -1417,7 +1417,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "15.06.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 11575
     },
@@ -1524,8 +1524,8 @@
       "status": "В работе",
       "executor": "Мамедова (ККП) Аида Гюльахмедовна",
       "executor_short": "Мамедова А.Г.",
-      "deadline": "10.06.2026",
-      "urgency": "urgent",
+      "deadline": "30.06.2026",
+      "urgency": "ok",
       "pct": 0,
       "parent_id": 11609
     },
@@ -1633,7 +1633,7 @@
       "executor": "Зернова (ККП) Елена Сергеевна",
       "executor_short": "Зернова Е.С.",
       "deadline": "15.06.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 75,
       "parent_id": 11497
     },
@@ -2616,7 +2616,7 @@
       "status": "В работе",
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
-      "deadline": "24.07.2026",
+      "deadline": "31.07.2026",
       "urgency": "ok",
       "pct": 71,
       "parent_id": 11242
@@ -2652,7 +2652,7 @@
       "status": "В работе",
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
-      "deadline": "31.07.2026",
+      "deadline": "07.08.2026",
       "urgency": "ok",
       "pct": 57,
       "parent_id": 11242
@@ -2688,8 +2688,8 @@
       "status": "В работе",
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
-      "deadline": "11.06.2026",
-      "urgency": "urgent",
+      "deadline": "18.06.2026",
+      "urgency": "soon",
       "pct": 75,
       "parent_id": 11242
     },
@@ -3733,7 +3733,7 @@
       "executor": "Родевальд (ККП) Станислав Евгеньевич",
       "executor_short": "Родевальд С.Е.",
       "deadline": "15.06.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 15699
     },
@@ -3769,7 +3769,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "15.06.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12927
     },
@@ -4632,8 +4632,8 @@
       "status": "В работе",
       "executor": "Мамедова (ККП) Аида Гюльахмедовна",
       "executor_short": "Мамедова А.Г.",
-      "deadline": "10.06.2026",
-      "urgency": "urgent",
+      "deadline": "30.06.2026",
+      "urgency": "ok",
       "pct": 0,
       "parent_id": 12966
     },
@@ -4644,8 +4644,8 @@
       "status": "В работе",
       "executor": "Мамедова (ККП) Аида Гюльахмедовна",
       "executor_short": "Мамедова А.Г.",
-      "deadline": "10.06.2026",
-      "urgency": "urgent",
+      "deadline": "30.06.2026",
+      "urgency": "ok",
       "pct": 0,
       "parent_id": 12966
     },
@@ -4656,8 +4656,8 @@
       "status": "В работе",
       "executor": "Мамедова (ККП) Аида Гюльахмедовна",
       "executor_short": "Мамедова А.Г.",
-      "deadline": "10.06.2026",
-      "urgency": "urgent",
+      "deadline": "30.06.2026",
+      "urgency": "ok",
       "pct": 0,
       "parent_id": 12966
     },
@@ -4668,8 +4668,8 @@
       "status": "В работе",
       "executor": "Мамедова (ККП) Аида Гюльахмедовна",
       "executor_short": "Мамедова А.Г.",
-      "deadline": "10.06.2026",
-      "urgency": "urgent",
+      "deadline": "30.06.2026",
+      "urgency": "ok",
       "pct": 0,
       "parent_id": 12966
     },
@@ -4849,7 +4849,7 @@
       "executor": "Радович (ЦРЦТ) Оксана Олеговна",
       "executor_short": "Радович О.О.",
       "deadline": "15.06.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13173
     },
@@ -5137,7 +5137,7 @@
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
       "deadline": "15.06.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5149,7 +5149,7 @@
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
       "deadline": "15.06.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5161,7 +5161,7 @@
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
       "deadline": "15.06.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5689,7 +5689,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "15.06.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12690
     },
@@ -5856,7 +5856,7 @@
       "status": "В работе",
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
-      "deadline": "24.07.2026",
+      "deadline": "31.07.2026",
       "urgency": "ok",
       "pct": 0,
       "parent_id": 12672
@@ -5868,7 +5868,7 @@
       "status": "В работе",
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
-      "deadline": "03.07.2026",
+      "deadline": "10.07.2026",
       "urgency": "ok",
       "pct": 0,
       "parent_id": 12672
@@ -5940,7 +5940,7 @@
       "status": "В работе",
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
-      "deadline": "31.07.2026",
+      "deadline": "07.08.2026",
       "urgency": "ok",
       "pct": 0,
       "parent_id": 12662
@@ -5952,7 +5952,7 @@
       "status": "В работе",
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
-      "deadline": "17.07.2026",
+      "deadline": "24.07.2026",
       "urgency": "ok",
       "pct": 0,
       "parent_id": 12662
@@ -6024,8 +6024,8 @@
       "status": "В работе",
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
-      "deadline": "11.06.2026",
-      "urgency": "urgent",
+      "deadline": "18.06.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12655
     },
@@ -7165,7 +7165,7 @@
       "executor": "Хорев Олег Геннадьевич",
       "executor_short": "Хорев О.Г.",
       "deadline": "15.06.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 2157
     },
@@ -7357,7 +7357,7 @@
       "executor": "Кучеров (МТДИ) Алексей Владимирович",
       "executor_short": "Кучеров А.В.",
       "deadline": "15.06.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13510
     },
@@ -7405,7 +7405,7 @@
       "executor": "Верещагин Виктор Александрович",
       "executor_short": "Верещагин В.А.",
       "deadline": "15.06.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13180
     },
@@ -7417,7 +7417,7 @@
       "executor": "Верещагин Виктор Александрович",
       "executor_short": "Верещагин В.А.",
       "deadline": "15.06.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13180
     },
@@ -7429,7 +7429,7 @@
       "executor": "Верещагин Виктор Александрович",
       "executor_short": "Верещагин В.А.",
       "deadline": "15.06.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13180
     },
@@ -7465,7 +7465,7 @@
       "executor": "Кордзахия Вахтанг Михайлович",
       "executor_short": "Кордзахия В.М.",
       "deadline": "15.06.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13179
     },
@@ -7477,7 +7477,7 @@
       "executor": "Кордзахия Вахтанг Михайлович",
       "executor_short": "Кордзахия В.М.",
       "deadline": "15.06.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13179
     },
@@ -7525,7 +7525,7 @@
       "executor": "Макаров (Минэнерго) Дмитрий Борисович",
       "executor_short": "Макаров Д.Б.",
       "deadline": "15.06.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13178
     },
@@ -7537,7 +7537,7 @@
       "executor": "Макаров (Минэнерго) Дмитрий Борисович",
       "executor_short": "Макаров Д.Б.",
       "deadline": "15.06.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13178
     },
@@ -7549,7 +7549,7 @@
       "executor": "Макаров (Минэнерго) Дмитрий Борисович",
       "executor_short": "Макаров Д.Б.",
       "deadline": "15.06.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13178
     },
@@ -7585,7 +7585,7 @@
       "executor": "Никулин (Минстрой) Никита Александрович",
       "executor_short": "Никулин Н.А.",
       "deadline": "15.06.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13177
     },
@@ -7597,7 +7597,7 @@
       "executor": "Никулин (Минстрой) Никита Александрович",
       "executor_short": "Никулин Н.А.",
       "deadline": "15.06.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13177
     },
@@ -7609,7 +7609,7 @@
       "executor": "Никулин (Минстрой) Никита Александрович",
       "executor_short": "Никулин Н.А.",
       "deadline": "15.06.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13177
     },
