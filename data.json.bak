@@ -1,17 +1,17 @@
 {
-  "updated_at": "10.06.2026 14:55",
+  "updated_at": "11.06.2026 02:55",
   "summary": {
     "projects_total": 36,
     "projects_active": 21,
     "projects_closed": 15,
-    "projects_avg_pct": 32,
-    "tasks_total": 611,
-    "tasks_active": 269,
-    "tasks_closed": 342,
-    "tasks_deadline_5": 28,
-    "tasks_deadline_14": 48,
+    "projects_avg_pct": 31,
+    "tasks_total": 613,
+    "tasks_active": 270,
+    "tasks_closed": 343,
+    "tasks_deadline_5": 26,
+    "tasks_deadline_14": 47,
     "tasks_overdue": 0,
-    "tasks_today": 0,
+    "tasks_today": 3,
     "vysv_pct_total": 128
   },
   "projects": [
@@ -213,7 +213,7 @@
       "start_date": "06.02.2026",
       "closed_at": null,
       "defense_at": null,
-      "pct": 46,
+      "pct": 27,
       "project_type": "Межведомственный",
       "is_priority": false,
       "goal": "Снижение внутренних трудозатрат со 100% до 80% к 11.12.2026",
@@ -492,7 +492,7 @@
       "start_date": "01.02.2026",
       "closed_at": null,
       "defense_at": null,
-      "pct": 50,
+      "pct": 47,
       "project_type": "Межведомственный",
       "is_priority": false,
       "goal": "Сокращение внутренних трудозатрат со 100% до 80% до 30.11.2026",
@@ -1464,7 +1464,7 @@
       "status": "Новая",
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
-      "deadline": "27.08.2026",
+      "deadline": "17.08.2026",
       "urgency": "ok",
       "pct": 0,
       "parent_id": 11498
@@ -2148,7 +2148,7 @@
       "status": "Новая",
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
-      "deadline": "16.07.2026",
+      "deadline": "24.07.2026",
       "urgency": "ok",
       "pct": 0,
       "parent_id": 11498
@@ -2172,7 +2172,7 @@
       "status": "Новая",
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
-      "deadline": "19.06.2026",
+      "deadline": "25.06.2026",
       "urgency": "soon",
       "pct": 0,
       "parent_id": 11498
@@ -2184,8 +2184,8 @@
       "status": "В работе",
       "executor": "Осипова Наталия Андреевна",
       "executor_short": "Осипова Н.А.",
-      "deadline": "11.06.2026",
-      "urgency": "urgent",
+      "deadline": "25.06.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 11498
     },
@@ -2256,21 +2256,21 @@
       "status": "В работе",
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
-      "deadline": "23.07.2026",
+      "deadline": "21.08.2026",
       "urgency": "ok",
-      "pct": 66,
+      "pct": 50,
       "parent_id": 11594
     },
     {
       "id": 12734,
       "project": "Цифровые коммуникации ЗИТ",
-      "theme": "ЭТАП 3. Разработка ТЗ по подпроекту «ИИ-помощник ОМСУ (векторное хранилище)»",
+      "theme": "ЭТАП 3. Внедрение \"ИИ-помощника ОМСУ\"",
       "status": "В работе",
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
-      "deadline": "31.07.2026",
+      "deadline": "27.08.2026",
       "urgency": "ok",
-      "pct": 50,
+      "pct": 33,
       "parent_id": 11594
     },
     {
@@ -2376,7 +2376,7 @@
       "status": "В работе",
       "executor": "Осипова Наталия Андреевна",
       "executor_short": "Осипова Н.А.",
-      "deadline": "25.06.2026",
+      "deadline": "23.07.2026",
       "urgency": "ok",
       "pct": 0,
       "parent_id": 11607
@@ -2594,7 +2594,7 @@
       "executor_short": "Кукарцева О.В.",
       "deadline": "02.11.2026",
       "urgency": "ok",
-      "pct": 44,
+      "pct": 55,
       "parent_id": 11242
     },
     {
@@ -3726,6 +3726,30 @@
       "parent_id": 1472
     },
     {
+      "id": 15868,
+      "project": "Цифровые коммуникации ЗИТ",
+      "theme": "Реализация функционала по подпроекту «Голосовой помощник»",
+      "status": "Новая",
+      "executor": "Воронина (ККП) Ольга Николаевна",
+      "executor_short": "Воронина О.Н.",
+      "deadline": "21.08.2026",
+      "urgency": "ok",
+      "pct": 0,
+      "parent_id": 12735
+    },
+    {
+      "id": 15867,
+      "project": "Цифровые коммуникации ЗИТ",
+      "theme": "Тестирование и реализация на промышленном контуре ИИ-Платформы МО функционала по подпроекту «ИИ-помощник ОМСУ»",
+      "status": "Новая",
+      "executor": "Воронина (ККП) Ольга Николаевна",
+      "executor_short": "Воронина О.Н.",
+      "deadline": "27.08.2026",
+      "urgency": "ok",
+      "pct": 0,
+      "parent_id": 12734
+    },
+    {
       "id": 15700,
       "project": "Задание на проектирование и инженерные изыскания в xml",
       "theme": "Шаблон ТЗ на строительство/реконструкцию НПП",
@@ -4380,7 +4404,7 @@
       "status": "Новая",
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
-      "deadline": "27.08.2026",
+      "deadline": "17.08.2026",
       "urgency": "ok",
       "pct": 0,
       "parent_id": 13009
@@ -4392,7 +4416,7 @@
       "status": "Новая",
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
-      "deadline": "27.08.2026",
+      "deadline": "17.08.2026",
       "urgency": "ok",
       "pct": 0,
       "parent_id": 13009
@@ -4404,7 +4428,7 @@
       "status": "Новая",
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
-      "deadline": "27.08.2026",
+      "deadline": "17.08.2026",
       "urgency": "ok",
       "pct": 0,
       "parent_id": 13009
@@ -4416,7 +4440,7 @@
       "status": "Новая",
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
-      "deadline": "27.08.2026",
+      "deadline": "17.08.2026",
       "urgency": "ok",
       "pct": 0,
       "parent_id": 13009
@@ -5473,7 +5497,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "11.06.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 12793
     },
@@ -5521,7 +5545,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "11.06.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 12778
     },
@@ -5685,12 +5709,12 @@
       "id": 12695,
       "project": "Оптимизация закупок 223-ФЗ",
       "theme": "5.5 Согласование ТЗ",
-      "status": "В работе",
+      "status": "Закрыта",
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "15.06.2026",
-      "urgency": "urgent",
-      "pct": 0,
+      "urgency": "ok",
+      "pct": 100,
       "parent_id": 12690
     },
     {
@@ -6121,7 +6145,7 @@
       "executor": "Гиренко Илья Андреевич",
       "executor_short": "Гиренко И.А.",
       "deadline": "11.06.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 12548
     },
