@@ -1,5 +1,5 @@
 {
-  "updated_at": "15.06.2026 03:50",
+  "updated_at": "15.06.2026 10:03",
   "summary": {
     "projects_total": 36,
     "projects_active": 21,
@@ -12,7 +12,7 @@
     "tasks_deadline_14": 54,
     "tasks_overdue": 1,
     "tasks_today": 23,
-    "vysv_pct_total": 121
+    "vysv_pct_total": 122
   },
   "projects": [
     {
@@ -66,7 +66,7 @@
       "team": "Филатова (ККП) Екатерина Игоревна , Федоренчик Наталья Олеговна , Королькова Дарья Александровна",
       "current_status": null,
       "problem": "1. ручная проверка на соответствие применимому законодательству.\n2. ручной анализ проекта и оценка рисков.",
-      "plan_hours": 1824.0,
+      "plan_hours": 912.0,
       "fact_hours": null,
       "plan_hours_cio": 912.0,
       "fact_hours_cio": null,
@@ -74,7 +74,7 @@
       "fact_units": null,
       "url": "https://transformation.rm.mosreg.ru/#/issues/11562",
       "internal_hours": 912.0,
-      "external_hours": 912.0,
+      "external_hours": 0.0,
       "total_units": 0.46247464503042596
     },
     {
@@ -8501,12 +8501,12 @@
       "fact_total": 132,
       "vacancies": 34,
       "plan_minus20": 26.400000000000002,
-      "vysv_units": 31.83,
+      "vysv_units": 32.3,
       "vysv_plan_hours": null,
       "vysv_fact_hours": null,
-      "vysv_internal_hours": 62774.0,
-      "vysv_external_hours": 596284.0,
-      "pct_vysv": 121
+      "vysv_internal_hours": 63686.0,
+      "vysv_external_hours": 595372.0,
+      "pct_vysv": 122
     },
     {
       "name": "Кренёва А.А.",
@@ -8535,12 +8535,12 @@
       "fact_total": 58,
       "vacancies": 16,
       "plan_minus20": 11.600000000000001,
-      "vysv_units": 15.507099391480729,
-      "vysv_plan_hours": 146413.0,
+      "vysv_units": 15.969574036511155,
+      "vysv_plan_hours": 147325.0,
       "vysv_fact_hours": 0.0,
-      "vysv_internal_hours": 30580.0,
+      "vysv_internal_hours": 31492.0,
       "vysv_external_hours": 115833.0,
-      "pct_vysv": 134
+      "pct_vysv": 138
     },
     {
       "name": "Гуляев В.А.",
@@ -8570,10 +8570,10 @@
       "vacancies": 3,
       "plan_minus20": 3.0,
       "vysv_units": 2.756085192697769,
-      "vysv_plan_hours": 53864.0,
+      "vysv_plan_hours": 52952.0,
       "vysv_fact_hours": 2993.0,
       "vysv_internal_hours": 5435.0,
-      "vysv_external_hours": 48429.0,
+      "vysv_external_hours": 47517.0,
       "pct_vysv": 92
     }
   ]
