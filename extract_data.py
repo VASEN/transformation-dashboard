@@ -28,18 +28,29 @@ from datetime import datetime
 from pathlib import Path
 
 # ===== НАСТРОЙКИ =====
-# Можно передать файл аргументом: python3 extract_data.py "issues (1).xlsx"
+# Файлы можно передать аргументами (в порядке: redmine, штатка, высвобождение):
+#   python3 extract_data.py issues_15.06.xlsx ШТАТКА_ДБ_15.06.2026.xlsx "Проекты_...xlsx"
 REDMINE_FILE = sys.argv[1] if len(sys.argv) > 1 else "issues.xlsx"
-SHTATKA_FILE = "ШТАТКА_ДБ.xlsx"
-VYSV_FILE    = "ПРОЕКТЫ_Данные по высвобождению.xlsx"
+SHTATKA_FILE = sys.argv[2] if len(sys.argv) > 2 else "ШТАТКА_ДБ.xlsx"
+VYSV_FILE    = sys.argv[3] if len(sys.argv) > 3 else "ПРОЕКТЫ_Данные по высвобождению.xlsx"
 OUTPUT_FILE  = "data.json"
 
 ACTIVE_STATUSES = ('В работе', 'Новая', 'На проверке')
 CLOSED_STATUSES = ('Закрыта', 'Закрыто', 'Выполнено', 'Выполнена', 'Завершена')
 
-# Порядок групп в VYSV_FILE → имена кураторов в штатке
+# Старый формат VYSV_FILE: итоги кураторов лежали в NaN-строках в этом порядке.
+# Новый формат содержит колонку «Ответственный» — кураторы определяются из неё.
 CURATOR_ORDER = ['Кренёва АА', 'Родевальд СЕ', 'Гуляев ВА']
 TOTAL_CURATOR = 'Комитет и РЦТ'
+
+# Варианты имён колонок в файле высвобождения (новый/старый формат)
+VYSV_UNITS_COLS    = ('План, шт. ед.', 'высвобождение, шт. ед.')
+VYSV_EXTERNAL_COLS = ('Внешнее высвобождение, часы', 'Внешнее высвобождение')
+VYSV_INTERNAL_COLS = ('Внутрнее высвобождение', 'Внутреннее высвобождение')
+
+# Исправления написания фамилий кураторов (в штатке/высвобождении встречаются опечатки).
+# Правильно — «Кудряшов» (через «о»), как в Redmine.
+CURATOR_NAME_FIX = (('Кудряшев', 'Кудряшов'),)
 
 
 # ===== УТИЛИТЫ =====
@@ -69,6 +80,29 @@ def safe_float(v):
 def safe_int(v):
     try: return int(v) if pd.notna(v) else None
     except: return None
+
+def cell_any(row, *names):
+    """Первое присутствующее непустое значение среди колонок (совместимость имён)."""
+    for n in names:
+        if n in row.index:
+            v = row.get(n)
+            if pd.notna(v):
+                return v
+    return None
+
+def canon_name(name):
+    """Исправляет опечатки в написании фамилий кураторов (см. CURATOR_NAME_FIX)."""
+    if not name: return name
+    s = str(name).strip()
+    for wrong, right in CURATOR_NAME_FIX:
+        s = s.replace(wrong, right)
+    return s
+
+def curator_key(name):
+    """Ключ куратора по фамилии для матчинга между файлами:
+    'Кудряшов Е.С.' / 'Кудряшов ЕС' → 'кудряшов'; 'Кренёва А.А.' → 'кренева'."""
+    if not name: return None
+    return canon_name(name).split()[0].lower().replace('ё', 'е')
 
 def get_urgency(deadline_str, status=None):
     if status in CLOSED_STATUSES: return 'ok'
@@ -203,22 +237,21 @@ def extract():
     vdf = pd.read_excel(VYSV_FILE)
 
     # Overlay per-project данных из VYSV: plan_hours_cio (внутреннее), plan_units, fact_hours
+    # Строки проектов — где заполнена колонка «Проект».
     vysv_proj = {}
     for _, r in vdf[vdf['Проект'].notna()].iterrows():
         name = str(r['Проект']).strip()
-        # Осторожно с опечаткой в заголовке: проверяем оба варианта
-        internal_raw = r.get('Внутрнее высвобождение')
-        if internal_raw is None or (hasattr(internal_raw, '__float__') and pd.isna(internal_raw)):
-            internal_raw = r.get('Внутреннее высвобождение')
+        internal_raw = cell_any(r, *VYSV_INTERNAL_COLS)
+        units        = safe_float(cell_any(r, *VYSV_UNITS_COLS))
         vysv_proj[name] = {
             'plan_hours':     safe_float(r.get('План по проектам, часы')),
             'plan_hours_cio': safe_float(internal_raw),
-            'plan_units':     safe_float(r.get('высвобождение, шт. ед.')),
+            'plan_units':     units,
             'fact_hours':     safe_float(r.get('Факт высвобождения трудозатрат всего, часы')),
             'url':            safe(r.get('Ссылка на акцептованную идею')),
             'internal_hours': safe_float(internal_raw),
-            'external_hours': safe_float(r.get('Внешнее высвобождение, часы')),
-            'total_units':    safe_float(r.get('высвобождение, шт. ед.')),
+            'external_hours': safe_float(cell_any(r, *VYSV_EXTERNAL_COLS)),
+            'total_units':    units,
         }
     for p in projects:
         v = vysv_proj.get(p['name'].strip())
@@ -241,23 +274,32 @@ def extract():
         if v.get('total_units') is not None:
             p['total_units'] = v['total_units']
 
-    # NaN строки — итоги по группам кураторов (в порядке CURATOR_ORDER)
-    nan_rows = vdf[vdf['Проект'].isna()].reset_index(drop=True)
+    # Итоги по группам кураторов. Ключ — фамилия (curator_key), т.к. написание
+    # имён в файле высвобождения и штатке может отличаться (точки, ё/е).
+    def _curator_total_row(row):
+        internal_raw = cell_any(row, *VYSV_INTERNAL_COLS)
+        return {
+            'plan_hours':     safe_float(row.get('План по проектам, часы')),
+            'units':          safe_float(cell_any(row, *VYSV_UNITS_COLS)),
+            'fact_hours':     safe_float(row.get('Факт высвобождения трудозатрат всего, часы')),
+            'internal_hours': safe_float(internal_raw),
+            'external_hours': safe_float(cell_any(row, *VYSV_EXTERNAL_COLS)),
+        }
 
     vysv_by_curator = {}
-    for i, curator_name in enumerate(CURATOR_ORDER):
-        if i < len(nan_rows):
-            row = nan_rows.iloc[i]
-            internal_raw = row.get('Внутрнее высвобождение')
-            if internal_raw is None or (hasattr(internal_raw, '__float__') and pd.isna(internal_raw)):
-                internal_raw = row.get('Внутреннее высвобождение')
-            vysv_by_curator[curator_name] = {
-                'plan_hours':     safe_float(row.get('План по проектам, часы')),
-                'units':          safe_float(row.get('высвобождение, шт. ед.')),
-                'fact_hours':     safe_float(row.get('Факт высвобождения трудозатрат всего, часы')),
-                'internal_hours': safe_float(internal_raw),
-                'external_hours': safe_float(row.get('Внешнее высвобождение, часы')),
-            }
+    if 'Ответственный' in vdf.columns:
+        # Новый формат: строки-заголовки кураторов (Проект пуст, Ответственный заполнен)
+        header_rows = vdf[vdf['Проект'].isna() & vdf['Ответственный'].notna()]
+        for _, row in header_rows.iterrows():
+            key = curator_key(safe(row.get('Ответственный')))
+            if key:
+                vysv_by_curator[key] = _curator_total_row(row)
+    else:
+        # Старый формат: NaN-строки в порядке CURATOR_ORDER
+        nan_rows = vdf[vdf['Проект'].isna()].reset_index(drop=True)
+        for i, curator_name in enumerate(CURATOR_ORDER):
+            if i < len(nan_rows):
+                vysv_by_curator[curator_key(curator_name)] = _curator_total_row(nan_rows.iloc[i])
 
     # ── 6. Штатка + % высвобождения ──────────────────────────────────────────
     print(f"📂 Читаем {SHTATKA_FILE}...")
@@ -270,11 +312,11 @@ def extract():
     total_external  = 0.0
 
     for _, r in sh.iterrows():
-        name = safe(r.get('Куратор направления'))
+        name = canon_name(safe(r.get('Куратор направления')))
         if not name: continue
 
         plan20 = safe_float(r.get('План высвобождения - 20%'))
-        vysv   = vysv_by_curator.get(name, {})
+        vysv   = vysv_by_curator.get(curator_key(name), {})
         units  = vysv.get('units')
 
         if units is not None and plan20:
