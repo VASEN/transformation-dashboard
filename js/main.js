@@ -6,7 +6,6 @@ import { renderVysvBlock } from './render/vysv.js';
 import { renderDeadlineMap } from './render/deadlines.js';
 import { renderTasks, filterTasksByStat, populateTaskFilter } from './render/tasks.js';
 import { loadDetail, populateDetailSelect } from './render/detail.js';
-import { renderFullProjTable } from './render/projects.js';
 import { populateOwnerFilter, applyExecFilters } from './filters.js';
 import { showTab } from './nav.js';
 
@@ -46,10 +45,6 @@ function initDashboard(data) {
       `<span class="trend ${overall.pct_vysv >= 100 ? 'up' : 'down'}">${overall.pct_vysv >= 100 ? '↑' : '↓'} план</span> ${overall.name}`;
   }
 
-  // Projects screen badge (total unfiltered)
-  document.getElementById('badge-projects-total').innerHTML =
-    `<div class="dot" style="background:var(--accent)"></div>Всего: ${s.projects_total}`;
-
   // Tasks screen stats (from summary — not filtered)
   document.getElementById('kpi-deadline14').textContent = s.tasks_deadline_14 ?? '—';
   document.getElementById('kpi-overdue').textContent = s.tasks_overdue ?? '—';
@@ -81,7 +76,6 @@ function initDashboard(data) {
   populateDetailSelect(allDetails);
 
   // Static renders
-  renderFullProjTable(allProjects);
   renderDeadlineMap(allTasks);
   renderTasks(allTasks2026);
 
@@ -103,11 +97,6 @@ function setupEventListeners() {
 
   // Owner filter
   document.getElementById('ownerFilter').addEventListener('change', applyExecFilters);
-
-  // Project status filter
-  document.getElementById('projectStatusFilter').addEventListener('change', (e) => {
-    renderFullProjTable(allProjects, e.target.value);
-  });
 
   // Task project filter
   document.getElementById('taskProjectFilter').addEventListener('change', (e) => {
