@@ -779,3 +779,15 @@
     .two-col { grid-template-columns: 1fr; }
     .detail-grid { grid-template-columns: 1fr 1fr; }
   }
+
+  /* === LARGE SCREENS (≥1600px): meeting / projector === */
+  @media (min-width: 1600px) {
+    .app { max-width: 1560px; margin: 0 auto; }
+    .screen { padding: 32px 40px; }
+    .nav { padding: 20px 40px 0; }
+    .kpi-value { font-size: 42px; }
+    .stat-pill-val { font-size: 34px; }
+    .section-title { font-size: 12px; }
+    .proj-table td, .task-table td { font-size: 14px; }
+    .exec-grid { gap: 20px; }
+  }
