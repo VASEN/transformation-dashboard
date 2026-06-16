@@ -96,6 +96,11 @@ function setupEventListeners() {
     tab.addEventListener('click', () => showTab(tab.dataset.tab));
   });
 
+  // Bottom nav (mobile) — reuse showTab
+  document.querySelectorAll('.bottom-tab[data-tab]').forEach(btn => {
+    btn.addEventListener('click', () => showTab(btn.dataset.tab));
+  });
+
   // Owner filter
   document.getElementById('ownerFilter').addEventListener('change', applyExecFilters);
 

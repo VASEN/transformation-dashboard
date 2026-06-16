@@ -792,6 +792,9 @@
     .exec-grid { gap: 20px; }
   }
 
+  /* === BOTTOM NAV (mobile) === */
+  .bottom-nav { display: none; }   /* hidden on desktop */
+
   /* === PHONE (≤640px): single column === */
   @media (max-width: 640px) {
     /* layout in one column */
@@ -824,4 +827,37 @@
 
     /* запас под нижнюю навигацию (Task 3) */
     .app { padding-bottom: 64px; }
+
+    /* нижняя навигация (mobile) */
+    .bottom-nav {
+      display: flex;
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      z-index: 50;
+      background: rgba(10,10,26,0.96);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--card-border);
+      padding: 6px 4px env(safe-area-inset-bottom, 4px);
+    }
+    .bottom-tab {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 6px 4px;
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      font-family: 'Exo 2', sans-serif;
+      cursor: pointer;
+    }
+    .bottom-tab .bottom-tab-ico { font-size: 18px; line-height: 1; }
+    .bottom-tab .bottom-tab-lbl {
+      font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; font-weight: 600;
+    }
+    .bottom-tab.active { color: var(--accent); text-shadow: var(--glow); }
+
+    /* скрыть верхние вкладки-кнопки на телефоне, оставив логотип + timestamp */
+    .nav .tab { display: none; }
   }
