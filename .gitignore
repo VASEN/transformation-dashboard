@@ -6,3 +6,11 @@
 # macOS / прочий мусор
 .DS_Store
 data.json.bak
+
+# Визуальный компаньон brainstorming
+.superpowers/
+
+# Python / тесты
+__pycache__/
+.pytest_cache/
+.ruff_cache/

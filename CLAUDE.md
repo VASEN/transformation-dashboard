@@ -34,6 +34,9 @@ extract_data.py   →   data.json   →   index.html
 | `amvera.yml` | Конфигурация деплоя на Amvera |
 | `deploy.sh` | Скрипт одной командой: extract → report → overdue → git commit → push (аргументы: `$1` — xlsx Redmine, `$2` — md, `$3` — prev md, `$4` — штатка, `$5` — высвобождение). Штатка/высвобождение по умолчанию — самый свежий подходящий файл (`ШТАТКА_ДБ*.xlsx` / `*Данные по высвобождению*.xlsx` по времени изменения), иначе каноническое имя |
 | `overdue_report.py` | Скрипт отчёта по просроченным задачам на текущую дату (читает `data.json` → `overdue_tasks_DD_MM_YYYY.txt`) |
+| `config.py` | Единый источник констант (год, `REDMINE_BASE`, `1972`, кураторы, статусы, синонимы колонок) + резолвер колонок Excel. Импортируется всеми скриптами; подмножество (`public_config`) пишется в `data.json` под ключом `config` и читается `index.html` |
+| `tests/` | pytest: юниты резолвера колонок и чистых хелперов + интеграционный smoke на Excel-фикстуре (`tests/fixtures.py`); запуск — `python3 -m pytest tests/` |
+| `pyproject.toml` | Конфиг `ruff` (линтер) + `pytest` |
 
 ## Источники данных (Excel, в git не хранятся)
 
@@ -103,14 +106,19 @@ git и переносятся через `git mv` (история сохраня
 ## Зависимости
 
 ```bash
-pip install pandas openpyxl
+pip install pandas openpyxl   # пайплайн
+pip install pytest ruff       # тесты и линтер (dev)
 ```
+
+> Тесты: `python3 -m pytest tests/` (юниты + интеграционный smoke на Excel-фикстуре).
+> Линтер: `ruff check .` (конфиг в `pyproject.toml`).
 
 ## Структура data.json
 
 ```
 {
   updated_at  — дата/время генерации
+  config      — год / redmine_base / hours_per_unit (из config.py, читает index.html)
   summary     — сводная статистика
   projects    — список проектов (из трекера "Паспорт проекта")
   all_tasks   — все задачи всех уровней (итеративный обход L1–Ln)
@@ -472,3 +480,14 @@ python3 overdue_report.py --output overdue_tasks_28_05_2026.txt
 | 2026-06-16 | Документация: `CLAUDE.md` — добавлен раздел «Архив (`archive/`)», заметка про датированные исходники и `data.json.bak`, раздел «Обновление данных» приведён к актуальному `deploy.sh` (аргументы `$4`/`$5`, автоопределение штатки/высвобождения, полный пайплайн с `overdue_report.py`). `README_report.md` — два telegram-файла (priority/transform) вместо одного, добавлен флаг `--prev`, ссылка на подробности в `CLAUDE.md` |
 | 2026-06-16 | Порядок в папке: старые датированные файлы перенесены в `archive/` (`issues/`, `reports/`, `telegram/`, `overdue/`, `source/`) — оставлен набор за последнюю неделю (с 09.06). `ОТЧЕТ_*.md` (кроме 10.06) перенесены через `git mv`; `data.json.bak` снят с отслеживания и добавлен в `.gitignore` вместе с `.DS_Store`. Архивные `*.xlsx`/`*.txt` остаются вне git (глобальные правила `.gitignore`); deploy-глобы и `git add .` их не цепляют |
 | 2026-06-16 | `deploy.sh`: теперь передаёт штатку и высвобождение в `extract_data.py` (раньше — только Redmine-файл, из-за чего бралась старая мартовская штатка и кураторы откатывались к 3). Добавлены аргументы `$4` (штатка) / `$5` (высвобождение) с автовыбором самого свежего файла по `ls -t` (`ШТАТКА_ДБ*.xlsx` / `*Данные по высвобождению*.xlsx`, `shopt -s nullglob`), fallback — каноническое имя; добавлен лог выбранных файлов |
+| 2026-06-16 | **Фаза 1 «Надёжность + Качество»** (ветка `phase1-reliability-quality`). Спека `docs/specs/2026-06-16-phase1-reliability-quality-design.md`, план `docs/plans/2026-06-16-phase1-reliability-quality.md`. 11 коммитов; приёмка: 22 теста зелёные, контрольный прогон даёт те же цифры (36/613/5, просрочено 17, высвобождение 122%) + ключ `config` |
+| 2026-06-16 | `config.py` (новый): единый источник констант (`YEAR`, `REDMINE_BASE`, `HOURS_PER_UNIT=1972`, `CURATOR_ORDER`, `CLOSED_STATUSES`, `COLUMN_SYNONYMS`) + резолвер колонок (`normalize_col`/`resolve_column`/`require_column`) + `public_config()`. [R3] |
+| 2026-06-16 | `extract_data.py`: константы импортируются из `config`; `extract()` параметризован (`redmine_file`/`shtatka_file`/`vysv_file`/`output_file`), разбор `sys.argv` перенесён в `__main__` (импорт без побочных эффектов — нужно для тестов); в `data.json` добавлен ключ `config`; запись через `write_json_atomic` (tmp → парс-проверка → `os.replace`). [R3/R1] |
+| 2026-06-16 | `extract_data.py`: `validate_source_columns` — проверка обязательных колонок Redmine/штатки/высвобождения с понятной ошибкой вместо `KeyError`. [R2] |
+| 2026-06-16 | `extract_data.py`: `validate_result` — стоп при пустом результате или просадке проектов/задач > 50% относительно прошлого `data.json`; битая выгрузка больше не затирает рабочий файл (атомарная запись). [R1] |
+| 2026-06-16 | `process_report.py` / `overdue_report.py`: `HOURS_PER_UNIT` / `REDMINE_BASE` / `CLOSED_STATUSES` берутся из `config` (убраны локальные дубли). [R3] |
+| 2026-06-16 | `index.html`: глобал `CONFIG` читается из `data.config` (с фолбэком на дефолты); убран хардкод года `2026` (5 мест) и `1972` (4 места), URL Redmine — из `CONFIG.redmineBase`. [R3] |
+| 2026-06-16 | `index.html`: добавлен `escapeHTML()` и применён к строкам из `data.json` (имена проектов/исполнителей, темы, статусы, `current_status`, цель, показатели) — защита от поломки разметки. [R5] |
+| 2026-06-16 | `deploy.sh`: `git add .` → `git add data.json`; guard'ы — проверка непустого/валидного JSON, пропуск коммита при отсутствии изменений (`git diff --cached --quiet`), пуш только в существующие remotes. [R4] |
+| 2026-06-16 | `tests/` (новый): pytest — юниты резолвера колонок и хелперов (`get_urgency`, `short_name`, `curator_key`, `canon_name`, `clean_pct`, `clean_date`, `parse_deadline`, `plural_*`) + интеграционный smoke на Excel-фикстуре (`fixtures.py`): валидный вход → форма `data.json` + ключ `config`; битый/пустой → `data.json` не затирается. Итого 22 теста. [Q1] |
+| 2026-06-16 | `pyproject.toml` (новый): конфиг `ruff` + `pytest`; type hints на ключевых функциях `extract_data.py`. Прогон `ruff` отложен (нет доступа к сети в текущей среде) — конфиг готов, синтаксис проверяется через `py_compile`. [Q2] |

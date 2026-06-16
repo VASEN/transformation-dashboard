@@ -22,40 +22,30 @@ extract_data.py — скрипт извлечения данных из Excel в
 
 import pandas as pd
 import json
+import os
 import re
 import sys
 from datetime import datetime
 from pathlib import Path
 
-# ===== НАСТРОЙКИ =====
-# Файлы можно передать аргументами (в порядке: redmine, штатка, высвобождение):
-#   python3 extract_data.py issues_15.06.xlsx ШТАТКА_ДБ_15.06.2026.xlsx "Проекты_...xlsx"
-REDMINE_FILE = sys.argv[1] if len(sys.argv) > 1 else "issues.xlsx"
-SHTATKA_FILE = sys.argv[2] if len(sys.argv) > 2 else "ШТАТКА_ДБ.xlsx"
-VYSV_FILE    = sys.argv[3] if len(sys.argv) > 3 else "ПРОЕКТЫ_Данные по высвобождению.xlsx"
-OUTPUT_FILE  = "data.json"
+from config import (
+    ACTIVE_STATUSES, CLOSED_STATUSES, CURATOR_ORDER, TOTAL_CURATOR,
+    CURATOR_NAME_FIX, COLUMN_SYNONYMS, REGRESSION_DROP_LIMIT,
+    public_config, resolve_column, require_column,
+)
 
-ACTIVE_STATUSES = ('В работе', 'Новая', 'На проверке')
-CLOSED_STATUSES = ('Закрыта', 'Закрыто', 'Выполнено', 'Выполнена', 'Завершена')
+DEFAULT_REDMINE = "issues.xlsx"
+DEFAULT_SHTATKA = "ШТАТКА_ДБ.xlsx"
+DEFAULT_VYSV    = "ПРОЕКТЫ_Данные по высвобождению.xlsx"
 
-# Старый формат VYSV_FILE: итоги кураторов лежали в NaN-строках в этом порядке.
-# Новый формат содержит колонку «Ответственный» — кураторы определяются из неё.
-CURATOR_ORDER = ['Кренёва АА', 'Родевальд СЕ', 'Гуляев ВА']
-TOTAL_CURATOR = 'Комитет и РЦТ'
-
-# Варианты имён колонок в файле высвобождения (новый/старый формат)
-VYSV_UNITS_COLS    = ('План, шт. ед.', 'высвобождение, шт. ед.')
-VYSV_EXTERNAL_COLS = ('Внешнее высвобождение, часы', 'Внешнее высвобождение')
-VYSV_INTERNAL_COLS = ('Внутрнее высвобождение', 'Внутреннее высвобождение')
-
-# Исправления написания фамилий кураторов (в штатке/высвобождении встречаются опечатки).
-# Правильно — «Кудряшов» (через «о»), как в Redmine.
-CURATOR_NAME_FIX = (('Кудряшев', 'Кудряшов'),)
+VYSV_UNITS_COLS    = COLUMN_SYNONYMS['vysv_units']
+VYSV_EXTERNAL_COLS = COLUMN_SYNONYMS['vysv_external']
+VYSV_INTERNAL_COLS = COLUMN_SYNONYMS['vysv_internal']
 
 
 # ===== УТИЛИТЫ =====
 
-def clean_date(v):
+def clean_date(v) -> str | None:
     if pd.isna(v): return None
     s = str(v).strip()
     for fmt in ('%d.%m.%Y', '%Y-%m-%d'):
@@ -63,12 +53,12 @@ def clean_date(v):
         except: pass
     return s[:10] if len(s) >= 10 else s
 
-def clean_pct(v):
+def clean_pct(v) -> int:
     if pd.isna(v): return 0
     try: return int(float(str(v).replace('%', '').replace(',', '.').strip()))
     except: return 0
 
-def safe(v):
+def safe(v) -> str | None:
     if pd.isna(v): return None
     s = str(v).strip()
     return s if s and s != 'nan' else None
@@ -104,7 +94,7 @@ def curator_key(name):
     if not name: return None
     return canon_name(name).split()[0].lower().replace('ё', 'е')
 
-def get_urgency(deadline_str, status=None):
+def get_urgency(deadline_str, status=None) -> str:
     if status in CLOSED_STATUSES: return 'ok'
     if not deadline_str: return 'ok'
     try:
@@ -117,7 +107,7 @@ def get_urgency(deadline_str, status=None):
     except: pass
     return 'ok'
 
-def short_name(full_name):
+def short_name(full_name) -> str | None:
     """'Кренева (ККП) Анастасия Андреевна' → 'Кренева А.А.'"""
     if not full_name: return None
     s = re.sub(r'\s*\(.*?\)\s*', ' ', full_name).strip()
@@ -127,13 +117,60 @@ def short_name(full_name):
     return s
 
 
+def validate_source_columns(df, required, source_name) -> None:
+    """Бросает понятную ошибку, если в df нет нужных колонок (с учётом синонимов)."""
+    missing = [c for c in required if resolve_column(df.columns, c) is None]
+    if missing:
+        raise KeyError(
+            f"В файле {source_name} отсутствуют колонки: {missing}. "
+            f"Есть: {list(df.columns)}"
+        )
+
+
 # ===== ОСНОВНАЯ ЛОГИКА =====
 
-def extract():
+def write_json_atomic(result, output_file) -> None:
+    """Пишет JSON во временный файл, проверяет парсингом, затем атомарно
+    подменяет целевой — чтобы битый результат не затирал рабочий data.json."""
+    tmp = output_file + '.tmp'
+    safe_json = json.dumps(result, ensure_ascii=False, indent=2).replace('</', '<\\/')
+    with open(tmp, 'w', encoding='utf-8') as f:
+        f.write(safe_json)
+    json.loads(Path(tmp).read_text(encoding='utf-8'))  # sanity-парсинг
+    os.replace(tmp, output_file)
+
+
+def validate_result(result, prev=None, drop_limit=REGRESSION_DROP_LIMIT) -> None:
+    """Проверяет, что результат не пустой и не просел относительно прошлого.
+    Бросает ValueError с понятным текстом при нарушении."""
+    errs = []
+    if not result.get('projects'):
+        errs.append('нет проектов')
+    if not result.get('all_tasks'):
+        errs.append('нет задач')
+    if not result.get('curators'):
+        errs.append('нет кураторов')
+    if prev:
+        for key in ('projects', 'all_tasks'):
+            old, new = len(prev.get(key, [])), len(result.get(key, []))
+            if old and new < old * (1 - drop_limit):
+                errs.append(
+                    f'{key}: было {old}, стало {new} '
+                    f'(просадка > {int(drop_limit * 100)}%)'
+                )
+    if errs:
+        raise ValueError('Валидация data.json не пройдена: ' + '; '.join(errs))
+
+
+def extract(redmine_file=DEFAULT_REDMINE, shtatka_file=DEFAULT_SHTATKA,
+            vysv_file=DEFAULT_VYSV, output_file="data.json") -> None:
 
     # ── 1. Redmine выгрузка ──────────────────────────────────────────────────
-    print(f"📂 Читаем {REDMINE_FILE}...")
-    df = pd.read_excel(REDMINE_FILE)
+    print(f"📂 Читаем {redmine_file}...")
+    df = pd.read_excel(redmine_file)
+    validate_source_columns(
+        df, ['Трекер', '#', 'Проект', 'Статус', 'Родительская задача'], redmine_file
+    )
 
     passport   = df[df['Трекер'] == 'Паспорт проекта'].copy()
     activities = df[df['Трекер'] == 'Мероприятие проекта'].copy()
@@ -233,8 +270,9 @@ def extract():
         })
 
     # ── 5. Высвобождение (ПРОЕКТЫ_НМА) ───────────────────────────────────────
-    print(f"📂 Читаем {VYSV_FILE}...")
-    vdf = pd.read_excel(VYSV_FILE)
+    print(f"📂 Читаем {vysv_file}...")
+    vdf = pd.read_excel(vysv_file)
+    validate_source_columns(vdf, ['Проект'], vysv_file)
 
     # Overlay per-project данных из VYSV: plan_hours_cio (внутреннее), plan_units, fact_hours
     # Строки проектов — где заполнена колонка «Проект».
@@ -302,8 +340,11 @@ def extract():
                 vysv_by_curator[curator_key(curator_name)] = _curator_total_row(nan_rows.iloc[i])
 
     # ── 6. Штатка + % высвобождения ──────────────────────────────────────────
-    print(f"📂 Читаем {SHTATKA_FILE}...")
-    sh = pd.read_excel(SHTATKA_FILE)
+    print(f"📂 Читаем {shtatka_file}...")
+    sh = pd.read_excel(shtatka_file)
+    validate_source_columns(
+        sh, ['Куратор направления', 'План высвобождения - 20%'], shtatka_file
+    )
 
     curators        = []
     total_units     = 0.0
@@ -387,20 +428,24 @@ def extract():
     # ── 8. Сохраняем JSON ─────────────────────────────────────────────────────
     result = {
         'updated_at': datetime.now().strftime('%d.%m.%Y %H:%M'),
+        'config':     public_config(),
         'summary':    summary,
         'projects':   projects,
         'all_tasks':  all_tasks,
         'curators':   curators,
     }
 
-    with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
-        # Экранируем </ чтобы не ломать <script> блок при любом встраивании
-        safe_json = json.dumps(result, ensure_ascii=False, indent=2)
-        safe_json = safe_json.replace('</', '<\\/')
-        f.write(safe_json)
+    prev = None
+    if os.path.exists(output_file):
+        try:
+            prev = json.loads(Path(output_file).read_text(encoding='utf-8'))
+        except (ValueError, OSError):
+            prev = None
+    validate_result(result, prev)
+    write_json_atomic(result, output_file)
 
-    kb = Path(OUTPUT_FILE).stat().st_size // 1024
-    print(f"\n✅ {OUTPUT_FILE} сохранён ({kb} KB)")
+    kb = Path(output_file).stat().st_size // 1024
+    print(f"\n✅ {output_file} сохранён ({kb} KB)")
     print(f"\n📊 Сводка:")
     print(f"  Проектов:           {summary['projects_total']}  (активных: {summary['projects_active']}, закрытых: {summary['projects_closed']})")
     print(f"  Среднее выполнение: {summary['projects_avg_pct']}%")
@@ -417,4 +462,8 @@ def extract():
 
 
 if __name__ == '__main__':
-    extract()
+    extract(
+        sys.argv[1] if len(sys.argv) > 1 else DEFAULT_REDMINE,
+        sys.argv[2] if len(sys.argv) > 2 else DEFAULT_SHTATKA,
+        sys.argv[3] if len(sys.argv) > 3 else DEFAULT_VYSV,
+    )

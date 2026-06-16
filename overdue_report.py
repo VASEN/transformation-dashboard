@@ -18,12 +18,10 @@ import json
 import argparse
 from datetime import datetime, date
 
-CLOSED_STATUSES = {'Закрыта', 'Закрыто', 'Выполнено', 'Выполнена', 'Завершена'}
+from config import CLOSED_STATUSES, REDMINE_BASE
 
 SEPARATOR_THICK = '━━━━━━━━━━━━━━━━'
 SEPARATOR_THIN  = '─────────────────'
-
-REDMINE_BASE = 'https://transformation.rm.mosreg.ru/#/issues'
 
 
 def parse_deadline(s):
