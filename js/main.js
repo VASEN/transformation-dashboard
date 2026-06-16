@@ -125,6 +125,29 @@ function setupEventListeners() {
   document.querySelectorAll('.stat-pill[data-filter]').forEach(pill => {
     pill.addEventListener('click', () => filterTasksByStat(pill.dataset.filter));
   });
+
+  // Tablist keyboard navigation (WAI-ARIA tabs pattern)
+  setupTablistKeyboard();
+}
+
+// ===== TABLIST KEYBOARD (arrows + Home/End) =====
+function setupTablistKeyboard() {
+  const tabs = [...document.querySelectorAll('.nav .tab[role="tab"]')];
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('keydown', (e) => {
+      const map = {
+        ArrowRight: (i + 1) % tabs.length,
+        ArrowLeft: (i - 1 + tabs.length) % tabs.length,
+        Home: 0,
+        End: tabs.length - 1,
+      };
+      if (!(e.key in map)) return;
+      e.preventDefault();
+      const next = tabs[map[e.key]];
+      showTab(next.dataset.tab);
+      next.focus();
+    });
+  });
 }
 
 // ===== FETCH DATA =====

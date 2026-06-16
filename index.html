@@ -18,17 +18,19 @@
 <div class="app">
 
   <!-- NAV -->
-  <nav class="nav">
+  <nav class="nav" role="tablist" aria-label="Основная навигация">
     <div class="nav-logo">РМ</div>
-    <button class="tab active" data-tab="exec">Обзор</button>
-    <button class="tab" data-tab="detail">Детализация</button>
-    <button class="tab" data-tab="tasks">Задачи</button>
+    <button class="tab active" data-tab="exec" role="tab" aria-selected="true" aria-controls="screen-exec" id="tab-exec">Обзор</button>
+    <button class="tab" data-tab="detail" role="tab" aria-selected="false" aria-controls="screen-detail" id="tab-detail">Детализация</button>
+    <button class="tab" data-tab="tasks" role="tab" aria-selected="false" aria-controls="screen-tasks" id="tab-tasks">Задачи</button>
     <span class="separator"></span>
     <span id="updated-at" style="font-size:11px;color:var(--text-dim);padding-bottom:10px"></span>
   </nav>
 
+  <main id="main-content">
+
   <!-- ===================== SCREEN: EXEC ===================== -->
-  <div class="screen active" id="screen-exec">
+  <div class="screen active" id="screen-exec" role="tabpanel" aria-labelledby="tab-exec" tabindex="0">
 
     <div class="filter-bar">
       <span class="filter-label">Год</span>
@@ -185,7 +187,7 @@
   </div>
 
   <!-- ===================== SCREEN: TASKS ===================== -->
-  <div class="screen" id="screen-tasks">
+  <div class="screen" id="screen-tasks" role="tabpanel" aria-labelledby="tab-tasks" tabindex="0">
     <div class="tasks-stats">
       <div class="stat-pill selected" id="spill-all" style="--c:var(--accent)" data-filter="all"><span class="stat-pill-val" id="tasks-stat-total">—</span><div class="stat-pill-label">Всего задач</div></div>
       <div class="stat-pill" id="spill-active" style="--c:var(--accent2)" data-filter="active"><span class="stat-pill-val" id="tasks-stat-active">—</span><div class="stat-pill-label">В работе</div></div>
@@ -222,7 +224,7 @@
   </div>
 
   <!-- ===================== SCREEN: DETAIL ===================== -->
-  <div class="screen" id="screen-detail">
+  <div class="screen" id="screen-detail" role="tabpanel" aria-labelledby="tab-detail" tabindex="0">
     <div class="filter-bar">
       <span class="filter-label">Проект</span>
       <select class="filter-select" id="detailSelect">
@@ -231,6 +233,8 @@
     </div>
     <div class="detail-grid" id="detailGrid"></div>
   </div>
+
+  </main>
 
   <!-- BOTTOM NAV (phone only) -->
   <nav class="bottom-nav" aria-label="Мобильная навигация">
