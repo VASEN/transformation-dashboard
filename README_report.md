@@ -16,6 +16,9 @@ python3 process_report.py ОТЧЕТ_01_04.md --telegram-only
 
 # Только обновить data.json (Telegram-файл не создавать)
 python3 process_report.py ОТЧЕТ_01_04.md --no-telegram
+
+# Сравнение с предыдущим отчётом — новые строки помечаются 🆕
+python3 process_report.py ОТЧЕТ_10.06.md --prev ОТЧЕТ_03.06.md
 ```
 
 ## Что делает скрипт
@@ -27,7 +30,9 @@ python3 process_report.py ОТЧЕТ_01_04.md --no-telegram
 3. Записывает `current_status` в найденные проекты.
 4. Создаёт резервную копию `data.json.bak` перед перезаписью.
 5. Добавляет `summary.report_updated_at` с датой отчёта.
-6. Сохраняет Telegram-сообщение в файл `telegram_ДД_ММ_ГГГГ.txt`.
+6. Сохраняет **два** файла Telegram-сообщений: `telegram_priority_ДД_ММ_ГГГГ.txt` (приоритетные, `is_priority=true`) и `telegram_transform_ДД_ММ_ГГГГ.txt` (трансформационные). С флагом `--prev` новые строки блоков «Выполнено»/«В работе» помечаются `🆕`.
+
+> Подробное описание формата сообщений, diff-режима (`--prev`) и всех вспомогательных функций — в `CLAUDE.md`, раздел «Еженедельный отчёт».
 
 ## Формат входного файла
 
