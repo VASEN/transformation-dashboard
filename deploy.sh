@@ -42,12 +42,31 @@ fi
 echo "⏰ Отчёт по просроченным задачам..."
 python3 overdue_report.py
 
+echo "🔎 Проверка data.json..."
+if [ ! -s data.json ]; then
+  echo "❌ data.json отсутствует или пуст — деплой остановлен" >&2
+  exit 1
+fi
+if ! python3 -c "import json,sys; json.load(open('data.json'))" 2>/dev/null; then
+  echo "❌ data.json не парсится как JSON — деплой остановлен" >&2
+  exit 1
+fi
+
 echo "📦 Коммит data.json..."
-git add .
+git add data.json
+if git diff --cached --quiet; then
+  echo "ℹ️  data.json не изменился — коммит/пуш пропущены"
+  exit 0
+fi
 git commit -m "data: обновление $(date '+%d.%m.%Y %H:%M')"
 
 echo "📤 Пуш в репозитории..."
-git push -u upstream main
-git push -u origin main
+for remote in upstream origin; do
+  if git remote get-url "$remote" >/dev/null 2>&1; then
+    git push -u "$remote" main
+  else
+    echo "⚠️  remote '$remote' не настроен — пропускаю"
+  fi
+done
 
 echo "✅ Деплой завершён"
