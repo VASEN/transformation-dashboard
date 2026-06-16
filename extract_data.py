@@ -117,6 +117,16 @@ def short_name(full_name):
     return s
 
 
+def validate_source_columns(df, required, source_name):
+    """Бросает понятную ошибку, если в df нет нужных колонок (с учётом синонимов)."""
+    missing = [c for c in required if resolve_column(df.columns, c) is None]
+    if missing:
+        raise KeyError(
+            f"В файле {source_name} отсутствуют колонки: {missing}. "
+            f"Есть: {list(df.columns)}"
+        )
+
+
 # ===== ОСНОВНАЯ ЛОГИКА =====
 
 def write_json_atomic(result, output_file):
@@ -136,6 +146,9 @@ def extract(redmine_file=DEFAULT_REDMINE, shtatka_file=DEFAULT_SHTATKA,
     # ── 1. Redmine выгрузка ──────────────────────────────────────────────────
     print(f"📂 Читаем {redmine_file}...")
     df = pd.read_excel(redmine_file)
+    validate_source_columns(
+        df, ['Трекер', '#', 'Проект', 'Статус', 'Родительская задача'], redmine_file
+    )
 
     passport   = df[df['Трекер'] == 'Паспорт проекта'].copy()
     activities = df[df['Трекер'] == 'Мероприятие проекта'].copy()
@@ -237,6 +250,7 @@ def extract(redmine_file=DEFAULT_REDMINE, shtatka_file=DEFAULT_SHTATKA,
     # ── 5. Высвобождение (ПРОЕКТЫ_НМА) ───────────────────────────────────────
     print(f"📂 Читаем {vysv_file}...")
     vdf = pd.read_excel(vysv_file)
+    validate_source_columns(vdf, ['Проект'], vysv_file)
 
     # Overlay per-project данных из VYSV: plan_hours_cio (внутреннее), plan_units, fact_hours
     # Строки проектов — где заполнена колонка «Проект».
@@ -306,6 +320,9 @@ def extract(redmine_file=DEFAULT_REDMINE, shtatka_file=DEFAULT_SHTATKA,
     # ── 6. Штатка + % высвобождения ──────────────────────────────────────────
     print(f"📂 Читаем {shtatka_file}...")
     sh = pd.read_excel(shtatka_file)
+    validate_source_columns(
+        sh, ['Куратор направления', 'План высвобождения - 20%'], shtatka_file
+    )
 
     curators        = []
     total_units     = 0.0
