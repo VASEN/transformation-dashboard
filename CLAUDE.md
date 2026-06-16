@@ -19,9 +19,13 @@
 ## Архитектура
 
 ```
-extract_data.py   →   data.json   →   index.html
-(Python-скрипт)       (данные)        (дашборд, статический HTML)
+extract_data.py   →   data.json   →   index.html  →  js/main.js → js/* (ES-модули)
+(Python-скрипт)       (данные)        (оболочка)      (точка входа)  css/styles.css
 ```
+
+> **UI модульный (с Фазы 2 / D4):** `index.html` — только разметка-оболочка; стили в `css/styles.css`,
+> логика в ES-модулях `js/` (точка входа `js/main.js`). Открывать по http (ES-модули требуют CORS),
+> не как `file://`.
 
 ## Файлы
 
@@ -29,7 +33,9 @@ extract_data.py   →   data.json   →   index.html
 |------|-----------|
 | `extract_data.py` | Скрипт извлечения данных из Excel → JSON |
 | `data.json` | Готовые данные для дашборда (коммитится в git) |
-| `index.html` | Дашборд (читает data.json через fetch) |
+| `index.html` | Дашборд: разметка-оболочка (читает data.json через fetch в `js/main.js`) |
+| `css/styles.css` | Стили дашборда (вынесены из `index.html` в D4) |
+| `js/` | ES-модули UI: `main.js` (вход), `config.js`, `helpers.js`, `state.js`, `filters.js`, `nav.js`, `render/{overview,vysv,deadlines,tasks,detail,projects}.js`. Логика по функциям; см. карту `symbol → модуль` в `docs/plans/2026-06-16-phase2-d4-modularization.md` |
 | `Dockerfile` | Контейнер для деплоя |
 | `amvera.yml` | Конфигурация деплоя на Amvera |
 | `deploy.sh` | Скрипт одной командой: extract → report → overdue → git commit → push (аргументы: `$1` — xlsx Redmine, `$2` — md, `$3` — prev md, `$4` — штатка, `$5` — высвобождение). Штатка/высвобождение по умолчанию — самый свежий подходящий файл (`ШТАТКА_ДБ*.xlsx` / `*Данные по высвобождению*.xlsx` по времени изменения), иначе каноническое имя |
@@ -491,3 +497,5 @@ python3 overdue_report.py --output overdue_tasks_28_05_2026.txt
 | 2026-06-16 | `deploy.sh`: `git add .` → `git add data.json`; guard'ы — проверка непустого/валидного JSON, пропуск коммита при отсутствии изменений (`git diff --cached --quiet`), пуш только в существующие remotes. [R4] |
 | 2026-06-16 | `tests/` (новый): pytest — юниты резолвера колонок и хелперов (`get_urgency`, `short_name`, `curator_key`, `canon_name`, `clean_pct`, `clean_date`, `parse_deadline`, `plural_*`) + интеграционный smoke на Excel-фикстуре (`fixtures.py`): валидный вход → форма `data.json` + ключ `config`; битый/пустой → `data.json` не затирается. Итого 22 теста. [Q1] |
 | 2026-06-16 | `pyproject.toml` (новый): конфиг `ruff` + `pytest`; type hints на ключевых функциях `extract_data.py`. Прогон `ruff` отложен (нет доступа к сети в текущей среде) — конфиг готов, синтаксис проверяется через `py_compile`. [Q2] |
+| 2026-06-16 | **Фаза 2 «Дизайн»** (ветка `phase2-design`). Спека `docs/specs/2026-06-16-phase2-ui-hardening-design.md`. Эстетика сохраняется; под-фазы D4→D1→D2→D3. Решения: адаптив на телефон/десктоп/крупные; мобильные карточки задач + нижняя навигация; ES-модули по функциям |
+| 2026-06-16 | **D4 — модуляризация `index.html`** (план `docs/plans/2026-06-16-phase2-d4-modularization.md`). CSS вынесен в `css/styles.css`; JS разбит на ES-модули `js/` по функциям (`config`/`helpers`/`state`/`render/*`/`filters`/`nav`/`main`); `index.html` → `<script type="module" src="js/main.js">`. Логика не менялась — дашборд идентичен (36/613/5, 122%). Стратегия «строим рядом, переключаем последним»; верификация: `node --check` + резолвинг графа `import('./js/main.js')` + статический анализ полноты импортов (0 проблем) + ручная визуальная сверка |
