@@ -1,0 +1,41 @@
+<!-- @dsCard group="Бейджи" -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Project-tag</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap');
+  :root {
+    --bg: #06060f;
+    --text: #e8eaf6;
+    --text-dim: rgba(232,234,246,0.72);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Exo 2', sans-serif; background: var(--bg); color: var(--text); padding: 24px; }
+  .ds-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .ds-cap { font-size: 11px; color: var(--text-dim); margin: 0 0 14px; letter-spacing: 0.5px; }
+
+  /* PROJECT_PALETTE (js/helpers.js) — stable per-project bg/color */
+  .project-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+</style>
+</head>
+<body>
+  <div class="ds-cap">Цвета из PROJECT_PALETTE — назначаются проектам по порядку (стабильно)</div>
+  <div class="ds-row">
+    <span class="project-tag" style="background:rgba(0,229,255,0.12);color:#00e5ff">Электронные ДС с ПИК</span>
+    <span class="project-tag" style="background:rgba(180,79,255,0.12);color:#b44fff">Цифровой профиль</span>
+    <span class="project-tag" style="background:rgba(0,255,157,0.12);color:#00ff9d">Реестр НМА</span>
+    <span class="project-tag" style="background:rgba(255,184,0,0.12);color:#ffb800">Единое окно</span>
+    <span class="project-tag" style="background:rgba(255,59,92,0.12);color:#ff3b5c">Госуслуги 2.0</span>
+    <span class="project-tag" style="background:rgba(100,180,255,0.12);color:#64b4ff">Аналитика КПЭ</span>
+  </div>
+</body>
+</html>

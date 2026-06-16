@@ -1,0 +1,57 @@
+<!-- @dsCard group="Бейджи" -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Квартальные бейджи</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap');
+  :root {
+    --bg: #06060f;
+    --card: rgba(255,255,255,0.04);
+    --card-border: rgba(255,255,255,0.08);
+    --text: #e8eaf6;
+    --text-dim: rgba(232,234,246,0.72);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Exo 2', sans-serif; background: var(--bg); color: var(--text); padding: 24px; }
+  .ds-cap { font-size: 11px; color: var(--text-dim); margin: 0 0 14px; letter-spacing: 0.5px; }
+
+  /* Q_COLORS (js/helpers.js): Q1 #7c6af7, Q2 #00e5ff, Q3 #00ff9d, Q4 #ffb800 */
+  .q-badge {
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+  .badge-row { display: flex; gap: 8px; margin-bottom: 28px; }
+
+  /* Row markers (.row-q*) shown for context */
+  .row-demo { display: flex; flex-direction: column; gap: 6px; max-width: 360px; }
+  .row-demo > div { padding: 9px 14px; border-radius: 6px; font-size: 13px; }
+  .row-q1 { border-left: 3px solid #7c6af7; background: rgba(124,106,247,0.04); }
+  .row-q2 { border-left: 3px solid #00e5ff; background: rgba(0,229,255,0.04); }
+  .row-q3 { border-left: 3px solid #00ff9d; background: rgba(0,255,157,0.04); }
+  .row-q4 { border-left: 3px solid #ffb800; background: rgba(255,184,0,0.04); }
+</style>
+</head>
+<body>
+  <div class="ds-cap">Счётчики кварталов (.q-badge) в заголовке таблицы</div>
+  <div class="badge-row">
+    <span class="q-badge" style="background:rgba(124,106,247,0.12);color:#7c6af7;border:1px solid rgba(124,106,247,0.3)">Q1: 6</span>
+    <span class="q-badge" style="background:rgba(0,229,255,0.12);color:#00e5ff;border:1px solid rgba(0,229,255,0.3)">Q2: 14</span>
+    <span class="q-badge" style="background:rgba(0,255,157,0.12);color:#00ff9d;border:1px solid rgba(0,255,157,0.3)">Q3: 9</span>
+    <span class="q-badge" style="background:rgba(255,184,0,0.12);color:#ffb800;border:1px solid rgba(255,184,0,0.3)">Q4: 3</span>
+  </div>
+
+  <div class="ds-cap">Маркировка строк таблицы по кварталу дедлайна (.row-q1–.row-q4)</div>
+  <div class="row-demo">
+    <div class="row-q1">Q1 · янв–март — фиолетовый</div>
+    <div class="row-q2">Q2 · апр–июнь — циан</div>
+    <div class="row-q3">Q3 · июл–сент — зелёный</div>
+    <div class="row-q4">Q4 · окт–дек — жёлтый</div>
+  </div>
+</body>
+</html>

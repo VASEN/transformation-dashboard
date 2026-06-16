@@ -1,0 +1,74 @@
+<!-- @dsCard group="Навигация" -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Нижняя мобильная панель</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap');
+  :root {
+    --bg: #06060f;
+    --card-border: rgba(255,255,255,0.08);
+    --accent: #00e5ff;
+    --text: #e8eaf6;
+    --text-dim: rgba(232,234,246,0.72);
+    --glow: 0 0 20px rgba(0,229,255,0.25);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Exo 2', sans-serif; background: var(--bg); color: var(--text); padding: 24px; }
+  .ds-cap { font-size: 11px; color: var(--text-dim); margin-bottom: 14px; }
+
+  /* .bottom-nav lifted out of @media(max-width:640px) for standalone preview;
+     in the app it is display:none on desktop and display:flex on phones. */
+  .phone-frame { max-width: 380px; border: 1px solid var(--card-border); border-radius: 16px; overflow: hidden; }
+  .phone-body { height: 120px; background: rgba(255,255,255,0.02); }
+
+  .bottom-nav {
+    display: flex;
+    position: relative;          /* fixed in the real app */
+    left: 0; right: 0; bottom: 0;
+    z-index: 50;
+    background: rgba(10,10,26,0.96);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--card-border);
+    padding: 6px 4px;
+  }
+  .bottom-tab {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 6px 4px;
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    font-family: 'Exo 2', sans-serif;
+    cursor: pointer;
+  }
+  .bottom-tab .bottom-tab-ico { font-size: 18px; line-height: 1; }
+  .bottom-tab .bottom-tab-lbl { font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; font-weight: 600; }
+  .bottom-tab.active { color: var(--accent); text-shadow: var(--glow); }
+</style>
+</head>
+<body>
+  <div class="ds-cap">Нижняя навигация (моб., ≤640px) — 3 кнопки, одна .active</div>
+  <div class="phone-frame">
+    <div class="phone-body"></div>
+    <nav class="bottom-nav" aria-label="Мобильная навигация">
+      <button class="bottom-tab active">
+        <span class="bottom-tab-ico" aria-hidden="true">▣</span>
+        <span class="bottom-tab-lbl">Обзор</span>
+      </button>
+      <button class="bottom-tab">
+        <span class="bottom-tab-ico" aria-hidden="true">≣</span>
+        <span class="bottom-tab-lbl">Детали</span>
+      </button>
+      <button class="bottom-tab">
+        <span class="bottom-tab-ico" aria-hidden="true">✓</span>
+        <span class="bottom-tab-lbl">Задачи</span>
+      </button>
+    </nav>
+  </div>
+</body>
+</html>

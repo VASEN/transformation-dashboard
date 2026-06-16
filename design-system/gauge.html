@@ -1,0 +1,85 @@
+<!-- @dsCard group="Высвобождение" -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Gauge (полукруг)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap');
+  :root {
+    --bg: #06060f;
+    --card-border: rgba(255,255,255,0.08);
+    --accent: #00e5ff;
+    --accent3: #00ff9d;
+    --danger: #ff3b5c;
+    --text: #e8eaf6;
+    --text-dim: rgba(232,234,246,0.72);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Exo 2', sans-serif; background: var(--bg); color: var(--text); padding: 24px; }
+  .ds-row { display: flex; gap: 20px; flex-wrap: wrap; }
+
+  .gauge-card {
+    position: relative;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    width: 180px;
+  }
+  .gauge-card.highlighted {
+    box-shadow: 0 0 0 2px var(--accent), 0 0 20px rgba(0,229,255,0.25);
+    border-color: var(--accent);
+  }
+  .gauge-name { font-size: 11px; font-weight: 600; color: var(--text-dim); margin-bottom: 8px; letter-spacing: 0.5px; }
+  .gauge-wrap { position: relative; width: 110px; height: 64px; margin: 0 auto 8px; overflow: visible; }
+  .gauge-svg { width: 100%; height: 100%; overflow: visible; }
+  .ds-state { font-size: 10px; color: var(--text-dim); letter-spacing: 0.5px; }
+</style>
+</head>
+<body>
+  <div class="ds-row">
+
+    <!-- <100% → red #ff3b5c -->
+    <div class="gauge-card">
+      <div class="gauge-name">Гуляев В.А.</div>
+      <div class="gauge-wrap">
+        <svg class="gauge-svg" viewBox="0 0 100 65" role="img" aria-label="Высвобождение 92%">
+          <path d="M 10,55 A 40,40 0 0 1 90,55" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="8" stroke-linecap="round"/>
+          <path d="M 10,55 A 40,40 0 0 1 44.987,15.315" fill="none" stroke="#ff3b5c" stroke-width="8" stroke-linecap="round" style="filter:drop-shadow(0 0 6px #ff3b5c)"/>
+          <text x="50" y="52" text-anchor="middle" font-family="Orbitron,sans-serif" font-size="13" font-weight="700" fill="#ff3b5c">92%</text>
+        </svg>
+      </div>
+      <div class="ds-state">&lt;100% — red</div>
+    </div>
+
+    <!-- 100–119% → cyan #00e5ff -->
+    <div class="gauge-card highlighted">
+      <div class="gauge-name">Кренёва А.А.</div>
+      <div class="gauge-wrap">
+        <svg class="gauge-svg" viewBox="0 0 100 65" role="img" aria-label="Высвобождение 110%">
+          <path d="M 10,55 A 40,40 0 0 1 90,55" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="8" stroke-linecap="round"/>
+          <path d="M 10,55 A 40,40 0 0 1 56.257,15.492" fill="none" stroke="#00e5ff" stroke-width="8" stroke-linecap="round" style="filter:drop-shadow(0 0 6px #00e5ff)"/>
+          <text x="50" y="52" text-anchor="middle" font-family="Orbitron,sans-serif" font-size="13" font-weight="700" fill="#00e5ff">110%</text>
+        </svg>
+      </div>
+      <div class="ds-state">100–119% — cyan (.highlighted)</div>
+    </div>
+
+    <!-- ≥120% → green #00ff9d -->
+    <div class="gauge-card">
+      <div class="gauge-name">Родевальд С.Е.</div>
+      <div class="gauge-wrap">
+        <svg class="gauge-svg" viewBox="0 0 100 65" role="img" aria-label="Высвобождение 134%">
+          <path d="M 10,55 A 40,40 0 0 1 90,55" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="8" stroke-linecap="round"/>
+          <path d="M 10,55 A 40,40 0 0 1 70.362,20.57" fill="none" stroke="#00ff9d" stroke-width="8" stroke-linecap="round" style="filter:drop-shadow(0 0 6px #00ff9d)"/>
+          <text x="50" y="52" text-anchor="middle" font-family="Orbitron,sans-serif" font-size="13" font-weight="700" fill="#00ff9d">134%</text>
+        </svg>
+      </div>
+      <div class="ds-state">≥120% — green</div>
+    </div>
+
+  </div>
+</body>
+</html>
