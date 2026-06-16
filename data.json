@@ -1,5 +1,10 @@
 {
-  "updated_at": "16.06.2026 02:44",
+  "updated_at": "16.06.2026 09:11",
+  "config": {
+    "year": 2026,
+    "redmine_base": "https://transformation.rm.mosreg.ru/#/issues",
+    "hours_per_unit": 1972
+  },
   "summary": {
     "projects_total": 36,
     "projects_active": 21,
