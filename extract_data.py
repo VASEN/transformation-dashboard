@@ -140,6 +140,28 @@ def write_json_atomic(result, output_file):
     os.replace(tmp, output_file)
 
 
+def validate_result(result, prev=None, drop_limit=REGRESSION_DROP_LIMIT):
+    """Проверяет, что результат не пустой и не просел относительно прошлого.
+    Бросает ValueError с понятным текстом при нарушении."""
+    errs = []
+    if not result.get('projects'):
+        errs.append('нет проектов')
+    if not result.get('all_tasks'):
+        errs.append('нет задач')
+    if not result.get('curators'):
+        errs.append('нет кураторов')
+    if prev:
+        for key in ('projects', 'all_tasks'):
+            old, new = len(prev.get(key, [])), len(result.get(key, []))
+            if old and new < old * (1 - drop_limit):
+                errs.append(
+                    f'{key}: было {old}, стало {new} '
+                    f'(просадка > {int(drop_limit * 100)}%)'
+                )
+    if errs:
+        raise ValueError('Валидация data.json не пройдена: ' + '; '.join(errs))
+
+
 def extract(redmine_file=DEFAULT_REDMINE, shtatka_file=DEFAULT_SHTATKA,
             vysv_file=DEFAULT_VYSV, output_file="data.json"):
 
@@ -413,6 +435,13 @@ def extract(redmine_file=DEFAULT_REDMINE, shtatka_file=DEFAULT_SHTATKA,
         'curators':   curators,
     }
 
+    prev = None
+    if os.path.exists(output_file):
+        try:
+            prev = json.loads(Path(output_file).read_text(encoding='utf-8'))
+        except (ValueError, OSError):
+            prev = None
+    validate_result(result, prev)
     write_json_atomic(result, output_file)
 
     kb = Path(output_file).stat().st_size // 1024
