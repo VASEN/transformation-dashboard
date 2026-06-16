@@ -18,6 +18,8 @@ import argparse
 from datetime import datetime, date
 from difflib import SequenceMatcher
 
+from config import HOURS_PER_UNIT
+
 
 CLOSED_STATUSES = {'Закрыта', 'Закрыто', 'Выполнено', 'Выполнена', 'Завершена'}
 
@@ -422,7 +424,6 @@ def _render_group(out, emoji, title, projects, prev_index=None):
         if url:
             out.append(f'🔗 {url}')
 
-        HOURS_PER_UNIT = 1972
         internal = dp.get('internal_hours')
         external = dp.get('external_hours')
         lines_vysv = []
