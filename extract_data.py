@@ -45,7 +45,7 @@ VYSV_INTERNAL_COLS = COLUMN_SYNONYMS['vysv_internal']
 
 # ===== УТИЛИТЫ =====
 
-def clean_date(v):
+def clean_date(v) -> str | None:
     if pd.isna(v): return None
     s = str(v).strip()
     for fmt in ('%d.%m.%Y', '%Y-%m-%d'):
@@ -53,12 +53,12 @@ def clean_date(v):
         except: pass
     return s[:10] if len(s) >= 10 else s
 
-def clean_pct(v):
+def clean_pct(v) -> int:
     if pd.isna(v): return 0
     try: return int(float(str(v).replace('%', '').replace(',', '.').strip()))
     except: return 0
 
-def safe(v):
+def safe(v) -> str | None:
     if pd.isna(v): return None
     s = str(v).strip()
     return s if s and s != 'nan' else None
@@ -94,7 +94,7 @@ def curator_key(name):
     if not name: return None
     return canon_name(name).split()[0].lower().replace('ё', 'е')
 
-def get_urgency(deadline_str, status=None):
+def get_urgency(deadline_str, status=None) -> str:
     if status in CLOSED_STATUSES: return 'ok'
     if not deadline_str: return 'ok'
     try:
@@ -107,7 +107,7 @@ def get_urgency(deadline_str, status=None):
     except: pass
     return 'ok'
 
-def short_name(full_name):
+def short_name(full_name) -> str | None:
     """'Кренева (ККП) Анастасия Андреевна' → 'Кренева А.А.'"""
     if not full_name: return None
     s = re.sub(r'\s*\(.*?\)\s*', ' ', full_name).strip()
@@ -117,7 +117,7 @@ def short_name(full_name):
     return s
 
 
-def validate_source_columns(df, required, source_name):
+def validate_source_columns(df, required, source_name) -> None:
     """Бросает понятную ошибку, если в df нет нужных колонок (с учётом синонимов)."""
     missing = [c for c in required if resolve_column(df.columns, c) is None]
     if missing:
@@ -129,7 +129,7 @@ def validate_source_columns(df, required, source_name):
 
 # ===== ОСНОВНАЯ ЛОГИКА =====
 
-def write_json_atomic(result, output_file):
+def write_json_atomic(result, output_file) -> None:
     """Пишет JSON во временный файл, проверяет парсингом, затем атомарно
     подменяет целевой — чтобы битый результат не затирал рабочий data.json."""
     tmp = output_file + '.tmp'
@@ -140,7 +140,7 @@ def write_json_atomic(result, output_file):
     os.replace(tmp, output_file)
 
 
-def validate_result(result, prev=None, drop_limit=REGRESSION_DROP_LIMIT):
+def validate_result(result, prev=None, drop_limit=REGRESSION_DROP_LIMIT) -> None:
     """Проверяет, что результат не пустой и не просел относительно прошлого.
     Бросает ValueError с понятным текстом при нарушении."""
     errs = []
@@ -163,7 +163,7 @@ def validate_result(result, prev=None, drop_limit=REGRESSION_DROP_LIMIT):
 
 
 def extract(redmine_file=DEFAULT_REDMINE, shtatka_file=DEFAULT_SHTATKA,
-            vysv_file=DEFAULT_VYSV, output_file="data.json"):
+            vysv_file=DEFAULT_VYSV, output_file="data.json") -> None:
 
     # ── 1. Redmine выгрузка ──────────────────────────────────────────────────
     print(f"📂 Читаем {redmine_file}...")

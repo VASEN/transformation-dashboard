@@ -1,0 +1,11 @@
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+exclude = ["archive", ".superpowers"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B"]
+ignore = ["E501"]  # длинные строки в готовых f-print допустимы
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
