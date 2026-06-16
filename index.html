@@ -30,7 +30,7 @@
   <main id="main-content">
 
   <!-- ===================== SCREEN: EXEC ===================== -->
-  <div class="screen active" id="screen-exec" role="tabpanel" aria-labelledby="tab-exec" tabindex="0">
+  <div class="screen active" id="screen-exec" role="tabpanel" aria-labelledby="tab-exec">
 
     <div class="filter-bar">
       <span class="filter-label">Год</span>
@@ -48,7 +48,7 @@
         <div class="kpi-value" id="kpi-projects">—</div>
         <div class="kpi-sub" id="kpi-projects-sub">активных и закрытых</div>
         <div class="sparkline-wrap">
-          <svg class="sparkline-svg" viewBox="0 0 100 32">
+          <svg class="sparkline-svg" viewBox="0 0 100 32" aria-hidden="true">
             <polyline points="0,28 16,22 32,24 48,16 64,18 80,10 100,6"
               fill="none" stroke="var(--accent)" stroke-width="2" opacity="0.8"/>
             <polyline points="0,28 16,22 32,24 48,16 64,18 80,10 100,6 100,32 0,32"
@@ -68,7 +68,7 @@
         <div class="kpi-value" id="kpi-completion">—</div>
         <div class="kpi-sub" id="kpi-completion-sub">по активным проектам</div>
         <div class="sparkline-wrap">
-          <svg class="sparkline-svg" viewBox="0 0 100 32">
+          <svg class="sparkline-svg" viewBox="0 0 100 32" aria-hidden="true">
             <polyline points="0,20 16,18 32,22 48,12 64,10 80,8 100,4"
               fill="none" stroke="var(--accent3)" stroke-width="2" opacity="0.8"/>
             <polyline points="0,20 16,18 32,22 48,12 64,10 80,8 100,4 100,32 0,32"
@@ -88,7 +88,7 @@
         <div class="kpi-value" id="kpi-vysv">—</div>
         <div class="kpi-sub" id="kpi-vysv-sub"><span class="trend up">↑ план</span> Комитет и РЦТ</div>
         <div class="sparkline-wrap">
-          <svg class="sparkline-svg" viewBox="0 0 100 32">
+          <svg class="sparkline-svg" viewBox="0 0 100 32" aria-hidden="true">
             <polyline points="0,26 16,22 32,20 48,14 64,10 80,8 100,4"
               fill="none" stroke="var(--accent2)" stroke-width="2" opacity="0.8"/>
           </svg>
@@ -100,7 +100,7 @@
         <div class="kpi-value" id="kpi-deadline14">—</div>
         <div class="kpi-sub"><span class="trend down">↑</span> задач требуют внимания</div>
         <div class="sparkline-wrap">
-          <svg class="sparkline-svg" viewBox="0 0 100 32">
+          <svg class="sparkline-svg" viewBox="0 0 100 32" aria-hidden="true">
             <polyline points="0,28 16,26 32,28 48,24 64,20 80,16 100,10"
               fill="none" stroke="var(--warn)" stroke-width="2" opacity="0.8"/>
           </svg>
@@ -112,7 +112,7 @@
         <div class="kpi-value" id="kpi-overdue">—</div>
         <div class="kpi-sub" id="kpi-overdue-sub"><span class="trend up">✓</span> Всё в норме</div>
         <div class="sparkline-wrap">
-          <svg class="sparkline-svg" viewBox="0 0 100 32">
+          <svg class="sparkline-svg" viewBox="0 0 100 32" aria-hidden="true">
             <polyline points="0,16 20,16 20,8 40,8 60,16 80,16 100,16"
               fill="none" stroke="var(--danger)" stroke-width="2" opacity="0.4"/>
           </svg>
@@ -187,7 +187,7 @@
   </div>
 
   <!-- ===================== SCREEN: TASKS ===================== -->
-  <div class="screen" id="screen-tasks" role="tabpanel" aria-labelledby="tab-tasks" tabindex="0">
+  <div class="screen" id="screen-tasks" role="tabpanel" aria-labelledby="tab-tasks">
     <div class="tasks-stats" aria-live="polite">
       <div class="stat-pill selected" id="spill-all" style="--c:var(--accent)" data-filter="all"><span class="stat-pill-val" id="tasks-stat-total">—</span><div class="stat-pill-label">Всего задач</div></div>
       <div class="stat-pill" id="spill-active" style="--c:var(--accent2)" data-filter="active"><span class="stat-pill-val" id="tasks-stat-active">—</span><div class="stat-pill-label">В работе</div></div>
@@ -224,7 +224,7 @@
   </div>
 
   <!-- ===================== SCREEN: DETAIL ===================== -->
-  <div class="screen" id="screen-detail" role="tabpanel" aria-labelledby="tab-detail" tabindex="0">
+  <div class="screen" id="screen-detail" role="tabpanel" aria-labelledby="tab-detail">
     <div class="filter-bar">
       <span class="filter-label">Проект</span>
       <select class="filter-select" id="detailSelect" aria-label="Выбор проекта для детализации">
