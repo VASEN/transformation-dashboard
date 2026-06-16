@@ -12,7 +12,7 @@
     --warn: #ffb800;
     --danger: #ff3b5c;
     --text: #e8eaf6;
-    --text-dim: rgba(232,234,246,0.5);
+    --text-dim: rgba(232,234,246,0.72);
     --glow: 0 0 20px rgba(0,229,255,0.25);
     --glow2: 0 0 20px rgba(180,79,255,0.25);
   }
@@ -912,3 +912,17 @@
     /* скрыть верхние вкладки-кнопки на телефоне, оставив логотип + timestamp */
     .nav .tab { display: none; }
   }
+
+/* === FOCUS (keyboard) === */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+.tab:focus-visible,
+.bottom-tab:focus-visible,
+.stat-pill:focus-visible,
+.gauge-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
