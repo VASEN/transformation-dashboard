@@ -1,0 +1,31 @@
+<!-- @dsCard group="Бейджи" -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Приоритет-звезда</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap');
+  :root {
+    --bg: #06060f;
+    --warn: #ffb800;
+    --text: #e8eaf6;
+    --text-dim: rgba(232,234,246,0.72);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Exo 2', sans-serif; background: var(--bg); color: var(--text); padding: 24px; }
+  .ds-cap { font-size: 11px; color: var(--text-dim); margin: 0 0 14px; letter-spacing: 0.5px; }
+  .ds-line { font-size: 14px; margin-bottom: 12px; }
+
+  /* PRIORITY_STAR markup: <span class="priority-marker">★</span> */
+  .priority-marker { color: var(--warn); margin-right: 4px; }
+</style>
+</head>
+<body>
+  <div class="ds-cap">Маркер приоритетного проекта (is_priority = true)</div>
+
+  <div class="ds-line"><span class="priority-marker" title="Приоритетный проект">★</span>Электронные ДС с ПИК</div>
+  <div class="ds-line"><span class="priority-marker" title="Приоритетный проект">★</span>Цифровой профиль гражданина</div>
+  <div class="ds-line" style="color:var(--text-dim)">Обычный проект (без звезды)</div>
+</body>
+</html>

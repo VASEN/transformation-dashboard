@@ -1,0 +1,66 @@
+<!-- @dsCard group="Таблицы" -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Прогресс-бар</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap');
+  :root {
+    --bg: #06060f;
+    --accent3: #00ff9d;
+    --warn: #ffb800;
+    --danger: #ff3b5c;
+    --text: #e8eaf6;
+    --text-dim: rgba(232,234,246,0.72);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Exo 2', sans-serif; background: var(--bg); color: var(--text); padding: 24px; }
+
+  .progress-wrap { display: flex; align-items: center; gap: 8px; min-width: 120px; max-width: 240px; }
+  .progress-bar { flex: 1; height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 3px; transition: width 0.6s cubic-bezier(0.4,0,0.2,1); position: relative; }
+  .progress-fill::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 50%;
+    transform: translateY(-50%);
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: inherit;
+    box-shadow: 0 0 6px currentColor;
+  }
+  .progress-pct { font-size: 11px; font-weight: 700; min-width: 28px; text-align: right; }
+
+  .ds-item { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }
+  .ds-label { width: 200px; font-size: 12px; color: var(--text-dim); }
+</style>
+</head>
+<body>
+
+  <div class="ds-item">
+    <div class="ds-label">25% — red (pct ≤ 30)</div>
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" style="width:25%;background:#ff3b5c"></div></div>
+      <span class="progress-pct" style="color:#ff3b5c">25%</span>
+    </div>
+  </div>
+
+  <div class="ds-item">
+    <div class="ds-label">55% — warn (pct ≤ 70)</div>
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" style="width:55%;background:#ffb800"></div></div>
+      <span class="progress-pct" style="color:#ffb800">55%</span>
+    </div>
+  </div>
+
+  <div class="ds-item">
+    <div class="ds-label">85% — green (pct &gt; 70)</div>
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" style="width:85%;background:#00ff9d"></div></div>
+      <span class="progress-pct" style="color:#00ff9d">85%</span>
+    </div>
+  </div>
+
+</body>
+</html>

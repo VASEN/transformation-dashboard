@@ -1,0 +1,48 @@
+<!-- @dsCard group="Бейджи" -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Статус-бейдж</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap');
+  :root {
+    --bg: #06060f;
+    --accent: #00e5ff;
+    --accent3: #00ff9d;
+    --text: #e8eaf6;
+    --text-dim: rgba(232,234,246,0.72);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Exo 2', sans-serif; background: var(--bg); color: var(--text); padding: 24px; }
+  .ds-row { display: flex; gap: 28px; align-items: center; flex-wrap: wrap; }
+  .ds-item { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+  .ds-cap { font-size: 10px; color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase; }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .status-badge::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+  .status-badge.active { background: rgba(0,229,255,0.1); color: var(--accent); }
+  .status-badge.done { background: rgba(0,255,157,0.1); color: var(--accent3); }
+</style>
+</head>
+<body>
+  <div class="ds-row">
+    <div class="ds-item">
+      <span class="status-badge active">В работе</span>
+      <span class="ds-cap">.active — активный проект</span>
+    </div>
+    <div class="ds-item">
+      <span class="status-badge done">Закрыта</span>
+      <span class="ds-cap">.done — завершён</span>
+    </div>
+  </div>
+</body>
+</html>

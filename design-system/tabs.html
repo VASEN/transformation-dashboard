@@ -1,0 +1,70 @@
+<!-- @dsCard group="Навигация" -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Верхние вкладки</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap');
+  :root {
+    --bg: #06060f;
+    --card-border: rgba(255,255,255,0.08);
+    --accent: #00e5ff;
+    --text: #e8eaf6;
+    --text-dim: rgba(232,234,246,0.72);
+    --glow: 0 0 20px rgba(0,229,255,0.25);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Exo 2', sans-serif; background: var(--bg); color: var(--text); padding: 24px; }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 16px 24px 0;
+    border-bottom: 1px solid var(--card-border);
+  }
+  .nav-logo {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: 14px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    text-shadow: var(--glow);
+    margin-right: 24px;
+    text-transform: uppercase;
+  }
+  .tab {
+    padding: 10px 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: none;
+    background: transparent;
+    color: var(--text-dim);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    font-family: 'Exo 2', sans-serif;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    text-shadow: var(--glow);
+  }
+  .separator { flex: 1; }
+</style>
+</head>
+<body>
+  <nav class="nav" role="tablist" aria-label="Основная навигация">
+    <div class="nav-logo">РМ</div>
+    <button class="tab active">Обзор</button>
+    <button class="tab">Детализация</button>
+    <button class="tab">Задачи</button>
+    <span class="separator"></span>
+    <span style="font-size:11px;color:var(--text-dim);padding-bottom:10px">Обновлено: 16.06.2026 02:44</span>
+  </nav>
+</body>
+</html>

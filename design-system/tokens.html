@@ -1,0 +1,86 @@
+<!-- @dsCard group="Токены" -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Токены — палитра и типографика</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap');
+  :root {
+    --bg: #06060f;
+    --bg2: #0d0d1e;
+    --bg3: #12122a;
+    --card: rgba(255,255,255,0.04);
+    --card-border: rgba(255,255,255,0.08);
+    --accent: #00e5ff;
+    --accent2: #b44fff;
+    --accent3: #00ff9d;
+    --warn: #ffb800;
+    --danger: #ff3b5c;
+    --text: #e8eaf6;
+    --text-dim: rgba(232,234,246,0.72);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Exo 2', sans-serif; background: var(--bg); color: var(--text); padding: 24px; }
+
+  h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent); margin: 0 0 16px;
+  }
+  section { margin-bottom: 36px; }
+
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+  .swatch {
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--card);
+  }
+  .swatch .chip { height: 64px; }
+  .swatch .meta { padding: 8px 10px; }
+  .swatch .name { font-size: 11px; font-weight: 700; }
+  .swatch .hex { font-family: 'Orbitron', sans-serif; font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+
+  .type-row { margin-bottom: 18px; }
+  .type-label { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 4px; }
+  .orb { font-family: 'Orbitron', sans-serif; }
+  .exo { font-family: 'Exo 2', sans-serif; }
+</style>
+</head>
+<body>
+
+  <section>
+    <h2>Палитра</h2>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:#06060f;border-bottom:1px solid var(--card-border)"></div><div class="meta"><div class="name">--bg</div><div class="hex">#06060f</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#0d0d1e"></div><div class="meta"><div class="name">--bg2</div><div class="hex">#0d0d1e</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#12122a"></div><div class="meta"><div class="name">--bg3</div><div class="hex">#12122a</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#00e5ff"></div><div class="meta"><div class="name">--accent (cyan)</div><div class="hex">#00e5ff</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#b44fff"></div><div class="meta"><div class="name">--accent2 (purple)</div><div class="hex">#b44fff</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#00ff9d"></div><div class="meta"><div class="name">--accent3 (green)</div><div class="hex">#00ff9d</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#ffb800"></div><div class="meta"><div class="name">--warn</div><div class="hex">#ffb800</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#ff3b5c"></div><div class="meta"><div class="name">--danger</div><div class="hex">#ff3b5c</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#e8eaf6"></div><div class="meta"><div class="name">--text</div><div class="hex">#e8eaf6</div></div></div>
+      <div class="swatch"><div class="chip" style="background:rgba(232,234,246,0.72)"></div><div class="meta"><div class="name">--text-dim</div><div class="hex">rgba(232,234,246,.72)</div></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Типографика — Orbitron (заголовки / числа)</h2>
+    <div class="type-row"><div class="type-label">42px / 700 — KPI value</div><div class="orb" style="font-size:42px;font-weight:700;color:var(--accent)">68%</div></div>
+    <div class="type-row"><div class="type-label">28px / 700 — stat-pill value</div><div class="orb" style="font-size:28px;font-weight:700;color:var(--accent3)">214</div></div>
+    <div class="type-row"><div class="type-label">14px / 900 — nav-logo</div><div class="orb" style="font-size:14px;font-weight:900;letter-spacing:3px;color:var(--accent)">РМ</div></div>
+    <div class="type-row"><div class="type-label">11px / 700 — section-title (uppercase)</div><div class="orb" style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent)">Проекты — Готовность</div></div>
+  </section>
+
+  <section>
+    <h2>Типографика — Exo 2 (текст)</h2>
+    <div class="type-row"><div class="type-label">15px / 600 — info-value</div><div class="exo" style="font-size:15px;font-weight:600">Электронные ДС с ПИК</div></div>
+    <div class="type-row"><div class="type-label">13px / 400 — table cell</div><div class="exo" style="font-size:13px">Согласование макетов с подрядчиком</div></div>
+    <div class="type-row"><div class="type-label">12px / 600 — tab (uppercase)</div><div class="exo" style="font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase">Детализация</div></div>
+    <div class="type-row"><div class="type-label">10px / 700 — label (uppercase, dim)</div><div class="exo" style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim)">Всего проектов</div></div>
+  </section>
+
+</body>
+</html>

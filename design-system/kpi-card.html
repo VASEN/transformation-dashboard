@@ -1,0 +1,110 @@
+<!-- @dsCard group="Карточки" -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>KPI-карточка</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap');
+  :root {
+    --bg: #06060f;
+    --card: rgba(255,255,255,0.04);
+    --card-border: rgba(255,255,255,0.08);
+    --accent: #00e5ff;
+    --accent2: #b44fff;
+    --accent3: #00ff9d;
+    --warn: #ffb800;
+    --danger: #ff3b5c;
+    --text: #e8eaf6;
+    --text-dim: rgba(232,234,246,0.72);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Exo 2', sans-serif; background: var(--bg); color: var(--text); padding: 24px; }
+  .ds-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+
+  .kpi-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: default;
+  }
+  .kpi-card:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--c, var(--accent));
+    box-shadow: 0 0 12px var(--c, var(--accent));
+  }
+  .kpi-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--text-dim); margin-bottom: 10px;
+  }
+  .kpi-value {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 36px; font-weight: 700;
+    color: var(--c, var(--accent));
+    text-shadow: 0 0 20px var(--c, var(--accent));
+    line-height: 1; margin-bottom: 8px;
+  }
+  .kpi-sub { font-size: 12px; color: var(--text-dim); display: flex; align-items: center; gap: 6px; }
+  .trend {
+    display: inline-flex; align-items: center; gap: 2px;
+    font-weight: 700; font-size: 11px; padding: 2px 6px; border-radius: 4px;
+  }
+  .trend.up { background: rgba(0,255,157,0.15); color: var(--accent3); }
+  .trend.down { background: rgba(255,59,92,0.15); color: var(--danger); }
+  .sparkline-wrap { margin-top: 12px; }
+  .sparkline-svg { width: 100%; height: 32px; }
+</style>
+</head>
+<body>
+  <div class="ds-row">
+
+    <div class="kpi-card" style="--c: var(--accent)">
+      <div class="kpi-label">Всего проектов</div>
+      <div class="kpi-value">42</div>
+      <div class="kpi-sub">активных и закрытых</div>
+      <div class="sparkline-wrap">
+        <svg class="sparkline-svg" viewBox="0 0 100 32" aria-hidden="true">
+          <polyline points="0,28 16,22 32,24 48,16 64,18 80,10 100,6" fill="none" stroke="var(--accent)" stroke-width="2" opacity="0.8"/>
+          <polyline points="0,28 16,22 32,24 48,16 64,18 80,10 100,6 100,32 0,32" fill="url(#g1)" opacity="0.15"/>
+          <defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--accent)"/><stop offset="100%" stop-color="transparent"/></linearGradient></defs>
+        </svg>
+      </div>
+    </div>
+
+    <div class="kpi-card" style="--c: var(--accent3)">
+      <div class="kpi-label">Готовность (ср.)</div>
+      <div class="kpi-value">68%</div>
+      <div class="kpi-sub"><span class="trend up">↑ 4%</span> по активным проектам</div>
+      <div class="sparkline-wrap">
+        <svg class="sparkline-svg" viewBox="0 0 100 32" aria-hidden="true">
+          <polyline points="0,20 16,18 32,22 48,12 64,10 80,8 100,4" fill="none" stroke="var(--accent3)" stroke-width="2" opacity="0.8"/>
+          <polyline points="0,20 16,18 32,22 48,12 64,10 80,8 100,4 100,32 0,32" fill="url(#g2)" opacity="0.15"/>
+          <defs><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--accent3)"/><stop offset="100%" stop-color="transparent"/></linearGradient></defs>
+        </svg>
+      </div>
+    </div>
+
+    <div class="kpi-card" style="--c: var(--danger)">
+      <div class="kpi-label">Просрочено</div>
+      <div class="kpi-value">7</div>
+      <div class="kpi-sub"><span class="trend down">↑</span> задач требуют внимания</div>
+      <div class="sparkline-wrap">
+        <svg class="sparkline-svg" viewBox="0 0 100 32" aria-hidden="true">
+          <polyline points="0,8 16,12 32,10 48,16 64,14 80,22 100,26" fill="none" stroke="var(--danger)" stroke-width="2" opacity="0.8"/>
+          <polyline points="0,8 16,12 32,10 48,16 64,14 80,22 100,26 100,32 0,32" fill="url(#g3)" opacity="0.15"/>
+          <defs><linearGradient id="g3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--danger)"/><stop offset="100%" stop-color="transparent"/></linearGradient></defs>
+        </svg>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

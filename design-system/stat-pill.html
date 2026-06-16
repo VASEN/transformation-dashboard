@@ -1,0 +1,86 @@
+<!-- @dsCard group="Карточки" -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Stat-pill</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap');
+  :root {
+    --bg: #06060f;
+    --card: rgba(255,255,255,0.04);
+    --card-border: rgba(255,255,255,0.08);
+    --accent: #00e5ff;
+    --accent3: #00ff9d;
+    --warn: #ffb800;
+    --danger: #ff3b5c;
+    --text: #e8eaf6;
+    --text-dim: rgba(232,234,246,0.72);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Exo 2', sans-serif; background: var(--bg); color: var(--text); padding: 24px; }
+  .tasks-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+
+  .stat-pill {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    user-select: none;
+  }
+  .stat-pill:hover { background: rgba(255,255,255,0.05); }
+  .stat-pill.selected {
+    border-color: var(--c, var(--accent));
+    background: rgba(0,229,255,0.07);
+    box-shadow: 0 0 10px rgba(0,229,255,0.12);
+  }
+  .stat-pill-val {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 28px; font-weight: 700; display: block;
+    color: var(--c, var(--accent));
+    text-shadow: 0 0 16px var(--c, var(--accent));
+  }
+  .stat-pill-label {
+    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--text-dim); margin-top: 4px;
+  }
+  .ds-cap { font-size: 11px; color: var(--text-dim); margin: 18px 0 6px; letter-spacing: 1px; text-transform: uppercase; }
+</style>
+</head>
+<body>
+  <div class="ds-cap">Состояние по умолчанию · одна выбрана (.selected)</div>
+  <div class="tasks-stats">
+    <div class="stat-pill selected" style="--c: var(--accent)">
+      <span class="stat-pill-val">214</span>
+      <div class="stat-pill-label">Всего задач</div>
+    </div>
+    <div class="stat-pill" style="--c: var(--accent3)">
+      <span class="stat-pill-val">87</span>
+      <div class="stat-pill-label">В работе</div>
+    </div>
+    <div class="stat-pill" style="--c: var(--danger)">
+      <span class="stat-pill-val">7</span>
+      <div class="stat-pill-label">Просрочено</div>
+    </div>
+  </div>
+
+  <div class="ds-cap">Цветовые варианты</div>
+  <div class="tasks-stats">
+    <div class="stat-pill" style="--c: var(--warn)">
+      <span class="stat-pill-val">31</span>
+      <div class="stat-pill-label">Дедлайн ≤14 дн</div>
+    </div>
+    <div class="stat-pill" style="--c: var(--accent3)">
+      <span class="stat-pill-val">109</span>
+      <div class="stat-pill-label">Закрыто</div>
+    </div>
+    <div class="stat-pill" style="--c: var(--accent)">
+      <span class="stat-pill-val">42</span>
+      <div class="stat-pill-label">Проекты</div>
+    </div>
+  </div>
+</body>
+</html>
