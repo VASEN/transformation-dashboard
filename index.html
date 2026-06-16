@@ -38,11 +38,11 @@
       <span class="filter-label" style="margin-left:16px">Ответственный</span>
       <select class="filter-select" id="ownerFilter" aria-label="Фильтр по ответственному"><option value="all">Все</option></select>
       <span class="separator"></span>
-      <div class="badge-row" id="status-badges-row"></div>
+      <div class="badge-row" id="status-badges-row" aria-live="polite"></div>
     </div>
 
     <!-- KPI CARDS -->
-    <div class="exec-grid">
+    <div class="exec-grid" aria-live="polite">
       <div class="kpi-card" style="--c: var(--accent)">
         <div class="kpi-label">Всего проектов</div>
         <div class="kpi-value" id="kpi-projects">—</div>
@@ -125,7 +125,7 @@
       <div class="section-card">
         <div class="section-header">
           <span class="section-title">Проекты — Готовность</span>
-          <div id="qBadgesRow" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+          <div id="qBadgesRow" style="display:flex;gap:6px;flex-wrap:wrap" aria-live="polite"></div>
         </div>
         <table class="proj-table">
           <thead>
@@ -188,7 +188,7 @@
 
   <!-- ===================== SCREEN: TASKS ===================== -->
   <div class="screen" id="screen-tasks" role="tabpanel" aria-labelledby="tab-tasks" tabindex="0">
-    <div class="tasks-stats">
+    <div class="tasks-stats" aria-live="polite">
       <div class="stat-pill selected" id="spill-all" style="--c:var(--accent)" data-filter="all"><span class="stat-pill-val" id="tasks-stat-total">—</span><div class="stat-pill-label">Всего задач</div></div>
       <div class="stat-pill" id="spill-active" style="--c:var(--accent2)" data-filter="active"><span class="stat-pill-val" id="tasks-stat-active">—</span><div class="stat-pill-label">В работе</div></div>
       <div class="stat-pill" id="spill-closed" style="--c:var(--accent3)" data-filter="closed"><span class="stat-pill-val" id="tasks-stat-closed">—</span><div class="stat-pill-label">Закрыто</div></div>

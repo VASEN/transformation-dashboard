@@ -9,7 +9,7 @@ function _gaugeSVG(pct_vysv) {
   const a0 = -Math.PI, a1 = a0 + pct * Math.PI;
   const x1 = cx + radius * Math.cos(a0), y1 = cy + radius * Math.sin(a0);
   const x2 = cx + radius * Math.cos(a1), y2 = cy + radius * Math.sin(a1);
-  return `<svg class="gauge-svg" viewBox="0 0 100 65">
+  return `<svg class="gauge-svg" viewBox="0 0 100 65" role="img" aria-label="Высвобождение ${pct_vysv}%">
     <path d="M ${cx-radius},${cy} A ${radius},${radius} 0 0 1 ${cx+radius},${cy}"
       fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="8" stroke-linecap="round"/>
     <path d="M ${x1},${y1} A ${radius},${radius} 0 0 1 ${x2},${y2}"
