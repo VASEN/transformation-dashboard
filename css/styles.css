@@ -825,6 +825,57 @@
     /* секция-хедеры переносят бейджи */
     .section-header { flex-wrap: wrap; gap: 8px; }
 
+    /* table → cards reflow */
+    .table-scroll { max-height: none; overflow: visible; }
+    .task-table, .proj-table { border-collapse: collapse; }
+    .task-table thead, .proj-table thead {
+      position: absolute; left: -9999px; top: -9999px;   /* visually hide, keep for SR */
+    }
+    .task-table tr, .proj-table tr {
+      display: block;
+      margin: 0 12px 12px;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 8px 4px;
+    }
+    .task-table td, .proj-table td {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 6px 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      text-align: right;
+      white-space: normal;          /* override inline nowrap on "Тема" */
+      max-width: none;
+      overflow: visible;
+      text-overflow: clip;
+    }
+    .task-table td:last-child, .proj-table td:last-child {
+      border-bottom: none;
+      width: auto;                  /* override desktop fixed width on last col */
+    }
+    .task-table td::before, .proj-table td::before {
+      content: attr(data-label);
+      flex: 0 0 auto;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-align: left;
+    }
+    /* ячейки без метки (нет data-label) — не показывать пустой ::before */
+    .task-table td:not([data-label])::before,
+    .proj-table td:not([data-label])::before { content: none; }
+
+    /* hover/sticky thead неактуальны на карточках */
+    .task-table th { position: static; }
+
+    /* прогресс-бар в карточке — даём ему ширину */
+    .proj-table .progress-wrap { min-width: 140px; }
+
     /* запас под нижнюю навигацию (Task 3) */
     .app { padding-bottom: 64px; }
 
