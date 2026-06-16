@@ -6,3 +6,6 @@
 # macOS / прочий мусор
 .DS_Store
 data.json.bak
+
+# Визуальный компаньон brainstorming
+.superpowers/
