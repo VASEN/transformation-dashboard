@@ -1,0 +1,997 @@
+// ===== STATE =====
+let allProjects = [];
+let allTasks = [];
+let allTasks2026 = [];
+let allDetails = [];
+let allCurators = [];
+let CONFIG = {
+  year: 2026,
+  hoursPerUnit: 1972,
+  redmineBase: 'https://transformation.rm.mosreg.ru/#/issues',
+};
+
+// ===== HELPERS =====
+function escapeHTML(s) {
+  if (s == null) return '';
+  return String(s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function getProgressColor(pct) {
+  if (pct <= 30) return '#ff3b5c';
+  if (pct <= 70) return '#ffb800';
+  return '#00ff9d';
+}
+
+function getGaugeColor(pct) {
+  if (pct >= 120) return '#00ff9d';
+  if (pct >= 100) return '#00e5ff';
+  return '#ff3b5c';
+}
+
+// Assign a stable color per project name
+const PROJECT_PALETTE = [
+  { bg: 'rgba(0,229,255,0.12)', color: '#00e5ff' },
+  { bg: 'rgba(180,79,255,0.12)', color: '#b44fff' },
+  { bg: 'rgba(0,255,157,0.12)', color: '#00ff9d' },
+  { bg: 'rgba(255,184,0,0.12)', color: '#ffb800' },
+  { bg: 'rgba(255,59,92,0.12)', color: '#ff3b5c' },
+  { bg: 'rgba(100,180,255,0.12)', color: '#64b4ff' },
+];
+const projectColorCache = {};
+let paletteIdx = 0;
+function getProjectStyle(name) {
+  if (!projectColorCache[name]) {
+    projectColorCache[name] = PROJECT_PALETTE[paletteIdx % PROJECT_PALETTE.length];
+    paletteIdx++;
+  }
+  return projectColorCache[name];
+}
+
+// ===== HELPERS: parse date dd.mm.yyyy → Date =====
+function parseDate(str) {
+  if (!str) return new Date(9999, 0, 1);
+  const [dd, mm, yyyy] = str.split('.');
+  return new Date(+yyyy, +mm - 1, +dd);
+}
+
+// ===== HELPERS: quarter from deadline =====
+function getQuarter(deadlineStr) {
+  if (!deadlineStr) return null;
+  const month = parseInt((deadlineStr.split('.'))[1], 10);
+  if (!month) return null;
+  return month <= 3 ? 1 : month <= 6 ? 2 : month <= 9 ? 3 : 4;
+}
+
+const Q_COLORS = {
+  1: { color: '#7c6af7', bg: 'rgba(124,106,247,0.12)', border: 'rgba(124,106,247,0.3)' },
+  2: { color: '#00e5ff', bg: 'rgba(0,229,255,0.12)',   border: 'rgba(0,229,255,0.3)' },
+  3: { color: '#00ff9d', bg: 'rgba(0,255,157,0.12)',   border: 'rgba(0,255,157,0.3)' },
+  4: { color: '#ffb800', bg: 'rgba(255,184,0,0.12)',   border: 'rgba(255,184,0,0.3)' },
+};
+const CLOSED_STATUSES = new Set(['Закрыта', 'Закрыто', 'Выполнено', 'Выполнена', 'Завершена']);
+const PRIORITY_STAR = '<span class="priority-marker" title="Приоритетный проект">★</span>';
+const byDeadline = (a, b) => parseDate(a.deadline) - parseDate(b.deadline);
+
+// ===== RENDER: PROJ TABLE (exec mini) =====
+function renderProjTable(projects) {
+  const body = document.getElementById('projTableBody');
+
+  const closed = projects.filter(p => CLOSED_STATUSES.has(p.status)).sort(byDeadline);
+  const active = projects.filter(p => !CLOSED_STATUSES.has(p.status)).sort(byDeadline);
+
+  const qCounts = {1:0, 2:0, 3:0, 4:0};
+  active.forEach(p => { const q = getQuarter(p.deadline); if (q) qCounts[q]++; });
+
+  const renderRow = (p, isClosed) => {
+    const q = getQuarter(p.deadline);
+    const rowClass = isClosed ? 'row-closed' : (q ? `row-q${q}` : '');
+    const pctDisplay = isClosed
+      ? `<span style="color:#4caf50;font-weight:700;font-size:12px">✓ Завершён</span>`
+      : `<div class="progress-wrap">
+           <div class="progress-bar">
+             <div class="progress-fill" style="width:${p.pct}%;background:${getProgressColor(p.pct)}"></div>
+           </div>
+           <span class="progress-pct" style="color:${getProgressColor(p.pct)}">${p.pct}%</span>
+         </div>`;
+    return `
+      <tr data-name="${escapeHTML(p.name)}"${rowClass ? ` class="${rowClass}"` : ''} style="cursor:pointer" title="Двойной клик — детализация">
+        <td>${p.is_priority ? PRIORITY_STAR : ''}${escapeHTML(p.name)}</td>
+        <td style="color:var(--text-dim);font-size:12px">${escapeHTML(p.owner_short || p.person || '—')}</td>
+        <td style="color:var(--text-dim);font-size:12px">${p.deadline || '—'}</td>
+        <td>${pctDisplay}</td>
+      </tr>`;
+  };
+
+  body.innerHTML = [
+    ...closed.map(p => renderRow(p, true)),
+    ...active.map(p => renderRow(p, false))
+  ].join('');
+
+  // Update quarter badges (only active)
+  const badgesRow = document.getElementById('qBadgesRow');
+  if (badgesRow) {
+    badgesRow.innerHTML = [1,2,3,4].map(q => {
+      const c = Q_COLORS[q];
+      return `<span class="q-badge" style="background:${c.bg};color:${c.color};border:1px solid ${c.border}">Q${q}: ${qCounts[q]}</span>`;
+    }).join('');
+  }
+
+  // Add double-click handlers
+  body.querySelectorAll('tr').forEach(tr => {
+    tr.addEventListener('dblclick', () => goToDetail(tr.dataset.name));
+  });
+}
+
+// ===== RENDER: FULL PROJECTS TABLE =====
+function renderFullProjTable(projects, filter = 'all') {
+  const body = document.getElementById('fullProjTable');
+  const overdueProjects = new Set(allTasks.filter(t => t.urgency === 'overdue' && !CLOSED_STATUSES.has(t.status)).map(t => t.project));
+  const todayProjects   = new Set(allTasks.filter(t => t.urgency === 'today'   && !CLOSED_STATUSES.has(t.status)).map(t => t.project));
+  const filtered = filter === 'all' ? projects : projects.filter(p => p.status === filter);
+
+  body.innerHTML = filtered.map((p, i) => {
+    const isActive = p.status === 'В работе';
+    const rowClass = overdueProjects.has(p.name) ? 'row-overdue'
+      : todayProjects.has(p.name) ? 'row-today'
+      : '';
+    return `
+      <tr data-name="${escapeHTML(p.name)}"${rowClass ? ' class="' + rowClass + '"' : ''} style="cursor:pointer" title="Двойной клик — детализация">
+        <td style="color:var(--text-dim);font-size:11px">${i + 1}</td>
+        <td>${p.is_priority ? PRIORITY_STAR : ''}${escapeHTML(p.name)}</td>
+        <td><span class="status-badge ${isActive ? 'active' : 'done'}">${escapeHTML(p.status)}</span></td>
+        <td style="color:var(--text-dim);font-size:12px">${escapeHTML(p.owner_short || p.person || '—')}</td>
+        <td style="color:var(--text-dim);font-size:12px">${p.deadline || '—'}</td>
+        <td>
+          <div class="progress-wrap">
+            <div class="progress-bar">
+              <div class="progress-fill" style="width:${p.pct}%;background:${getProgressColor(p.pct)}"></div>
+            </div>
+            <span class="progress-pct" style="color:${getProgressColor(p.pct)}">${p.pct}%</span>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+
+  // Add double-click handlers
+  body.querySelectorAll('tr').forEach(tr => {
+    tr.addEventListener('dblclick', () => goToDetail(tr.dataset.name));
+  });
+}
+
+// ===== RENDER: VYSV BLOCK =====
+function _gaugeSVG(pct_vysv) {
+  const radius = 40, cx = 50, cy = 55;
+  const color = getGaugeColor(pct_vysv);
+  const pct = Math.min(pct_vysv, 200) / 200;
+  const a0 = -Math.PI, a1 = a0 + pct * Math.PI;
+  const x1 = cx + radius * Math.cos(a0), y1 = cy + radius * Math.sin(a0);
+  const x2 = cx + radius * Math.cos(a1), y2 = cy + radius * Math.sin(a1);
+  return `<svg class="gauge-svg" viewBox="0 0 100 65">
+    <path d="M ${cx-radius},${cy} A ${radius},${radius} 0 0 1 ${cx+radius},${cy}"
+      fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="8" stroke-linecap="round"/>
+    <path d="M ${x1},${y1} A ${radius},${radius} 0 0 1 ${x2},${y2}"
+      fill="none" stroke="${color}" stroke-width="8" stroke-linecap="round"
+      style="filter:drop-shadow(0 0 6px ${color})"/>
+    <text x="50" y="52" text-anchor="middle" font-family="Orbitron,sans-serif"
+      font-size="13" font-weight="700" fill="${color}">${pct_vysv}%</text>
+  </svg>`;
+}
+
+function _vysvDetailHTML(curator) {
+  const fmtH = h => h != null ? Math.round(h).toLocaleString('ru') + ' ч' : '—';
+  const fmtN = v => v != null ? v : '—';
+  const planMinus20 = curator.plan_minus20 != null ? (Math.round(curator.plan_minus20 * 10) / 10) + ' шт.ед.' : '—';
+  const vysvUnits   = curator.vysv_units   != null ? (Math.round(curator.vysv_units * 10) / 10)   + ' шт.ед.' : '—';
+
+  const pct = curator.pct_vysv;
+  const pctColor = pct === 100 ? 'var(--warn)' : pct > 100 ? 'var(--accent3)' : 'var(--danger)';
+  const pctStr   = pct != null ? pct + '%' : '—';
+
+  const intH = curator.vysv_internal_hours;
+  const extH = curator.vysv_external_hours;
+
+  const BASE = 'min-width:0;overflow:hidden;word-break:break-word;padding:5px 8px;background:rgba(255,255,255,0.03);border-radius:6px';
+  const LBL  = 'font-size:10px;color:var(--text-dim)';
+  const VAL  = 'font-size:13px;font-weight:700;color:var(--text)';
+
+  // simple cell: label top, value bottom
+  const cell = (lbl, val) =>
+    `<div style="${BASE}">
+      <div style="${LBL};margin-bottom:2px">${lbl}</div>
+      <div style="${VAL}">${val}</div>
+    </div>`;
+
+  // combined cell: label + two sub-rows (e.g. ККП plan/fact)
+  const cellDuo = (lbl, row1lbl, row1val, row2lbl, row2val) =>
+    `<div style="${BASE}">
+      <div style="${LBL};margin-bottom:4px">${lbl}</div>
+      <div style="display:flex;justify-content:space-between;gap:4px;margin-bottom:2px">
+        <span style="font-size:10px;color:var(--text-dim)">${row1lbl}</span>
+        <span style="${VAL}">${row1val}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;gap:4px">
+        <span style="font-size:10px;color:var(--text-dim)">${row2lbl}</span>
+        <span style="${VAL}">${row2val}</span>
+      </div>
+    </div>`;
+
+  // vysv cell: label, hours large, units small below
+  const vysvCell = (lbl, h) => {
+    const u = h != null ? (h / CONFIG.hoursPerUnit).toFixed(1) + ' шт.ед.' : null;
+    return `<div style="${BASE}">
+      <div style="${LBL};margin-bottom:4px">${lbl}</div>
+      <div style="font-size:14px;font-weight:700;color:var(--text)">${h != null ? fmtH(h) : '—'}</div>
+      ${u ? `<div style="font-size:10px;color:var(--text-dim);margin-top:2px">${u}</div>` : ''}
+    </div>`;
+  };
+
+  return `
+    <div class="vysv-detail-title">${curator.name}</div>
+
+    <div style="font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-dim);text-transform:uppercase;margin-bottom:6px">Кадры</div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:5px;margin-bottom:12px">
+      ${cell('Штат', fmtN(curator.headcount))}
+      ${cellDuo('ККП', 'Штат', fmtN(curator.kkp), 'Факт', fmtN(curator.kkp_fact))}
+      ${cell('Итого факт', fmtN(curator.fact_total))}
+      ${cellDuo('РЦТ', 'Штат', fmtN(curator.rct), 'Факт', fmtN(curator.rct_fact))}
+      ${cell('План −20%', planMinus20)}
+      ${cell('Вакансии', fmtN(curator.vacancies))}
+    </div>
+
+    <div style="font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-dim);text-transform:uppercase;margin-bottom:6px">Высвобождение</div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:5px;margin-bottom:10px">
+      ${vysvCell('Внутреннее', intH)}
+      ${vysvCell('Внешнее', extH)}
+    </div>
+
+    <div class="vysv-detail-accent">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">
+        <div style="font-family:'Orbitron',sans-serif;font-size:28px;font-weight:700;color:${pctColor}">${pctStr}</div>
+        <div style="font-size:10px;color:var(--text-dim)">% высвобождения</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:5px;justify-content:center">
+        <div style="font-size:11px;color:var(--text-dim)">План: <span style="color:var(--text);font-weight:600">${planMinus20}</span></div>
+        <div style="font-size:11px;color:var(--text-dim)">Факт: <span style="color:var(--text);font-weight:600">${vysvUnits}</span></div>
+      </div>
+    </div>`;
+}
+
+function renderVysvBlock(selectedName) {
+  const grid = document.getElementById('vysvGrid');
+  if (!grid || !allCurators || !allCurators.length) return;
+
+  const norm = s => (s || '').toLowerCase().replace(/ё/g, 'е');
+  const komitet = allCurators.find(c => c.name === 'Комитет и РЦТ') || allCurators[0];
+
+  // Resolve target curator from owner filter name or curator name
+  let target = komitet;
+  if (selectedName && selectedName !== 'all') {
+    const ln = norm(selectedName).split(' ')[0];
+    target = allCurators.find(c => norm(c.name).includes(ln)) || komitet;
+  }
+
+  // 1. Render grid structure once (detail panel + all cards)
+  if (!document.getElementById('vysvDetailPanel')) {
+    let html = `<div class="vysv-detail" id="vysvDetailPanel" style="grid-column:1/-1"></div>`;
+    allCurators.forEach(c => {
+      html += `<div class="gauge-card" data-curator-name="${c.name}">
+        <div class="gauge-name">${c.name}</div>
+        <div class="gauge-wrap">${_gaugeSVG(c.pct_vysv)}</div>
+      </div>`;
+    });
+    grid.innerHTML = html;
+
+    // Attach click handlers once
+    grid.querySelectorAll('.gauge-card').forEach(card => {
+      card.addEventListener('click', () => {
+        if (document.getElementById('ownerFilter').value !== 'all') return;
+        renderVysvBlock(card.dataset.curatorName);
+      });
+    });
+  }
+
+  // 2. Update highlight — selected card gets accent border, others plain
+  grid.querySelectorAll('.gauge-card').forEach(card => {
+    card.classList.toggle('highlighted', card.dataset.curatorName === target.name);
+  });
+
+  // 3. Update detail panel content only
+  const panel = document.getElementById('vysvDetailPanel');
+  if (panel) panel.innerHTML = _vysvDetailHTML(target);
+}
+
+// ===== RENDER: DEADLINE HEATMAP =====
+function getMonday(d) {
+  const day = d.getDay();
+  const diff = (day === 0 ? -6 : 1 - day);
+  const monday = new Date(d);
+  monday.setDate(d.getDate() + diff);
+  monday.setHours(0, 0, 0, 0);
+  return monday;
+}
+
+function renderDeadlineMap(tasks) {
+  const map = document.getElementById('deadlineMap');
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const monday = getMonday(today);
+
+  const weeks = [];
+  for (let i = 0; i < 6; i++) {
+    const start = new Date(monday);
+    start.setDate(monday.getDate() + i * 7);
+    const end = new Date(start);
+    end.setDate(start.getDate() + 6);
+    const sm = start.toLocaleString('ru', { day: 'numeric', month: 'short' });
+    const em = end.toLocaleString('ru', { day: 'numeric', month: 'short' });
+    const label = start.getMonth() === end.getMonth()
+      ? `${start.getDate()}–${end.getDate()} ${start.toLocaleString('ru', { month: 'short' })}`
+      : `${sm}–${em}`;
+    weeks.push({ start, end, label, counts: [0, 0, 0, 0, 0, 0, 0], total: 0 });
+  }
+
+  tasks.forEach(t => {
+    if (!t.deadline) return;
+    const [dd, mm, yyyy] = t.deadline.split('.');
+    const d = new Date(+yyyy, +mm - 1, +dd);
+    weeks.forEach(w => {
+      if (d >= w.start && d <= w.end) {
+        const dayIdx = (d.getDay() + 6) % 7;
+        w.counts[dayIdx]++;
+        w.total++;
+      }
+    });
+  });
+
+  const days = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+  map.innerHTML = `
+    <div class="week-row">
+      <div class="week-label"></div>
+      <div class="week-bar-wrap">
+        ${days.map(d => `<div style="flex:1;text-align:center;font-size:9px;color:var(--text-dim);letter-spacing:0.5px">${d}</div>`).join('')}
+      </div>
+      <div class="week-count"></div>
+    </div>
+  ` + weeks.map(w => {
+    const maxDay = Math.max(...w.counts, 1);
+    return `
+      <div class="week-row">
+        <div class="week-label">${w.label}</div>
+        <div class="week-bar-wrap">
+          ${w.counts.map(c => {
+            const alpha = c > 0 ? (c / maxDay * 0.7 + 0.15) : 0;
+            const col = c >= 5 ? `rgba(255,59,92,${alpha})` : c >= 3 ? `rgba(255,184,0,${alpha})` : `rgba(0,229,255,${alpha})`;
+            return `<div class="day-cell" style="background:${col}" title="${c} задач"></div>`;
+          }).join('')}
+        </div>
+        <div class="week-count" style="color:${w.total >= 15 ? 'var(--danger)' : w.total >= 8 ? 'var(--warn)' : 'var(--text-dim)'}">${w.total}</div>
+      </div>
+    `;
+  }).join('') + `
+    <div style="display:flex;gap:14px;padding:8px 0 2px;margin-top:4px;border-top:1px solid rgba(255,255,255,0.06)">
+      <div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-dim)">
+        <span style="width:10px;height:10px;border-radius:2px;background:rgba(0,229,255,0.55);display:inline-block;flex-shrink:0"></span>1–2 задачи
+      </div>
+      <div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-dim)">
+        <span style="width:10px;height:10px;border-radius:2px;background:rgba(255,184,0,0.65);display:inline-block;flex-shrink:0"></span>3–4 задачи
+      </div>
+      <div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-dim)">
+        <span style="width:10px;height:10px;border-radius:2px;background:rgba(255,59,92,0.65);display:inline-block;flex-shrink:0"></span>5+ задач
+      </div>
+    </div>
+  `;
+}
+
+// ===== RENDER: TASKS =====
+function renderTasks(tasks, filter = 'all') {
+  const body = document.getElementById('taskTableBody');
+  const filtered = (filter === 'all') ? tasks : tasks.filter(t => t.project === filter);
+
+  body.innerHTML = filtered.map(t => {
+    const ps = getProjectStyle(t.project);
+    const isClosed = t.status === 'Закрыта' || t.status === 'Выполнено';
+    const urgencyLabel = isClosed ? 'ok'
+      : t.urgency === 'overdue' ? 'urgent'
+      : t.urgency === 'today'   ? 'today'
+      : t.urgency === 'urgent'  ? 'soon'
+      : t.urgency === 'soon'    ? 'soon' : 'ok';
+    const urgencyIcon = isClosed ? ''
+      : t.urgency === 'overdue' ? '🔴 '
+      : t.urgency === 'today'   ? '🔴 '
+      : t.urgency === 'urgent'  ? '🟡 ' : '';
+    const statusColor = t.status === 'В работе' ? 'var(--accent)' : 'var(--text-dim)';
+
+    const daysLeft = (() => {
+      if (!t.deadline || isClosed) return '—';
+      const today = new Date(); today.setHours(0,0,0,0);
+      const diff = Math.round((parseDate(t.deadline) - today) / 86400000);
+      if (diff === 0) return '<span style="color:var(--danger);font-weight:600">сегодня</span>';
+      if (diff < 0)  return `<span style="color:var(--danger)">−${Math.abs(diff)} дн</span>`;
+      return `<span style="color:var(--text-dim)">+${diff} дн</span>`;
+    })();
+
+    return `
+      <tr>
+        <td><span class="project-tag" style="background:${ps.bg};color:${ps.color}">${escapeHTML(t.project)}</span></td>
+        <td style="max-width:280px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t.id ? `<a href="${CONFIG.redmineBase}/${t.id}" target="_blank" rel="noopener noreferrer" class="task-link">${escapeHTML(t.theme)}</a>` : escapeHTML(t.theme)}</td>
+        <td><span style="color:${statusColor};font-size:12px">${escapeHTML(t.status)}</span></td>
+        <td style="color:var(--text-dim);font-size:12px">${escapeHTML(t.executor_short || t.person || '—')}</td>
+        <td><span class="deadline-chip ${urgencyLabel}">${urgencyIcon}${t.deadline || '—'}</span></td>
+        <td style="font-size:12px;text-align:right;padding-right:8px">${daysLeft}</td>
+      </tr>
+    `;
+  }).join('');
+}
+
+// ===== FILTER TASKS BY STAT PILL =====
+function filterTasksByStat(type) {
+  document.querySelectorAll('.stat-pill').forEach(p => p.classList.remove('selected'));
+  document.getElementById('spill-' + type).classList.add('selected');
+  document.getElementById('taskProjectFilter').value = 'all';
+
+  const byProjectThenDeadline = (a, b) =>
+    (a.project || '').localeCompare(b.project || '', 'ru') || parseDate(a.deadline) - parseDate(b.deadline);
+
+  let filtered;
+  if (type === 'active') {
+    filtered = allTasks2026.filter(t => t.status === 'В работе').sort(byProjectThenDeadline);
+  } else if (type === 'closed') {
+    filtered = allTasks2026.filter(t => t.status === 'Закрыта').sort(byProjectThenDeadline);
+  } else if (type === 'deadline14') {
+    filtered = allTasks2026
+      .filter(t => (t.urgency === 'overdue' || t.urgency === 'today' || t.urgency === 'urgent' || t.urgency === 'soon') && t.status !== 'Закрыта' && t.status !== 'Выполнено')
+      .sort(byDeadline);
+  } else if (type === 'overdue') {
+    filtered = allTasks2026.filter(t => t.urgency === 'overdue' && t.status !== 'Закрыта' && t.status !== 'Выполнено').sort(byDeadline);
+  } else {
+    filtered = [...allTasks2026].sort(byProjectThenDeadline);
+  }
+  renderTasks(filtered);
+}
+
+// ===== POPULATE TASK PROJECT FILTER =====
+function populateTaskFilter(tasks) {
+  const sel = document.getElementById('taskProjectFilter');
+  sel.innerHTML = '<option value="all">Все проекты</option>';
+  const projects = [...new Set(tasks.map(t => t.project).filter(Boolean))].sort();
+  projects.forEach(name => {
+    const opt = document.createElement('option');
+    opt.value = name;
+    opt.textContent = name;
+    sel.appendChild(opt);
+  });
+}
+
+// ===== RENDER: DETAIL =====
+function loadDetail(name) {
+  const d = allDetails.find(x => x.name === name);
+  if (!d) return;
+
+  const planH = d.plan_hours ? Math.round(d.plan_hours).toLocaleString('ru') : '—';
+  const planInt = d.plan_hours_cio ? Math.round(d.plan_hours_cio).toLocaleString('ru') : '—';
+  const planUnits = d.plan_hours ? (d.plan_hours / CONFIG.hoursPerUnit).toFixed(2) : '—';
+  const planIntUnits = d.plan_hours_cio
+    ? (d.plan_hours_cio / CONFIG.hoursPerUnit).toFixed(2) : '—';
+  const planExtVal = (d.plan_hours && d.plan_hours_cio != null)
+    ? d.plan_hours - d.plan_hours_cio : null;
+  const planExtH = planExtVal != null
+    ? Math.round(planExtVal).toLocaleString('ru') : '—';
+  const planExtUnits = planExtVal != null
+    ? (planExtVal / CONFIG.hoursPerUnit).toFixed(2) : '—';
+
+  const teamArr = d.team ? d.team.split(',').map(s => s.trim()).filter(Boolean) : [];
+  const indicatorsArr = d.indicators
+    ? d.indicators.split('\n').map(s => s.trim()).filter(Boolean)
+    : [];
+
+  // Determine active ETAPs from tasks (tasks "В работе" grouped by parent_id)
+  const statusText = (d.current_status || '').trim();
+  const currentStages = (() => {
+    const projTasks = allTasks.filter(t => t && t.project === name);
+    if (!projTasks.length) return [];
+
+    // Group tasks by parent_id; find groups with at least one "В работе"
+    const groups = {};
+    projTasks.forEach(t => {
+      const pid = t.parent_id || '__root__';
+      if (!groups[pid]) groups[pid] = [];
+      groups[pid].push(t);
+    });
+
+    const activeGroups = Object.values(groups).filter(g =>
+      g.some(t => t.status === 'В работе')
+    );
+    if (!activeGroups.length) return [];
+
+    // Build ЭТАП label map from status_text: "ЭТАП N ..." → label
+    const etapMap = {};
+    if (statusText) {
+      const rx = /ЭТАП\s+(\d+)[.:\s]+([^\n;]+)/gi;
+      let m;
+      while ((m = rx.exec(statusText)) !== null) {
+        etapMap[m[1]] = `ЭТАП ${m[1]}: ${m[2].trim()}`;
+      }
+    }
+
+    const stageEntries = []; // { num: Number, label: String }
+
+    activeGroups.forEach(g => {
+      const sampleTheme = g[0].theme || '';
+      const numMatch = sampleTheme.match(/^(\d+)\./);
+      const etapNum = numMatch ? numMatch[1] : null;
+      const numInt = etapNum ? parseInt(etapNum, 10) : null;
+
+      let label;
+      if (etapNum && etapMap[etapNum]) {
+        label = etapMap[etapNum];
+      } else if (etapNum) {
+        label = `ЭТАП ${etapNum}`;
+      } else {
+        const activeTask = g.find(t => t.status === 'В работе');
+        label = activeTask ? activeTask.theme : null;
+      }
+
+      if (label && !stageEntries.find(e => e.label === label)) {
+        stageEntries.push({ num: numInt ?? 9999, label });
+      }
+    });
+
+    // Sort by ЭТАП number ascending
+    stageEntries.sort((a, b) => a.num - b.num);
+    return stageEntries.map(e => e.label);
+  })();
+
+  const isClosed = CLOSED_STATUSES.has(d.status);
+
+  // Текущий этап
+  const currentStageHTML = isClosed
+    ? `<div style="padding:9px 14px;background:rgba(76,175,80,0.12);border-left:3px solid #4caf50;border-radius:0 8px 8px 0;font-size:13px;font-weight:600;color:#4caf50">✓ Реализован</div>`
+      + (d.defense_at ? `<div style="padding:6px 14px;font-size:12px;color:var(--text-dim);margin-top:4px">Защищён: <span style="color:var(--text);font-weight:600">${d.defense_at}</span></div>` : '')
+    : currentStages.length
+      ? currentStages.map(s => `<div style="padding:9px 14px;background:rgba(0,229,255,0.09);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;margin-bottom:6px;font-size:13px;line-height:1.5;font-weight:500">${s}</div>`).join('')
+      : `<div style="padding:9px 14px;background:rgba(255,255,255,0.04);border-left:3px solid rgba(255,255,255,0.15);border-radius:0 8px 8px 0;font-size:13px;color:var(--text-dim)">Нет данных</div>`;
+
+  // Full status lines for block 2
+  const statusFullLines = statusText
+    ? statusText.split('\n').map(s => s.trim()).filter(Boolean)
+    : [];
+  const statusArr = d.current_status
+    ? d.current_status.split('\n').map(s => s.trim()).filter(Boolean)
+    : ['Нет данных'];
+  const problemArr = d.problem
+    ? d.problem.split('\n').map(s => s.trim()).filter(Boolean)
+    : [];
+
+  const grid = document.getElementById('detailGrid');
+  grid.innerHTML = `
+    <!-- LEFT: info + team -->
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="info-block">
+        <div class="info-label">Держатель проекта</div>
+        <div class="info-value" style="font-size:20px;font-weight:700">${d.owner_short || d.owner || '—'}</div>
+        <div class="info-label">Руководитель проекта</div>
+        <div class="info-value" style="color:var(--accent2);font-size:20px;font-weight:700">${d.manager_short || d.manager || '—'}</div>
+        <div class="info-label">Срок завершения</div>
+        <div class="info-value" style="color:var(--warn);font-size:20px;font-weight:700">${d.deadline || '—'}</div>
+
+        <div style="margin-top:12px">
+          <div class="section-title" style="margin-bottom:12px">Высвобождение часов</div>
+          <div class="hours-visual">
+            <div class="hour-box">
+              <div class="hour-num" style="color:var(--accent)">${planH}</div>
+              <div class="hour-lbl">план всего</div>
+            </div>
+            <div class="hour-box">
+              <div class="hour-num" style="color:var(--accent2)">${planUnits}</div>
+              <div class="hour-lbl">план шт.ед.</div>
+            </div>
+            <div class="hour-box">
+              <div class="hour-num" style="color:var(--accent)">${planInt}</div>
+              <div class="hour-lbl">внутреннее</div>
+            </div>
+            <div class="hour-box">
+              <div class="hour-num" style="color:var(--accent2)">${planIntUnits}</div>
+              <div class="hour-lbl">внутр. шт.ед.</div>
+            </div>
+            <div class="hour-box">
+              <div class="hour-num" style="color:var(--accent)">${planExtH}</div>
+              <div class="hour-lbl">внешнее</div>
+            </div>
+            <div class="hour-box">
+              <div class="hour-num" style="color:var(--accent2)">${planExtUnits}</div>
+              <div class="hour-lbl">внешн. шт.ед.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-block">
+        <div class="section-title" style="margin-bottom:12px">Команда проекта</div>
+        ${teamArr.length
+          ? teamArr.map(m => `<div style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:13px">${escapeHTML(m)}</div>`).join('')
+          : '<div style="color:var(--text-dim);font-size:13px">—</div>'}
+      </div>
+    </div>
+
+    <!-- MIDDLE: status + goal -->
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="info-block">
+        <div class="section-title" style="margin-bottom:12px">Актуальный статус</div>
+
+        <!-- Sub-block 1: current stages -->
+        <div style="margin-bottom:12px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--accent);text-transform:uppercase;margin-bottom:8px">Текущий этап</div>
+          ${currentStageHTML}
+        </div>
+
+        <!-- Sub-block 2: full status -->
+        <div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--accent2);text-transform:uppercase;margin-bottom:8px">Статус проекта</div>
+          ${statusFullLines.length
+            ? statusFullLines.map(s => {
+                const isStage = /^(ЭТАП\s+\d+|Подпроект|Текущий этап)/i.test(s);
+                const isBullet = /^\d+\./.test(s);
+                const bg = isStage ? 'rgba(100,220,100,0.07)' : 'transparent';
+                const border = isStage ? 'border-left:2px solid var(--accent2);padding-left:10px;' : isBullet ? 'padding-left:14px;' : '';
+                return `<div style="font-size:12px;line-height:1.6;${border}background:${bg};border-radius:4px;margin-bottom:3px;color:${isStage?'var(--accent2)':'var(--text)'}">${escapeHTML(s)}</div>`;
+              }).join('')
+            : `<div style="font-size:13px;color:var(--text-dim)">Нет данных</div>`}
+        </div>
+      </div>
+
+      <div class="info-block" style="flex:1">
+        <div class="section-title" style="margin-bottom:16px">Критически важная цель</div>
+        <div class="big-goal">${escapeHTML(d.goal || '—')}</div>
+      </div>
+
+      ${problemArr.length ? `
+      <div class="info-block">
+        <div class="section-title" style="margin-bottom:12px">Описание проекта</div>
+        ${problemArr.map((s, i) => `<div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)"><span style="color:var(--accent);font-weight:700;font-size:11px">${i+1}.</span><span style="font-size:13px">${escapeHTML(s)}</span></div>`).join('')}
+      </div>` : ''}
+    </div>
+
+    <!-- RIGHT: indicators -->
+    <div class="info-block">
+      <div class="section-title" style="margin-bottom:16px">Опережающие показатели</div>
+      <div class="indicators-list">
+        ${indicatorsArr.length
+          ? indicatorsArr.map((ind, i) => `
+            <div class="indicator-item">
+              <span class="indicator-num">${i + 1}</span>
+              <span class="indicator-text">${escapeHTML(ind)}</span>
+            </div>
+          `).join('')
+          : '<div style="color:var(--text-dim);font-size:13px">—</div>'}
+      </div>
+    </div>
+  `;
+}
+
+// ===== POPULATE DETAIL SELECT =====
+function populateDetailSelect(details) {
+  const sel = document.getElementById('detailSelect');
+  sel.innerHTML = '';
+
+  const proj2026 = details.filter(d => d.deadline && d.deadline.split('.')[2] === String(CONFIG.year));
+  const closed = proj2026.filter(d => CLOSED_STATUSES.has(d.status)).sort(byDeadline);
+  const active = proj2026.filter(d => !CLOSED_STATUSES.has(d.status)).sort(byDeadline);
+
+  closed.forEach(d => {
+    const opt = document.createElement('option');
+    opt.value = d.name;
+    opt.textContent = '✓ ' + (d.is_priority ? '★ ' : '') + d.name;
+    sel.appendChild(opt);
+  });
+  active.forEach(d => {
+    const opt = document.createElement('option');
+    opt.value = d.name;
+    opt.textContent = (d.is_priority ? '★ ' : '') + d.name;
+    sel.appendChild(opt);
+  });
+
+  const first = closed[0] || active[0];
+  if (first) loadDetail(first.name);
+}
+
+// ===== POPULATE OWNER FILTER =====
+function populateOwnerFilter(projects) {
+  const sel = document.getElementById('ownerFilter');
+  const proj2026 = projects.filter(p => p.deadline && p.deadline.split('.')[2] === String(CONFIG.year));
+  const owners = [...new Set(proj2026.map(p => p.owner_short).filter(Boolean))].sort();
+  owners.forEach(name => {
+    const opt = document.createElement('option');
+    opt.value = name;
+    opt.textContent = name;
+    sel.appendChild(opt);
+  });
+}
+
+// ===== GAUGE HIGHLIGHT =====
+function highlightGauge(selectedOwner) {
+  renderVysvBlock(selectedOwner);
+}
+
+// ===== COMPUTE TASK KPIs FOR FILTERED PROJECTS =====
+function computeTaskKPIs(filteredProjects) {
+  const projNames = new Set(filteredProjects.map(p => p.name));
+  const tasks = allTasks2026.filter(t => projNames.has(t.project));
+  const deadline14 = tasks.filter(t =>
+    (t.urgency === 'overdue' || t.urgency === 'today' || t.urgency === 'urgent' || t.urgency === 'soon')
+    && !CLOSED_STATUSES.has(t.status)
+  ).length;
+  const overdue = tasks.filter(t => t.urgency === 'overdue' && !CLOSED_STATUSES.has(t.status)).length;
+  return { deadline14, overdue };
+}
+
+// ===== STATUS BADGES =====
+const STATUS_COLORS = {
+  'В работе':    '#00bcd4',
+  'Новая':       '#7c6af7',
+  'Закрыта':     '#4caf50',
+  'Выполнено':   '#4caf50',
+  'На проверке': '#ff9800',
+};
+const STATUS_ORDER = ['В работе', 'Новая', 'На проверке', 'Выполнено', 'Закрыта'];
+
+function renderStatusBadges(filtered) {
+  const counts = {};
+  filtered.forEach(p => { if (p.status) counts[p.status] = (counts[p.status] || 0) + 1; });
+
+  const ordered = [
+    ...STATUS_ORDER.filter(s => counts[s]),
+    ...Object.keys(counts).filter(s => !STATUS_ORDER.includes(s)),
+  ];
+
+  const row = document.getElementById('status-badges-row');
+  row.innerHTML = '';
+  ordered.forEach(status => {
+    const color = STATUS_COLORS[status] || '#888';
+    const badge = document.createElement('div');
+    badge.className = 'info-badge';
+    badge.innerHTML = `<div class="dot" style="background:${color}"></div>${status}: ${counts[status]}`;
+    row.appendChild(badge);
+  });
+}
+
+// ===== APPLY EXEC FILTERS =====
+function applyExecFilters() {
+  const owner = document.getElementById('ownerFilter').value;
+
+  let filtered = allProjects.filter(p => p.deadline && p.deadline.endsWith(String(CONFIG.year)));
+  if (owner !== 'all') filtered = filtered.filter(p => p.owner_short === owner);
+
+  const active = filtered.filter(p => p.status === 'В работе');
+  const closed = filtered.filter(p => p.status === 'Закрыта');
+  const { deadline14, overdue } = computeTaskKPIs(filtered);
+
+  // KPI cards
+  document.getElementById('kpi-projects').textContent = filtered.length;
+  document.getElementById('kpi-projects-sub').innerHTML =
+    `<span class="trend up">${active.length} активных</span>&nbsp;/ ${closed.length} закрыто`;
+
+  const avgPct = active.length
+    ? Math.round(active.reduce((s, p) => s + (p.pct || 0), 0) / active.length)
+    : 0;
+  document.getElementById('kpi-completion').textContent = avgPct + '%';
+  document.getElementById('kpi-completion-sub').textContent =
+    `среднее по ${active.length} активным проектам`;
+
+  document.getElementById('kpi-deadline14').textContent = deadline14;
+  document.getElementById('kpi-overdue').textContent = overdue;
+  document.getElementById('kpi-overdue-sub').innerHTML = overdue === 0
+    ? `<span class="trend up">✓</span> Всё в норме`
+    : `<span class="trend down">!</span> Требует внимания`;
+
+  // Badges
+  renderStatusBadges(filtered);
+
+  // Project table (sorted by deadline, all non-closed)
+  renderProjTable(filtered);
+
+  // Gauge highlight
+  highlightGauge(owner);
+}
+
+// ===== TAB SWITCHING =====
+function showTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelector(`.tab[data-tab="${name}"]`).classList.add('active');
+  document.getElementById('screen-' + name).classList.add('active');
+}
+
+// ===== NAVIGATE TO DETAIL TAB WITH PROJECT FILTER =====
+function goToDetail(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const detailTab = document.querySelector('.tab[data-tab="detail"]');
+  if (detailTab) detailTab.classList.add('active');
+  document.getElementById('screen-detail').classList.add('active');
+  const sel = document.getElementById('detailSelect');
+  if (sel) {
+    sel.value = name;
+    loadDetail(name);
+  }
+}
+
+// ===== INIT DASHBOARD =====
+function initDashboard(data) {
+  const s = data.summary;
+
+  // Timestamp
+  document.getElementById('updated-at').textContent = 'Обновлено: ' + data.updated_at;
+
+  // Store globally (use all_tasks for full task coverage)
+  allProjects = data.projects;
+  allTasks = data.all_tasks || data.tasks;
+  const proj2026Names = new Set(allProjects.filter(p => p.deadline && p.deadline.split('.')[2] === String(CONFIG.year)).map(p => p.name));
+  allTasks2026 = allTasks.filter(t => proj2026Names.has(t.project));
+  allDetails = data.projects;
+  allCurators = data.curators;
+
+  if (data.config) {
+    CONFIG = {
+      year:         data.config.year ?? CONFIG.year,
+      hoursPerUnit: data.config.hours_per_unit ?? CONFIG.hoursPerUnit,
+      redmineBase:  data.config.redmine_base ?? CONFIG.redmineBase,
+    };
+  }
+  const yearLabel = document.getElementById('yearLabel');
+  if (yearLabel) yearLabel.textContent = CONFIG.year;
+
+  // Gauges (Высвобождение — never filtered)
+  renderVysvBlock();
+
+  // KPI cards
+  document.getElementById('kpi-projects').textContent = s.projects_total;
+  document.getElementById('kpi-projects-sub').innerHTML =
+    `<span class="trend up">${s.projects_active} активных</span>&nbsp;/ ${s.projects_closed} закрыто`;
+
+  const activeProjs = data.projects.filter(p => p.status === 'В работе');
+  const avgPct = activeProjs.length
+    ? Math.round(activeProjs.reduce((sum, p) => sum + (p.pct || 0), 0) / activeProjs.length)
+    : 0;
+  document.getElementById('kpi-completion').textContent = avgPct + '%';
+  document.getElementById('kpi-completion-sub').textContent =
+    `среднее по ${activeProjs.length} активным проектам`;
+
+  const overall = data.curators.find(c => c.name === 'Комитет и РЦТ') || data.curators[0];
+  if (overall) {
+    document.getElementById('kpi-vysv').textContent = overall.pct_vysv + '%';
+    document.getElementById('kpi-vysv-sub').innerHTML =
+      `<span class="trend ${overall.pct_vysv >= 100 ? 'up' : 'down'}">${overall.pct_vysv >= 100 ? '↑' : '↓'} план</span> ${overall.name}`;
+  }
+
+  // Projects screen badge (total unfiltered)
+  document.getElementById('badge-projects-total').innerHTML =
+    `<div class="dot" style="background:var(--accent)"></div>Всего: ${s.projects_total}`;
+
+  // Tasks screen stats (from summary — not filtered)
+  document.getElementById('kpi-deadline14').textContent = s.tasks_deadline_14 ?? '—';
+  document.getElementById('kpi-overdue').textContent = s.tasks_overdue ?? '—';
+
+  if ((s.tasks_overdue || 0) === 0) {
+    document.getElementById('kpi-overdue-sub').innerHTML = `<span class="trend up">✓</span> Всё в норме`;
+  } else {
+    document.getElementById('kpi-overdue-sub').innerHTML = `<span class="trend down">!</span> Требует внимания`;
+  }
+
+  // Exec filter badges
+  renderStatusBadges(allProjects.filter(p => p.deadline && p.deadline.endsWith(String(CONFIG.year))));
+
+  // Tasks stats (computed from 2026 tasks only)
+  const tTotal = allTasks2026.length;
+  const tActive = allTasks2026.filter(t => t.status === 'В работе').length;
+  const tClosed = allTasks2026.filter(t => t.status === 'Закрыта').length;
+  const tDeadline14 = allTasks2026.filter(t => (t.urgency === 'overdue' || t.urgency === 'today' || t.urgency === 'urgent' || t.urgency === 'soon') && t.status !== 'Закрыта' && t.status !== 'Выполнено').length;
+  const tOverdue = allTasks2026.filter(t => t.urgency === 'overdue' && t.status !== 'Закрыта' && t.status !== 'Выполнено').length;
+  document.getElementById('tasks-stat-total').textContent = tTotal;
+  document.getElementById('tasks-stat-active').textContent = tActive;
+  document.getElementById('tasks-stat-closed').textContent = tClosed;
+  document.getElementById('tasks-stat-deadline14').textContent = tDeadline14;
+  document.getElementById('tasks-stat-overdue').textContent = tOverdue;
+
+  // Populate dropdowns
+  populateOwnerFilter(allProjects);
+  populateTaskFilter(allTasks2026);
+  populateDetailSelect(allDetails);
+
+  // Static renders
+  renderFullProjTable(allProjects);
+  renderDeadlineMap(allTasks);
+  renderTasks(allTasks2026);
+
+  // Apply exec filters (uses default year/owner=all)
+  applyExecFilters();
+}
+
+// ===== EVENT LISTENERS SETUP =====
+function setupEventListeners() {
+  // Tab buttons
+  document.querySelectorAll('.tab[data-tab]').forEach(tab => {
+    tab.addEventListener('click', () => showTab(tab.dataset.tab));
+  });
+
+  // Owner filter
+  document.getElementById('ownerFilter').addEventListener('change', applyExecFilters);
+
+  // Project status filter
+  document.getElementById('projectStatusFilter').addEventListener('change', (e) => {
+    renderFullProjTable(allProjects, e.target.value);
+  });
+
+  // Task project filter
+  document.getElementById('taskProjectFilter').addEventListener('change', (e) => {
+    document.querySelectorAll('.stat-pill').forEach(p => p.classList.remove('selected'));
+    document.getElementById('spill-all').classList.add('selected');
+    renderTasks(allTasks2026, e.target.value);
+  });
+
+  // Detail select
+  document.getElementById('detailSelect').addEventListener('change', (e) => {
+    loadDetail(e.target.value);
+  });
+
+  // Stat pills
+  document.querySelectorAll('.stat-pill[data-filter]').forEach(pill => {
+    pill.addEventListener('click', () => filterTasksByStat(pill.dataset.filter));
+  });
+}
+
+// ===== FETCH DATA =====
+// "Unexpected token '<'" at runtime = server returned an HTML error page
+// instead of JSON (e.g. 404 from GitHub Pages). We detect this explicitly
+// and show a meaningful message instead of a cryptic SyntaxError.
+async function loadData() {
+  const loader = document.getElementById('loader');
+  try {
+    const resp = await fetch('data.json');
+
+    const ct = resp.headers.get('content-type') || '';
+    const bodyText = await resp.text();
+
+    if (!resp.ok || (!ct.includes('json') && bodyText.trim().startsWith('<'))) {
+      const dataUrl = new URL('data.json', location.href).href;
+      throw new Error(
+        `Сервер вернул HTML вместо JSON (HTTP ${resp.status}).\n` +
+        `Проверьте, что файл доступен по адресу:\n${dataUrl}`
+      );
+    }
+
+    let data;
+    try {
+      data = JSON.parse(bodyText);
+    } catch (parseErr) {
+      const pos = parseInt((parseErr.message.match(/position (\d+)/) || [])[1]);
+      const snippet = Number.isFinite(pos)
+        ? bodyText.slice(Math.max(0, pos - 40), pos + 40)
+        : '';
+      throw new Error(
+        `Ошибка разбора data.json: ${parseErr.message}` +
+        (snippet ? `\nФрагмент: …${snippet}…` : '')
+      );
+    }
+
+    initDashboard(data);
+    setupEventListeners();
+    loader.style.display = 'none';
+
+  } catch (err) {
+    loader.innerHTML = `
+      <div style="color:var(--danger);font-family:'Orbitron',sans-serif;font-size:12px;
+                  letter-spacing:1px;text-align:center;max-width:460px;padding:0 16px">
+        Ошибка загрузки данных
+        <pre style="font-size:10px;color:var(--text-dim);font-family:'Exo 2',sans-serif;
+                    margin-top:12px;white-space:pre-wrap;text-align:left;
+                    background:rgba(255,255,255,0.06);padding:10px;border-radius:8px;
+                    word-break:break-all">${err.message}</pre>
+      </div>`;
+  }
+}
+
+// Start
+loadData();
