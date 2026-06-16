@@ -9,3 +9,8 @@ data.json.bak
 
 # Визуальный компаньон brainstorming
 .superpowers/
+
+# Python / тесты
+__pycache__/
+.pytest_cache/
+.ruff_cache/
