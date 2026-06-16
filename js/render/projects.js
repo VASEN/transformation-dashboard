@@ -16,12 +16,12 @@ export function renderFullProjTable(projects, filter = 'all') {
       : '';
     return `
       <tr data-name="${escapeHTML(p.name)}"${rowClass ? ' class="' + rowClass + '"' : ''} style="cursor:pointer" title="Двойной клик — детализация">
-        <td style="color:var(--text-dim);font-size:11px">${i + 1}</td>
-        <td>${p.is_priority ? PRIORITY_STAR : ''}${escapeHTML(p.name)}</td>
-        <td><span class="status-badge ${isActive ? 'active' : 'done'}">${escapeHTML(p.status)}</span></td>
-        <td style="color:var(--text-dim);font-size:12px">${escapeHTML(p.owner_short || p.person || '—')}</td>
-        <td style="color:var(--text-dim);font-size:12px">${p.deadline || '—'}</td>
-        <td>
+        <td data-label="#" style="color:var(--text-dim);font-size:11px">${i + 1}</td>
+        <td data-label="Проект">${p.is_priority ? PRIORITY_STAR : ''}${escapeHTML(p.name)}</td>
+        <td data-label="Статус"><span class="status-badge ${isActive ? 'active' : 'done'}">${escapeHTML(p.status)}</span></td>
+        <td data-label="Назначена" style="color:var(--text-dim);font-size:12px">${escapeHTML(p.owner_short || p.person || '—')}</td>
+        <td data-label="Срок" style="color:var(--text-dim);font-size:12px">${p.deadline || '—'}</td>
+        <td data-label="Готовность">
           <div class="progress-wrap">
             <div class="progress-bar">
               <div class="progress-fill" style="width:${p.pct}%;background:${getProgressColor(p.pct)}"></div>

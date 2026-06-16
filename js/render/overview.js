@@ -24,10 +24,10 @@ export function renderProjTable(projects) {
          </div>`;
     return `
       <tr data-name="${escapeHTML(p.name)}"${rowClass ? ` class="${rowClass}"` : ''} style="cursor:pointer" title="Двойной клик — детализация">
-        <td>${p.is_priority ? PRIORITY_STAR : ''}${escapeHTML(p.name)}</td>
-        <td style="color:var(--text-dim);font-size:12px">${escapeHTML(p.owner_short || p.person || '—')}</td>
-        <td style="color:var(--text-dim);font-size:12px">${p.deadline || '—'}</td>
-        <td>${pctDisplay}</td>
+        <td data-label="Тема">${p.is_priority ? PRIORITY_STAR : ''}${escapeHTML(p.name)}</td>
+        <td data-label="Назначена" style="color:var(--text-dim);font-size:12px">${escapeHTML(p.owner_short || p.person || '—')}</td>
+        <td data-label="Срок" style="color:var(--text-dim);font-size:12px">${p.deadline || '—'}</td>
+        <td data-label="Готовность">${pctDisplay}</td>
       </tr>`;
   };
 

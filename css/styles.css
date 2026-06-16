@@ -12,7 +12,7 @@
     --warn: #ffb800;
     --danger: #ff3b5c;
     --text: #e8eaf6;
-    --text-dim: rgba(232,234,246,0.5);
+    --text-dim: rgba(232,234,246,0.72);
     --glow: 0 0 20px rgba(0,229,255,0.25);
     --glow2: 0 0 20px rgba(180,79,255,0.25);
   }
@@ -779,3 +779,159 @@
     .two-col { grid-template-columns: 1fr; }
     .detail-grid { grid-template-columns: 1fr 1fr; }
   }
+
+  /* === LARGE SCREENS (≥1600px): meeting / projector === */
+  @media (min-width: 1600px) {
+    .app { max-width: 1560px; margin: 0 auto; }
+    .screen { padding: 32px 40px; }
+    .nav { padding: 20px 40px 0; }
+    .kpi-value { font-size: 42px; }
+    .stat-pill-val { font-size: 34px; }
+    .section-title { font-size: 12px; }
+    .proj-table td, .task-table td { font-size: 14px; }
+    .exec-grid { gap: 20px; }
+  }
+
+  /* === BOTTOM NAV (mobile) === */
+  .bottom-nav { display: none; }   /* hidden on desktop */
+
+  /* === PHONE (≤640px): single column === */
+  @media (max-width: 640px) {
+    /* layout in one column */
+    .screen { padding: 16px 12px; }
+    .exec-grid { grid-template-columns: 1fr; gap: 12px; margin-bottom: 20px; }
+    .two-col { grid-template-columns: 1fr; gap: 14px; }
+    .detail-grid { grid-template-columns: 1fr; gap: 14px; }
+    .vysv-grid { grid-template-columns: 1fr; }
+    .hours-visual { grid-template-columns: 1fr 1fr; }   /* 2×3 ещё читаемо на телефоне */
+    .tasks-stats { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .vysv-detail-grid { grid-template-columns: repeat(2, 1fr); }
+
+    /* KPI чуть компактнее */
+    .kpi-card { padding: 16px; }
+    .kpi-value { font-size: 30px; }
+    .stat-pill-val { font-size: 24px; }
+
+    /* фильтр-бар колонкой, select на всю ширину */
+    .filter-bar {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 8px;
+    }
+    .filter-bar .separator { display: none; }
+    .filter-select { width: 100%; }
+    .badge-row { flex-wrap: wrap; }
+
+    /* секция-хедеры переносят бейджи */
+    .section-header { flex-wrap: wrap; gap: 8px; }
+
+    /* table → cards reflow */
+    .table-scroll { max-height: none; overflow: visible; }
+    .task-table, .proj-table { border-collapse: collapse; }
+    .task-table thead, .proj-table thead {
+      position: absolute; left: -9999px; top: -9999px;   /* visually hide, keep for SR */
+    }
+    .task-table tr, .proj-table tr {
+      display: block;
+      margin: 0 12px 12px;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 8px 4px;
+    }
+    .task-table td, .proj-table td {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 6px 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      text-align: right;
+      white-space: normal;          /* override inline nowrap on "Тема" */
+      max-width: none;
+      overflow: visible;
+      text-overflow: clip;
+    }
+    .task-table td:last-child, .proj-table td:last-child {
+      border-bottom: none;
+      width: auto;                  /* override desktop fixed width on last col */
+    }
+    .task-table td::before, .proj-table td::before {
+      content: attr(data-label);
+      flex: 0 0 auto;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-align: left;
+    }
+    /* ячейки без метки (нет data-label) — не показывать пустой ::before */
+    .task-table td:not([data-label])::before,
+    .proj-table td:not([data-label])::before { content: none; }
+
+    /* hover/sticky thead неактуальны на карточках */
+    .task-table th { position: static; }
+
+    /* прогресс-бар в карточке — даём ему ширину */
+    .proj-table .progress-wrap { min-width: 140px; }
+
+    /* запас под нижнюю навигацию (Task 3) */
+    .app { padding-bottom: 64px; }
+
+    /* нижняя навигация (mobile) */
+    .bottom-nav {
+      display: flex;
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      z-index: 50;
+      background: rgba(10,10,26,0.96);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--card-border);
+      padding: 6px 4px env(safe-area-inset-bottom, 4px);
+    }
+    .bottom-tab {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 6px 4px;
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      font-family: 'Exo 2', sans-serif;
+      cursor: pointer;
+    }
+    .bottom-tab .bottom-tab-ico { font-size: 18px; line-height: 1; }
+    .bottom-tab .bottom-tab-lbl {
+      font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; font-weight: 600;
+    }
+    .bottom-tab.active { color: var(--accent); text-shadow: var(--glow); }
+
+    /* скрыть верхние вкладки-кнопки на телефоне, оставив логотип + timestamp */
+    .nav .tab { display: none; }
+  }
+
+/* === FOCUS (keyboard) === */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+.tab:focus-visible,
+.bottom-tab:focus-visible,
+.stat-pill:focus-visible,
+.gauge-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
