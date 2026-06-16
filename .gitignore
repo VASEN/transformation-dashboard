@@ -2,3 +2,7 @@
 *.xlsx
 *.xls
 *.txt
+
+# macOS / прочий мусор
+.DS_Store
+data.json.bak
