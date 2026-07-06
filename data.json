@@ -1,5 +1,5 @@
 {
-  "updated_at": "06.07.2026 02:26",
+  "updated_at": "06.07.2026 02:32",
   "config": {
     "year": 2026,
     "redmine_base": "https://transformation.rm.mosreg.ru/#/issues",
@@ -14,8 +14,8 @@
     "tasks_active": 248,
     "tasks_closed": 365,
     "tasks_deadline_5": 13,
-    "tasks_deadline_14": 55,
-    "tasks_overdue": 4,
+    "tasks_deadline_14": 54,
+    "tasks_overdue": 3,
     "tasks_today": 0,
     "vysv_pct_total": 122,
     "report_updated_at": "01.07.2026"
@@ -1314,8 +1314,8 @@
       "status": "В работе",
       "executor": "Заичко Валерий Валерьевич",
       "executor_short": "Заичко В.В.",
-      "deadline": "03.07.2026",
-      "urgency": "overdue",
+      "deadline": "30.07.2026",
+      "urgency": "ok",
       "pct": 0,
       "parent_id": 11244
     },
