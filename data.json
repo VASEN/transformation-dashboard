@@ -1,5 +1,5 @@
 {
-  "updated_at": "03.07.2026 06:36",
+  "updated_at": "06.07.2026 02:26",
   "config": {
     "year": 2026,
     "redmine_base": "https://transformation.rm.mosreg.ru/#/issues",
@@ -11,12 +11,12 @@
     "projects_closed": 17,
     "projects_avg_pct": 28,
     "tasks_total": 613,
-    "tasks_active": 250,
-    "tasks_closed": 363,
-    "tasks_deadline_5": 9,
-    "tasks_deadline_14": 54,
-    "tasks_overdue": 3,
-    "tasks_today": 5,
+    "tasks_active": 248,
+    "tasks_closed": 365,
+    "tasks_deadline_5": 13,
+    "tasks_deadline_14": 55,
+    "tasks_overdue": 4,
+    "tasks_today": 0,
     "vysv_pct_total": 122,
     "report_updated_at": "01.07.2026"
   },
@@ -405,7 +405,7 @@
       "start_date": "01.02.2026",
       "closed_at": null,
       "defense_at": null,
-      "pct": 16,
+      "pct": 9,
       "project_type": "Межведомственный",
       "is_priority": false,
       "goal": "Сократить количество допущенных просрочек по этапам закупочного цикла за счет своевременного информирования заказчика со 100% до 80% к 30.11.2026",
@@ -560,7 +560,7 @@
       "start_date": "26.01.2026",
       "closed_at": null,
       "defense_at": null,
-      "pct": 22,
+      "pct": 24,
       "project_type": "Межведомственный",
       "is_priority": false,
       "goal": "Снижение трудозатрат со 100% до 80% к 30.09.2026",
@@ -1315,7 +1315,7 @@
       "executor": "Заичко Валерий Валерьевич",
       "executor_short": "Заичко В.В.",
       "deadline": "03.07.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 11244
     },
@@ -1831,7 +1831,7 @@
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
       "deadline": "18.07.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 11243
     },
@@ -1843,7 +1843,7 @@
       "executor": "Колесников (ККП) Кирилл Владимирович",
       "executor_short": "Колесников К.В.",
       "deadline": "18.07.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 11243
     },
@@ -1855,7 +1855,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "10.07.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 11243
     },
@@ -1867,7 +1867,7 @@
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
       "deadline": "10.07.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 11243
     },
@@ -1879,7 +1879,7 @@
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
       "deadline": "10.07.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 11243
     },
@@ -2119,7 +2119,7 @@
       "executor": "Громов (ЦРЦТ) Михаил",
       "executor_short": "Громов Михаил",
       "deadline": "10.07.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 11246
     },
@@ -2166,7 +2166,7 @@
       "status": "Новая",
       "executor": "Хасарокова Светлана Сергеевна",
       "executor_short": "Хасарокова С.С.",
-      "deadline": "06.07.2026",
+      "deadline": "10.07.2026",
       "urgency": "urgent",
       "pct": 0,
       "parent_id": 11498
@@ -2178,8 +2178,8 @@
       "status": "Новая",
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
-      "deadline": "03.07.2026",
-      "urgency": "today",
+      "deadline": "08.07.2026",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 11498
     },
@@ -2190,8 +2190,8 @@
       "status": "В работе",
       "executor": "Осипова Наталия Андреевна",
       "executor_short": "Осипова Н.А.",
-      "deadline": "03.07.2026",
-      "urgency": "today",
+      "deadline": "08.07.2026",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 11498
     },
@@ -2516,7 +2516,7 @@
       "executor_short": "Заичко В.В.",
       "deadline": "28.08.2026",
       "urgency": "ok",
-      "pct": 57,
+      "pct": 71,
       "parent_id": 10862
     },
     {
@@ -2763,12 +2763,12 @@
       "id": 12648,
       "project": "Панель управления заказчика + ИИ",
       "theme": "Этап 2. Формирование, согласование технического задания и макета",
-      "status": "Новая",
+      "status": "Выполнено",
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "03.07.2026",
-      "urgency": "today",
-      "pct": 0,
+      "urgency": "ok",
+      "pct": 100,
       "parent_id": 11245
     },
     {
@@ -3787,7 +3787,7 @@
       "executor": "Потапчик (ККП) Татьяна Павловна",
       "executor_short": "Потапчик Т.П.",
       "deadline": "20.07.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 2155
     },
@@ -5319,7 +5319,7 @@
       "id": 12871,
       "project": "Оптимизация организационного блока РЦТ",
       "theme": "ЭТАП 6. Адаптация методики учета операционной деятельности в ППО Redmine под каждое структурное подразделение",
-      "status": "Новая",
+      "status": "В работе",
       "executor": "Заичко Валерий Валерьевич",
       "executor_short": "Заичко В.В.",
       "deadline": "31.07.2026",
@@ -5331,12 +5331,12 @@
       "id": 12870,
       "project": "Оптимизация организационного блока РЦТ",
       "theme": "ЭТАП 5. Проверка формирования квартальных отчетов KPI на пилотном подразделении (УЦТиОПД)",
-      "status": "В работе",
+      "status": "Закрыта",
       "executor": "Заичко Валерий Валерьевич",
       "executor_short": "Заичко В.В.",
       "deadline": "03.07.2026",
-      "urgency": "today",
-      "pct": 0,
+      "urgency": "ok",
+      "pct": 100,
       "parent_id": 12714
     },
     {
@@ -5551,7 +5551,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "10.07.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12778
     },
@@ -5899,7 +5899,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "10.07.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12672
     },
@@ -7183,7 +7183,7 @@
       "executor": "Хорев Олег Геннадьевич",
       "executor_short": "Хорев О.Г.",
       "deadline": "09.07.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 2157
     },
