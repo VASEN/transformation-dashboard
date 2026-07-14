@@ -1,5 +1,5 @@
 {
-  "updated_at": "13.07.2026 07:44",
+  "updated_at": "14.07.2026 02:25",
   "config": {
     "year": 2026,
     "redmine_base": "https://transformation.rm.mosreg.ru/#/issues",
@@ -11,11 +11,11 @@
     "projects_closed": 17,
     "projects_avg_pct": 30,
     "tasks_total": 613,
-    "tasks_active": 247,
-    "tasks_closed": 366,
+    "tasks_active": 246,
+    "tasks_closed": 367,
     "tasks_deadline_5": 44,
-    "tasks_deadline_14": 57,
-    "tasks_overdue": 7,
+    "tasks_deadline_14": 50,
+    "tasks_overdue": 0,
     "tasks_today": 0,
     "vysv_pct_total": 122,
     "report_updated_at": "08.07.2026"
@@ -622,7 +622,7 @@
       "start_date": "26.01.2026",
       "closed_at": null,
       "defense_at": null,
-      "pct": 6,
+      "pct": 12,
       "project_type": "Межведомственный",
       "is_priority": false,
       "goal": "Сокращение внутренних трудозатрат со 100% до 80% к 30.11.2026",
@@ -1854,8 +1854,8 @@
       "status": "Новая",
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
-      "deadline": "10.07.2026",
-      "urgency": "overdue",
+      "deadline": "03.08.2026",
+      "urgency": "ok",
       "pct": 0,
       "parent_id": 11243
     },
@@ -1866,8 +1866,8 @@
       "status": "Новая",
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
-      "deadline": "10.07.2026",
-      "urgency": "overdue",
+      "deadline": "03.08.2026",
+      "urgency": "ok",
       "pct": 0,
       "parent_id": 11243
     },
@@ -1878,8 +1878,8 @@
       "status": "Новая",
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
-      "deadline": "10.07.2026",
-      "urgency": "overdue",
+      "deadline": "03.08.2026",
+      "urgency": "ok",
       "pct": 0,
       "parent_id": 11243
     },
@@ -1928,7 +1928,7 @@
       "executor_short": "Кренева А.А.",
       "deadline": "20.11.2026",
       "urgency": "ok",
-      "pct": 25,
+      "pct": 50,
       "parent_id": 10860
     },
     {
@@ -4830,8 +4830,8 @@
       "status": "Новая",
       "executor": "Гиренко Илья Андреевич",
       "executor_short": "Гиренко И.А.",
-      "deadline": "30.06.2026",
-      "urgency": "overdue",
+      "deadline": "31.07.2026",
+      "urgency": "ok",
       "pct": 0,
       "parent_id": 13952
     },
@@ -5547,12 +5547,12 @@
       "id": 12783,
       "project": "Авто план-график",
       "theme": "ЭТАП 2. Анализ ТЗ и определение сроков разработки",
-      "status": "В работе",
+      "status": "Закрыта",
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "10.07.2026",
-      "urgency": "overdue",
-      "pct": 0,
+      "urgency": "ok",
+      "pct": 100,
       "parent_id": 12778
     },
     {
@@ -6162,8 +6162,8 @@
       "status": "Новая",
       "executor": "Кренева Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
-      "deadline": "30.06.2026",
-      "urgency": "overdue",
+      "deadline": "31.07.2026",
+      "urgency": "ok",
       "pct": 0,
       "parent_id": 12548
     },
@@ -6282,8 +6282,8 @@
       "status": "Новая",
       "executor": "Гиренко Илья Андреевич",
       "executor_short": "Гиренко И.А.",
-      "deadline": "30.06.2026",
-      "urgency": "overdue",
+      "deadline": "31.07.2026",
+      "urgency": "ok",
       "pct": 100,
       "parent_id": 12547
     },
