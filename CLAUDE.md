@@ -2,7 +2,7 @@
 
 ## Система работы (vz-system)
 Проект — часть общей системы. База (скиллы/агенты/ревью) — из плагина `vz-system`
-(`~/Projects/claude-system`, ставится глобально): `/goal`, `/night`, `/morning`,
+(`~/Projects/claude-system`, ставится глобально): `/vzgoal`, `/night`, `/morning`,
 `/close`, `graphify`, `retro`, агент `reviewer` и др.
 - Концепт: `~/Projects/claude-system/CONCEPT.md`
 - Карта возможностей (куда идти за чем): `~/Projects/claude-system/CAPABILITIES.md`
