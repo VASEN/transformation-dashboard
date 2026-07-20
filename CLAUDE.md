@@ -1,5 +1,16 @@
 # Transformation Dashboard
 
+## Система работы (vz-system)
+Проект — часть общей системы. База (скиллы/агенты/ревью) — из плагина `vz-system`
+(`~/Projects/claude-system`, ставится глобально): `/goal`, `/night`, `/morning`,
+`/close`, `graphify`, `retro`, агент `reviewer` и др.
+- Концепт: `~/Projects/claude-system/CONCEPT.md`
+- Карта возможностей (куда идти за чем): `~/Projects/claude-system/CAPABILITIES.md`
+- Протокол ночной шины: `~/Projects/shared/CLAUDE.md`
+
+**Локальные скиллы/агенты:** нет.
+**Локальные нюансы:** дашборд мониторинга проектов (Excel → `data.json` → `index.html`, ES-модули), деплой на Amvera через Docker; детали — в разделах ниже.
+
 Дашборд мониторинга проектов трансформации. Данные извлекаются из Excel-файлов в `data.json`, который отображается в `index.html`.
 
 ## Роли в работе над проектом
