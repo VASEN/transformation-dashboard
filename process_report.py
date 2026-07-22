@@ -18,7 +18,7 @@ import argparse
 from datetime import datetime, date
 from difflib import SequenceMatcher
 
-from config import HOURS_PER_UNIT
+from config import HOURS_PER_UNIT, REDMINE_BASE, YEAR
 
 
 CLOSED_STATUSES = {'Закрыта', 'Закрыто', 'Выполнено', 'Выполнена', 'Завершена'}
@@ -64,6 +64,55 @@ def extract_id_from_url(url):
     """
     m = re.search(r'(?:#/issues|/issues)/(\d+)', url)
     return int(m.group(1)) if m else None
+
+
+# Явный маркер примечания в MD-отчёте.
+NOTE_MARKER_RE = re.compile(
+    r'^(?:ℹ️|📝|💬|❗|‼️|Примечание|Прим\.|Доп\.?\s*информация'
+    r'|Дополнительно|Дополнительная информация|Справочно)\s*:?\s*',
+    re.IGNORECASE,
+)
+
+# Строка выглядит как пункт списка / этап (а не свободный текст).
+LIST_ITEM_RE = re.compile(r'^\s*(?:[•\-–—*✅📍]|\d{1,2}[.)](?!\d)|этап\b)', re.IGNORECASE)
+
+# Абзац без явного маркера считается примечанием, только если это связный
+# текст: есть строка не короче стольких символов (иначе это подпункт этапа).
+NOTE_MIN_FREE_TEXT_LEN = 100
+
+
+def split_note(text):
+    """Отделить примечание к проекту от тела блока.
+
+    Примечанием считается последний абзац блока, если он либо помечен явно
+    («ℹ️», «Примечание:», «Дополнительно:» …), либо не содержит ни одного
+    пункта списка/этапа и перед ним в блоке есть хотя бы один абзац.
+
+    Возвращает кортеж (тело_без_примечания, примечание | None).
+    """
+    if not text:
+        return text, None
+
+    paragraphs = [p for p in re.split(r'\n\s*\n', text.strip()) if p.strip()]
+    if not paragraphs:
+        return text, None
+
+    last = paragraphs[-1].strip()
+    explicit  = bool(NOTE_MARKER_RE.match(last))
+    lines_last = [ln for ln in last.split('\n') if ln.strip()]
+    free_text = (
+        len(paragraphs) > 1
+        and not any(LIST_ITEM_RE.match(ln) for ln in lines_last)
+        and max((len(ln.strip()) for ln in lines_last), default=0) >= NOTE_MIN_FREE_TEXT_LEN
+    )
+    if not (explicit or free_text):
+        return text, None
+
+    note = NOTE_MARKER_RE.sub('', last).strip()
+    if not note:                      # маркер без текста — оставляем блок как есть
+        return text, None
+    body = '\n\n'.join(paragraphs[:-1]).strip()
+    return (body or None), note
 
 
 def parse_report(filepath):
@@ -113,8 +162,13 @@ def parse_report(filepath):
         if p is not None:
             completed = '\n'.join(p.pop('_completed')).strip()
             current   = '\n'.join(p.pop('_current')).strip()
+            # Свободный абзац в конце блока — это примечание к проекту,
+            # а не очередной этап: выносим его отдельно.
+            current,   note_cur  = split_note(current)
+            completed, note_done = split_note(completed)
             p['completed'] = completed or None
             p['current']   = current   or None
+            p['note']      = '\n\n'.join(x for x in (note_done, note_cur) if x) or None
             current_group['projects'].append(p)
             proj[0] = None
 
@@ -253,9 +307,15 @@ def strip_dates(s):
 
 
 def normalize_line(s):
-    """Normalize a line for comparison: strip bullet markers, lowercase."""
+    """Normalize a line for comparison: strip bullet markers, lowercase.
+
+    Маркер примечания («Доп. информация:» …) тоже убирается: один и тот же
+    текст на прошлой неделе мог лежать в теле блока вместе с маркером,
+    а на этой — быть отделён в примечание уже без него.
+    """
     s = strip_dates(s)
     s = re.sub(r'^[\s]*(?:[•\-\*]|\d+\.)\s*', '', s)
+    s = NOTE_MARKER_RE.sub('', s)
     return s.lower().strip()
 
 
@@ -320,6 +380,12 @@ def build_prev_index(prev_groups):
     return {'by_id': by_id, 'by_name': by_name}
 
 
+def _with_note(block_text, note):
+    """Тело блока вместе с примечанием — для сравнения с прошлой неделей:
+    абзац мог быть примечанием тогда и частью блока сейчас (и наоборот)."""
+    return '\n\n'.join(x for x in (block_text, note) if x) or None
+
+
 def render_block_with_diff(block_text, new_lines_set):
     """
     Return list of lines from block_text, with new lines prefixed by '🆕 '.
@@ -340,6 +406,13 @@ def render_block_with_diff(block_text, new_lines_set):
 # ---------------------------------------------------------------------------
 # Matching report projects to data.json
 # ---------------------------------------------------------------------------
+
+def in_completed_section(proj, completed_projects):
+    """Проект из MD-отчёта, попавший в секцию «Реализовано» (и потому не
+    должен дублироваться в списке «в работе»)."""
+    dp = proj.get('_data_project')
+    return dp is not None and any(dp is c for c in completed_projects)
+
 
 def find_in_data(issue_id, name, data_projects):
     """
@@ -371,13 +444,15 @@ def find_in_data(issue_id, name, data_projects):
 # current_status builder
 # ---------------------------------------------------------------------------
 
-def build_current_status(completed, current):
+def build_current_status(completed, current, note=None):
     """Compose the current_status string from parsed sections."""
     parts = []
     if completed:
         parts.append('✅ Выполнено:\n' + completed)
     if current:
         parts.append('📍 В работе:\n' + current)
+    if note:
+        parts.append('ℹ️ Дополнительно:\n' + note)
     return '\n\n'.join(parts) if parts else None
 
 
@@ -393,6 +468,79 @@ def _deadline_sort_key(proj):
         return date(int(y), int(m), int(d))
     except (ValueError, AttributeError):
         return date.max  # no deadline → sort last
+
+
+# ---------------------------------------------------------------------------
+# Completed (closed) projects
+# ---------------------------------------------------------------------------
+
+def _parse_ddmmyyyy(s):
+    """'DD.MM.YYYY' → date, иначе None."""
+    try:
+        d, m, y = str(s).split('.')
+        return date(int(y), int(m), int(d))
+    except (ValueError, AttributeError):
+        return None
+
+
+def completed_date(dp):
+    """Дата реализации проекта: «Закрыта», иначе «Дата защиты»."""
+    return _parse_ddmmyyyy(dp.get('closed_at')) or _parse_ddmmyyyy(dp.get('defense_at'))
+
+
+def collect_completed(data_projects, priority, year=YEAR):
+    """Реализованные (закрытые) проекты выбранной группы за год `year`,
+    свежие первыми. Проекты прошлых лет в отчёт не попадают."""
+    result = []
+    for dp in data_projects:
+        if dp.get('status') not in CLOSED_STATUSES:
+            continue
+        if bool(dp.get('is_priority')) != bool(priority):
+            continue
+        cd = completed_date(dp)
+        if cd is None or cd.year != year:
+            continue
+        result.append(dp)
+    result.sort(key=lambda dp: completed_date(dp), reverse=True)
+    return result
+
+
+def project_url(dp):
+    """Ссылка на проект в Redmine: поле url, иначе собирается из id."""
+    url = dp.get('url')
+    if url:
+        return url
+    pid = dp.get('id')
+    return f'{REDMINE_BASE}/{pid}' if pid else None
+
+
+def _portfolio_line(completed, in_work_count):
+    """Строка-счётчик портфеля для шапки сообщения."""
+    total = len(completed) + in_work_count
+    return (f'📈 Портфель: {total} · '
+            f'✅ реализовано {len(completed)} · '
+            f'🔄 в работе {in_work_count}')
+
+
+def _render_completed(out, projects, year=YEAR):
+    """Секция «Реализовано»: проекты, закрытые в текущем году."""
+    if not projects:
+        return
+
+    out.append(TELEGRAM_SEPARATOR_THICK)
+    out.append(f'✅ РЕАЛИЗОВАНО В {year} ({len(projects)})')
+    out.append(TELEGRAM_SEPARATOR_THICK)
+    out.append('')
+
+    for idx, dp in enumerate(projects):
+        cd = completed_date(dp)
+        cd_str = cd.strftime('%d.%m.%Y') if cd else '—'
+        owner = dp.get('owner_short') or '—'
+        out.append(f'{idx + 1}. {dp["name"]} — {cd_str} · {owner}')
+        url = project_url(dp)
+        if url:
+            out.append(f'🔗 {url}')
+        out.append('')
 
 
 def _render_group(out, emoji, title, projects, prev_index=None):
@@ -444,7 +592,7 @@ def _render_group(out, emoji, title, projects, prev_index=None):
             if prev_proj is not None:
                 new_completed = compute_new_lines(
                     proj.get('completed'),
-                    prev_proj.get('completed'),
+                    _with_note(prev_proj.get('completed'), prev_proj.get('note')),
                     prev_proj.get('current'),
                 )
                 out.extend(render_block_with_diff(proj['completed'], new_completed))
@@ -458,11 +606,25 @@ def _render_group(out, emoji, title, projects, prev_index=None):
                 new_current = compute_new_lines(
                     proj.get('current'),
                     None,
-                    prev_proj.get('current'),
+                    _with_note(prev_proj.get('current'), prev_proj.get('note')),
                 )
                 out.extend(render_block_with_diff(proj['current'], new_current))
             else:
                 out.append(proj['current'])
+            out.append('')
+
+        if proj.get('note'):
+            # Примечание новое, только если его строк не было в прошлом отчёте
+            # ни в примечании, ни в теле блоков (абзац мог «переехать» между ними).
+            note_changed = bool(
+                compute_new_lines(
+                    proj['note'],
+                    _with_note(prev_proj.get('completed'), prev_proj.get('note')),
+                    prev_proj.get('current'),
+                )
+            ) if prev_proj is not None else False
+            out.append(('🆕 ' if note_changed else '') + 'ℹ️ Дополнительно:')
+            out.append(proj['note'])
             out.append('')
 
         if idx < count - 1:
@@ -485,15 +647,21 @@ def _render_not_reported(out, names):
 
 
 def build_priority_message(priority_projs, not_reported, report_date,
-                           prev_index=None, prev_date=None):
+                           prev_index=None, prev_date=None,
+                           completed_projs=None, in_work_count=None):
     """Telegram message for priority projects only."""
     out = []
+    completed_projs = completed_projs or []
     date_str = report_date.strftime('%d.%m.%Y')
     out.append('📊 Еженедельный отчёт — Приоритетные проекты')
     out.append(f'Дата: {date_str}')
     if prev_date is not None:
         out.append(f'🔄 Сравнение с отчётом от {prev_date.strftime("%d.%m.%Y")}')
+    if in_work_count is not None:
+        out.append(_portfolio_line(completed_projs, in_work_count))
     out.append('')
+    if completed_projs:
+        _render_completed(out, completed_projs)
     _render_group(out, '🔴', 'ПРИОРИТЕТНЫЕ ПРОЕКТЫ', priority_projs, prev_index)
     if not_reported:
         out.append('')
@@ -502,15 +670,21 @@ def build_priority_message(priority_projs, not_reported, report_date,
 
 
 def build_transform_message(transform_projs, not_reported, report_date,
-                            prev_index=None, prev_date=None):
+                            prev_index=None, prev_date=None,
+                            completed_projs=None, in_work_count=None):
     """Telegram message for transformation projects only."""
     out = []
+    completed_projs = completed_projs or []
     date_str = report_date.strftime('%d.%m.%Y')
     out.append('📊 Еженедельный отчёт — Трансформационные проекты')
     out.append(f'Дата: {date_str}')
     if prev_date is not None:
         out.append(f'🔄 Сравнение с отчётом от {prev_date.strftime("%d.%m.%Y")}')
+    if in_work_count is not None:
+        out.append(_portfolio_line(completed_projs, in_work_count))
     out.append('')
+    if completed_projs:
+        _render_completed(out, completed_projs)
     _render_group(out, '🔵', 'ТРАНСФОРМАЦИОННЫЕ ПРОЕКТЫ', transform_projs, prev_index)
     if not_reported:
         out.append('')
@@ -644,7 +818,9 @@ def main():
         for proj in all_report_projects:
             dp = proj.get('_data_project')
             if dp is not None:
-                status = build_current_status(proj.get('completed'), proj.get('current'))
+                status = build_current_status(
+                    proj.get('completed'), proj.get('current'), proj.get('note')
+                )
                 if status:
                     dp['current_status'] = status
                     updated_count += 1
@@ -667,14 +843,61 @@ def main():
     if make_telegram:
         date_suffix = report_date.strftime('%d_%m_%Y')
 
-        priority_projs   = [p for p in all_report_projects if p.get('is_priority')]
-        transform_projs  = [p for p in all_report_projects if not p.get('is_priority')]
+        # Реализованные (закрытые) проекты и число активных — из data.json
+        completed_priority  = collect_completed(data_projects, priority=True)
+        completed_transform = collect_completed(data_projects, priority=False)
+
+        # Проект, закрытый на отчётной неделе, ещё присутствует в MD-отчёте.
+        # Убираем из списка «в работе» только те, что реально попали в секцию
+        # «Реализовано», — иначе закрытый проект прошлого года (или без даты
+        # закрытия) исчез бы из сообщения совсем.
+        completed_all    = completed_priority + completed_transform
+        closed_in_report = [
+            p for p in all_report_projects if in_completed_section(p, completed_all)
+        ]
+        active_report_projects = [
+            p for p in all_report_projects if not in_completed_section(p, completed_all)
+        ]
+
+        priority_projs   = [p for p in active_report_projects if p.get('is_priority')]
+        transform_projs  = [p for p in active_report_projects if not p.get('is_priority')]
+
+        # Портфель показываем только когда есть data.json (иначе счётчики не с чем сверить)
+        in_work_priority = in_work_transform = None
+        if data_projects:
+            in_work_priority = sum(
+                1 for dp in data_projects
+                if dp.get('status') not in CLOSED_STATUSES and dp.get('is_priority')
+            )
+            in_work_transform = sum(
+                1 for dp in data_projects
+                if dp.get('status') not in CLOSED_STATUSES and not dp.get('is_priority')
+            )
+
+        if closed_in_report:
+            print('✅ Реализованы — перенесены из блока «в работе» в секцию «Реализовано»:')
+            for p in closed_in_report:
+                print(f'   • {p["name"]}')
+            print()
+
+        # Закрытые проекты без даты закрытия/защиты не попадут никуда — предупреждаем
+        undated_closed = [
+            dp for dp in data_projects
+            if dp.get('status') in CLOSED_STATUSES and completed_date(dp) is None
+        ]
+        if undated_closed:
+            print('⚠️ Закрытые проекты без даты закрытия и защиты '
+                  '(не попадут в секцию «Реализовано»):')
+            for dp in undated_closed:
+                print(f'   • {dp["name"]}')
+            print()
 
         # File 1 — priority projects
         fn_priority  = f'telegram_priority_{date_suffix}.txt'
         msg_priority = build_priority_message(
             priority_projs, not_reported_priority, report_date,
             prev_index=prev_index, prev_date=prev_date,
+            completed_projs=completed_priority, in_work_count=in_work_priority,
         )
         with open(fn_priority, 'w', encoding='utf-8') as f:
             f.write(msg_priority)
@@ -687,6 +910,7 @@ def main():
         msg_transform = build_transform_message(
             transform_projs, not_reported_transform, report_date,
             prev_index=prev_index, prev_date=prev_date,
+            completed_projs=completed_transform, in_work_count=in_work_transform,
         )
         with open(fn_transform, 'w', encoding='utf-8') as f:
             f.write(msg_transform)
