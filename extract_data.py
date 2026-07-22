@@ -25,6 +25,7 @@ import json
 import os
 import re
 import sys
+from collections import Counter
 from datetime import datetime
 from pathlib import Path
 
@@ -93,6 +94,30 @@ def curator_key(name):
     'Кудряшов Е.С.' / 'Кудряшов ЕС' → 'кудряшов'; 'Кренёва А.А.' → 'кренева'."""
     if not name: return None
     return canon_name(name).split()[0].lower().replace('ё', 'е')
+
+# Поля файла высвобождения, которые суммируются, когда проект разнесён
+# по нескольким строкам (доли разных кураторов).
+VYSV_SUM_FIELDS = (
+    'plan_hours', 'plan_hours_cio', 'plan_units', 'fact_hours',
+    'internal_hours', 'external_hours', 'total_units',
+)
+
+def sum_opt(a, b):
+    """Сложение с None: None + x = x, None + None = None."""
+    if a is None: return b
+    if b is None: return a
+    return a + b
+
+def project_key(name) -> str:
+    """Ключ проекта для матчинга Redmine ↔ файл высвобождения.
+
+    Названия в источниках расходятся ('Цифровое нормирование 2.0' в Redmine
+    против 'Цифровое нормирование' в файле высвобождения), поэтому сравниваем
+    по нормализованному виду: lowercase, ё→е, без хвоста-версии ('2.0'),
+    только буквы/цифры через один пробел."""
+    s = str(name or '').lower().replace('ё', 'е')
+    s = re.sub(r'\s*\d+[.,]\d+\s*$', '', s)           # хвост версии: «… 2.0»
+    return re.sub(r'[^a-zа-я0-9]+', ' ', s).strip()
 
 def get_urgency(deadline_str, status=None) -> str:
     if status in CLOSED_STATUSES: return 'ok'
@@ -276,25 +301,64 @@ def extract(redmine_file=DEFAULT_REDMINE, shtatka_file=DEFAULT_SHTATKA,
 
     # Overlay per-project данных из VYSV: plan_hours_cio (внутреннее), plan_units, fact_hours
     # Строки проектов — где заполнена колонка «Проект».
+    # Один проект может идти НЕСКОЛЬКИМИ строками — по доле каждого куратора
+    # (строки лежат в разных блоках «Ответственный»); величина по проекту —
+    # сумма долей, поэтому строки аккумулируются, а не перезаписываются.
     vysv_proj = {}
     for _, r in vdf[vdf['Проект'].notna()].iterrows():
         name = str(r['Проект']).strip()
         internal_raw = cell_any(r, *VYSV_INTERNAL_COLS)
         units        = safe_float(cell_any(r, *VYSV_UNITS_COLS))
-        vysv_proj[name] = {
+        row = {
             'plan_hours':     safe_float(r.get('План по проектам, часы')),
             'plan_hours_cio': safe_float(internal_raw),
             'plan_units':     units,
             'fact_hours':     safe_float(r.get('Факт высвобождения трудозатрат всего, часы')),
-            'url':            safe(r.get('Ссылка на акцептованную идею')),
             'internal_hours': safe_float(internal_raw),
             'external_hours': safe_float(cell_any(r, *VYSV_EXTERNAL_COLS)),
             'total_units':    units,
         }
+        url = safe(r.get('Ссылка на акцептованную идею'))
+        acc = vysv_proj.get(project_key(name))
+        if acc is None:
+            vysv_proj[project_key(name)] = {
+                'source_name': name, 'rows': 1, 'url': url, **row,
+            }
+        else:
+            acc['rows'] += 1
+            for f in VYSV_SUM_FIELDS:
+                acc[f] = sum_opt(acc[f], row[f])
+            if not acc.get('url'):
+                acc['url'] = url
+    matched_renamed = []   # проекты, совпавшие только после нормализации имени
+    unmatched       = []   # активные проекты без строки в файле высвобождения
+    multi_row       = []   # проекты, собранные из нескольких строк-долей
+
+    # Неоднозначный ключ: два проекта Redmine отличаются только версией
+    # («X» и «X 2.0») — какой из них описывает строка высвобождения, неизвестно.
+    # Оверлей не применяем (иначе оба получат одни и те же часы), а сообщаем.
+    key_counts = Counter(project_key(p['name']) for p in projects)
+    ambiguous = sorted({k for k, n in key_counts.items() if n > 1})
+    if ambiguous:
+        print('   ⚠️ неоднозначные названия проектов (отличаются только версией) '
+              '— данные высвобождения не применены:')
+        for key in ambiguous:
+            names = [p['name'] for p in projects if project_key(p['name']) == key]
+            print(f'      • {" / ".join(names)}')
+
     for p in projects:
-        v = vysv_proj.get(p['name'].strip())
-        if not v:
+        key = project_key(p['name'])
+        if key in ambiguous:
             continue
+        v = vysv_proj.get(key)
+        if not v:
+            if p.get('status') not in CLOSED_STATUSES:
+                unmatched.append(p['name'])
+            continue
+        if v['source_name'].strip() != p['name'].strip():
+            matched_renamed.append((p['name'], v['source_name']))
+        if v.get('rows', 1) > 1:
+            multi_row.append((p['name'], v['rows'], v['internal_hours'], v['external_hours']))
         if v['plan_hours'] is not None:
             p['plan_hours'] = v['plan_hours']
         if v['plan_hours_cio'] is not None:
@@ -311,6 +375,22 @@ def extract(redmine_file=DEFAULT_REDMINE, shtatka_file=DEFAULT_SHTATKA,
             p['external_hours'] = v['external_hours']
         if v.get('total_units') is not None:
             p['total_units'] = v['total_units']
+
+    if multi_row:
+        print('   Σ проекты, разнесённые по долям кураторов (строки просуммированы):')
+        for name, rows, internal, external in multi_row:
+            i_s = f'{internal:.0f}' if internal is not None else '—'
+            e_s = f'{external:.0f}' if external is not None else '—'
+            print(f'      • {name}: {rows} строк(и) → внутр. {i_s} ч, внеш. {e_s} ч')
+    if matched_renamed:
+        print('   ~ сопоставлены по нормализованному имени (названия расходятся):')
+        for rm_name, vysv_name in matched_renamed:
+            print(f'      • «{rm_name}» ← «{vysv_name}»')
+    if unmatched:
+        print('   ⚠️ активные проекты без строки в файле высвобождения '
+              '(часы не заполнятся):')
+        for name in unmatched:
+            print(f'      • {name}')
 
     # Итоги по группам кураторов. Ключ — фамилия (curator_key), т.к. написание
     # имён в файле высвобождения и штатке может отличаться (точки, ё/е).

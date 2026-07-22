@@ -14,3 +14,6 @@ data.json.bak
 __pycache__/
 .pytest_cache/
 .ruff_cache/
+
+# Граф знаний (graphify) — артефакт генерации, пересобирается локально
+graphify-out/

@@ -2,8 +2,12 @@
 import pandas as pd
 
 
-def build_fixtures(dir_path, broken=False):
+def build_fixtures(dir_path, broken=False, split_shares=False):
     """Создаёт три xlsx в dir_path. broken=True → Redmine без колонки 'Трекер'.
+
+    split_shares=True → тот же проект разнесён по долям двух кураторов
+    (вторая строка ещё и с хвостом-версией в названии — проверка нормализации).
+
     Возвращает (redmine_path, shtatka_path, vysv_path)."""
     redmine = dir_path / 'issues.xlsx'
     shtatka = dir_path / 'shtatka.xlsx'
@@ -27,7 +31,7 @@ def build_fixtures(dir_path, broken=False):
     ])
     redmine_df.to_excel(redmine, index=False)
 
-    shtatka_df = pd.DataFrame([
+    shtatka_rows = [
         {'Куратор направления': 'Кренёва А.А.', 'Кол-во ставок': 47,
          'из них ККП': 14, 'Факт ККП': 11, ' из них РЦТ': 33, 'Факт РЦТ': 25,
          'Кол-во фактическое': 36, 'Вакансии': 0,
@@ -36,10 +40,16 @@ def build_fixtures(dir_path, broken=False):
          'из них ККП': 14, 'Факт ККП': 11, ' из них РЦТ': 33, 'Факт РЦТ': 25,
          'Кол-во фактическое': 36, 'Вакансии': 0,
          'План высвобождения - 20%': 7.2},
-    ])
-    shtatka_df.to_excel(shtatka, index=False)
+    ]
+    if split_shares:
+        shtatka_rows.insert(1, {
+            'Куратор направления': 'Гуляев В.А.', 'Кол-во ставок': 27,
+            'из них ККП': 8, 'Факт ККП': 7, ' из них РЦТ': 19, 'Факт РЦТ': 16,
+            'Кол-во фактическое': 23, 'Вакансии': 0,
+            'План высвобождения - 20%': 4.6})
+    pd.DataFrame(shtatka_rows).to_excel(shtatka, index=False)
 
-    vysv_df = pd.DataFrame([
+    vysv_rows = [
         {'Ответственный': 'Кренёва А.А.', 'Проект': None,
          'План по проектам, часы': 9000, 'План, шт. ед.': 9.16,
          'Внешнее высвобождение, часы': 5000, 'Внутрнее высвобождение': 4000,
@@ -50,7 +60,20 @@ def build_fixtures(dir_path, broken=False):
          'Внешнее высвобождение, часы': 5000, 'Внутрнее высвобождение': 4000,
          'Факт высвобождения трудозатрат всего, часы': 0,
          'Ссылка на акцептованную идею': 'https://example/123'},
-    ])
-    vysv_df.to_excel(vysv, index=False)
+    ]
+    if split_shares:
+        vysv_rows += [
+            {'Ответственный': 'Гуляев В.А.', 'Проект': None,
+             'План по проектам, часы': 1500, 'План, шт. ед.': 1.0,
+             'Внешнее высвобождение, часы': 500, 'Внутрнее высвобождение': 1000,
+             'Факт высвобождения трудозатрат всего, часы': 0,
+             'Ссылка на акцептованную идею': None},
+            {'Ответственный': None, 'Проект': 'Проект А 2.0',
+             'План по проектам, часы': 1500, 'План, шт. ед.': 1.0,
+             'Внешнее высвобождение, часы': 500, 'Внутрнее высвобождение': 1000,
+             'Факт высвобождения трудозатрат всего, часы': 0,
+             'Ссылка на акцептованную идею': None},
+        ]
+    pd.DataFrame(vysv_rows).to_excel(vysv, index=False)
 
     return str(redmine), str(shtatka), str(vysv)

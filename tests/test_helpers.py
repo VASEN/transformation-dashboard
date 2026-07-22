@@ -5,6 +5,8 @@ import pytest
 
 from extract_data import (
     canon_name,
+    project_key,
+    sum_opt,
     clean_date,
     clean_pct,
     curator_key,
@@ -96,3 +98,40 @@ def test_plural_projects():
     assert plural_projects(3) == '3 проектах'
     assert plural_projects(11) == '11 проектах'
     assert plural_projects(21) == '21 проекте'
+
+
+# ── project_key: матчинг проектов с файлом высвобождения ──────────────
+
+def test_project_key_ignores_version_suffix():
+    """«Цифровое нормирование 2.0» (Redmine) = «Цифровое нормирование» (файл высвобождения)."""
+    assert project_key('Цифровое нормирование 2.0') == project_key('Цифровое нормирование')
+
+
+def test_project_key_normalizes_case_yo_and_spaces():
+    assert project_key('Единый  личный кабинет ГИС «ЕАСУЗ»') == \
+           project_key('единый личный кабинет гис ЕАСУЗ')
+    assert project_key('Смарт-допуск к ЗИТ') == project_key('смарт допуск к зит')
+    assert project_key('Всё о закупках') == project_key('Все о закупках')
+
+
+def test_project_key_keeps_law_number_suffix():
+    """Хвост «223-ФЗ» — не номер версии, проекты не должны схлопываться."""
+    assert project_key('Оптимизация закупок 223-ФЗ') != project_key('Оптимизация закупок')
+    assert project_key('Цифровой протокол 223-ФЗ') != project_key('ИИ проверка 223-ФЗ')
+
+
+def test_project_key_distinguishes_different_projects():
+    assert project_key('ИИ проверка закупок') != project_key('ИИ мониторинг закупок 223-ФЗ')
+
+
+def test_project_key_handles_empty():
+    assert project_key(None) == ''
+    assert project_key('') == ''
+
+
+def test_sum_opt_handles_none():
+    assert sum_opt(None, None) is None
+    assert sum_opt(None, 5) == 5
+    assert sum_opt(5, None) == 5
+    assert sum_opt(2, 3) == 5
+    assert sum_opt(0, None) == 0
