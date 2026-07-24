@@ -61,12 +61,21 @@ fi
 git commit -m "data: обновление $(date '+%d.%m.%Y %H:%M')"
 
 echo "📤 Пуш в репозитории..."
+push_failed=""
 for remote in upstream origin; do
   if git remote get-url "$remote" >/dev/null 2>&1; then
-    git push -u "$remote" main
+    if ! git push -u "$remote" main; then
+      echo "⚠️  push в '$remote' не прошёл — продолжаю с остальными" >&2
+      push_failed="$push_failed $remote"
+    fi
   else
     echo "⚠️  remote '$remote' не настроен — пропускаю"
   fi
 done
+
+if [ -n "$push_failed" ]; then
+  echo "❌ Деплой завершён с ошибками пуша:$push_failed" >&2
+  exit 1
+fi
 
 echo "✅ Деплой завершён"
