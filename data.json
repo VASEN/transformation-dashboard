@@ -1,5 +1,5 @@
 {
-  "updated_at": "28.07.2026 01:16",
+  "updated_at": "29.07.2026 01:53",
   "config": {
     "year": 2026,
     "redmine_base": "https://transformation.rm.mosreg.ru/#/issues",
@@ -9,14 +9,14 @@
     "projects_total": 36,
     "projects_active": 19,
     "projects_closed": 17,
-    "projects_avg_pct": 31,
+    "projects_avg_pct": 30,
     "tasks_total": 614,
     "tasks_active": 242,
     "tasks_closed": 372,
-    "tasks_deadline_5": 51,
-    "tasks_deadline_14": 72,
+    "tasks_deadline_5": 61,
+    "tasks_deadline_14": 73,
     "tasks_overdue": 1,
-    "tasks_today": 0,
+    "tasks_today": 4,
     "vysv_pct_total": 122,
     "report_updated_at": "22.07.2026"
   },
@@ -219,7 +219,7 @@
       "start_date": "06.02.2026",
       "closed_at": null,
       "defense_at": null,
-      "pct": 56,
+      "pct": 36,
       "project_type": "Межведомственный",
       "is_priority": false,
       "goal": "Снижение внутренних трудозатрат со 100% до 80% к 11.12.2026",
@@ -529,7 +529,7 @@
       "start_date": "01.02.2026",
       "closed_at": null,
       "defense_at": null,
-      "pct": 33,
+      "pct": 40,
       "project_type": "Межведомственный",
       "is_priority": false,
       "goal": "Сокращение внутренних трудозатрат со 100% до 80% до 30.11.2026",
@@ -1651,7 +1651,7 @@
       "executor": "Зернова (ККП) Елена Сергеевна",
       "executor_short": "Зернова Е.С.",
       "deadline": "03.08.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 75,
       "parent_id": 11497
     },
@@ -1843,7 +1843,7 @@
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
       "deadline": "12.08.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 11243
     },
@@ -1867,7 +1867,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "03.08.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 11243
     },
@@ -1879,7 +1879,7 @@
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
       "deadline": "03.08.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 11243
     },
@@ -1891,7 +1891,7 @@
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
       "deadline": "03.08.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 11243
     },
@@ -2167,7 +2167,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "29.07.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 11498
     },
@@ -2179,7 +2179,7 @@
       "executor": "Хасарокова Светлана Сергеевна",
       "executor_short": "Хасарокова С.С.",
       "deadline": "29.07.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 11498
     },
@@ -2191,7 +2191,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "29.07.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 11498
     },
@@ -2203,7 +2203,7 @@
       "executor": "Осипова Наталия Андреевна",
       "executor_short": "Осипова Н.А.",
       "deadline": "29.07.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 11498
     },
@@ -3747,7 +3747,7 @@
       "id": 15868,
       "project": "Цифровые коммуникации ЗИТ",
       "theme": "Реализация функционала по подпроекту «Голосовой помощник»",
-      "status": "Новая",
+      "status": "В работе",
       "executor": "Ефимова Анастасия Александровна",
       "executor_short": "Ефимова А.А.",
       "deadline": "21.08.2026",
@@ -3811,7 +3811,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "03.08.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12927
     },
@@ -3856,9 +3856,9 @@
       "project": "ИИ мониторинг закупок 223-ФЗ",
       "theme": "3.4. Разработка ИИ-Агента",
       "status": "Новая",
-      "executor": "Гиренко Илья Андреевич",
-      "executor_short": "Гиренко И.А.",
-      "deadline": "31.07.2026",
+      "executor": "Абрамов Максим Игоревич",
+      "executor_short": "Абрамов М.И.",
+      "deadline": "03.08.2026",
       "urgency": "urgent",
       "pct": 0,
       "parent_id": 12707
@@ -7363,7 +7363,7 @@
       "executor": "Кучеров (МТДИ) Алексей Владимирович",
       "executor_short": "Кучеров А.В.",
       "deadline": "03.08.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13510
     },
@@ -7423,7 +7423,7 @@
       "executor": "Верещагин Виктор Александрович",
       "executor_short": "Верещагин В.А.",
       "deadline": "03.08.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13180
     },
@@ -7483,7 +7483,7 @@
       "executor": "Кордзахия Вахтанг Михайлович",
       "executor_short": "Кордзахия В.М.",
       "deadline": "03.08.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13179
     },
@@ -7543,7 +7543,7 @@
       "executor": "Макаров (Минэнерго) Дмитрий Борисович",
       "executor_short": "Макаров Д.Б.",
       "deadline": "03.08.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13178
     },
@@ -7603,7 +7603,7 @@
       "executor": "Никулин (Минстрой) Никита Александрович",
       "executor_short": "Никулин Н.А.",
       "deadline": "03.08.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13177
     },
