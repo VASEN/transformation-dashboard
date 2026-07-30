@@ -1,9 +1,13 @@
 # Transformation Dashboard
 
 ## Система работы (vz-system)
-Проект — часть общей системы. База (скиллы/агенты/ревью) — из плагина `vz-system`
-(`~/Projects/claude-system`, ставится глобально): `/vzgoal`, `/night`, `/morning`,
-`/close`, `graphify`, `retro`, агент `reviewer` и др.
+Проект — часть общей системы. База (скиллы/агенты/ревью) приезжает **установленным
+плагином** `vz-system` (источник — `~/Projects/claude-system`, scope `user` → доступен
+во всех проектах; ставить в проект ничего не нужно). Скиллы вызываются **с namespace**:
+`/vz-system:vzgoal`, `/vz-system:night`, `/vz-system:morning`, `/vz-system:close`,
+`/vz-system:graphify`, `/vz-system:retro`; агенты — `reviewer`, `plan-reviewer`.
+- **Актуальный состав базы — `claude plugin details vz-system`.** Список выше может
+  отстать; при расхождении верна команда, а не список.
 - Концепт: `~/Projects/claude-system/CONCEPT.md`
 - Карта возможностей (куда идти за чем): `~/Projects/claude-system/CAPABILITIES.md`
 - Протокол ночной шины: `~/Projects/shared/CLAUDE.md`
