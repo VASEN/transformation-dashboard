@@ -1,5 +1,5 @@
 {
-  "updated_at": "05.08.2026 09:57",
+  "updated_at": "06.08.2026 02:36",
   "config": {
     "year": 2026,
     "redmine_base": "https://transformation.rm.mosreg.ru/#/issues",
@@ -13,8 +13,8 @@
     "tasks_total": 613,
     "tasks_active": 233,
     "tasks_closed": 380,
-    "tasks_deadline_5": 8,
-    "tasks_deadline_14": 39,
+    "tasks_deadline_5": 6,
+    "tasks_deadline_14": 40,
     "tasks_overdue": 0,
     "tasks_today": 0,
     "vysv_pct_total": 122,
@@ -2154,8 +2154,8 @@
       "status": "Новая",
       "executor": "Хасарокова Светлана Сергеевна",
       "executor_short": "Хасарокова С.С.",
-      "deadline": "06.08.2026",
-      "urgency": "urgent",
+      "deadline": "12.08.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 11498
     },
@@ -2166,8 +2166,8 @@
       "status": "Новая",
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
-      "deadline": "06.08.2026",
-      "urgency": "urgent",
+      "deadline": "12.08.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 11498
     },
@@ -3835,7 +3835,7 @@
       "executor": "Абрамов Максим Игоревич",
       "executor_short": "Абрамов М.И.",
       "deadline": "20.08.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12734
     },
