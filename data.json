@@ -1,5 +1,5 @@
 {
-  "updated_at": "11.08.2026 05:41",
+  "updated_at": "12.08.2026 01:46",
   "config": {
     "year": 2026,
     "redmine_base": "https://transformation.rm.mosreg.ru/#/issues",
@@ -13,10 +13,10 @@
     "tasks_total": 613,
     "tasks_active": 227,
     "tasks_closed": 386,
-    "tasks_deadline_5": 23,
+    "tasks_deadline_5": 29,
     "tasks_deadline_14": 43,
     "tasks_overdue": 0,
-    "tasks_today": 0,
+    "tasks_today": 4,
     "vysv_pct_total": 122,
     "report_updated_at": "05.08.2026"
   },
@@ -1483,7 +1483,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "17.08.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 11498
     },
@@ -1843,7 +1843,7 @@
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
       "deadline": "12.08.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 11243
     },
@@ -2155,7 +2155,7 @@
       "executor": "Хасарокова Светлана Сергеевна",
       "executor_short": "Хасарокова С.С.",
       "deadline": "12.08.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 11498
     },
@@ -2167,7 +2167,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "12.08.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 11498
     },
@@ -4411,7 +4411,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "17.08.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13009
     },
@@ -4423,7 +4423,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "17.08.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13009
     },
@@ -4435,7 +4435,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "17.08.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13009
     },
@@ -4447,7 +4447,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "17.08.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13009
     },
@@ -5551,7 +5551,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "12.08.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 100,
       "parent_id": 12778
     },
@@ -5611,7 +5611,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "17.08.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12707
     },
