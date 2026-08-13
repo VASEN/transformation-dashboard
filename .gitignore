@@ -3,6 +3,10 @@
 *.xls
 *.txt
 
+# Справки (upcoming_report.py / ручные) — рабочие выгрузки, наружу не идут
+# .txt уже покрыт правилом выше, здесь — markdown-версии
+СПРАВКА_*.md
+
 # macOS / прочий мусор
 .DS_Store
 data.json.bak
