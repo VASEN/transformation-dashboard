@@ -1,5 +1,5 @@
 {
-  "updated_at": "12.08.2026 08:27",
+  "updated_at": "13.08.2026 01:22",
   "config": {
     "year": 2026,
     "redmine_base": "https://transformation.rm.mosreg.ru/#/issues",
@@ -13,10 +13,10 @@
     "tasks_total": 613,
     "tasks_active": 227,
     "tasks_closed": 386,
-    "tasks_deadline_5": 29,
-    "tasks_deadline_14": 43,
-    "tasks_overdue": 0,
-    "tasks_today": 4,
+    "tasks_deadline_5": 21,
+    "tasks_deadline_14": 46,
+    "tasks_overdue": 1,
+    "tasks_today": 3,
     "vysv_pct_total": 122,
     "report_updated_at": "12.08.2026"
   },
@@ -467,7 +467,7 @@
       "start_date": "02.03.2026",
       "closed_at": null,
       "defense_at": null,
-      "pct": 60,
+      "pct": 62,
       "project_type": "Межведомственный",
       "is_priority": false,
       "goal": "Сокращение внутренних трудозатрат со 100% до 80% к 30.08.2026",
@@ -1842,8 +1842,8 @@
       "status": "Новая",
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
-      "deadline": "12.08.2026",
-      "urgency": "today",
+      "deadline": "14.08.2026",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 11243
     },
@@ -2154,7 +2154,7 @@
       "status": "Новая",
       "executor": "Хасарокова Светлана Сергеевна",
       "executor_short": "Хасарокова С.С.",
-      "deadline": "12.08.2026",
+      "deadline": "13.08.2026",
       "urgency": "today",
       "pct": 0,
       "parent_id": 11498
@@ -2166,7 +2166,7 @@
       "status": "Новая",
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
-      "deadline": "12.08.2026",
+      "deadline": "13.08.2026",
       "urgency": "today",
       "pct": 0,
       "parent_id": 11498
@@ -2239,7 +2239,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "27.08.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 11594
     },
@@ -2287,7 +2287,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "27.08.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 33,
       "parent_id": 11594
     },
@@ -2371,7 +2371,7 @@
       "executor": "Теслина Анна Сергеевна",
       "executor_short": "Теслина А.С.",
       "deadline": "18.08.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 11607
     },
@@ -2382,8 +2382,8 @@
       "status": "В работе",
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
-      "deadline": "13.08.2026",
-      "urgency": "urgent",
+      "deadline": "19.08.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 11607
     },
@@ -2491,7 +2491,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "13.08.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 11606
     },
@@ -3751,7 +3751,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "27.08.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12734
     },
@@ -3847,7 +3847,7 @@
       "executor": "Абрамов Максим Игоревич",
       "executor_short": "Абрамов М.И.",
       "deadline": "27.08.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12707
     },
@@ -5118,8 +5118,8 @@
       "status": "Новая",
       "executor": "Кострова Ирина Валерьевна",
       "executor_short": "Кострова И.В.",
-      "deadline": "13.08.2026",
-      "urgency": "urgent",
+      "deadline": "20.08.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5130,8 +5130,8 @@
       "status": "Новая",
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
-      "deadline": "13.08.2026",
-      "urgency": "urgent",
+      "deadline": "20.08.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5142,8 +5142,8 @@
       "status": "Новая",
       "executor": "Мельникова Наталья Михайловна",
       "executor_short": "Мельникова Н.М.",
-      "deadline": "13.08.2026",
-      "urgency": "urgent",
+      "deadline": "20.08.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5154,8 +5154,8 @@
       "status": "В работе",
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
-      "deadline": "13.08.2026",
-      "urgency": "urgent",
+      "deadline": "20.08.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5166,8 +5166,8 @@
       "status": "В работе",
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
-      "deadline": "13.08.2026",
-      "urgency": "urgent",
+      "deadline": "20.08.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5178,8 +5178,8 @@
       "status": "В работе",
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
-      "deadline": "13.08.2026",
-      "urgency": "urgent",
+      "deadline": "20.08.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5551,7 +5551,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "12.08.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 100,
       "parent_id": 12778
     },
@@ -5610,8 +5610,8 @@
       "status": "Новая",
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
-      "deadline": "17.08.2026",
-      "urgency": "urgent",
+      "deadline": "28.08.2026",
+      "urgency": "ok",
       "pct": 0,
       "parent_id": 12707
     },
