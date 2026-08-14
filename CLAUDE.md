@@ -5,7 +5,7 @@
 плагином** `vz-system` (источник — `~/Projects/claude-system`, scope `user` → доступен
 во всех проектах; ставить в проект ничего не нужно). Скиллы вызываются **с namespace**:
 `/vz-system:vzgoal`, `/vz-system:night`, `/vz-system:morning`, `/vz-system:close`,
-`/vz-system:graphify`, `/vz-system:retro`; агенты — `reviewer`, `plan-reviewer`.
+`/vz-system:graphify`, `/vz-system:retro`; агенты — тоже с namespace: `vz-system:reviewer`, `vz-system:plan-reviewer` (голое имя = жёсткая ошибка резолвинга).
 - **Актуальный состав базы — `claude plugin details vz-system`.** Список выше может
   отстать; при расхождении верна команда, а не список.
 - Концепт: `~/Projects/claude-system/CONCEPT.md`
