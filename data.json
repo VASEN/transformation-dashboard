@@ -1,5 +1,5 @@
 {
-  "updated_at": "17.08.2026 01:31",
+  "updated_at": "18.08.2026 01:20",
   "config": {
     "year": 2026,
     "redmine_base": "https://transformation.rm.mosreg.ru/#/issues",
@@ -14,7 +14,7 @@
     "tasks_active": 218,
     "tasks_closed": 395,
     "tasks_deadline_5": 28,
-    "tasks_deadline_14": 86,
+    "tasks_deadline_14": 94,
     "tasks_overdue": 0,
     "tasks_today": 0,
     "vysv_pct_total": 122,
@@ -1339,7 +1339,7 @@
       "executor": "Мазуров (ККП) Даниил Юрьевич",
       "executor_short": "Мазуров Д.Ю.",
       "deadline": "01.09.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 80,
       "parent_id": 12546
     },
@@ -1399,7 +1399,7 @@
       "executor": "Родевальд (ККП) Станислав Евгеньевич",
       "executor_short": "Родевальд С.Е.",
       "deadline": "01.09.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 8,
       "parent_id": 11575
     },
@@ -4843,7 +4843,7 @@
       "executor": "Кучеров (МТДИ) Алексей Владимирович",
       "executor_short": "Кучеров А.В.",
       "deadline": "01.09.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 20,
       "parent_id": 13176
     },
@@ -4963,7 +4963,7 @@
       "executor": "Верещагин Виктор Александрович",
       "executor_short": "Верещагин В.А.",
       "deadline": "01.09.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 13176
     },
@@ -4975,7 +4975,7 @@
       "executor": "Кордзахия  Вахтанг Михайлович",
       "executor_short": "Кордзахия В.М.",
       "deadline": "01.09.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 20,
       "parent_id": 13176
     },
@@ -4987,7 +4987,7 @@
       "executor": "Макаров (Минэнерго) Дмитрий Борисович",
       "executor_short": "Макаров Д.Б.",
       "deadline": "01.09.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 13176
     },
@@ -4999,7 +4999,7 @@
       "executor": "Никулин (Минстрой) Никита Александрович",
       "executor_short": "Никулин Н.А.",
       "deadline": "01.09.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 13176
     },
@@ -6139,7 +6139,7 @@
       "executor": "Гиренко Илья Андреевич",
       "executor_short": "Гиренко И.А.",
       "deadline": "01.09.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12548
     },
