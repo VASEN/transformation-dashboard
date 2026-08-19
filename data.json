@@ -1,5 +1,5 @@
 {
-  "updated_at": "18.08.2026 01:20",
+  "updated_at": "19.08.2026 01:30",
   "config": {
     "year": 2026,
     "redmine_base": "https://transformation.rm.mosreg.ru/#/issues",
@@ -16,7 +16,7 @@
     "tasks_deadline_5": 28,
     "tasks_deadline_14": 94,
     "tasks_overdue": 0,
-    "tasks_today": 0,
+    "tasks_today": 3,
     "vysv_pct_total": 122,
     "report_updated_at": "12.08.2026"
   },
@@ -1783,7 +1783,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "19.08.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 11243
     },
@@ -1903,7 +1903,7 @@
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
       "deadline": "19.08.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 11243
     },
@@ -2383,7 +2383,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "19.08.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 11607
     },
