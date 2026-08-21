@@ -1,5 +1,5 @@
 {
-  "updated_at": "20.08.2026 02:16",
+  "updated_at": "21.08.2026 01:29",
   "config": {
     "year": 2026,
     "redmine_base": "https://transformation.rm.mosreg.ru/#/issues",
@@ -11,12 +11,12 @@
     "projects_closed": 18,
     "projects_avg_pct": 38,
     "tasks_total": 623,
-    "tasks_active": 214,
-    "tasks_closed": 409,
-    "tasks_deadline_5": 18,
+    "tasks_active": 213,
+    "tasks_closed": 410,
+    "tasks_deadline_5": 12,
     "tasks_deadline_14": 81,
     "tasks_overdue": 0,
-    "tasks_today": 8,
+    "tasks_today": 10,
     "vysv_pct_total": 122,
     "report_updated_at": "19.08.2026"
   },
@@ -157,7 +157,7 @@
       "start_date": "08.02.2026",
       "closed_at": null,
       "defense_at": null,
-      "pct": 53,
+      "pct": 44,
       "project_type": "Межведомственный",
       "is_priority": false,
       "goal": "Снижение внутренних трудозатрат со 100% до 80% к 29.09.2026",
@@ -1663,7 +1663,7 @@
       "executor": "Зернова (ККП) Елена Сергеевна",
       "executor_short": "Зернова Е.С.",
       "deadline": "21.08.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 75,
       "parent_id": 11497
     },
@@ -1771,7 +1771,7 @@
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
       "deadline": "21.08.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 11243
     },
@@ -1795,7 +1795,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "21.08.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 11243
     },
@@ -1807,7 +1807,7 @@
       "executor": "Володин Кирилл Олегович",
       "executor_short": "Володин К.О.",
       "deadline": "21.08.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 11243
     },
@@ -1831,7 +1831,7 @@
       "executor": "Гуляев (ККП) Виктор Александрович",
       "executor_short": "Гуляев В.А.",
       "deadline": "21.08.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 11243
     },
@@ -1843,7 +1843,7 @@
       "executor": "Колесников (ККП) Кирилл Владимирович",
       "executor_short": "Колесников К.В.",
       "deadline": "26.08.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 11243
     },
@@ -2287,7 +2287,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "21.08.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 75,
       "parent_id": 11594
     },
@@ -2379,12 +2379,12 @@
       "id": 12727,
       "project": "Оптимизация процессов ЗИТ",
       "theme": "ЭТАП 8. Тестирование 1 этапа реализованного функционала по подпроекту «Публикация в 1 клик»",
-      "status": "Новая",
+      "status": "Закрыта",
       "executor": "Теслина Анна Сергеевна",
       "executor_short": "Теслина А.С.",
       "deadline": "20.08.2026",
-      "urgency": "today",
-      "pct": 0,
+      "urgency": "ok",
+      "pct": 100,
       "parent_id": 11607
     },
     {
@@ -3763,7 +3763,7 @@
       "executor": "Ефимова Анастасия Александровна",
       "executor_short": "Ефимова А.А.",
       "deadline": "21.08.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 12735
     },
@@ -3823,7 +3823,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "21.08.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 12927
     },
@@ -3858,8 +3858,8 @@
       "status": "В работе",
       "executor": "Абрамов Максим Игоревич",
       "executor_short": "Абрамов М.И.",
-      "deadline": "20.08.2026",
-      "urgency": "today",
+      "deadline": "28.08.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12734
     },
@@ -5128,10 +5128,10 @@
       "project": "Оптимизация организационного блока РЦТ",
       "theme": "Внедрение функционала форм трудового договора",
       "status": "Новая",
-      "executor": "Кострова Ирина Валерьевна",
-      "executor_short": "Кострова И.В.",
-      "deadline": "20.08.2026",
-      "urgency": "today",
+      "executor": "Федорова Наталья Михайловна",
+      "executor_short": "Федорова Н.М.",
+      "deadline": "27.08.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5142,8 +5142,8 @@
       "status": "Новая",
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
-      "deadline": "20.08.2026",
-      "urgency": "today",
+      "deadline": "27.08.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5154,8 +5154,8 @@
       "status": "Новая",
       "executor": "Мельникова Наталья Михайловна",
       "executor_short": "Мельникова Н.М.",
-      "deadline": "20.08.2026",
-      "urgency": "today",
+      "deadline": "27.08.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5166,8 +5166,8 @@
       "status": "В работе",
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
-      "deadline": "20.08.2026",
-      "urgency": "today",
+      "deadline": "27.08.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5178,8 +5178,8 @@
       "status": "В работе",
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
-      "deadline": "20.08.2026",
-      "urgency": "today",
+      "deadline": "27.08.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5190,8 +5190,8 @@
       "status": "В работе",
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
-      "deadline": "20.08.2026",
-      "urgency": "today",
+      "deadline": "27.08.2026",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5551,7 +5551,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "26.08.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 100,
       "parent_id": 12778
     },
@@ -5599,7 +5599,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "04.09.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12707
     },
@@ -7603,7 +7603,7 @@
       "executor": "Никулин (Минстрой) Никита Александрович",
       "executor_short": "Никулин Н.А.",
       "deadline": "21.08.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 13177
     },
@@ -7615,7 +7615,7 @@
       "executor": "Никулин (Минстрой) Никита Александрович",
       "executor_short": "Никулин Н.А.",
       "deadline": "21.08.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 13177
     },
