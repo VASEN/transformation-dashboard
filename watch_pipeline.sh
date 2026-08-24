@@ -20,7 +20,7 @@
 # Режимы:
 #   ./watch_pipeline.sh            — рабочий (так его зовёт launchd)
 #   ./watch_pipeline.sh --force    — прогнать, даже если выгрузка уже обработана
-#   ./watch_pipeline.sh --dry-run  — показать, что было бы сделано; ничего не пишет
+#   ./watch_pipeline.sh --dry-run  — показать, что было бы сделано (пишет только в лог)
 #
 set -uo pipefail
 
@@ -37,7 +37,8 @@ cd "$PROJECT_DIR" || exit 1
 
 LOG_DIR="$PROJECT_DIR/logs"
 LOG="$LOG_DIR/auto-pipeline.log"
-STATE="$LOG_DIR/.processed"      # отпечаток последней обработанной выгрузки
+STATE="$LOG_DIR/.processed"      # отпечаток последней взятой в работу выгрузки
+SKIPPED="$LOG_DIR/.skipped"      # отпечаток отброшенной — чтобы не повторять сообщение
 LOCK="$LOG_DIR/.lock"            # каталог-замок: mkdir атомарен
 mkdir -p "$LOG_DIR"
 
@@ -59,7 +60,13 @@ log() {
 
 notify() {  # notify «заголовок» «текст» — всплывашка macOS
   [ "$DRY" -eq 1 ] && return 0
-  osascript -e "display notification \"$2\" with title \"$1\"" >/dev/null 2>&1
+  # текст передаём аргументами: в него попадает имя файла от владельца,
+  # а склейка строк выполнила бы кавычку в имени как AppleScript
+  osascript - "$1" "$2" >/dev/null 2>&1 <<'APPLESCRIPT'
+on run argv
+  display notification (item 2 of argv) with title (item 1 of argv)
+end run
+APPLESCRIPT
   return 0
 }
 
@@ -100,25 +107,34 @@ fail() {  # fail «шаг» «код»
         "${target:-${latest:-выгрузка не определена}}" "$step" "$code" "$(log_tail)")"
 }
 
-# лог не должен расти бесконечно: раз в прогон подрезаем хвостом
-if [ -f "$LOG" ] && [ "$(stat -f %z "$LOG")" -gt 1048576 ]; then
-  tail -n 2000 "$LOG" >"$LOG.tmp" && mv -f "$LOG.tmp" "$LOG"
-fi
-
 # ─────────────────────────────── замок ───────────────────────────────
 # Прогон длится минуту и сам пишет в папку (data.json, отчёты, справки),
-# что снова будит launchd. Без замка это наложение прогонов друг на друга.
+# что снова будит launchd — а будит он часто: замер 24.08 дал ~6 пробуждений
+# в минуту. Без замка это наложение прогонов друг на друга.
+#
+# Замок держит PID: возраст сам по себе о смерти процесса не говорит —
+# застрявший на 40 минут `git push` жив, и снимать его замок нельзя.
 if [ "$DRY" -eq 0 ]; then
-  if ! mkdir "$LOCK" 2>/dev/null; then
-    if [ -n "$(find "$LOCK" -maxdepth 0 -mmin +30 2>/dev/null)" ]; then
-      log "⚠️  снимаю зависший замок (старше 30 мин)"
-      rm -rf "$LOCK"
-      mkdir "$LOCK" 2>/dev/null || exit 0
-    else
-      exit 0   # прогон уже идёт — молча уходим
+  while true; do
+    if mkdir "$LOCK" 2>/dev/null; then
+      printf '%s' "$$" >"$LOCK/pid"
+      break
     fi
-  fi
-  trap 'rm -rf "$LOCK"' EXIT
+    owner=$(cat "$LOCK/pid" 2>/dev/null)
+    if [ -n "$owner" ] && kill -0 "$owner" 2>/dev/null; then
+      exit 0   # прогон реально идёт — молча уходим
+    fi
+    log "⚠️  снимаю замок мёртвого процесса (pid ${owner:-неизвестен})"
+    rm -rf "$LOCK" || exit 0
+  done
+  # снимаем только СВОЙ замок: чужой мог быть создан после того, как наш сняли
+  trap '[ "$(cat "$LOCK/pid" 2>/dev/null)" = "$$" ] && rm -rf "$LOCK"' EXIT
+fi
+
+# Подрезка лога — под замком: иначе параллельное пробуждение подменит файл
+# под работающим прогоном и хвост для сообщения об ошибке соберётся не тот.
+if [ -f "$LOG" ] && [ "$(stat -f %z "$LOG")" -gt 1048576 ]; then
+  tail -n 2000 "$LOG" >"$LOG.tmp" && mv -f "$LOG.tmp" "$LOG"
 fi
 
 # ────────────────────────── поиск выгрузки ───────────────────────────
@@ -131,21 +147,52 @@ fi
 latest=$(ls -t -- "${candidates[@]}" 2>/dev/null | head -n1)
 [ -n "$latest" ] || exit 0
 
-# Только сегодняшняя выгрузка. Иначе любое постороннее изменение папки
-# (правка кода, запись отчёта) заставило бы переименовать вчерашний файл
-# в сегодняшний и прогнать пайплайн на устаревших данных.
-mtime=$(stat -f %m -- "$latest")
-day_start=$(date -j -f '%Y-%m-%d %H:%M:%S' "$(date '+%Y-%m-%d') 00:00:00" '+%s')
-if [ "$mtime" -lt "$day_start" ] && [ "$FORCE" -eq 0 ]; then
-  [ "$DRY" -eq 1 ] && log "самая свежая выгрузка $latest не сегодняшняя — выход"
+fingerprint=$(stat -f '%m|%z' -- "$latest" 2>/dev/null)
+if [ -z "$fingerprint" ]; then
+  log "⚠️  не удалось прочитать $latest — пропускаю"
   exit 0
 fi
 
-# Отпечаток по mtime+размеру, без имени: переименование его не сбивает,
-# поэтому собственная запись скрипта в папку второй прогон не вызывает.
-fingerprint=$(stat -f '%m|%z' -- "$latest")
+# Уже обработанное (в том числе неудачно) второй раз не берём: см. запись
+# отпечатка ниже. Повтор — только по --force.
 if [ "$FORCE" -eq 0 ] && [ -f "$STATE" ] && [ "$(cat "$STATE")" = "$fingerprint" ]; then
   [ "$DRY" -eq 1 ] && log "выгрузка $latest уже обработана — выход"
+  exit 0
+fi
+
+# ───────────────────── отбраковка: не сегодняшняя ─────────────────────
+# Только сегодняшняя выгрузка: иначе постороннее изменение папки (правка кода,
+# запись отчёта) заставило бы переименовать вчерашний файл в сегодняшний и
+# прогнать пайплайн на устаревших данных.
+#
+# Об отбраковке нужно СКАЗАТЬ: файл, скачанный вечером и перенесённый в папку
+# утром, сохраняет старый mtime, и молчание владелец прочитает как «всё прошло».
+# Чтобы не повторять это на каждое пробуждение, отпечаток отброшенного файла
+# запоминается отдельно.
+mtime=$(stat -f %m -- "$latest" 2>/dev/null)
+day_start=$(date -j -f '%Y-%m-%d %H:%M:%S' "$(date '+%Y-%m-%d') 00:00:00" '+%s')
+if [ -n "$mtime" ] && [ "$mtime" -lt "$day_start" ] && [ "$FORCE" -eq 0 ]; then
+  log "⏭  $latest не сегодняшний (изменён $(date -r "$mtime" '+%d.%m %H:%M')) — пропускаю"
+  if [ "$DRY" -eq 0 ] && [ "$(cat "$SKIPPED" 2>/dev/null)" != "$fingerprint" ]; then
+    printf '%s' "$fingerprint" >"$SKIPPED"
+    tg "$(printf '⏭ Выгрузка пропущена · %s\n\n📄 %s\n📆 Файл изменён %s — не сегодня, поэтому автопрогон его не взял.\n\nЕсли выгрузка всё-таки актуальна:\n🔁 ./watch_pipeline.sh --force' \
+          "$(date '+%d.%m %H:%M')" "$latest" "$(date -r "$mtime" '+%d.%m %H:%M')")"
+  fi
+  exit 0
+fi
+
+# Старый снимок, вернувшийся в корень (например, `cp archive/issues/…`), получает
+# свежий mtime и прошёл бы проверку выше — а дальше был бы переименован в сегодня
+# и опубликован как актуальные данные. Дата в имени старше сегодняшней — стоп.
+name_day=$(printf '%s' "$latest" | sed -n 's/^issues_\([0-9][0-9]\)\.\([0-9][0-9]\).*/\1.\2/p')
+today_day=$(date '+%d.%m')
+if [ -n "$name_day" ] && [ "$name_day" != "$today_day" ] && [ "$FORCE" -eq 0 ]; then
+  log "⏭  $latest — снимок за $name_day, не за $today_day; пропускаю"
+  if [ "$DRY" -eq 0 ] && [ "$(cat "$SKIPPED" 2>/dev/null)" != "$fingerprint" ]; then
+    printf '%s' "$fingerprint" >"$SKIPPED"
+    tg "$(printf '⏭ Выгрузка пропущена · %s\n\n📄 %s\n📆 В имени файла дата %s, а сегодня %s — похоже на старый снимок, публиковать его как свежие данные автопрогон не стал.\n\nЕсли это всё-таки актуальная выгрузка:\n🔁 ./watch_pipeline.sh --force' \
+          "$(date '+%d.%m %H:%M')" "$latest" "$name_day" "$today_day")"
+  fi
   exit 0
 fi
 
@@ -158,11 +205,49 @@ for _ in 1 2 3 4 5; do
   [ "$size_now" = "$size_prev" ] && break
   size_prev="$size_now"
 done
+# отпечаток — после ожидания: снятый раньше принадлежал недокачанному файлу
+# и не совпал бы с итоговым, давая лишний полный прогон
+fingerprint=$(stat -f '%m|%z' -- "$latest")
 
 log "─── новая выгрузка: $latest ($((size_prev / 1024)) КБ)"
 
+# ─────────────────── проверка, что это выгрузка Redmine ───────────────
+# Маска issues*.xlsx ловит любой файл, начинающийся на «issues», а `mv -f` ниже
+# затирает сегодняшний снимок безвозвратно — выгрузки в git не хранятся.
+# Поэтому проверяем колонки ДО переименования, теми же требованиями,
+# что и сам пайплайн (extract_data.validate_source_columns).
+if ! check_out=$(python3 - "$latest" <<'PYCHECK' 2>&1
+import sys
+import pandas as pd
+from extract_data import validate_source_columns
+
+df = pd.read_excel(sys.argv[1])
+validate_source_columns(
+    df, ['Трекер', '#', 'Проект', 'Статус', 'Родительская задача'], sys.argv[1]
+)
+PYCHECK
+); then
+  log "❌ $latest не похож на выгрузку Redmine — файл не тронут"
+  log "$check_out"
+  if [ "$DRY" -eq 0 ]; then
+    printf '%s' "$fingerprint" >"$STATE"
+    notify "Дашборд: чужой файл" "$latest — не выгрузка Redmine"
+    tg "$(printf '⚠️ Файл не взят в работу · %s\n\n📄 %s\n\nЭто не похоже на выгрузку Redmine — нет обязательных колонок. Файл оставлен как есть, сегодняшний снимок не тронут.\n\n%s' \
+          "$(date '+%d.%m %H:%M')" "$latest" "$(printf '%s' "$check_out" | tail -n 3)")"
+  fi
+  exit 0
+fi
+log "✅ проверка колонок Redmine пройдена"
+
 # ───────────────────── переименование в текущую дату ──────────────────
 target="issues_$(date '+%d.%m').xlsx"
+
+# Отпечаток пишем ДО работы: если пайплайн упадёт, launchd разбудит скрипт
+# снова (и снова — пробуждений порядка шести в минуту), и та же выгрузка
+# уходила бы в бесконечный цикл коммитов, пушей и сообщений об ошибке.
+# «Обработана» здесь значит «попытка была»; повтор — осознанный, по --force.
+[ "$DRY" -eq 0 ] && printf '%s' "$fingerprint" >"$STATE"
+
 if [ "$latest" != "$target" ]; then
   if [ "$DRY" -eq 1 ]; then
     log "→ переименовал бы: $latest → $target"
@@ -273,8 +358,8 @@ fi
 tg "$(printf '%s\n\n📄 %s\n%s\n\n%s\n\n%s' \
       "$head_line" "$target" "$stats" "${report_line:-—}" "${deploy_line:-—}")"
 
+# отпечаток уже записан перед началом работы (см. «переименование»)
 if [ "$DRY" -eq 0 ]; then
-  printf '%s' "$fingerprint" >"$STATE"
   notify "Дашборд: прогон завершён" "$target · ${deploy_note:-готово} · справка до $week_end"
 fi
 log "─── готово"

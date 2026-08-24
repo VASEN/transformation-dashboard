@@ -53,12 +53,24 @@ if ! python3 -c "import json,sys; json.load(open('data.json'))" 2>/dev/null; the
 fi
 
 echo "📦 Коммит data.json..."
+# Ветка: коммит идёт в текущую, а пуш ниже — всегда в main. Если HEAD не на main,
+# «запушено» было бы неправдой: на Amvera ничего не уедет. Скрипт запускается
+# и автопрогоном, без человека рядом, поэтому лучше остановиться.
+branch=$(git symbolic-ref --short HEAD 2>/dev/null || echo "")
+if [ "$branch" != "main" ]; then
+  echo "❌ HEAD на ветке '${branch:-detached}', а деплой идёт в main — остановлено" >&2
+  echo "   переключитесь на main или запушьте вручную" >&2
+  exit 1
+fi
+
 git add data.json
-if git diff --cached --quiet; then
+if git diff --cached --quiet -- data.json; then
   echo "ℹ️  data.json не изменился — коммит/пуш пропущены"
   exit 0
 fi
-git commit -m "data: обновление $(date '+%d.%m.%Y %H:%M')"
+# pathspec обязателен: в индексе может лежать что-то ещё (чужая правка, забытый
+# `git add`), а коммит без него уносит это в публичный репозиторий заодно с данными
+git commit -m "data: обновление $(date '+%d.%m.%Y %H:%M')" -- data.json
 
 echo "📤 Пуш в репозитории..."
 push_failed=""
