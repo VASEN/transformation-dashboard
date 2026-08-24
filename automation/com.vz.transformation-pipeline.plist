@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.vz.transformation-pipeline</string>
+
+  <!-- Триггер — не час, а появление свежей выгрузки: владелец кладёт файл из
+       Redmine в корень проекта. WatchPaths будит агент на любое изменение папки
+       (включая записи самого пайплайна), а watch_pipeline.sh сам решает, работать
+       ли: замок, отпечаток обработанной выгрузки, «только сегодняшняя».
+       На этой же папке висит com.vz.redmine-watch — агенты не мешают друг другу:
+       наш нормализует имя issues_ДД.ММ.xlsx, которого тот ждёт. -->
+  <key>WatchPaths</key>
+  <array>
+    <string>/Users/valeriy/Projects/transformation</string>
+  </array>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/valeriy/Projects/transformation/watch_pipeline.sh</string>
+  </array>
+
+  <key>WorkingDirectory</key>
+  <string>/Users/valeriy/Projects/transformation</string>
+
+  <key>StandardOutPath</key>
+  <string>/Users/valeriy/Projects/transformation/logs/launchd.out</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/valeriy/Projects/transformation/logs/launchd.err</string>
+
+  <!-- не запускать при загрузке агента: работа начинается от нового файла -->
+  <key>RunAtLoad</key>
+  <false/>
+</dict>
+</plist>
