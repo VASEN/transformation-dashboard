@@ -254,3 +254,91 @@ def test_dry_run_changes_nothing(tmp_path, flag):
     assert (tmp_path / 'issues (9).xlsx').exists()
     assert not (tmp_path / f'issues_{today_name()}.xlsx').exists()
     assert messages(tmp_path) == []
+
+
+# ────────── дефекты, внесённые самими исправлениями (круг 2) ──────────
+
+def test_unavailable_lock_dir_does_not_spin(tmp_path):
+    """Недоступный `logs/` завершает прогон, а не крутит его вечно.
+
+    Метка агента одна: зациклившийся экземпляр занял бы её навсегда,
+    launchd не поднял бы второй, и автопрогон встал бы молча.
+    """
+    script = make_sandbox(tmp_path)
+    redmine_xlsx(tmp_path, 'issues.xlsx')
+    logs = tmp_path / 'logs'
+    logs.mkdir()
+    logs.chmod(0o500)                      # каталог есть, записать в него нельзя
+    try:
+        r = subprocess.run([str(script)], capture_output=True, text=True,
+                           cwd=str(tmp_path), timeout=20)
+    finally:
+        logs.chmod(0o700)
+    assert r.returncode == 1
+
+
+def test_broken_environment_does_not_consume_upload(tmp_path):
+    """Сломанная среда не помечает выгрузку обработанной.
+
+    Проверка колонок падает не потому, что файл чужой (в проекте уже был
+    рассинхрон numpy/pandas). Диагноз неизвестен — значит после починки
+    выгрузка должна подхватиться сама.
+    """
+    script = make_sandbox(tmp_path)
+    redmine_xlsx(tmp_path, 'issues.xlsx')
+    good = (tmp_path / 'extract_data.py').read_text()
+    (tmp_path / 'extract_data.py').write_text(
+        'raise ImportError("numpy.core.multiarray failed to import")\n')
+
+    assert run(script).returncode == 0
+    assert not (tmp_path / f'issues_{today_name()}.xlsx').exists()
+    msgs = messages(tmp_path)
+    assert len(msgs) == 1 and 'не проверена' in msgs[0]
+
+    run(script)                             # пока среда сломана — не спамим
+    assert len(messages(tmp_path)) == 1
+
+    (tmp_path / 'extract_data.py').write_text(good)   # среда починена
+    assert run(script).returncode == 0
+    assert (tmp_path / f'issues_{today_name()}.xlsx').exists(), \
+        'после починки среды выгрузка не подхватилась'
+    assert 'Дашборд обновлён' in messages(tmp_path)[-1]
+
+
+def test_interrupted_run_is_retried(tmp_path):
+    """Прогон, убитый сигналом, повторяется, а не считается обработанным.
+
+    launchd шлёт SIGTERM при выходе из системы. Без статуса в отпечатке
+    выгрузка выглядела бы обработанной, `data.json` остался бы вчерашним,
+    и владелец не получил бы ни одного сообщения.
+    """
+    script = make_sandbox(tmp_path)
+    upload = redmine_xlsx(tmp_path, 'issues.xlsx')
+    st = upload.stat()
+    fingerprint = f'{int(st.st_mtime)}|{st.st_size}'
+
+    logs = tmp_path / 'logs'
+    logs.mkdir()
+    # прогон начат и оборван: pid заведомо мёртвый
+    (logs / '.processed').write_text(f'started {fingerprint} 999123')
+
+    assert run(script).returncode == 0
+    msgs = messages(tmp_path)
+    assert len(msgs) == 1
+    assert 'оборван' in msgs[0], 'о повторе оборванного прогона не сказано'
+    assert (tmp_path / f'issues_{today_name()}.xlsx').exists()
+
+
+def test_finished_run_is_not_retried(tmp_path):
+    """Завершённая попытка (в том числе неудачная) сама не повторяется."""
+    script = make_sandbox(tmp_path, deploy=DEPLOY_FAIL)
+    upload = redmine_xlsx(tmp_path, 'issues.xlsx')
+    st = upload.stat()
+    fingerprint = f'{int(st.st_mtime)}|{st.st_size}'
+
+    logs = tmp_path / 'logs'
+    logs.mkdir()
+    (logs / '.processed').write_text(f'failed {fingerprint} 999123')
+
+    assert run(script).returncode == 0
+    assert messages(tmp_path) == []
