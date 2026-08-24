@@ -57,10 +57,47 @@ log() {
   return 0
 }
 
-notify() {  # notify «заголовок» «текст»
+notify() {  # notify «заголовок» «текст» — всплывашка macOS
   [ "$DRY" -eq 1 ] && return 0
   osascript -e "display notification \"$2\" with title \"$1\"" >/dev/null 2>&1
   return 0
+}
+
+# Telegram — тот же канал, которым шлёт LIFE/bin/redmine_watch.py:
+# токен в keychain (vz-telegram-bot), chat_id в shared/telegram/state.json.
+TG="/Users/valeriy/Projects/LIFE/bin/tg.py"
+
+tg() {  # tg «текст» — недоставленное сообщение не должно ронять прогон
+  if [ "$DRY" -eq 1 ]; then
+    printf '\n--- telegram ---\n%s\n----------------\n' "$1"
+    return 0
+  fi
+  if [ ! -f "$TG" ]; then
+    log "⚠️  $TG не найден — сообщение не отправлено"
+    return 0
+  fi
+  if ! python3 "$TG" "$1" >>"$LOG" 2>&1; then
+    log "⚠️  Telegram не принял сообщение (см. лог выше)"
+  fi
+  return 0
+}
+
+# Хвост лога для сообщения об ошибке: только строки ТЕКУЩЕГО прогона —
+# от последнего маркера «новая выгрузка». Иначе в сообщение затекает
+# история прошлых прогонов и разобрать причину нельзя.
+log_tail() {
+  awk '/─── новая выгрузка/ {buf=""} {buf = buf $0 "\n"} END {printf "%s", buf}' "$LOG" \
+    | tail -n 15 | sed 's/^/   /'
+}
+
+# Сообщение о падении + всплывашка. Зовётся перед каждым аварийным выходом,
+# чтобы «тишина в Telegram» никогда не значила «прогон прошёл».
+fail() {  # fail «шаг» «код»
+  local step="$1" code="$2"
+  notify "Дашборд: ошибка" "$step · код $code"
+  tg "$(printf '%s\n\n📄 %s\n🧩 Шаг: %s (код %s)\n\n⌄ хвост лога:\n%s\n\n🔁 Повторить: ./watch_pipeline.sh --force\n📓 Полный лог: logs/auto-pipeline.log' \
+        "❌ Автопрогон дашборда упал · $(date '+%d.%m %H:%M')" \
+        "${target:-${latest:-выгрузка не определена}}" "$step" "$code" "$(log_tail)")"
 }
 
 # лог не должен расти бесконечно: раз в прогон подрезаем хвостом
@@ -135,7 +172,7 @@ if [ "$latest" != "$target" ]; then
       log "📄 $latest → $target"
     else
       log "❌ не удалось переименовать $latest"
-      notify "Дашборд: ошибка" "Не удалось переименовать $latest"
+      fail "переименование $latest → $target" 1
       exit 1
     fi
   fi
@@ -158,9 +195,11 @@ else
     if grep -q "не изменился" "$out"; then
       log "ℹ️  данные не изменились — коммита не было"
       deploy_note="данные без изменений"
+      deploy_line="ℹ️ data.json не изменился — коммита и пуша не было"
     else
       log "✅ deploy прошёл"
       deploy_note="данные обновлены и запушены"
+      deploy_line="🚀 data.json закоммичен и запушен"
     fi
   elif grep -q "ошибками пуша" "$out"; then
     # Пайплайн отработал, коммит сделан, но один из remotes отказал
@@ -170,9 +209,10 @@ else
     log "⚠️  пуш не прошёл в:$failed (данные пересчитаны и закоммичены)"
     notify "Дашборд: пуш не прошёл" "Не отправлено в:$failed"
     deploy_note="пуш не прошёл в:$failed"
+    deploy_line="⚠️ Пуш не прошёл в:$failed — данные пересчитаны и закоммичены, но на Amvera уедут только после ручного пуша"
   else
     log "❌ deploy завершился с кодом $code — см. лог выше"
-    notify "Дашборд: ошибка деплоя" "$target · код $code · logs/auto-pipeline.log"
+    fail "deploy.sh" "$code"
     exit "$code"
   fi
 fi
@@ -187,15 +227,52 @@ if [ "$DRY" -eq 1 ]; then
   log "→ собрал бы справку: сегодня .. $week_end"
 else
   log "📅 справка по срокам: сегодня .. $week_end"
-  if python3 upcoming_report.py --to "$week_end" --format both >>"$LOG" 2>&1; then
+  rep_out="$LOG_DIR/.report-out"
+  if python3 upcoming_report.py --to "$week_end" --format both >"$rep_out" 2>&1; then
+    cat "$rep_out" >>"$LOG"
     log "✅ справка собрана"
+    # первая строка скрипта уже сводка: «✅ Справка 24.08–28.08.2026: 59 задач в 9 проектах»
+    report_line=$(head -n1 "$rep_out")
+    report_file=$(grep -o '[^/]*\.md$' "$rep_out" | head -n1)
+    [ -n "$report_file" ] && report_line="$report_line
+   $report_file"
   else
-    log "⚠️  справка не собралась (данные обновлены и запушены)"
+    cat "$rep_out" >>"$LOG"
+    log "⚠️  справка не собралась (данные обновлены)"
     notify "Дашборд обновлён" "Справка по срокам не собралась — см. лог"
+    report_line="⚠️ Справка по срокам не собралась — см. logs/auto-pipeline.log"
   fi
 fi
 
 # ───────────────────────────── завершение ─────────────────────────────
+# Итог в Telegram: владелец должен видеть, что работа закончилась, не заглядывая
+# в папку. Цифры берём из свежесобранного data.json — «готово» без чисел не даёт
+# понять, тот ли файл обработан.
+stats=$(python3 - <<'PYSTATS' 2>/dev/null
+import json
+try:
+    s = json.load(open('data.json'))['summary']
+except Exception:
+    raise SystemExit(0)
+print('📊 Проекты {} (в работе {}) · задачи {} (активных {})'.format(
+    s.get('projects_total', '—'), s.get('projects_active', '—'),
+    s.get('tasks_total', '—'), s.get('tasks_active', '—')))
+print('⏰ Просрочено {} · срок сегодня {}'.format(
+    s.get('tasks_overdue', '—'), s.get('tasks_today', '—')))
+if s.get('vysv_pct_total') is not None:
+    print('📈 Высвобождение {}%'.format(s['vysv_pct_total']))
+PYSTATS
+)
+
+if [ -n "${failed:-}" ]; then
+  head_line="⚠️ Дашборд обновлён с замечанием · $(date '+%d.%m %H:%M')"
+else
+  head_line="✅ Дашборд обновлён · $(date '+%d.%m %H:%M')"
+fi
+
+tg "$(printf '%s\n\n📄 %s\n%s\n\n%s\n\n%s' \
+      "$head_line" "$target" "$stats" "${report_line:-—}" "${deploy_line:-—}")"
+
 if [ "$DRY" -eq 0 ]; then
   printf '%s' "$fingerprint" >"$STATE"
   notify "Дашборд: прогон завершён" "$target · ${deploy_note:-готово} · справка до $week_end"
