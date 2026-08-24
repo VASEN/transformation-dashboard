@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Автопрогон выгрузки — как это работает</title>
+<style>
+  :root{
+    --bg:#06060f; --bg2:#0d0d1e; --bg3:#12122a;
+    --card:rgba(255,255,255,0.04); --card-border:rgba(255,255,255,0.08);
+    --accent:#00e5ff; --accent2:#b44fff; --accent3:#00ff9d;
+    --warn:#ffb800; --danger:#ff3b5c;
+    --text:#e8eaf6; --text-dim:rgba(232,234,246,0.72);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    padding:32px 20px 64px;
+  }
+  .wrap{max-width:1080px;margin:0 auto}
+  header{margin-bottom:36px}
+  h1{font-size:30px;margin:0 0 8px;letter-spacing:-.02em}
+  .sub{color:var(--text-dim);font-size:15px}
+  h2{font-size:20px;margin:44px 0 16px;letter-spacing:-.01em}
+  h2 .num{color:var(--accent);font-variant-numeric:tabular-nums;margin-right:8px}
+
+  /* поток */
+  .flow{display:flex;gap:10px;flex-wrap:wrap;align-items:stretch;margin-bottom:8px}
+  .step{
+    flex:1 1 150px;min-width:0;background:var(--card);border:1px solid var(--card-border);
+    border-radius:12px;padding:14px 14px 16px;position:relative;
+  }
+  .step .n{
+    font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--accent);margin-bottom:6px
+  }
+  .step .t{font-weight:600;font-size:15px;margin-bottom:4px}
+  .step .d{font-size:13px;color:var(--text-dim);line-height:1.45}
+  .arrow{align-self:center;color:rgba(232,234,246,.35);font-size:18px}
+
+  /* карточки исходов */
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
+  .card{
+    background:var(--card);border:1px solid var(--card-border);
+    border-left:3px solid var(--tone,var(--accent));
+    border-radius:12px;padding:18px 20px;
+  }
+  .card h3{margin:0 0 4px;font-size:16px;color:var(--tone,var(--text))}
+  .card .when{font-size:13px;color:var(--text-dim);margin-bottom:12px}
+  .msg{
+    background:var(--bg);border:1px solid var(--card-border);border-radius:8px;
+    padding:12px 14px;font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;
+    white-space:pre-wrap;color:var(--text-dim);margin-bottom:12px;overflow-x:auto;
+  }
+  .todo{font-size:14px}
+  .todo b{color:var(--text);font-weight:600}
+  code{
+    background:var(--bg3);border:1px solid var(--card-border);border-radius:5px;
+    padding:1px 6px;font:13px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--accent);
+  }
+  .ok{--tone:var(--accent3)} .warn{--tone:var(--warn)}
+  .bad{--tone:var(--danger)} .skip{--tone:var(--accent2)}
+
+  .note{
+    background:linear-gradient(180deg,rgba(255,184,0,.08),rgba(255,184,0,.03));
+    border:1px solid rgba(255,184,0,.25);border-radius:12px;padding:18px 20px;margin-top:16px;
+  }
+  .note h3{margin:0 0 8px;font-size:16px;color:var(--warn)}
+  .note p{margin:0 0 8px;font-size:14px;color:var(--text-dim)}
+  .note p:last-child{margin-bottom:0}
+
+  table{width:100%;border-collapse:collapse;margin-top:8px;font-size:14px}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--card-border);vertical-align:top}
+  th{color:var(--text-dim);font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+  td:first-child{white-space:nowrap}
+  .scroll{overflow-x:auto}
+  footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--card-border);
+    color:var(--text-dim);font-size:13px}
+  @media (max-width:640px){ .arrow{display:none} h1{font-size:24px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Автопрогон выгрузки</h1>
+  <div class="sub">Что происходит после того, как вы положили файл в папку проекта — и что означает каждое сообщение в Telegram. Версия 24.08.2026</div>
+</header>
+
+<h2><span class="num">1</span>Путь выгрузки</h2>
+<div class="flow">
+  <div class="step">
+    <div class="n">Вы</div>
+    <div class="t">Кладёте файл</div>
+    <div class="d">Имя любое: <code>issues (45).xlsx</code>. Папка проекта.</div>
+  </div>
+  <div class="arrow">→</div>
+  <div class="step">
+    <div class="n">Проверки</div>
+    <div class="t">Тот ли это файл</div>
+    <div class="d">Сегодняшний? Выгрузка Redmine? Не старый снимок?</div>
+  </div>
+  <div class="arrow">→</div>
+  <div class="step">
+    <div class="n">Шаг 1</div>
+    <div class="t">Переименование</div>
+    <div class="d">В <code>issues_ДД.ММ.xlsx</code> по дате в Москве.</div>
+  </div>
+  <div class="arrow">→</div>
+  <div class="step">
+    <div class="n">Шаг 2</div>
+    <div class="t">Пересчёт и пуш</div>
+    <div class="d">data.json, просрочки, коммит, GitHub → Amvera.</div>
+  </div>
+  <div class="arrow">→</div>
+  <div class="step">
+    <div class="n">Шаг 3</div>
+    <div class="t">Справка</div>
+    <div class="d">Сроки от сегодня до ближайшей пятницы.</div>
+  </div>
+  <div class="arrow">→</div>
+  <div class="step">
+    <div class="n">Итог</div>
+    <div class="t">Сообщение</div>
+    <div class="d">Приходит всегда — успех это или сбой.</div>
+  </div>
+</div>
+<p class="sub">Занимает около минуты. Повторный заброс в тот же день проходит цикл заново: вечерняя картина замещает утреннюю.</p>
+
+<h2><span class="num">2</span>Шесть сообщений</h2>
+<div class="cards">
+
+  <div class="card ok">
+    <h3>✅ Дашборд обновлён</h3>
+    <div class="when">Всё прошло</div>
+    <div class="msg">✅ Дашборд обновлён · 24.08 10:43
+
+📄 issues_24.08.xlsx
+📊 Проекты 36 (в работе 18) · задачи 623
+⏰ Просрочено 0 · срок сегодня 0
+📈 Высвобождение 122%
+
+✅ Справка 24.08–28.08: 59 задач в 9 проектах
+🚀 data.json закоммичен и запушен</div>
+    <div class="todo"><b>Ничего.</b> Взгляните только на цифры: если проектов или задач заметно меньше обычного — выгрузка пришла неполной.</div>
+  </div>
+
+  <div class="card warn">
+    <h3>⚠️ Дашборд обновлён с замечанием</h3>
+    <div class="when">Данные готовы, пуш не прошёл</div>
+    <div class="msg">⚠️ Пуш не прошёл в: upstream — данные
+пересчитаны и закоммичены, но на Amvera
+уедут только после ручного пуша</div>
+    <div class="todo"><b>Запушить руками:</b> <code>git push origin main</code> — тот репозиторий, что назван в сообщении. Частая причина: слетел доступ к <code>upstream</code>.</div>
+  </div>
+
+  <div class="card bad">
+    <h3>❌ Автопрогон дашборда упал</h3>
+    <div class="when">Пайплайн остановился</div>
+    <div class="msg">🧩 Шаг: deploy.sh (код 1)
+
+⌄ хвост лога:
+   ❌ Ошибка: колонка «Срок завершения»
+      не найдена в выгрузке
+
+🔁 Повторить: ./watch_pipeline.sh --force</div>
+    <div class="todo"><b>Причина — в самом сообщении.</b> Устраните и повторите командой из него. Сам прогон не повторится: иначе он слал бы ошибку каждые несколько секунд.</div>
+  </div>
+
+  <div class="card skip">
+    <h3>⏭ Выгрузка пропущена</h3>
+    <div class="when">Файл сочтён не сегодняшним</div>
+    <div class="msg">📆 Файл изменён 23.08 19:40 — не сегодня,
+поэтому автопрогон его не взял.
+
+Если выгрузка всё-таки актуальна:
+🔁 ./watch_pipeline.sh --force</div>
+    <div class="todo"><b>Актуальная?</b> <code>--force</code>. Бывает, когда файл скачан вечером, а перенесён утром, или когда в корень вернули старый снимок из архива.</div>
+  </div>
+
+  <div class="card warn">
+    <h3>⚠️ Файл не взят в работу</h3>
+    <div class="when">Это не выгрузка Redmine</div>
+    <div class="msg">В нём нет обязательных колонок Redmine,
+поэтому автопрогон его не тронул —
+сегодняшний снимок цел.</div>
+    <div class="todo"><b>Обычно ничего</b> — уберите посторонний файл. Проверка стоит ради последней строки: переименование затирает снимок дня безвозвратно, а выгрузки в git не хранятся.</div>
+  </div>
+
+  <div class="card warn">
+    <h3>⚠️ Выгрузка не проверена</h3>
+    <div class="when">Сломалось окружение</div>
+    <div class="msg">проверка не выполнилась:
+ImportError('numpy.core.multiarray
+failed to import')
+
+Файл оставлен как есть.</div>
+    <div class="todo"><b>Почините окружение</b> — <code>pip3 install --upgrade numpy pandas openpyxl</code>. Выгрузка не помечена обработанной и подхватится сама.</div>
+  </div>
+
+</div>
+
+<h2><span class="num">3</span>Две приписки к обычным сообщениям</h2>
+<div class="scroll">
+<table>
+  <tr><th>Строка</th><th>Что случилось</th><th>Что делать</th></tr>
+  <tr>
+    <td>↻ прошлый прогон был оборван</td>
+    <td>Предыдущий прогон убили на середине — выключение, сон. Автопрогон заметил и переделал работу.</td>
+    <td>Ничего</td>
+  </tr>
+  <tr>
+    <td>⚠️ Справка не собралась</td>
+    <td>Данные обновились и уехали, а справка по срокам — нет.</td>
+    <td><code>python3 upcoming_report.py --to ДД.ММ.ГГГГ</code></td>
+  </tr>
+</table>
+</div>
+
+<h2><span class="num">4</span>Когда Telegram молчит</h2>
+<div class="note">
+  <h3>Тишина не означает «всё прошло» — кроме одного случая</h3>
+  <p>По каждому исходу приходит сообщение. Единственное исключение: если каталог <code>logs/</code> стал недоступен на запись — нет прав или кончилось место, — автопрогон не может ни писать лог, ни отправить сообщение.</p>
+  <p>Тогда приходит только всплывашка macOS <b>«Дашборд: автопрогон встал»</b>. Увидели её — проверьте место на диске и права на папку <code>logs/</code>.</p>
+  <p>Отдельно: если вы не клали файл, автопрогон просыпается от изменений в папке и молча уходит. Это норма.</p>
+</div>
+
+<h2><span class="num">5</span>Чего автопрогон не делает</h2>
+<p class="sub">Не собирает <b>еженедельную telegram-сводку по проектам</b>: она строится из вашего <code>ОТЧЕТ_ДД.ММ.md</code>, и прогон в середине недели собрал бы её по прошлонедельному отчёту. Сводку делаете вы, когда отчёт готов:</p>
+<div class="msg">./deploy.sh issues_ДД.ММ.xlsx ОТЧЕТ_ДД.ММ.md ОТЧЕТ_предыдущий.md</div>
+
+<h2><span class="num">6</span>Управление</h2>
+<div class="scroll">
+<table>
+  <tr><th>Команда</th><th>Что делает</th></tr>
+  <tr><td><code>tail -50 logs/auto-pipeline.log</code></td><td>посмотреть, что было</td></tr>
+  <tr><td><code>./watch_pipeline.sh --force</code></td><td>прогнать вручную, обойдя проверки даты и «уже обработано»</td></tr>
+  <tr><td><code>./watch_pipeline.sh --dry-run</code></td><td>показать, что было бы сделано, ничего не делая</td></tr>
+  <tr><td><code>./automation/install.sh --status</code></td><td>включён ли автопрогон</td></tr>
+  <tr><td><code>./automation/install.sh --uninstall</code></td><td>выключить на время</td></tr>
+  <tr><td><code>./automation/install.sh</code></td><td>включить снова</td></tr>
+</table>
+</div>
+
+<footer>
+  Тексты сообщений взяты из <code>watch_pipeline.sh</code> как есть. Подробности механики — раздел «Автопрогон по свежей выгрузке» в <code>CLAUDE.md</code>.
+</footer>
+
+</div>
+</body>
+</html>
