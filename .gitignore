@@ -24,3 +24,6 @@ graphify-out/
 
 # Логи автопрогона (watch_pipeline.sh) — рабочие, наружу не идут
 logs/
+
+# Накопитель еженедельных отчётов (report_inbox.py) — рабочие блоки, наружу не идут
+report_inbox/

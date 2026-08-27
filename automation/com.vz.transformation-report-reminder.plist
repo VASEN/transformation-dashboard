@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.vz.transformation-report-reminder</string>
+
+  <!-- Напоминание о несданных отчётах — по средам в 12:00 МСК.
+       launchd живёт по времени машины (America/New_York), а оно относительно
+       Москвы съезжает: летом 12:00 МСК = 05:00 NY, зимой = 04:00. Поэтому
+       будим скрипт в оба часа, а нужный ли сейчас момент — решает он сам,
+       сверяясь с московским временем (report_reminder.is_reminder_time). -->
+  <key>StartCalendarInterval</key>
+  <array>
+    <dict>
+      <key>Weekday</key><integer>3</integer>
+      <key>Hour</key><integer>4</integer>
+      <key>Minute</key><integer>0</integer>
+    </dict>
+    <dict>
+      <key>Weekday</key><integer>3</integer>
+      <key>Hour</key><integer>5</integer>
+      <key>Minute</key><integer>0</integer>
+    </dict>
+  </array>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Library/Frameworks/Python.framework/Versions/3.13/bin/python3</string>
+    <string>/Users/valeriy/Projects/transformation/report_reminder.py</string>
+  </array>
+
+  <key>WorkingDirectory</key>
+  <string>/Users/valeriy/Projects/transformation</string>
+
+  <key>StandardOutPath</key>
+  <string>/Users/valeriy/Projects/transformation/logs/report-reminder.out</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/valeriy/Projects/transformation/logs/report-reminder.err</string>
+
+  <key>RunAtLoad</key>
+  <false/>
+</dict>
+</plist>
