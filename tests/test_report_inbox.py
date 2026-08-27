@@ -212,3 +212,108 @@ def test_reset_archives_and_starts_clean(sandbox):
 
     assert res['archived'] and Path(res['archived']).exists()
     assert run(sandbox, 'status')['done'] == []
+
+
+# ────────── находки независимого ревью (круг 1) ──────────
+
+def test_saves_raw_message_verbatim(sandbox):
+    """Присланное сохраняется дословно — отчёт живёт только в чате.
+
+    Разбор выбрасывает строки вне секций (риски, готовность) и не спасает
+    хвост сообщения, разрезанного Telegram по длине. Сырьё — единственная
+    страховка: восстановить блок иначе можно только попросив прислать заново.
+    """
+    text = SAMPLE + '\n📉 Риски: подрядчик сорвал поставку\n📊 Готовность 40%\n'
+    run(sandbox, 'add', '--stdin', stdin=text)
+
+    raws = list((sandbox / 'report_inbox' / 'current' / '_raw').glob('*.md'))
+    assert len(raws) == 1
+    saved = raws[0].read_text(encoding='utf-8')
+    assert saved == text, 'присланное сохранено не дословно'
+    assert 'подрядчик сорвал поставку' in saved
+
+
+def test_block_keeps_completed_section(sandbox):
+    """Сохранённый блок содержит присланное «Выполнено».
+
+    Без этой проверки мутация «сохранять блок до ✅» проходила незамеченной
+    во всех тестах сразу.
+    """
+    run(sandbox, 'add', '--stdin', stdin=SAMPLE)
+    block = (sandbox / 'report_inbox' / 'current' / '11241.md').read_text(encoding='utf-8')
+    assert '✅ Выполнено:' in block
+    assert 'Корректировки ТЗ (08.06.2026)' in block
+    assert '📍 Текущие этапы' in block
+    assert 'ЭТАП 3. Внедрение функционала (09.10.2026)' in block
+
+
+def test_closed_project_does_not_complete_the_week(sandbox):
+    """Проект, закрывшийся за неделю, не считается сдавшим.
+
+    `data.json` обновляется автопрогоном каждое утро. Пока сдавшие считались
+    по всем накопленным ключам, закрытие проекта досрочно давало «сдали все»:
+    неделя закрывалась, а отчёт собирался без тех, кого реально ждали.
+    """
+    run(sandbox, 'add', '--stdin', stdin=SAMPLE)          # сдали 11241 и 11242
+    make_data(sandbox, [                                   # 11241 закрылся в Redmine
+        project(11241, 'ИИ мониторинг закупок 223-ФЗ', status='Закрыта'),
+        project(11242, 'Оптимизация закупок 223-ФЗ'),
+        project(11246, 'Робот закупщик', priority=True),
+    ])
+    st = run(sandbox, 'status')
+
+    assert st['complete'] is False, 'закрытый проект досчитал неделю до полной'
+    assert len(st['done']) == 1
+    assert [p['name'] for p in st['pending']] == ['Робот закупщик']
+
+    res = run(sandbox, 'build')
+    assert res['ok'] is False, 'сборка пошла, хотя ждём отчёт'
+
+
+def test_stale_cycle_rotates_before_accepting(sandbox):
+    """Блоки прошлой недели не доживают до следующей.
+
+    Сборка «без опоздавших» намеренно оставляет неделю открытой. Через неделю
+    первый же свежий отчёт добирал старьё до полноты, и оно уезжало в сводку
+    руководству как актуальное.
+    """
+    run(sandbox, 'add', '--stdin', stdin=SAMPLE)
+    meta_path = sandbox / 'report_inbox' / 'current' / '_meta.json'
+    meta = json.loads(meta_path.read_text(encoding='utf-8'))
+    meta['opened_at'] = '2026-08-01T09:00:00+03:00'        # неделя с лишним назад
+    meta_path.write_text(json.dumps(meta, ensure_ascii=False), encoding='utf-8')
+
+    res = run(sandbox, 'add', '--stdin',
+              stdin=('🔴 РОБОТ ЗАКУПЩИК\n'
+                     '🔗 https://transformation.rm.mosreg.ru/#/issues/11246\n\n'
+                     '✅ Выполнено:\nпилот запущен\n'))
+
+    assert res['cycle_rotated'] is True
+    assert res['done_count'] == 1, 'блоки прошлой недели дожили до новой'
+    assert res['complete'] is False
+    assert list((sandbox / 'report_inbox').glob('2026-*')), 'прошлая неделя не заархивирована'
+
+
+def test_wrong_link_warns_before_overwriting(sandbox):
+    """Ссылка не от того проекта не переписывает чужой блок молча."""
+    run(sandbox, 'add', '--stdin', stdin=SAMPLE)
+    res = run(sandbox, 'add', '--stdin',
+              stdin=('🔵 ЭЛЕКТРОННЫЕ ДС С ПИК\n'
+                     '🔗 https://transformation.rm.mosreg.ru/#/issues/11241\n\n'
+                     '✅ Выполнено:\nчто-то другое\n'))
+
+    kinds = [w['kind'] for w in res['warnings']]
+    assert 'name_mismatch' in kinds, 'подмена проекта прошла без предупреждения'
+
+
+def test_poorer_resend_warns_and_keeps_copy(sandbox):
+    """Досылка без «Выполнено» предупреждает и оставляет прежнюю версию."""
+    run(sandbox, 'add', '--stdin', stdin=SAMPLE)
+    res = run(sandbox, 'add', '--stdin',
+              stdin=('🔵 ИИ МОНИТОРИНГ ЗАКУПОК 223-ФЗ\n'
+                     '🔗 https://transformation.rm.mosreg.ru/#/issues/11241\n\n'
+                     '📍 Текущие этапы (в работе):\nЭТАП 4\n'))
+
+    assert any(w['kind'] == 'section_lost' for w in res['warnings'])
+    prev = sandbox / 'report_inbox' / 'current' / '_prev' / '11241.md'
+    assert prev.exists() and 'Корректировки ТЗ' in prev.read_text(encoding='utf-8')

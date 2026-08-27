@@ -28,12 +28,39 @@ TG = Path.home() / 'Projects' / 'LIFE' / 'bin' / 'tg.py'
 
 MSK = ZoneInfo('Europe/Moscow')
 REPORT_WEEKDAY = 2      # среда (понедельник = 0)
-REPORT_HOUR = 12        # 12:00 МСК
+REPORT_HOUR = 12        # 12:00 МСК — начало окна
+REPORT_HOUR_LAST = 17   # до этого часа догоняющий запуск ещё уместен
+SENT_STAMP = Path.home() / 'Projects' / 'transformation' / 'logs' / '.reminder-sent' 
 
 
 def is_reminder_time(now=None) -> bool:
+    """Среда, окно 12:00–17:00 МСК.
+
+    Ровно `hour == 12` терял напоминание целиком: если ноутбук спал, launchd
+    догоняет задание после пробуждения — в 16:00 МСК проверка давала False, и
+    не появлялось ни сообщения, ни строки в логе. Тишина при этом неотличима
+    от «все сдали». Окно + отметка об отправке дают одно сообщение в неделю.
+    """
     now = now or datetime.now(MSK)
-    return now.weekday() == REPORT_WEEKDAY and now.hour == REPORT_HOUR
+    return (now.weekday() == REPORT_WEEKDAY
+            and REPORT_HOUR <= now.hour <= REPORT_HOUR_LAST)
+
+
+def already_sent_today(now=None) -> bool:
+    now = now or datetime.now(MSK)
+    try:
+        return SENT_STAMP.read_text().strip() == now.date().isoformat()
+    except (OSError, ValueError):
+        return False
+
+
+def mark_sent(now=None) -> None:
+    now = now or datetime.now(MSK)
+    try:
+        SENT_STAMP.parent.mkdir(parents=True, exist_ok=True)
+        SENT_STAMP.write_text(now.date().isoformat())
+    except OSError as exc:
+        print(f'не смог записать отметку об отправке: {exc}')
 
 
 def pending() -> dict:
@@ -74,6 +101,8 @@ def main() -> None:
 
     if not args.now and not is_reminder_time():
         return          # не наш час — молча выходим, это штатный исход
+    if not args.now and not args.dry_run and already_sent_today():
+        return          # в окно попали дважды — напоминание уже ушло
 
     try:
         data = pending()
@@ -93,6 +122,7 @@ def main() -> None:
         print(text)
         return
     send(text)
+    mark_sent()
     print(f"напоминание отправлено: ждём {len(data['pending'])}")
 
 

@@ -31,26 +31,45 @@ import json
 import shutil
 import argparse
 import subprocess
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from pathlib import Path
+from zoneinfo import ZoneInfo
+
+from difflib import SequenceMatcher
 
 from config import CLOSED_STATUSES
 from process_report import parse_report, find_in_data
+
+# Даты — по рабочей зоне владельца: машина стоит в America/New_York, и при сборке
+# ночью по МСК имя отчёта уехало бы на вчера. Тот же пояс у watch_pipeline.sh.
+MSK = ZoneInfo('Europe/Moscow')
+CYCLE_MAX_DAYS = 6          # старше — это прошлая неделя, цикл пора закрывать
+NAME_MISMATCH_RATIO = 0.5   # ниже — присланное имя не похоже на проект по ссылке
 
 HERE = Path(__file__).resolve().parent
 INBOX = HERE / 'report_inbox'          # накопитель; в git не идёт
 CURRENT = INBOX / 'current'            # блоки текущего цикла
 META = CURRENT / '_meta.json'          # когда и что принято
+RAW = CURRENT / '_raw'                 # присланное как есть — страховка от потери
+PREV = CURRENT / '_prev'               # прошлая версия блока перед перезаписью
 
 
 # ─────────────────────────── хранилище цикла ───────────────────────────
+
+def now_msk() -> datetime:
+    return datetime.now(MSK)
+
+
+def today_msk() -> date:
+    return now_msk().date()
+
 
 def load_meta() -> dict:
     """Метаданные цикла: когда открыт, что принято, по каким проектам."""
     try:
         return json.loads(META.read_text(encoding='utf-8'))
     except (FileNotFoundError, json.JSONDecodeError):
-        return {'opened_at': datetime.now().isoformat(timespec='seconds'),
+        return {'opened_at': now_msk().isoformat(timespec='seconds'),
                 'items': {}}
 
 
@@ -64,6 +83,34 @@ def block_path(key: str) -> Path:
     """Файл блока. Ключ — issue_id, иначе нормализованное имя."""
     safe = re.sub(r'[^\w\-]+', '_', key, flags=re.UNICODE).strip('_')
     return CURRENT / f'{safe}.md'
+
+
+def cycle_age_days() -> float | None:
+    """Возраст открытого цикла в днях."""
+    try:
+        opened = datetime.fromisoformat(load_meta()['opened_at'])
+    except (KeyError, ValueError):
+        return None
+    if opened.tzinfo is None:
+        opened = opened.replace(tzinfo=MSK)
+    return (now_msk() - opened).total_seconds() / 86400
+
+
+def rotate_if_stale() -> bool:
+    """Цикл старше недели закрывается сам.
+
+    Иначе блоки прошлой недели доживают до следующей и уезжают в свежий отчёт
+    как актуальные: достаточно один раз собрать сводки «без опоздавших»
+    (при этом цикл намеренно остаётся открытым), и через неделю первый же
+    новый отчёт добирает старьё до полноты.
+    """
+    if not CURRENT.exists() or not META.exists():
+        return False
+    age = cycle_age_days()
+    if age is None or age < CYCLE_MAX_DAYS:
+        return False
+    reset()
+    return True
 
 
 # ─────────────────────────── ожидаемые проекты ──────────────────────────
@@ -114,8 +161,17 @@ def add_text(text: str, data_path='data.json') -> dict:
 
     Возвращает сводку: что принято, что заменено, что не удалось опознать.
     """
-    tmp = CURRENT / '_incoming.md'
+    rotated = rotate_if_stale()
     CURRENT.mkdir(parents=True, exist_ok=True)
+    RAW.mkdir(exist_ok=True)
+
+    # Присланное сохраняем ДО разбора и целиком: отчёт живёт только в чате,
+    # и всё, что разбор не понял (строки вне секций, хвост сообщения, разрезанного
+    # Telegram по длине), иначе исчезло бы бесследно.
+    raw_name = f"{now_msk():%Y-%m-%d_%H%M%S}.md"
+    (RAW / raw_name).write_text(text, encoding='utf-8')
+
+    tmp = CURRENT / '_incoming.md'
     tmp.write_text(text, encoding='utf-8')
     try:
         groups = parse_report(str(tmp))
@@ -124,7 +180,7 @@ def add_text(text: str, data_path='data.json') -> dict:
 
     active = active_projects(data_path)
     meta = load_meta()
-    accepted, replaced, unknown = [], [], []
+    accepted, replaced, unknown, warnings = [], [], [], []
 
     for group in groups:
         for proj in group['projects']:
@@ -137,12 +193,32 @@ def add_text(text: str, data_path='data.json') -> dict:
                 unknown.append(proj.get('name'))
                 continue
             key = str(dp.get('id'))
+            # Ссылку могли скопировать не ту: имя из сообщения и имя проекта
+            # разошлись — молча затирать чужой блок нельзя.
+            if how == 'id' and proj.get('name'):
+                ratio = SequenceMatcher(None, proj['name'].lower(),
+                                        (dp.get('name') or '').lower()).ratio()
+                if ratio < NAME_MISMATCH_RATIO:
+                    warnings.append({'kind': 'name_mismatch',
+                                     'as_sent': proj['name'],
+                                     'name': dp.get('name'), 'id': key})
             path = block_path(key)
             was = path.exists()
+            if was:
+                # прежняя версия — на случай, если досылка окажется беднее
+                PREV.mkdir(exist_ok=True)
+                shutil.copy(path, PREV / f'{key}.md')
+                old_text = path.read_text(encoding='utf-8')
+                for mark, label in (('✅ Выполнено', 'Выполнено'),
+                                    ('📍 Текущие этапы', 'Текущие этапы')):
+                    if mark in old_text and not proj.get(
+                            'completed' if 'Выполнено' in mark else 'current'):
+                        warnings.append({'kind': 'section_lost', 'section': label,
+                                         'name': dp.get('name'), 'id': key})
             path.write_text(render_block(proj, dp), encoding='utf-8')
             meta['items'][key] = {
                 'name': dp.get('name'),
-                'received_at': datetime.now().isoformat(timespec='seconds'),
+                'received_at': now_msk().isoformat(timespec='seconds'),
                 'as_sent_name': proj.get('name'),
                 'matched_by': how,
             }
@@ -151,7 +227,7 @@ def add_text(text: str, data_path='data.json') -> dict:
             (replaced if was else accepted).append(entry)
 
     save_meta(meta)
-    done = set(meta['items'])
+    done = done_active(meta, active)
     return {
         'accepted': accepted,
         'replaced': replaced,
@@ -160,15 +236,30 @@ def add_text(text: str, data_path='data.json') -> dict:
         'total': len(active),
         'pending': [p['name'] for p in active if str(p.get('id')) not in done],
         'complete': len(done) >= len(active),
+        'cycle_rotated': rotated,
+        'warnings': warnings,
+        'raw': raw_name,
     }
 
 
 # ─────────────────────────────── статус ─────────────────────────────────
 
+def done_active(meta: dict, active: list) -> set:
+    """Сдавшие СРЕДИ ожидаемых.
+
+    В `meta['items']` остаются проекты, закрывшиеся в Redmine за неделю
+    (`data.json` обновляется автопрогоном каждое утро). Считая их, `complete`
+    срабатывал досрочно: неделя закрывалась, а отчёт собирался без тех, кого
+    реально ждали, — вплоть до пустого файла.
+    """
+    active_ids = {str(p.get('id')) for p in active}
+    return {k for k in meta['items'] if k in active_ids}
+
+
 def status(data_path='data.json') -> dict:
     active = active_projects(data_path)
     meta = load_meta()
-    done = set(meta['items'])
+    done = done_active(meta, active)
     return {
         'opened_at': meta.get('opened_at'),
         'done': [{'id': str(p.get('id')), 'name': p['name'],
@@ -185,23 +276,25 @@ def status(data_path='data.json') -> dict:
 # ─────────────────────────────── сборка ─────────────────────────────────
 
 def report_filename(today=None) -> str:
-    today = today or date.today()
+    today = today or today_msk()
     return f'ОТЧЕТ_{today:%d.%m}.md'
 
 
 def find_prev_report(exclude: str) -> str | None:
-    """Предыдущий отчёт для diff: свежайший по дате в имени, кроме собираемого."""
-    candidates = []
-    for p in list(HERE.glob('ОТЧЕТ_*.md')) + list((HERE / 'archive' / 'reports').glob('ОТЧЕТ_*.md')):
-        if p.name == exclude:
-            continue
-        m = re.match(r'ОТЧЕТ_(\d{2})\.(\d{2})\.md$', p.name)
-        if m:
-            candidates.append((int(m.group(2)), int(m.group(1)), p))
+    """Предыдущий отчёт для diff — свежайший по времени файла.
+
+    По дате в имени сортировать нельзя: года в нём нет, и в январе
+    `ОТЧЕТ_30.12.md` оказывался «свежее» январских — diff `🆕` в сводках
+    руководству стал бы бессмысленным.
+    """
+    candidates = [p for p in
+                  list(HERE.glob('ОТЧЕТ_*.md'))
+                  + list((HERE / 'archive' / 'reports').glob('ОТЧЕТ_*.md'))
+                  if p.name != exclude
+                  and re.match(r'ОТЧЕТ_\d{2}\.\d{2}\.md$', p.name)]
     if not candidates:
         return None
-    candidates.sort(reverse=True)
-    return str(candidates[0][2])
+    return str(max(candidates, key=lambda p: p.stat().st_mtime))
 
 
 def build(data_path='data.json', force=False, run_process=True) -> dict:
@@ -215,12 +308,12 @@ def build(data_path='data.json', force=False, run_process=True) -> dict:
     priority, transform = [], []
     for p in active:
         key = str(p.get('id'))
-        if key not in meta['items']:
+        if key not in meta['items'] or not block_path(key).exists():
             continue
         text = block_path(key).read_text(encoding='utf-8')
         (priority if p.get('is_priority') else transform).append(text)
 
-    out = [f'ЕЖЕНЕДЕЛЬНЫЙ ОТЧЁТ ПО ПРОЕКТАМ', f'📅 {date.today():%d.%m.%Y}', '']
+    out = ['ЕЖЕНЕДЕЛЬНЫЙ ОТЧЁТ ПО ПРОЕКТАМ', f'📅 {today_msk():%d.%m.%Y}', '']
     if priority:
         out += ['🔴 ПРИОРИТЕТНЫЕ ПРОЕКТЫ', '']
         out += ['\n\n'.join(priority), '']
@@ -245,7 +338,7 @@ def build(data_path='data.json', force=False, run_process=True) -> dict:
         result['process_rc'] = proc.returncode
         result['process_out'] = (proc.stdout + proc.stderr)[-2000:]
         if proc.returncode == 0:
-            stamp = f'{date.today():%d_%m_%Y}'
+            stamp = f'{today_msk():%d_%m_%Y}'
             for kind in ('priority', 'transform'):
                 f = HERE / f'telegram_{kind}_{stamp}.txt'
                 if f.exists():
@@ -257,9 +350,9 @@ def reset() -> dict:
     """Закрывает цикл: накопленное уезжает в архив под датой."""
     if not CURRENT.exists():
         return {'archived': None}
-    dest = INBOX / f'{date.today():%Y-%m-%d}'
+    dest = INBOX / f'{today_msk():%Y-%m-%d}'
     if dest.exists():
-        dest = INBOX / f'{date.today():%Y-%m-%d}_{datetime.now():%H%M}'
+        dest = INBOX / f'{today_msk():%Y-%m-%d}_{now_msk():%H%M}'
     shutil.move(str(CURRENT), str(dest))
     return {'archived': str(dest)}
 
@@ -315,6 +408,16 @@ def main() -> None:
                 print(f'♻️  обновлено: {mark(e)}')
             for n in r['unknown']:
                 print(f'❓ не опознан проект: {n}')
+            for w in r.get('warnings', []):
+                if w['kind'] == 'name_mismatch':
+                    print(f"⚠️  ссылка ведёт на «{w['name']}», а в тексте "
+                          f"«{w['as_sent']}» — проверьте, тот ли проект")
+                else:
+                    print(f"⚠️  в новом блоке «{w['name']}» нет раздела "
+                          f"«{w['section']}» — прежний перезаписан "
+                          f"(копия в report_inbox/current/_prev/{w['id']}.md)")
+            if r.get('cycle_rotated'):
+                print('📦 прошлая неделя была не закрыта — убрал её в архив')
             print(f"📊 сдано {r['done_count']} из {r['total']}")
             if r['complete']:
                 print('🎉 сдали все — можно собирать')
