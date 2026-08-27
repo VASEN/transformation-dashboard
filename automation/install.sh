@@ -13,8 +13,11 @@ AUTOMATION="/Users/valeriy/Projects/transformation/automation"
 
 case "${1:-install}" in
   --status)
+    # Через `launchctl print`, а не `launchctl list | grep -q`: grep -q закрывает
+    # пайп на первом совпадении, launchctl получает SIGPIPE, и под `set -o pipefail`
+    # успешная проверка выглядит как провал — тем вернее, чем раньше метка в списке.
     for LABEL in "${LABELS[@]}"; do
-      if launchctl list | grep -q "$LABEL"; then
+      if launchctl print "gui/$(id -u)/$LABEL" >/dev/null 2>&1; then
         echo "✅ $LABEL загружен"
       else
         echo "⛔️ $LABEL не загружен"
