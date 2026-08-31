@@ -1,5 +1,5 @@
 {
-  "updated_at": "28.08.2026 16:33",
+  "updated_at": "31.08.2026 09:31",
   "config": {
     "year": 2026,
     "redmine_base": "https://transformation.rm.mosreg.ru/#/issues",
@@ -13,10 +13,10 @@
     "tasks_total": 572,
     "tasks_active": 153,
     "tasks_closed": 419,
-    "tasks_deadline_5": 10,
-    "tasks_deadline_14": 25,
-    "tasks_overdue": 0,
-    "tasks_today": 4,
+    "tasks_deadline_5": 14,
+    "tasks_deadline_14": 43,
+    "tasks_overdue": 4,
+    "tasks_today": 5,
     "vysv_pct_total": 122
   },
   "projects": [
@@ -2879,7 +2879,7 @@
       "executor": "Абрамов Максим Игоревич",
       "executor_short": "Абрамов М.И.",
       "deadline": "28.08.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 11497
     },
@@ -2891,7 +2891,7 @@
       "executor": "Зернова (ККП) Елена Сергеевна",
       "executor_short": "Зернова Е.С.",
       "deadline": "28.08.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 75,
       "parent_id": 11497
     },
@@ -2932,18 +2932,6 @@
       "parent_id": 11243
     },
     {
-      "id": 12658,
-      "project": "Анализ проектов ГЧП",
-      "theme": "ЭТАП 2. Тестирование ИИ-агента в работе",
-      "status": "Новая",
-      "executor": "Филатова (ККП) Екатерина Игоревна",
-      "executor_short": "Филатова Е.И.",
-      "deadline": "30.08.2026",
-      "urgency": "urgent",
-      "pct": 0,
-      "parent_id": 11610
-    },
-    {
       "id": 12966,
       "project": "ИИ робот Ник",
       "theme": "Этап 4. Защита проекта",
@@ -2951,7 +2939,7 @@
       "executor": "Мамедова (ККП) Аида Гюльахмедовна",
       "executor_short": "Мамедова А.Г.",
       "deadline": "31.08.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 11609
     },
@@ -2963,7 +2951,7 @@
       "executor": "Кудряшов (ККП) Евгений Сергеевич",
       "executor_short": "Кудряшов Е.С.",
       "deadline": "04.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 60,
       "parent_id": 11584
     },
@@ -3023,7 +3011,7 @@
       "executor": "Кренева Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "14.09.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12546
     },
@@ -3035,7 +3023,7 @@
       "executor": "Мазуров (ККП) Даниил Юрьевич",
       "executor_short": "Мазуров Д.Ю.",
       "deadline": "14.09.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 100,
       "parent_id": 12546
     },
@@ -3047,7 +3035,7 @@
       "executor": "Заичко Валерий Валерьевич",
       "executor_short": "Заичко В.В.",
       "deadline": "14.09.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 71,
       "parent_id": 10862
     },
@@ -3059,7 +3047,7 @@
       "executor": "Кренева Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "14.09.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 55,
       "parent_id": 12546
     },
@@ -3206,6 +3194,18 @@
       "urgency": "ok",
       "pct": 33,
       "parent_id": 11594
+    },
+    {
+      "id": 12658,
+      "project": "Анализ проектов ГЧП",
+      "theme": "ЭТАП 2. Тестирование ИИ-агента в работе",
+      "status": "Новая",
+      "executor": "Филатова (ККП) Екатерина Игоревна",
+      "executor_short": "Филатова Е.И.",
+      "deadline": "30.09.2026",
+      "urgency": "ok",
+      "pct": 0,
+      "parent_id": 11610
     },
     {
       "id": 12649,
@@ -5627,7 +5627,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "28.08.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 12927
     },
@@ -5639,7 +5639,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "28.08.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 12793
     },
@@ -5663,7 +5663,7 @@
       "executor": "Мамедова (ККП) Аида Гюльахмедовна",
       "executor_short": "Мамедова А.Г.",
       "deadline": "31.08.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 12966
     },
@@ -5675,7 +5675,7 @@
       "executor": "Мамедова (ККП) Аида Гюльахмедовна",
       "executor_short": "Мамедова А.Г.",
       "deadline": "31.08.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 12966
     },
@@ -5687,7 +5687,7 @@
       "executor": "Мамедова (ККП) Аида Гюльахмедовна",
       "executor_short": "Мамедова А.Г.",
       "deadline": "31.08.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 12966
     },
@@ -5699,7 +5699,7 @@
       "executor": "Мамедова (ККП) Аида Гюльахмедовна",
       "executor_short": "Мамедова А.Г.",
       "deadline": "31.08.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 12966
     },
@@ -5723,7 +5723,7 @@
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
       "deadline": "03.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5735,7 +5735,7 @@
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
       "deadline": "03.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5747,7 +5747,7 @@
       "executor": "Мельникова Наталья Михайловна",
       "executor_short": "Мельникова Н.М.",
       "deadline": "03.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5759,7 +5759,7 @@
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
       "deadline": "03.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5771,7 +5771,7 @@
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
       "deadline": "03.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5783,7 +5783,7 @@
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
       "deadline": "03.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5795,7 +5795,7 @@
       "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
       "executor_short": "Степанов А.Д.",
       "deadline": "03.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 100,
       "parent_id": 12778
     },
@@ -5807,7 +5807,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "04.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12707
     },
@@ -5843,7 +5843,7 @@
       "executor": "Кренева Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "14.09.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12548
     },
@@ -5855,7 +5855,7 @@
       "executor": "Кренева Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "14.09.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 14276
     },
@@ -5867,7 +5867,7 @@
       "executor": "Мазуров (ККП) Даниил Юрьевич",
       "executor_short": "Мазуров Д.Ю.",
       "deadline": "14.09.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 14276
     },
@@ -5879,7 +5879,7 @@
       "executor": "Мазуров (ККП) Даниил Юрьевич",
       "executor_short": "Мазуров Д.Ю.",
       "deadline": "14.09.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 14276
     },
@@ -5891,7 +5891,7 @@
       "executor": "Заичко Валерий Валерьевич",
       "executor_short": "Заичко В.В.",
       "deadline": "14.09.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12714
     },
@@ -5903,7 +5903,7 @@
       "executor": "Заичко Валерий Валерьевич",
       "executor_short": "Заичко В.В.",
       "deadline": "14.09.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12714
     },
@@ -5915,7 +5915,7 @@
       "executor": "Кренева Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "14.09.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 90,
       "parent_id": 12548
     },
@@ -5927,7 +5927,7 @@
       "executor": "Гиренко Илья Андреевич",
       "executor_short": "Гиренко И.А.",
       "deadline": "14.09.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12548
     },
@@ -5939,7 +5939,7 @@
       "executor": "Дьяченко Олег Григорьевич",
       "executor_short": "Дьяченко О.Г.",
       "deadline": "14.09.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 12548
     },
@@ -5951,7 +5951,7 @@
       "executor": "Гиренко Илья Андреевич",
       "executor_short": "Гиренко И.А.",
       "deadline": "14.09.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 50,
       "parent_id": 12548
     },
@@ -7619,7 +7619,7 @@
       "executor": "Кренева Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "14.09.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 60,
       "parent_id": 12562
     },
@@ -7631,7 +7631,7 @@
       "executor": "Кренева Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "14.09.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 80,
       "parent_id": 12562
     },
@@ -7643,7 +7643,7 @@
       "executor": "Кренева Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "14.09.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 50,
       "parent_id": 12562
     },
@@ -7655,7 +7655,7 @@
       "executor": "Кренева Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "14.09.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 90,
       "parent_id": 12562
     },
@@ -7667,7 +7667,7 @@
       "executor": "Кренева Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "14.09.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 80,
       "parent_id": 12562
     },
