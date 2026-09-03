@@ -27,3 +27,6 @@ logs/
 
 # Накопитель еженедельных отчётов (report_inbox.py) — рабочие блоки, наружу не идут
 report_inbox/
+
+# Локальные разрешения сессии Claude Code — только на этой машине
+.claude/settings.local.json
