@@ -1,5 +1,5 @@
 {
-  "updated_at": "07.09.2026 08:23",
+  "updated_at": "08.09.2026 08:28",
   "config": {
     "year": 2026,
     "redmine_base": "https://transformation.rm.mosreg.ru/#/issues",
@@ -14,9 +14,9 @@
     "tasks_active": 153,
     "tasks_closed": 419,
     "tasks_deadline_5": 16,
-    "tasks_deadline_14": 39,
+    "tasks_deadline_14": 40,
     "tasks_overdue": 0,
-    "tasks_today": 0,
+    "tasks_today": 1,
     "vysv_pct_total": 122
   },
   "projects": [
@@ -2915,7 +2915,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "08.09.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 11606
     },
@@ -3047,7 +3047,7 @@
       "executor": "Коротаева Наталия Павловна",
       "executor_short": "Коротаева Н.П.",
       "deadline": "22.09.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 11607
     },
