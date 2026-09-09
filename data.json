@@ -1,5 +1,5 @@
 {
-  "updated_at": "08.09.2026 08:28",
+  "updated_at": "09.09.2026 08:37",
   "config": {
     "year": 2026,
     "redmine_base": "https://transformation.rm.mosreg.ru/#/issues",
@@ -11,12 +11,12 @@
     "projects_closed": 19,
     "projects_avg_pct": 42,
     "tasks_total": 572,
-    "tasks_active": 153,
-    "tasks_closed": 419,
-    "tasks_deadline_5": 16,
+    "tasks_active": 152,
+    "tasks_closed": 420,
+    "tasks_deadline_5": 33,
     "tasks_deadline_14": 40,
     "tasks_overdue": 0,
-    "tasks_today": 1,
+    "tasks_today": 2,
     "vysv_pct_total": 122
   },
   "projects": [
@@ -683,7 +683,7 @@
       "start_date": "08.02.2026",
       "closed_at": null,
       "defense_at": null,
-      "pct": 33,
+      "pct": 27,
       "project_type": "Межведомственный",
       "is_priority": false,
       "goal": "Снижение внутренних трудозатрат с 100% до 80% до 29.09.2026",
@@ -993,7 +993,7 @@
       "start_date": "01.02.2026",
       "closed_at": null,
       "defense_at": null,
-      "pct": 66,
+      "pct": 69,
       "project_type": "Межведомственный",
       "is_priority": false,
       "goal": "Сокращение внутренних трудозатрат со 100% до 80% до 30.11.2026",
@@ -2911,12 +2911,12 @@
       "id": 12717,
       "project": "Интеллектуальный аналитик торгов",
       "theme": "ЭТАП 3. Тестирование разработанного функционала",
-      "status": "Новая",
+      "status": "Закрыта",
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "08.09.2026",
-      "urgency": "today",
-      "pct": 0,
+      "urgency": "ok",
+      "pct": 100,
       "parent_id": 11606
     },
     {
@@ -2927,7 +2927,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "09.09.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 11607
     },
@@ -2999,7 +2999,7 @@
       "executor": "Кренева Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "14.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12546
     },
@@ -3011,7 +3011,7 @@
       "executor": "Мазуров (ККП) Даниил Юрьевич",
       "executor_short": "Мазуров Д.Ю.",
       "deadline": "14.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 100,
       "parent_id": 12546
     },
@@ -3023,7 +3023,7 @@
       "executor": "Заичко Валерий Валерьевич",
       "executor_short": "Заичко В.В.",
       "deadline": "14.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 71,
       "parent_id": 10862
     },
@@ -3035,7 +3035,7 @@
       "executor": "Кренева Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "14.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 55,
       "parent_id": 12546
     },
@@ -3059,7 +3059,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "23.09.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 11606
     },
@@ -5651,7 +5651,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "09.09.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 13006
     },
@@ -5728,18 +5728,6 @@
       "parent_id": 12994
     },
     {
-      "id": 12678,
-      "project": "Оптимизация закупок 223-ФЗ",
-      "theme": "3.6 Правки функционала по итогу тестирования",
-      "status": "В работе",
-      "executor": "Кукарцева Ольга Владимировна",
-      "executor_short": "Кукарцева О.В.",
-      "deadline": "10.09.2026",
-      "urgency": "urgent",
-      "pct": 0,
-      "parent_id": 12672
-    },
-    {
       "id": 14933,
       "project": "ИИ проверка закупок",
       "theme": "Контроль комплектности документов по КОЗ 2.0 в ГИС ЕАСУЗ",
@@ -5759,7 +5747,7 @@
       "executor": "Кренева Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "14.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12548
     },
@@ -5771,7 +5759,7 @@
       "executor": "Кренева Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "14.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 14276
     },
@@ -5783,7 +5771,7 @@
       "executor": "Мазуров (ККП) Даниил Юрьевич",
       "executor_short": "Мазуров Д.Ю.",
       "deadline": "14.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 14276
     },
@@ -5795,7 +5783,7 @@
       "executor": "Мазуров (ККП) Даниил Юрьевич",
       "executor_short": "Мазуров Д.Ю.",
       "deadline": "14.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 14276
     },
@@ -5807,7 +5795,7 @@
       "executor": "Заичко Валерий Валерьевич",
       "executor_short": "Заичко В.В.",
       "deadline": "14.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12714
     },
@@ -5819,7 +5807,7 @@
       "executor": "Заичко Валерий Валерьевич",
       "executor_short": "Заичко В.В.",
       "deadline": "14.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12714
     },
@@ -5831,7 +5819,7 @@
       "executor": "Кренева Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "14.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 90,
       "parent_id": 12548
     },
@@ -5843,7 +5831,7 @@
       "executor": "Гиренко Илья Андреевич",
       "executor_short": "Гиренко И.А.",
       "deadline": "14.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12548
     },
@@ -5855,7 +5843,7 @@
       "executor": "Дьяченко Олег Григорьевич",
       "executor_short": "Дьяченко О.Г.",
       "deadline": "14.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12548
     },
@@ -5867,7 +5855,7 @@
       "executor": "Гиренко Илья Андреевич",
       "executor_short": "Гиренко И.А.",
       "deadline": "14.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 50,
       "parent_id": 12548
     },
@@ -5894,6 +5882,18 @@
       "urgency": "soon",
       "pct": 100,
       "parent_id": 12778
+    },
+    {
+      "id": 12678,
+      "project": "Оптимизация закупок 223-ФЗ",
+      "theme": "3.6 Правки функционала по итогу тестирования",
+      "status": "В работе",
+      "executor": "Кукарцева Ольга Владимировна",
+      "executor_short": "Кукарцева О.В.",
+      "deadline": "17.09.2026",
+      "urgency": "soon",
+      "pct": 0,
+      "parent_id": 12672
     },
     {
       "id": 12709,
@@ -7619,7 +7619,7 @@
       "executor": "Кренева Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "14.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 60,
       "parent_id": 12562
     },
@@ -7631,7 +7631,7 @@
       "executor": "Кренева Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "14.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 80,
       "parent_id": 12562
     },
@@ -7643,7 +7643,7 @@
       "executor": "Кренева Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "14.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 50,
       "parent_id": 12562
     },
@@ -7655,7 +7655,7 @@
       "executor": "Кренева Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "14.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 90,
       "parent_id": 12562
     },
@@ -7667,7 +7667,7 @@
       "executor": "Кренева Анастасия Андреевна",
       "executor_short": "Кренева А.А.",
       "deadline": "14.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 80,
       "parent_id": 12562
     },
