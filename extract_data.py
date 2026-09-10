@@ -142,6 +142,12 @@ def short_name(full_name) -> str | None:
     return s
 
 
+# Обязательные колонки выгрузки Redmine — контракт источника в одном месте:
+# по нему пайплайн падает с внятной ошибкой, автопрогон (`watch_pipeline.sh`)
+# и Telegram-бот узнают выгрузку среди прочих xlsx (см. check_source.py).
+REDMINE_REQUIRED = ['Трекер', '#', 'Проект', 'Статус', 'Родительская задача']
+
+
 def validate_source_columns(df, required, source_name) -> None:
     """Бросает понятную ошибку, если в df нет нужных колонок (с учётом синонимов)."""
     missing = [c for c in required if resolve_column(df.columns, c) is None]
@@ -193,9 +199,7 @@ def extract(redmine_file=DEFAULT_REDMINE, shtatka_file=DEFAULT_SHTATKA,
     # ── 1. Redmine выгрузка ──────────────────────────────────────────────────
     print(f"📂 Читаем {redmine_file}...")
     df = pd.read_excel(redmine_file)
-    validate_source_columns(
-        df, ['Трекер', '#', 'Проект', 'Статус', 'Родительская задача'], redmine_file
-    )
+    validate_source_columns(df, REDMINE_REQUIRED, redmine_file)
 
     passport   = df[df['Трекер'] == 'Паспорт проекта'].copy()
     activities = df[df['Трекер'] == 'Мероприятие проекта'].copy()

@@ -11,6 +11,8 @@
 """
 import os
 import json
+from datetime import datetime
+from zoneinfo import ZoneInfo
 import time
 import shutil
 import subprocess
@@ -61,8 +63,8 @@ def make_sandbox(tmp_path, deploy=DEPLOY_OK):
     (tmp_path / 'upcoming_report.py').write_text(
         'print("✅ Справка: 0 задач в 0 проектах")\n')
 
-    # нужны проверке колонок (python-вставка в скрипте импортирует extract_data)
-    for mod in ('extract_data.py', 'config.py'):
+    # нужны проверке колонок (check_source.py импортирует extract_data)
+    for mod in ('check_source.py', 'extract_data.py', 'config.py'):
         shutil.copy(ROOT / mod, tmp_path / mod)
     (tmp_path / 'data.json').write_text(json.dumps(
         {'summary': {'projects_total': 1, 'projects_active': 1,
@@ -97,7 +99,9 @@ def redmine_xlsx(tmp_path, name, broken=False):
 
 
 def today_name():
-    return time.strftime('%d.%m', time.localtime())
+    # по Москве, как сам скрипт: машина стоит в America/New_York, и вечером
+    # локальная дата отстаёт от той, которую скрипт ставит в имя файла
+    return datetime.now(ZoneInfo('Europe/Moscow')).strftime('%d.%m')
 
 
 # ─────────────────────────── базовый сценарий ───────────────────────────
@@ -111,6 +115,21 @@ def test_renames_to_today_and_runs(tmp_path):
     assert (tmp_path / f'issues_{today_name()}.xlsx').exists()
     assert not (tmp_path / 'issues (7).xlsx').exists()
     assert len(messages(tmp_path)) == 1
+    assert 'Дашборд обновлён' in messages(tmp_path)[0]
+
+
+def test_drop_from_bot_is_taken(tmp_path):
+    """Имя, под которым выгрузку кладёт Telegram-бот, автопрогон берёт в работу.
+
+    Бот кладёт файл как `issues_tg.xlsx` — без даты в имени, иначе проверка
+    «дата в имени = сегодня» отбраковала бы его как старый снимок.
+    """
+    script = make_sandbox(tmp_path)
+    redmine_xlsx(tmp_path, 'issues_tg.xlsx')
+
+    assert run(script).returncode == 0
+    assert (tmp_path / f'issues_{today_name()}.xlsx').exists()
+    assert not (tmp_path / 'issues_tg.xlsx').exists()
     assert 'Дашборд обновлён' in messages(tmp_path)[0]
 
 
@@ -302,6 +321,32 @@ def test_broken_environment_does_not_consume_upload(tmp_path):
     assert run(script).returncode == 0
     assert (tmp_path / f'issues_{today_name()}.xlsx').exists(), \
         'после починки среды выгрузка не подхватилась'
+    assert 'Дашборд обновлён' in messages(tmp_path)[-1]
+
+
+def test_missing_checker_does_not_consume_upload(tmp_path):
+    """Отсутствие `check_source.py` — «не проверилось», а не «файл чужой».
+
+    Грабля, найденная независимым ревью 10.09.2026: `python3 нет-такого.py`
+    возвращает 2 сам, и на этом коде нельзя держать вердикт «чужой файл».
+    Иначе коммит, в который скрипт не попал, уводил бы настоящую выгрузку
+    в `failed` безвозвратно — с сообщением «нет обязательных колонок».
+    """
+    script = make_sandbox(tmp_path)
+    redmine_xlsx(tmp_path, 'issues.xlsx')
+    checker = tmp_path / 'check_source.py'
+    good = checker.read_text()
+    checker.unlink()
+
+    assert run(script).returncode == 0
+    assert not (tmp_path / f'issues_{today_name()}.xlsx').exists(), 'выгрузка тронута'
+    msgs = messages(tmp_path)
+    assert len(msgs) == 1 and 'не проверена' in msgs[0], msgs
+
+    checker.write_text(good)                # скрипт вернулся на место
+    assert run(script).returncode == 0
+    assert (tmp_path / f'issues_{today_name()}.xlsx').exists(), \
+        'после возврата скрипта выгрузка не подхватилась'
     assert 'Дашборд обновлён' in messages(tmp_path)[-1]
 
 
