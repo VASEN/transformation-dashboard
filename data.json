@@ -1,5 +1,5 @@
 {
-  "updated_at": "16.09.2026 09:38",
+  "updated_at": "17.09.2026 08:47",
   "config": {
     "year": 2026,
     "redmine_base": "https://transformation.rm.mosreg.ru/#/issues",
@@ -14,9 +14,9 @@
     "tasks_active": 141,
     "tasks_closed": 431,
     "tasks_deadline_5": 2,
-    "tasks_deadline_14": 53,
+    "tasks_deadline_14": 54,
     "tasks_overdue": 0,
-    "tasks_today": 0,
+    "tasks_today": 1,
     "vysv_pct_total": 122
   },
   "projects": [
@@ -2951,7 +2951,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "17.09.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 11607
     },
@@ -2963,7 +2963,7 @@
       "executor": "Коротаева Наталия Павловна",
       "executor_short": "Коротаева Н.П.",
       "deadline": "22.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 11607
     },
@@ -3191,7 +3191,7 @@
       "executor": "Фадеев Александр Евгеньевич",
       "executor_short": "Фадеев А.Е.",
       "deadline": "01.10.2026",
-      "urgency": "ok",
+      "urgency": "soon",
       "pct": 0,
       "parent_id": 11245
     },
@@ -5716,18 +5716,6 @@
       "parent_id": 12714
     },
     {
-      "id": 12783,
-      "project": "Авто план-график",
-      "theme": "ЭТАП 2. Анализ ТЗ и определение сроков разработки",
-      "status": "В работе",
-      "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
-      "executor_short": "Степанов А.Д.",
-      "deadline": "17.09.2026",
-      "urgency": "urgent",
-      "pct": 100,
-      "parent_id": 12778
-    },
-    {
       "id": 13003,
       "project": "Оптимизация организационного блока РЦТ",
       "theme": "Опытная эксплуатация реализованного функционала",
@@ -6098,6 +6086,18 @@
       "urgency": "soon",
       "pct": 0,
       "parent_id": 12994
+    },
+    {
+      "id": 12783,
+      "project": "Авто план-график",
+      "theme": "ЭТАП 2. Анализ ТЗ и определение сроков разработки",
+      "status": "В работе",
+      "executor": "Степанов (ЦРЦТ) Александр Дмитриевич",
+      "executor_short": "Степанов А.Д.",
+      "deadline": "01.10.2026",
+      "urgency": "soon",
+      "pct": 100,
+      "parent_id": 12778
     },
     {
       "id": 12679,
