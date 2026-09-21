@@ -1,5 +1,5 @@
 {
-  "updated_at": "18.09.2026 08:27",
+  "updated_at": "21.09.2026 08:34",
   "config": {
     "year": 2026,
     "redmine_base": "https://transformation.rm.mosreg.ru/#/issues",
@@ -10,11 +10,11 @@
     "projects_active": 16,
     "projects_closed": 19,
     "projects_avg_pct": 45,
-    "tasks_total": 572,
-    "tasks_active": 141,
-    "tasks_closed": 431,
-    "tasks_deadline_5": 5,
-    "tasks_deadline_14": 56,
+    "tasks_total": 566,
+    "tasks_active": 136,
+    "tasks_closed": 430,
+    "tasks_deadline_5": 15,
+    "tasks_deadline_14": 52,
     "tasks_overdue": 0,
     "tasks_today": 0,
     "vysv_pct_total": 122
@@ -1055,7 +1055,7 @@
       "start_date": "06.02.2026",
       "closed_at": null,
       "defense_at": null,
-      "pct": 59,
+      "pct": 56,
       "project_type": "Межведомственный",
       "is_priority": false,
       "goal": "Снижение внутренних трудозатрат со 100% до 80% к 11.12.2026",
@@ -2963,7 +2963,7 @@
       "executor": "Коротаева Наталия Павловна",
       "executor_short": "Коротаева Н.П.",
       "deadline": "24.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 11607
     },
@@ -2975,7 +2975,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "24.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 88,
       "parent_id": 11242
     },
@@ -2987,20 +2987,8 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "25.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 100,
-      "parent_id": 11594
-    },
-    {
-      "id": 12738,
-      "project": "Цифровые коммуникации ЗИТ",
-      "theme": "ЭТАП 7. Реализация функционала по подпроекту «ИИ-помощник ОМСУ (векторное хранилище)»",
-      "status": "Новая",
-      "executor": "Воронина (ККП) Ольга Николаевна",
-      "executor_short": "Воронина О.Н.",
-      "deadline": "25.09.2026",
-      "urgency": "soon",
-      "pct": 0,
       "parent_id": 11594
     },
     {
@@ -3011,7 +2999,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "25.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 11607
     },
@@ -3023,7 +3011,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "25.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 11607
     },
@@ -3035,7 +3023,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "25.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 11607
     },
@@ -3047,7 +3035,7 @@
       "executor": "Заичко Валерий Валерьевич",
       "executor_short": "Заичко В.В.",
       "deadline": "25.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 100,
       "parent_id": 10862
     },
@@ -3158,18 +3146,6 @@
       "urgency": "soon",
       "pct": 75,
       "parent_id": 11497
-    },
-    {
-      "id": 12734,
-      "project": "Цифровые коммуникации ЗИТ",
-      "theme": "ЭТАП 3. Внедрение \"ИИ-помощника ОМСУ\"",
-      "status": "В работе",
-      "executor": "Воронина (ККП) Ольга Николаевна",
-      "executor_short": "Воронина О.Н.",
-      "deadline": "30.09.2026",
-      "urgency": "soon",
-      "pct": 33,
-      "parent_id": 11594
     },
     {
       "id": 12658,
@@ -3302,18 +3278,6 @@
       "urgency": "ok",
       "pct": 0,
       "parent_id": 11241
-    },
-    {
-      "id": 12737,
-      "project": "Цифровые коммуникации ЗИТ",
-      "theme": "ЭТАП 6. Реализация функционала по подпроекту «Рефакторинг МАКС-бота»",
-      "status": "Новая",
-      "executor": "Воронина (ККП) Ольга Николаевна",
-      "executor_short": "Воронина О.Н.",
-      "deadline": "11.11.2026",
-      "urgency": "ok",
-      "pct": 0,
-      "parent_id": 11594
     },
     {
       "id": 12945,
@@ -4936,18 +4900,6 @@
       "parent_id": 12854
     },
     {
-      "id": 14072,
-      "project": "Цифровые коммуникации ЗИТ",
-      "theme": "Анализ Мингос ТЗ по подпроекту «ИИ помощник ОМСУ (векторное хранилище)»",
-      "status": "Закрыта",
-      "executor": "Воронина (ККП) Ольга Николаевна",
-      "executor_short": "Воронина О.Н.",
-      "deadline": "24.04.2026",
-      "urgency": "ok",
-      "pct": 100,
-      "parent_id": 12734
-    },
-    {
       "id": 13087,
       "project": "ИИ аналитика рисков",
       "theme": "Разработка алгоритмов работы ИИ",
@@ -5771,7 +5723,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "24.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12680
     },
@@ -5783,7 +5735,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "24.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12672
     },
@@ -5795,7 +5747,7 @@
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "25.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 12707
     },
@@ -5932,18 +5884,6 @@
       "parent_id": 13005
     },
     {
-      "id": 15867,
-      "project": "Цифровые коммуникации ЗИТ",
-      "theme": "Тестирование и реализация на промышленном контуре ИИ-Платформы МО функционала по подпроекту «ИИ-помощник ОМСУ»",
-      "status": "Новая",
-      "executor": "Воронина (ККП) Ольга Николаевна",
-      "executor_short": "Воронина О.Н.",
-      "deadline": "30.09.2026",
-      "urgency": "soon",
-      "pct": 0,
-      "parent_id": 12734
-    },
-    {
       "id": 15612,
       "project": "Цифровое нормирование 2.0",
       "theme": "Разработка и согласование правил определения порядка формирования, ведения и использования реестра РХО",
@@ -5966,18 +5906,6 @@
       "urgency": "soon",
       "pct": 0,
       "parent_id": 12927
-    },
-    {
-      "id": 14702,
-      "project": "Цифровые коммуникации ЗИТ",
-      "theme": "Реализация на ИИ платформе МО (Госчат) ИИ-агента",
-      "status": "В работе",
-      "executor": "Абрамов Максим Игоревич",
-      "executor_short": "Абрамов М.И.",
-      "deadline": "30.09.2026",
-      "urgency": "soon",
-      "pct": 0,
-      "parent_id": 12734
     },
     {
       "id": 14322,
