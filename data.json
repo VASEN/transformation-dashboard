@@ -1,5 +1,5 @@
 {
-  "updated_at": "22.09.2026 08:18",
+  "updated_at": "23.09.2026 08:28",
   "config": {
     "year": 2026,
     "redmine_base": "https://transformation.rm.mosreg.ru/#/issues",
@@ -16,7 +16,7 @@
     "tasks_deadline_5": 15,
     "tasks_deadline_14": 52,
     "tasks_overdue": 0,
-    "tasks_today": 0,
+    "tasks_today": 5,
     "vysv_pct_total": 122
   },
   "projects": [
@@ -2951,7 +2951,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "23.09.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 11606
     },
@@ -5675,7 +5675,7 @@
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
       "deadline": "23.09.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5687,7 +5687,7 @@
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
       "deadline": "23.09.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5699,7 +5699,7 @@
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
       "deadline": "23.09.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 12994
     },
@@ -5711,7 +5711,7 @@
       "executor": "Мельникова Наталья Михайловна",
       "executor_short": "Мельникова Н.М.",
       "deadline": "23.09.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 12994
     },
