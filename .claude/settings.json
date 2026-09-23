@@ -14,5 +14,19 @@
       "Read(**/.env)",
       "Bash(rm -rf *)"
     ]
+  },
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": false,
+    "network": {
+      "allowedDomains": [
+        "github.com",
+        "api.github.com",
+        "api.telegram.org",
+        "pypi.org",
+        "files.pythonhosted.org"
+      ],
+      "allowLocalBinding": true
+    }
   }
 }
