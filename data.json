@@ -1,5 +1,5 @@
 {
-  "updated_at": "23.09.2026 08:28",
+  "updated_at": "24.09.2026 08:25",
   "config": {
     "year": 2026,
     "redmine_base": "https://transformation.rm.mosreg.ru/#/issues",
@@ -11,12 +11,12 @@
     "projects_closed": 19,
     "projects_avg_pct": 45,
     "tasks_total": 566,
-    "tasks_active": 136,
-    "tasks_closed": 430,
-    "tasks_deadline_5": 15,
-    "tasks_deadline_14": 52,
-    "tasks_overdue": 0,
-    "tasks_today": 5,
+    "tasks_active": 134,
+    "tasks_closed": 432,
+    "tasks_deadline_5": 22,
+    "tasks_deadline_14": 49,
+    "tasks_overdue": 1,
+    "tasks_today": 1,
     "vysv_pct_total": 122
   },
   "projects": [
@@ -683,7 +683,7 @@
       "start_date": "26.01.2026",
       "closed_at": null,
       "defense_at": null,
-      "pct": 50,
+      "pct": 56,
       "project_type": "Межведомственный",
       "is_priority": false,
       "goal": "Снижение трудозатрат со 100% до 80% к 30.09.2026",
@@ -2951,7 +2951,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "23.09.2026",
-      "urgency": "today",
+      "urgency": "overdue",
       "pct": 0,
       "parent_id": 11606
     },
@@ -2963,21 +2963,9 @@
       "executor": "Коротаева Наталия Павловна",
       "executor_short": "Коротаева Н.П.",
       "deadline": "24.09.2026",
-      "urgency": "urgent",
+      "urgency": "today",
       "pct": 0,
       "parent_id": 11607
-    },
-    {
-      "id": 12680,
-      "project": "Оптимизация закупок 223-ФЗ",
-      "theme": "ЭТАП 4. Получение сведений из ПИК  по договору",
-      "status": "В работе",
-      "executor": "Кукарцева Ольга Владимировна",
-      "executor_short": "Кукарцева О.В.",
-      "deadline": "24.09.2026",
-      "urgency": "urgent",
-      "pct": 88,
-      "parent_id": 11242
     },
     {
       "id": 12739,
@@ -3047,7 +3035,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "29.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 11594
     },
@@ -3059,7 +3047,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "29.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 25,
       "parent_id": 11606
     },
@@ -3071,7 +3059,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "29.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 11607
     },
@@ -3108,7 +3096,7 @@
       "executor_short": "Кострова И.В.",
       "deadline": "30.09.2026",
       "urgency": "soon",
-      "pct": 50,
+      "pct": 70,
       "parent_id": 10862
     },
     {
@@ -3170,6 +3158,18 @@
       "urgency": "soon",
       "pct": 0,
       "parent_id": 11245
+    },
+    {
+      "id": 12680,
+      "project": "Оптимизация закупок 223-ФЗ",
+      "theme": "ЭТАП 4. Получение сведений из ПИК  по договору",
+      "status": "В работе",
+      "executor": "Кукарцева Ольга Владимировна",
+      "executor_short": "Кукарцева О.В.",
+      "deadline": "02.10.2026",
+      "urgency": "soon",
+      "pct": 88,
+      "parent_id": 11242
     },
     {
       "id": 12672,
@@ -5668,88 +5668,28 @@
       "parent_id": 12714
     },
     {
-      "id": 13003,
-      "project": "Оптимизация организационного блока РЦТ",
-      "theme": "Опытная эксплуатация реализованного функционала",
-      "status": "Новая",
-      "executor": "Федорова Наталья Михайловна",
-      "executor_short": "Федорова Н.М.",
-      "deadline": "23.09.2026",
-      "urgency": "today",
-      "pct": 0,
-      "parent_id": 12994
-    },
-    {
       "id": 13002,
       "project": "Оптимизация организационного блока РЦТ",
       "theme": "Внедрение функционала форм трудового договора",
-      "status": "Новая",
+      "status": "Закрыта",
       "executor": "Федорова Наталья Михайловна",
       "executor_short": "Федорова Н.М.",
       "deadline": "23.09.2026",
-      "urgency": "today",
-      "pct": 0,
-      "parent_id": 12994
-    },
-    {
-      "id": 13001,
-      "project": "Оптимизация организационного блока РЦТ",
-      "theme": "Тестирование формы трудового договора",
-      "status": "Новая",
-      "executor": "Федорова Наталья Михайловна",
-      "executor_short": "Федорова Н.М.",
-      "deadline": "23.09.2026",
-      "urgency": "today",
-      "pct": 0,
+      "urgency": "ok",
+      "pct": 100,
       "parent_id": 12994
     },
     {
       "id": 13000,
       "project": "Оптимизация организационного блока РЦТ",
       "theme": "Разработка функционала формы трудового договора",
-      "status": "Новая",
+      "status": "Закрыта",
       "executor": "Мельникова Наталья Михайловна",
       "executor_short": "Мельникова Н.М.",
       "deadline": "23.09.2026",
-      "urgency": "today",
-      "pct": 0,
+      "urgency": "ok",
+      "pct": 100,
       "parent_id": 12994
-    },
-    {
-      "id": 12689,
-      "project": "Оптимизация закупок 223-ФЗ",
-      "theme": "4.9 Ввод в промышленную эксплуатацию",
-      "status": "В работе",
-      "executor": "Кукарцева Ольга Владимировна",
-      "executor_short": "Кукарцева О.В.",
-      "deadline": "24.09.2026",
-      "urgency": "urgent",
-      "pct": 0,
-      "parent_id": 12680
-    },
-    {
-      "id": 12678,
-      "project": "Оптимизация закупок 223-ФЗ",
-      "theme": "3.6 Правки функционала по итогу тестирования",
-      "status": "В работе",
-      "executor": "Кукарцева Ольга Владимировна",
-      "executor_short": "Кукарцева О.В.",
-      "deadline": "24.09.2026",
-      "urgency": "urgent",
-      "pct": 0,
-      "parent_id": 12672
-    },
-    {
-      "id": 12709,
-      "project": "ИИ мониторинг закупок 223-ФЗ",
-      "theme": "3.2 Тестирование функционала",
-      "status": "Новая",
-      "executor": "Кукарцева Ольга Владимировна",
-      "executor_short": "Кукарцева О.В.",
-      "deadline": "25.09.2026",
-      "urgency": "urgent",
-      "pct": 0,
-      "parent_id": 12707
     },
     {
       "id": 14291,
@@ -5759,7 +5699,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "29.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13007
     },
@@ -5771,7 +5711,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "29.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13007
     },
@@ -5783,7 +5723,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "29.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13007
     },
@@ -5795,7 +5735,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "29.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13007
     },
@@ -5807,7 +5747,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "29.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13006
     },
@@ -5819,7 +5759,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "29.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13006
     },
@@ -5831,7 +5771,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "29.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13006
     },
@@ -5843,7 +5783,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "29.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13005
     },
@@ -5855,7 +5795,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "29.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13005
     },
@@ -5867,7 +5807,7 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "29.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13005
     },
@@ -5879,9 +5819,33 @@
       "executor": "Воронина (ККП) Ольга Николаевна",
       "executor_short": "Воронина О.Н.",
       "deadline": "29.09.2026",
-      "urgency": "soon",
+      "urgency": "urgent",
       "pct": 0,
       "parent_id": 13005
+    },
+    {
+      "id": 13003,
+      "project": "Оптимизация организационного блока РЦТ",
+      "theme": "Опытная эксплуатация реализованного функционала",
+      "status": "Новая",
+      "executor": "Федорова Наталья Михайловна",
+      "executor_short": "Федорова Н.М.",
+      "deadline": "29.09.2026",
+      "urgency": "urgent",
+      "pct": 0,
+      "parent_id": 12994
+    },
+    {
+      "id": 13001,
+      "project": "Оптимизация организационного блока РЦТ",
+      "theme": "Тестирование формы трудового договора",
+      "status": "В работе",
+      "executor": "Федорова Наталья Михайловна",
+      "executor_short": "Федорова Н.М.",
+      "deadline": "29.09.2026",
+      "urgency": "urgent",
+      "pct": 0,
+      "parent_id": 12994
     },
     {
       "id": 15612,
@@ -6028,16 +5992,40 @@
       "parent_id": 12778
     },
     {
-      "id": 12679,
+      "id": 12678,
       "project": "Оптимизация закупок 223-ФЗ",
-      "theme": "3.7 Ввод в промышленную эксплуатацию",
+      "theme": "3.6 Правки функционала по итогу тестирования",
+      "status": "В работе",
+      "executor": "Кукарцева Ольга Владимировна",
+      "executor_short": "Кукарцева О.В.",
+      "deadline": "01.10.2026",
+      "urgency": "soon",
+      "pct": 0,
+      "parent_id": 12672
+    },
+    {
+      "id": 12709,
+      "project": "ИИ мониторинг закупок 223-ФЗ",
+      "theme": "3.2 Тестирование функционала",
+      "status": "Новая",
+      "executor": "Кукарцева Ольга Владимировна",
+      "executor_short": "Кукарцева О.В.",
+      "deadline": "02.10.2026",
+      "urgency": "soon",
+      "pct": 0,
+      "parent_id": 12707
+    },
+    {
+      "id": 12689,
+      "project": "Оптимизация закупок 223-ФЗ",
+      "theme": "4.9 Ввод в промышленную эксплуатацию",
       "status": "В работе",
       "executor": "Кукарцева Ольга Владимировна",
       "executor_short": "Кукарцева О.В.",
       "deadline": "02.10.2026",
       "urgency": "soon",
       "pct": 0,
-      "parent_id": 12672
+      "parent_id": 12680
     },
     {
       "id": 12710,
@@ -6062,6 +6050,18 @@
       "urgency": "ok",
       "pct": 0,
       "parent_id": 12690
+    },
+    {
+      "id": 12679,
+      "project": "Оптимизация закупок 223-ФЗ",
+      "theme": "3.7 Ввод в промышленную эксплуатацию",
+      "status": "В работе",
+      "executor": "Кукарцева Ольга Владимировна",
+      "executor_short": "Кукарцева О.В.",
+      "deadline": "09.10.2026",
+      "urgency": "ok",
+      "pct": 0,
+      "parent_id": 12672
     },
     {
       "id": 12551,
