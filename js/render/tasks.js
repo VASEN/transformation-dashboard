@@ -35,7 +35,7 @@ export function renderTasks(tasks, filter = 'all') {
         <td data-label="Тема" style="max-width:280px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t.id ? `<a href="${CONFIG.redmineBase}/${t.id}" target="_blank" rel="noopener noreferrer" class="task-link">${escapeHTML(t.theme)}</a>` : escapeHTML(t.theme)}</td>
         <td data-label="Статус"><span style="color:${statusColor};font-size:12px">${escapeHTML(t.status)}</span></td>
         <td data-label="Назначена" style="color:var(--text-dim);font-size:12px">${escapeHTML(t.executor_short || t.person || '—')}</td>
-        <td data-label="Срок"><span class="deadline-chip ${urgencyLabel}">${urgencyIcon}${t.deadline || '—'}</span></td>
+        <td data-label="Срок"><span class="deadline-chip ${urgencyLabel}">${urgencyIcon}${escapeHTML(t.deadline || '—')}</span></td>
         <td data-label="Осталось" style="font-size:12px;text-align:right;padding-right:8px">${daysLeft}</td>
       </tr>
     `;

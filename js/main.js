@@ -1,5 +1,6 @@
 // ===== ENTRY POINT =====
 import { CONFIG, applyConfig } from './config.js';
+import { escapeHTML } from './helpers.js';
 import { allProjects, allTasks, allTasks2026, allDetails, setData } from './state.js';
 import { renderStatusBadges } from './render/overview.js';
 import { renderVysvBlock } from './render/vysv.js';
@@ -42,7 +43,7 @@ function initDashboard(data) {
   if (overall) {
     document.getElementById('kpi-vysv').textContent = overall.pct_vysv + '%';
     document.getElementById('kpi-vysv-sub').innerHTML =
-      `<span class="trend ${overall.pct_vysv >= 100 ? 'up' : 'down'}">${overall.pct_vysv >= 100 ? '↑' : '↓'} план</span> ${overall.name}`;
+      `<span class="trend ${overall.pct_vysv >= 100 ? 'up' : 'down'}">${overall.pct_vysv >= 100 ? '↑' : '↓'} план</span> ${escapeHTML(overall.name)}`;
   }
 
   // Tasks screen stats (from summary — not filtered)
@@ -185,7 +186,7 @@ async function loadData() {
         <pre style="font-size:10px;color:var(--text-dim);font-family:'Exo 2',sans-serif;
                     margin-top:12px;white-space:pre-wrap;text-align:left;
                     background:rgba(255,255,255,0.06);padding:10px;border-radius:8px;
-                    word-break:break-all">${err.message}</pre>
+                    word-break:break-all">${escapeHTML(err.message)}</pre>
       </div>`;
   }
 }

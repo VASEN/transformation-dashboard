@@ -74,6 +74,8 @@ extract_data.py   →   data.json   →   index.html  →  js/main.js → js/* (
 > логика в ES-модулях `js/` (точка входа `js/main.js`). Открывать по http (ES-модули требуют CORS),
 > не как `file://`.
 
+⚠️ **Строка из `data.json` → `innerHTML` только через `escapeHTML`** (сторож `tests/test_js_escape.py`; почему — `.claude/rules/data_json.md`).
+
 ## Файлы
 
 | Файл | Назначение |

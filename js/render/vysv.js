@@ -1,4 +1,4 @@
-import { getGaugeColor } from '../helpers.js';
+import { escapeHTML, getGaugeColor } from '../helpers.js';
 import { allCurators } from '../state.js';
 import { CONFIG } from '../config.js';
 
@@ -69,7 +69,7 @@ function _vysvDetailHTML(curator) {
   };
 
   return `
-    <div class="vysv-detail-title">${curator.name}</div>
+    <div class="vysv-detail-title">${escapeHTML(curator.name)}</div>
 
     <div style="font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-dim);text-transform:uppercase;margin-bottom:6px">Кадры</div>
     <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:5px;margin-bottom:12px">
@@ -117,8 +117,8 @@ export function renderVysvBlock(selectedName) {
   if (!document.getElementById('vysvDetailPanel')) {
     let html = `<div class="vysv-detail" id="vysvDetailPanel" style="grid-column:1/-1"></div>`;
     allCurators.forEach(c => {
-      html += `<div class="gauge-card" data-curator-name="${c.name}">
-        <div class="gauge-name">${c.name}</div>
+      html += `<div class="gauge-card" data-curator-name="${escapeHTML(c.name)}">
+        <div class="gauge-name">${escapeHTML(c.name)}</div>
         <div class="gauge-wrap">${_gaugeSVG(c.pct_vysv)}</div>
       </div>`;
     });

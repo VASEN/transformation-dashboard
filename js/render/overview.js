@@ -26,7 +26,7 @@ export function renderProjTable(projects) {
       <tr data-name="${escapeHTML(p.name)}"${rowClass ? ` class="${rowClass}"` : ''} style="cursor:pointer" title="Двойной клик — детализация">
         <td data-label="Тема">${p.is_priority ? PRIORITY_STAR : ''}${escapeHTML(p.name)}</td>
         <td data-label="Назначена" style="color:var(--text-dim);font-size:12px">${escapeHTML(p.owner_short || p.person || '—')}</td>
-        <td data-label="Срок" style="color:var(--text-dim);font-size:12px">${p.deadline || '—'}</td>
+        <td data-label="Срок" style="color:var(--text-dim);font-size:12px">${escapeHTML(p.deadline || '—')}</td>
         <td data-label="Готовность">${pctDisplay}</td>
       </tr>`;
   };
@@ -78,7 +78,7 @@ export function renderStatusBadges(filtered) {
     const color = STATUS_COLORS[status] || '#888';
     const badge = document.createElement('div');
     badge.className = 'info-badge';
-    badge.innerHTML = `<div class="dot" style="background:${color}"></div>${status}: ${counts[status]}`;
+    badge.innerHTML = `<div class="dot" style="background:${color}"></div>${escapeHTML(status)}: ${counts[status]}`;
     row.appendChild(badge);
   });
 }

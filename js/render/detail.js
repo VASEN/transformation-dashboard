@@ -85,9 +85,9 @@ export function loadDetail(name) {
   // Текущий этап
   const currentStageHTML = isClosed
     ? `<div style="padding:9px 14px;background:rgba(76,175,80,0.12);border-left:3px solid #4caf50;border-radius:0 8px 8px 0;font-size:13px;font-weight:600;color:#4caf50">✓ Реализован</div>`
-      + (d.defense_at ? `<div style="padding:6px 14px;font-size:12px;color:var(--text-dim);margin-top:4px">Защищён: <span style="color:var(--text);font-weight:600">${d.defense_at}</span></div>` : '')
+      + (d.defense_at ? `<div style="padding:6px 14px;font-size:12px;color:var(--text-dim);margin-top:4px">Защищён: <span style="color:var(--text);font-weight:600">${escapeHTML(d.defense_at)}</span></div>` : '')
     : currentStages.length
-      ? currentStages.map(s => `<div style="padding:9px 14px;background:rgba(0,229,255,0.09);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;margin-bottom:6px;font-size:13px;line-height:1.5;font-weight:500">${s}</div>`).join('')
+      ? currentStages.map(s => `<div style="padding:9px 14px;background:rgba(0,229,255,0.09);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;margin-bottom:6px;font-size:13px;line-height:1.5;font-weight:500">${escapeHTML(s)}</div>`).join('')
       : `<div style="padding:9px 14px;background:rgba(255,255,255,0.04);border-left:3px solid rgba(255,255,255,0.15);border-radius:0 8px 8px 0;font-size:13px;color:var(--text-dim)">Нет данных</div>`;
 
   // Full status lines for block 2
@@ -107,11 +107,11 @@ export function loadDetail(name) {
     <div style="display:flex;flex-direction:column;gap:16px">
       <div class="info-block">
         <div class="info-label">Держатель проекта</div>
-        <div class="info-value" style="font-size:20px;font-weight:700">${d.owner_short || d.owner || '—'}</div>
+        <div class="info-value" style="font-size:20px;font-weight:700">${escapeHTML(d.owner_short || d.owner || '—')}</div>
         <div class="info-label">Руководитель проекта</div>
-        <div class="info-value" style="color:var(--accent2);font-size:20px;font-weight:700">${d.manager_short || d.manager || '—'}</div>
+        <div class="info-value" style="color:var(--accent2);font-size:20px;font-weight:700">${escapeHTML(d.manager_short || d.manager || '—')}</div>
         <div class="info-label">Срок завершения</div>
-        <div class="info-value" style="color:var(--warn);font-size:20px;font-weight:700">${d.deadline || '—'}</div>
+        <div class="info-value" style="color:var(--warn);font-size:20px;font-weight:700">${escapeHTML(d.deadline || '—')}</div>
 
         <div style="margin-top:12px">
           <div class="section-title" style="margin-bottom:12px">Высвобождение часов</div>
