@@ -31,7 +31,13 @@ external_hours — внешнее высвобождение, часы (из xls
 total_units    — высвобождение всего, шт.ед. (из xlsx)
 closed_at      — дата закрытия (колонка «Закрыта» из Redmine)
 defense_at     — дата защиты (колонка «Дата и время защиты» из Redmine)
+current_status — текст статуса из еженедельного md-отчёта (process_report.py)
 ```
+
+⚠️ **Форма `data.json` зависит от того, кто писал последним.** Автопрогон (без md) оставляет
+`current_status` = `null` у всех проектов и нет `summary.report_updated_at`; после еженедельного
+`deploy.sh` с md это строки. Тест, читающий живой `data.json`, сверять и со снимком после
+`process_report` (напр. `git show a3e6cce:data.json`) — иначе он зелёный до пятницы.
 
 ## Логика сущностей
 
